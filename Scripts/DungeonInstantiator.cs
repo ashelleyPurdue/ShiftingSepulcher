@@ -23,7 +23,7 @@ namespace RandomDungeons
                 this.AddChild(realRoom);
 
                 // Create the room at its location
-                realRoom.Position = new Vector2(coordinates.X, coordinates.Y) * 64;
+                realRoom.Position = new Vector2(coordinates.X, -coordinates.Y) * 64;
 
                 // Hide or show all the doors
                 foreach (var dir in graphRoom.Doors.Keys)

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace RandomDungeons.DungeonGraphs
 {
     public class DungeonRoom
@@ -10,9 +12,7 @@ namespace RandomDungeons.DungeonGraphs
         /// </summary>
         public int RoomSeed;
 
-        public DungeonRoom NorthDoor;
-        public DungeonRoom SouthDoor;
-        public DungeonRoom WestDoor;
-        public DungeonRoom EastDoor;
+        public Dictionary<DoorDirection, DungeonRoom> Doors = new Dictionary<DoorDirection, DungeonRoom>();
+        public bool IsBossRoom;
     }
 }

@@ -6,7 +6,7 @@ namespace RandomDungeons.DungeonGraphs
 {
     public static class DungeonGenerator
     {
-        private struct RoomCoordinates
+        public struct RoomCoordinates
         {
             public int X;
             public int Y;
@@ -33,7 +33,7 @@ namespace RandomDungeons.DungeonGraphs
             }
         }
 
-        public static DungeonRoom GenerateGraph(int seed, int numRooms)
+        public static Dictionary<RoomCoordinates, DungeonRoom> GenerateGraph(int seed, int numRooms)
         {
             if (numRooms < 1)
                 throw new Exception("You can't have a zero-room dungeon.");
@@ -62,7 +62,7 @@ namespace RandomDungeons.DungeonGraphs
                 allRooms[childCoords] = childRoom;
             }
 
-            return root;
+            return allRooms;
         }
 
         private static IEnumerable<(RoomCoordinates parentCoords, DoorDirection dir)> UnusedDoors(

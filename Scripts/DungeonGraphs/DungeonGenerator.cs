@@ -6,6 +6,33 @@ namespace RandomDungeons.DungeonGraphs
 {
     public static class DungeonGenerator
     {
+        private struct RoomCoordinates
+        {
+            public int X;
+            public int Y;
+
+            public static RoomCoordinates Origin => new RoomCoordinates
+            {
+                X = 0,
+                Y = 0
+            };
+
+            public RoomCoordinates Adjacent(DoorDirection dir)
+            {
+                RoomCoordinates clone = this;
+
+                switch (dir)
+                {
+                    case DoorDirection.North: clone.Y += 1; break;
+                    case DoorDirection.South: clone.Y -= 1; break;
+                    case DoorDirection.East: clone.X += 1; break;
+                    case DoorDirection.West: clone.X -= 1; break;
+                }
+
+                return clone;
+            }
+        }
+
         public static DungeonRoom GenerateGraph(int seed, int numRooms)
         {
             if (numRooms < 1)
@@ -14,36 +41,40 @@ namespace RandomDungeons.DungeonGraphs
             var root = new DungeonRoom();
             var rng = new Random(seed);
 
-            var allRooms = new Dictionary<(int x, int y), DungeonRoom>();
-            allRooms[(0, 0)] = root;
+            var allRooms = new Dictionary<RoomCoordinates, DungeonRoom>();
+            allRooms[RoomCoordinates.Origin] = root;
 
             for (int i = 0; i < numRooms; i++)
             {
                 // Pick a random unused door and add a room to it.
-                var unusedDoors = UnusedDoors(allRooms.Values).ToArray();
+                var unusedDoors = UnusedDoors(allRooms).ToArray();
                 int doorIndex = rng.Next(0, unusedDoors.Length);
-                var door = unusedDoors[doorIndex];
+                (RoomCoordinates parentCoords, DoorDirection dir) = unusedDoors[doorIndex];
 
-                var newRoom = new DungeonRoom();
-                newRoom.RoomSeed = rng.Next();
+                RoomCoordinates childCoords = parentCoords.Adjacent(dir);
 
-                newRoom.Doors[OppositeDir(door.dir)] = door.room;
-                door.room.Doors[door.dir] = newRoom;
+                DungeonRoom parentRoom = allRooms[parentCoords];
+                DungeonRoom childRoom = new DungeonRoom();
+                childRoom.RoomSeed = rng.Next();
+
+                parentRoom.Doors[dir] = childRoom;
+                childRoom.Doors[OppositeDir(dir)] = parentRoom;
+                allRooms[childCoords] = childRoom;
             }
 
             return root;
         }
 
-        private static IEnumerable<(DungeonRoom room, DoorDirection dir)> UnusedDoors(
-            IEnumerable<DungeonRoom> rooms
+        private static IEnumerable<(RoomCoordinates parentCoords, DoorDirection dir)> UnusedDoors(
+            Dictionary<RoomCoordinates, DungeonRoom> allRooms
         )
         {
-            foreach (var room in rooms)
+            foreach (var roomCoords in allRooms.Keys)
             {
                 foreach (var dir in AllDirections())
                 {
-                    if (!room.Doors.ContainsKey(dir))
-                        yield return (room, dir);
+                    if (!allRooms.ContainsKey(roomCoords.Adjacent(dir)))
+                        yield return (roomCoords, dir);
                 }
             }
         }

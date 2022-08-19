@@ -57,3 +57,11 @@ script = ExtResource( 2 )
 margin_right = 40.0
 margin_bottom = 14.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+
+[node name="KeyLabel" type="Label" parent="."]
+unique_name_in_owner = true
+margin_left = 12.0
+margin_top = 24.0
+margin_right = 52.0
+margin_bottom = 38.0
+text = "Key 0"

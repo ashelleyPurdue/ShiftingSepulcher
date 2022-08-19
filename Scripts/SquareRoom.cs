@@ -25,6 +25,10 @@ namespace RandomDungeons
             GetNode<Door>("%SouthDoor").GraphDoor = _graphRoom.SouthDoor;
             GetNode<Door>("%EastDoor").GraphDoor = _graphRoom.EastDoor;
             GetNode<Door>("%WestDoor").GraphDoor = _graphRoom.WestDoor;
+
+            GetNode<Label>("%KeyLabel").Text = _graphRoom.HasKey
+                ? $"Key {_graphRoom.KeyId}"
+                : "";
         }
     }
 

@@ -34,14 +34,14 @@ namespace RandomDungeons.DungeonGraphs
             int seed,
             int minRunSize,
             int maxRunSize,
-            int numRuns
+            int numRooms
         )
         {
             var rng = new Random(seed);
             var dungeon = new DungeonGraph();
             dungeon.CreateRoom(RoomCoordinates.Origin);
 
-            for (int run = 0; run < numRuns; run++)
+            while (dungeon.RoomCount < numRooms)
             {
                 DungeonRoom startingRoom = ChooseRandomStartRoom();
                 int runLength = rng.Next(0, maxRunSize + 1);
@@ -66,6 +66,9 @@ namespace RandomDungeons.DungeonGraphs
             void GenerateRun(DungeonRoom startingRoom, int runLength)
             {
                 if (runLength == 0)
+                    return;
+
+                if (dungeon.RoomCount >= numRooms)
                     return;
 
                 if (!startingRoom.CanAddAnyRooms())

@@ -21,10 +21,10 @@ namespace RandomDungeons.DungeonGraphs
         public int KeyId = 0;
         public bool HasKey => KeyId > 0;
 
-        public DungeonRoom NorthRoom => NeighborRoom(CardinalDirection.North);
-        public DungeonRoom SouthRoom => NeighborRoom(CardinalDirection.South);
-        public DungeonRoom EastRoom => NeighborRoom(CardinalDirection.East);
-        public DungeonRoom WestRoom => NeighborRoom(CardinalDirection.West);
+        public DungeonDoor NorthDoor => GetDoor(CardinalDirection.North);
+        public DungeonDoor SouthDoor => GetDoor(CardinalDirection.South);
+        public DungeonDoor EastDoor => GetDoor(CardinalDirection.East);
+        public DungeonDoor WestDoor => GetDoor(CardinalDirection.West);
 
         private readonly Dictionary<CardinalDirection, DungeonDoor> _doors;
 
@@ -80,14 +80,6 @@ namespace RandomDungeons.DungeonGraphs
             Graph.JoinAdjacentRooms(this.Position, neighbor.Position);
 
             return neighbor;
-        }
-
-        private DungeonRoom NeighborRoom(CardinalDirection dir)
-        {
-            if (!_doors.ContainsKey(dir))
-                return null;
-
-            return _doors[dir].Destination;
         }
     }
 }

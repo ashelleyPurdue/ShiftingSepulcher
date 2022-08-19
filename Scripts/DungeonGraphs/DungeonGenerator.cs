@@ -24,11 +24,65 @@ namespace RandomDungeons.DungeonGraphs
                 (RoomCoordinates parentCoords, CardinalDirection dir) = unusedDoors[doorIndex];
                 DungeonRoom parentRoom = dungeon.GetRoom(parentCoords);
                 DungeonRoom childRoom = parentRoom.AddNeighbor(dir);
-
                 childRoom.RoomSeed = rng.Next();
             }
 
             return dungeon;
+        }
+
+        public static DungeonGraph GenerateUsingRuns(
+            int seed,
+            int minRunSize,
+            int maxRunSize,
+            int numRuns
+        )
+        {
+            var rng = new Random(seed);
+            var dungeon = new DungeonGraph();
+            dungeon.CreateRoom(RoomCoordinates.Origin);
+
+            for (int run = 0; run < numRuns; run++)
+            {
+                DungeonRoom startingRoom = ChooseRandomStartRoom();
+                int runLength = rng.Next(0, maxRunSize + 1);
+
+                GenerateRun(startingRoom, runLength);
+            }
+
+            return dungeon;
+
+            DungeonRoom ChooseRandomStartRoom()
+            {
+                var possibleStartingRooms = dungeon
+                    .AllRoomCoordinates()
+                    .Select(c => dungeon.GetRoom(c))
+                    .Where(r => r.CanAddAnyRooms())
+                    .ToArray();
+
+                int index = rng.Next(0, possibleStartingRooms.Length);
+                return possibleStartingRooms[index];
+            }
+
+            void GenerateRun(DungeonRoom startingRoom, int runLength)
+            {
+                if (runLength == 0)
+                    return;
+
+                if (!startingRoom.CanAddAnyRooms())
+                    return;
+
+                // Pick a direction.
+                var directions = startingRoom.UnusedDoors();
+                int index = rng.Next(0, directions.Length);
+                CardinalDirection dir = directions[index];
+
+                // Create a new room in that direction
+                DungeonRoom nextRoom = startingRoom.AddNeighbor(dir);
+
+                // Continue the run, recursively.
+                // Because I just felt like using recursion today.
+                GenerateRun(nextRoom, runLength - 1);
+            }
         }
     }
 }

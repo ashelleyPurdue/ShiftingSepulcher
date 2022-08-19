@@ -16,6 +16,9 @@ namespace RandomDungeons.DungeonGraphs
         public int RoomSeed;
         public bool IsBossRoom;
 
+        public int KeyId = 0;
+        public bool HasKey => KeyId > 0;
+
         public DungeonRoom NorthRoom => NeighborRoom(CardinalDirection.North);
         public DungeonRoom SouthRoom => NeighborRoom(CardinalDirection.South);
         public DungeonRoom EastRoom => NeighborRoom(CardinalDirection.East);

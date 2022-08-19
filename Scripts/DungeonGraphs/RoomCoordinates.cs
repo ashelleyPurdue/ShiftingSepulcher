@@ -36,6 +36,27 @@ namespace RandomDungeons.DungeonGraphs
             return (xDiff == 1 && yDiff == 0) || (xDiff == 0 && yDiff == 1);
         }
 
+        /// <summary>
+        /// If the given coordinates are adjacent to this one, returns which
+        /// direction you'd need to walk to go from this one to the other.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public CardinalDirection AdjacentDirection(RoomCoordinates other)
+        {
+            if (!other.IsAdjacentTo(this))
+                throw new Exception($"{this} is not adjacent to {other}");
+
+            if (other.X > this.X)
+                return CardinalDirection.East;
+            else if (other.X < this.X)
+                return CardinalDirection.West;
+            else if (other.Y > this.Y)
+                return CardinalDirection.North;
+            else
+                return CardinalDirection.South;
+        }
+
         public override string ToString()
         {
             return $"({X}, {Y})";

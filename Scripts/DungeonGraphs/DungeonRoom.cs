@@ -14,27 +14,40 @@ namespace RandomDungeons.DungeonGraphs
         /// cause the overall layout of the dungeon to change.
         /// </summary>
         public int RoomSeed;
-
-        public Dictionary<CardinalDirection, DungeonRoom> Doors = new Dictionary<CardinalDirection, DungeonRoom>();
         public bool IsBossRoom;
 
-        public DungeonRoom NorthRoom => DoorOrNull(CardinalDirection.North);
-        public DungeonRoom SouthRoom => DoorOrNull(CardinalDirection.South);
-        public DungeonRoom EastRoom => DoorOrNull(CardinalDirection.East);
-        public DungeonRoom WestRoom => DoorOrNull(CardinalDirection.West);
+        public DungeonRoom NorthRoom => NeighborRoom(CardinalDirection.North);
+        public DungeonRoom SouthRoom => NeighborRoom(CardinalDirection.South);
+        public DungeonRoom EastRoom => NeighborRoom(CardinalDirection.East);
+        public DungeonRoom WestRoom => NeighborRoom(CardinalDirection.West);
+
+        private readonly Dictionary<CardinalDirection, DungeonDoor> _doors;
 
         public DungeonRoom(DungeonGraph graph, RoomCoordinates pos)
         {
             Graph = graph;
             Position = pos;
+
+            _doors = new Dictionary<CardinalDirection, DungeonDoor>
+            {
+                {CardinalDirection.North, new DungeonDoor()},
+                {CardinalDirection.South, new DungeonDoor()},
+                {CardinalDirection.East, new DungeonDoor()},
+                {CardinalDirection.West, new DungeonDoor()}
+            };
         }
 
-        private DungeonRoom DoorOrNull(CardinalDirection dir)
+        public DungeonDoor GetDoor(CardinalDirection dir)
         {
-            if (!Doors.ContainsKey(dir))
+            return _doors[dir];
+        }
+
+        private DungeonRoom NeighborRoom(CardinalDirection dir)
+        {
+            if (!_doors.ContainsKey(dir))
                 return null;
 
-            return Doors[dir];
+            return _doors[dir].Destination;
         }
     }
 }

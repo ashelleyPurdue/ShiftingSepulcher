@@ -40,8 +40,8 @@ namespace RandomDungeons.DungeonGraphs
             if (!_rooms.ContainsKey(b))
                 throw new Exception($"There is no room at {b}");
 
-            _rooms[a].Doors[a.AdjacentDirection(b)] = _rooms[b];
-            _rooms[b].Doors[b.AdjacentDirection(a)] = _rooms[a];
+            _rooms[a].GetDoor(a.AdjacentDirection(b)).Destination = _rooms[b];
+            _rooms[b].GetDoor(b.AdjacentDirection(a)).Destination = _rooms[a];
         }
 
         public IEnumerable<(RoomCoordinates parentCoords, CardinalDirection dir)> UnusedDoors()

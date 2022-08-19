@@ -6,17 +6,25 @@ namespace RandomDungeons
 {
     public class SquareRoom : Node2D
     {
-        public Door GetDoor(CardinalDirection dir)
+        public DungeonRoom GraphRoom
         {
-            switch (dir)
+            get => _graphRoom;
+            set
             {
-                case CardinalDirection.North: return GetNode<Door>("%NorthDoor");
-                case CardinalDirection.South: return GetNode<Door>("%SouthDoor");
-                case CardinalDirection.East: return GetNode<Door>("%EastDoor");
-                case CardinalDirection.West: return GetNode<Door>("%WestDoor");
+                _graphRoom = value;
+                Refresh();
             }
+        }
+        private DungeonRoom _graphRoom;
 
-            throw new Exception("There are only four door directions.");
+        private void Refresh()
+        {
+            this.Position = new Vector2(_graphRoom.Position.X, -_graphRoom.Position.Y) * 64;
+
+            GetNode<Door>("%NorthDoor").IsOpen = _graphRoom.NorthRoom != null;
+            GetNode<Door>("%SouthDoor").IsOpen = _graphRoom.SouthRoom != null;
+            GetNode<Door>("%EastDoor").IsOpen = _graphRoom.EastRoom != null;
+            GetNode<Door>("%WestDoor").IsOpen = _graphRoom.WestRoom != null;
         }
     }
 

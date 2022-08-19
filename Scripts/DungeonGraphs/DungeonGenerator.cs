@@ -6,7 +6,12 @@ namespace RandomDungeons.DungeonGraphs
 {
     public static class DungeonGenerator
     {
-        public static DungeonGraph GenerateKeylessGraph(int seed, int numRooms)
+        public static DungeonGraph GenerateRunlessGraph(
+            int seed,
+            int numRooms,
+            int minRoomsWithoutKey,
+            int maxRoomsWithoutKey
+        )
         {
             if (numRooms < 1)
                 throw new Exception("You can't have a zero-room dungeon.");
@@ -15,7 +20,11 @@ namespace RandomDungeons.DungeonGraphs
             var dungeon = new DungeonGraph();
             dungeon.CreateRoom(RoomCoordinates.Origin);
 
-            for (int i = 0; i < numRooms; i++)
+            int currentKey = 0;
+            int roomsTilKey = rng.Next(minRoomsWithoutKey, maxRoomsWithoutKey + 1);
+            bool lastRoomPlacedKey = false;
+
+            while (dungeon.RoomCount < numRooms)
             {
                 // Pick a random unused door and add a room to it.
                 var unusedDoors = dungeon.UnusedDoors().ToArray();
@@ -25,6 +34,24 @@ namespace RandomDungeons.DungeonGraphs
                 DungeonRoom parentRoom = dungeon.GetRoom(parentCoords);
                 DungeonRoom childRoom = parentRoom.AddNeighbor(dir);
                 childRoom.RoomSeed = rng.Next();
+
+                // Lock the door if we just placed a key on the previous loop
+                if (lastRoomPlacedKey)
+                {
+                    parentRoom.GetDoor(dir).LockId = currentKey;
+                    lastRoomPlacedKey = false;
+                }
+
+                // Place a key in the room we just created, if it's time.
+                roomsTilKey--;
+                if (roomsTilKey == 0)
+                {
+                    currentKey++;
+                    childRoom.KeyId = currentKey;
+
+                    lastRoomPlacedKey = true;
+                    roomsTilKey = rng.Next(minRoomsWithoutKey, maxRoomsWithoutKey + 1);
+                }
             }
 
             return dungeon;

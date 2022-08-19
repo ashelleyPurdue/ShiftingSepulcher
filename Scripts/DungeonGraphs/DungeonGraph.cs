@@ -5,6 +5,8 @@ namespace RandomDungeons.DungeonGraphs
 {
     public class DungeonGraph
     {
+        public int RoomCount => _rooms.Count;
+
         private Dictionary<RoomCoordinates, DungeonRoom> _rooms
             = new Dictionary<RoomCoordinates, DungeonRoom>();
 
@@ -29,6 +31,11 @@ namespace RandomDungeons.DungeonGraphs
             return room;
         }
 
+        public bool CoordinatesInUse(RoomCoordinates c)
+        {
+            return _rooms.ContainsKey(c);
+        }
+
         public void JoinAdjacentRooms(RoomCoordinates a, RoomCoordinates b)
         {
             if (!a.IsAdjacentTo(b))
@@ -40,8 +47,8 @@ namespace RandomDungeons.DungeonGraphs
             if (!_rooms.ContainsKey(b))
                 throw new Exception($"There is no room at {b}");
 
-            _rooms[a].Doors[a.AdjacentDirection(b)] = _rooms[b];
-            _rooms[b].Doors[b.AdjacentDirection(a)] = _rooms[a];
+            _rooms[a].GetDoor(a.AdjacentDirection(b)).Destination = _rooms[b];
+            _rooms[b].GetDoor(b.AdjacentDirection(a)).Destination = _rooms[a];
         }
 
         public IEnumerable<(RoomCoordinates parentCoords, CardinalDirection dir)> UnusedDoors()

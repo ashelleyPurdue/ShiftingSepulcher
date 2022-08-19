@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RandomDungeons.DungeonGraphs
 {
@@ -14,27 +16,70 @@ namespace RandomDungeons.DungeonGraphs
         /// cause the overall layout of the dungeon to change.
         /// </summary>
         public int RoomSeed;
-
-        public Dictionary<CardinalDirection, DungeonRoom> Doors = new Dictionary<CardinalDirection, DungeonRoom>();
         public bool IsBossRoom;
 
-        public DungeonRoom NorthRoom => DoorOrNull(CardinalDirection.North);
-        public DungeonRoom SouthRoom => DoorOrNull(CardinalDirection.South);
-        public DungeonRoom EastRoom => DoorOrNull(CardinalDirection.East);
-        public DungeonRoom WestRoom => DoorOrNull(CardinalDirection.West);
+        public int KeyId = 0;
+        public bool HasKey => KeyId > 0;
+
+        public DungeonDoor NorthDoor => GetDoor(CardinalDirection.North);
+        public DungeonDoor SouthDoor => GetDoor(CardinalDirection.South);
+        public DungeonDoor EastDoor => GetDoor(CardinalDirection.East);
+        public DungeonDoor WestDoor => GetDoor(CardinalDirection.West);
+
+        private readonly Dictionary<CardinalDirection, DungeonDoor> _doors;
 
         public DungeonRoom(DungeonGraph graph, RoomCoordinates pos)
         {
             Graph = graph;
             Position = pos;
+
+            _doors = new Dictionary<CardinalDirection, DungeonDoor>
+            {
+                {CardinalDirection.North, new DungeonDoor()},
+                {CardinalDirection.South, new DungeonDoor()},
+                {CardinalDirection.East, new DungeonDoor()},
+                {CardinalDirection.West, new DungeonDoor()}
+            };
         }
 
-        private DungeonRoom DoorOrNull(CardinalDirection dir)
+        public DungeonDoor GetDoor(CardinalDirection dir)
         {
-            if (!Doors.ContainsKey(dir))
-                return null;
+            return _doors[dir];
+        }
 
-            return Doors[dir];
+        public bool CanAddRoom(CardinalDirection dir)
+        {
+            var newCoords = Position.Adjacent(dir);
+            return !Graph.CoordinatesInUse(newCoords);
+        }
+
+        public bool CanAddAnyRooms()
+        {
+            return
+                CanAddRoom(CardinalDirection.North) ||
+                CanAddRoom(CardinalDirection.South) ||
+                CanAddRoom(CardinalDirection.East) ||
+                CanAddRoom(CardinalDirection.West);
+        }
+
+        public CardinalDirection[] UnusedDoors()
+        {
+            return _doors
+                .Keys
+                .Where(CanAddRoom)
+                .ToArray();
+        }
+
+        public DungeonRoom AddNeighbor(CardinalDirection dir)
+        {
+            if (!CanAddRoom(dir))
+                throw new Exception("Another room is already there.");
+
+            var neighborPos = Position.Adjacent(dir);
+            var neighbor = Graph.CreateRoom(neighborPos);
+            Graph.JoinAdjacentRooms(this.Position, neighbor.Position);
+
+            return neighbor;
         }
     }
 }

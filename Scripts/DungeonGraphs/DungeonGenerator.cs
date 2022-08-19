@@ -22,7 +22,7 @@ namespace RandomDungeons.DungeonGraphs
                 // Pick a random unused door and add a room to it.
                 var unusedDoors = UnusedDoors(allRooms).ToArray();
                 int doorIndex = rng.Next(0, unusedDoors.Length);
-                (RoomCoordinates parentCoords, DoorDirection dir) = unusedDoors[doorIndex];
+                (RoomCoordinates parentCoords, CardinalDirection dir) = unusedDoors[doorIndex];
 
                 RoomCoordinates childCoords = parentCoords.Adjacent(dir);
 
@@ -38,13 +38,13 @@ namespace RandomDungeons.DungeonGraphs
             return allRooms;
         }
 
-        private static IEnumerable<(RoomCoordinates parentCoords, DoorDirection dir)> UnusedDoors(
+        private static IEnumerable<(RoomCoordinates parentCoords, CardinalDirection dir)> UnusedDoors(
             Dictionary<RoomCoordinates, DungeonRoom> allRooms
         )
         {
             foreach (var roomCoords in allRooms.Keys)
             {
-                foreach (var dir in DoorDirectionUtils.All())
+                foreach (var dir in CardinalDirectionUtils.All())
                 {
                     if (!allRooms.ContainsKey(roomCoords.Adjacent(dir)))
                         yield return (roomCoords, dir);

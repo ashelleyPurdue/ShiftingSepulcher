@@ -11,16 +11,16 @@ namespace RandomDungeons.DungeonGraphs
             Y = 0
         };
 
-        public RoomCoordinates Adjacent(DoorDirection dir)
+        public RoomCoordinates Adjacent(CardinalDirection dir)
         {
             RoomCoordinates clone = this;
 
             switch (dir)
             {
-                case DoorDirection.North: clone.Y += 1; break;
-                case DoorDirection.South: clone.Y -= 1; break;
-                case DoorDirection.East: clone.X += 1; break;
-                case DoorDirection.West: clone.X -= 1; break;
+                case CardinalDirection.North: clone.Y += 1; break;
+                case CardinalDirection.South: clone.Y -= 1; break;
+                case CardinalDirection.East: clone.X += 1; break;
+                case CardinalDirection.West: clone.X -= 1; break;
             }
 
             return clone;

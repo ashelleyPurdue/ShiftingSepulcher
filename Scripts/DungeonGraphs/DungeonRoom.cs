@@ -12,7 +12,7 @@ namespace RandomDungeons.DungeonGraphs
         /// </summary>
         public int RoomSeed;
 
-        public Dictionary<DoorDirection, DungeonRoom> Doors = new Dictionary<DoorDirection, DungeonRoom>();
+        public Dictionary<CardinalDirection, DungeonRoom> Doors = new Dictionary<CardinalDirection, DungeonRoom>();
         public bool IsBossRoom;
     }
 }

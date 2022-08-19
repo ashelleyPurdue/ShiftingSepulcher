@@ -44,21 +44,11 @@ namespace RandomDungeons.DungeonGraphs
         {
             foreach (var roomCoords in allRooms.Keys)
             {
-                foreach (var dir in AllDirections())
+                foreach (var dir in DoorDirectionUtils.All())
                 {
                     if (!allRooms.ContainsKey(roomCoords.Adjacent(dir)))
                         yield return (roomCoords, dir);
                 }
-            }
-        }
-
-        private static IEnumerable<DoorDirection> AllDirections()
-        {
-            var uncasted = Enum.GetValues(typeof(DoorDirection));
-
-            foreach (var dir in uncasted)
-            {
-                yield return (DoorDirection)dir;
             }
         }
     }

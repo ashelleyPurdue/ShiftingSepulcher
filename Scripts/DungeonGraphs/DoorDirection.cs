@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace RandomDungeons.DungeonGraphs
 {
@@ -23,6 +24,19 @@ namespace RandomDungeons.DungeonGraphs
             }
 
             throw new Exception("There are only four cardinal directions, dude.");
+        }
+    }
+
+    public static class DoorDirectionUtils
+    {
+        public static IEnumerable<DoorDirection> All()
+        {
+            var uncasted = Enum.GetValues(typeof(DoorDirection));
+
+            foreach (var dir in uncasted)
+            {
+                yield return (DoorDirection)dir;
+            }
         }
     }
 }

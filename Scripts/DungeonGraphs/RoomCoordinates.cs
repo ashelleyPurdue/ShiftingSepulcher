@@ -35,5 +35,10 @@ namespace RandomDungeons.DungeonGraphs
 
             return (xDiff == 1 && yDiff == 0) || (xDiff == 0 && yDiff == 1);
         }
+
+        public override string ToString()
+        {
+            return $"({X}, {Y})";
+        }
     }
 }

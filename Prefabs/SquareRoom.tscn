@@ -20,11 +20,21 @@ offset = Vector2( -8, -4 )
 polygon = PoolVector2Array( 0, 0, 24, 0, 24, 4, 0, 4 )
 script = ExtResource( 2 )
 
+[node name="Label" type="Label" parent="NorthDoor"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+
 [node name="SouthDoor" type="Polygon2D" parent="."]
 unique_name_in_owner = true
 position = Vector2( 20, 60 )
 polygon = PoolVector2Array( 0, 0, 24, 0, 24, 4, 0, 4 )
 script = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="SouthDoor"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 
 [node name="EastDoor" type="Polygon2D" parent="."]
 unique_name_in_owner = true
@@ -32,8 +42,18 @@ position = Vector2( 60, 20 )
 polygon = PoolVector2Array( 0, 0, 4, 0, 4, 24, 0, 24 )
 script = ExtResource( 2 )
 
+[node name="Label" type="Label" parent="EastDoor"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+
 [node name="WestDoor" type="Polygon2D" parent="."]
 unique_name_in_owner = true
 position = Vector2( 0, 20 )
 polygon = PoolVector2Array( 0, 0, 4, 0, 4, 24, 0, 24 )
 script = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="WestDoor"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )

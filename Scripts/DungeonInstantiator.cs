@@ -16,8 +16,8 @@ namespace RandomDungeons
 
             var graph = DungeonGenerator.GenerateUsingRuns(
                 seed: seed,
-                minRunSize: 1,
-                maxRunSize: 3,
+                minRunSize: 3,
+                maxRunSize: 5,
                 numRooms: 25
             );
 

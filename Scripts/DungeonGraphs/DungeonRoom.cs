@@ -18,10 +18,23 @@ namespace RandomDungeons.DungeonGraphs
         public Dictionary<CardinalDirection, DungeonRoom> Doors = new Dictionary<CardinalDirection, DungeonRoom>();
         public bool IsBossRoom;
 
+        public DungeonRoom NorthRoom => DoorOrNull(CardinalDirection.North);
+        public DungeonRoom SouthRoom => DoorOrNull(CardinalDirection.South);
+        public DungeonRoom EastRoom => DoorOrNull(CardinalDirection.East);
+        public DungeonRoom WestRoom => DoorOrNull(CardinalDirection.West);
+
         public DungeonRoom(DungeonGraph graph, RoomCoordinates pos)
         {
             Graph = graph;
             Position = pos;
+        }
+
+        private DungeonRoom DoorOrNull(CardinalDirection dir)
+        {
+            if (!Doors.ContainsKey(dir))
+                return null;
+
+            return Doors[dir];
         }
     }
 }

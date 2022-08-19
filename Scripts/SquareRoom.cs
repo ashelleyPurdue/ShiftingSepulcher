@@ -29,6 +29,12 @@ namespace RandomDungeons
             GetNode<Label>("%KeyLabel").Text = _graphRoom.HasKey
                 ? $"Key {_graphRoom.KeyId}"
                 : "";
+
+            // Highlight this room if it's the starting room
+            if (GraphRoom.Position.Equals(RoomCoordinates.Origin))
+            {
+                GetNode<Label>("%KeyLabel").Text += "*";
+            }
         }
     }
 

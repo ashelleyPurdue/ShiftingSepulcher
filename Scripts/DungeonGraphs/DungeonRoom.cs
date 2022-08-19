@@ -4,6 +4,9 @@ namespace RandomDungeons.DungeonGraphs
 {
     public class DungeonRoom
     {
+        public readonly DungeonGraph Graph;
+        public readonly RoomCoordinates Position;
+
         /// <summary>
         /// Seed used to generate this room's content.
         /// This is a separate seed from the one used to lay out all the rooms.
@@ -12,7 +15,26 @@ namespace RandomDungeons.DungeonGraphs
         /// </summary>
         public int RoomSeed;
 
-        public Dictionary<DoorDirection, DungeonRoom> Doors = new Dictionary<DoorDirection, DungeonRoom>();
+        public Dictionary<CardinalDirection, DungeonRoom> Doors = new Dictionary<CardinalDirection, DungeonRoom>();
         public bool IsBossRoom;
+
+        public DungeonRoom NorthRoom => DoorOrNull(CardinalDirection.North);
+        public DungeonRoom SouthRoom => DoorOrNull(CardinalDirection.South);
+        public DungeonRoom EastRoom => DoorOrNull(CardinalDirection.East);
+        public DungeonRoom WestRoom => DoorOrNull(CardinalDirection.West);
+
+        public DungeonRoom(DungeonGraph graph, RoomCoordinates pos)
+        {
+            Graph = graph;
+            Position = pos;
+        }
+
+        private DungeonRoom DoorOrNull(CardinalDirection dir)
+        {
+            if (!Doors.ContainsKey(dir))
+                return null;
+
+            return Doors[dir];
+        }
     }
 }

@@ -14,22 +14,16 @@ namespace RandomDungeons
             int seed = (int)GD.Randi();
             GD.Print(seed);
 
-            var allRooms = DungeonGenerator.GenerateGraph(seed, 25);
+            var graph = DungeonGenerator.GenerateGraph(seed, 25);
 
-            foreach (var coordinates in allRooms.Keys)
+            foreach (var coordinates in graph.AllRoomCoordinates())
             {
-                var graphRoom = allRooms[coordinates];
+                var graphRoom = graph.GetRoom(coordinates);
                 var realRoom = roomPrefab.Instance<SquareRoom>();
                 this.AddChild(realRoom);
 
                 // Create the room at its location
-                realRoom.Position = new Vector2(coordinates.X, -coordinates.Y) * 64;
-
-                // Hide or show all the doors
-                foreach (var dir in graphRoom.Doors.Keys)
-                {
-                    realRoom.GetDoor(dir).IsOpen = true;
-                }
+                realRoom.GraphRoom = graphRoom;
             }
         }
     }

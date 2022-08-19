@@ -29,6 +29,11 @@ namespace RandomDungeons.DungeonGraphs
             return room;
         }
 
+        public bool CoordinatesInUse(RoomCoordinates c)
+        {
+            return _rooms.ContainsKey(c);
+        }
+
         public void JoinAdjacentRooms(RoomCoordinates a, RoomCoordinates b)
         {
             if (!a.IsAdjacentTo(b))

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RandomDungeons.DungeonGraphs
 {
@@ -43,6 +44,20 @@ namespace RandomDungeons.DungeonGraphs
         public DungeonDoor GetDoor(CardinalDirection dir)
         {
             return _doors[dir];
+        }
+
+        public bool CanAddRoom(CardinalDirection dir)
+        {
+            var newCoords = Position.Adjacent(dir);
+            return !Graph.CoordinatesInUse(newCoords);
+        }
+
+        public CardinalDirection[] UnusedDoors()
+        {
+            return _doors
+                .Keys
+                .Where(CanAddRoom)
+                .ToArray();
         }
 
         private DungeonRoom NeighborRoom(CardinalDirection dir)

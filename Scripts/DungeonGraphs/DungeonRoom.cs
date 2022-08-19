@@ -53,6 +53,15 @@ namespace RandomDungeons.DungeonGraphs
             return !Graph.CoordinatesInUse(newCoords);
         }
 
+        public bool CanAddAnyRooms()
+        {
+            return
+                CanAddRoom(CardinalDirection.North) ||
+                CanAddRoom(CardinalDirection.South) ||
+                CanAddRoom(CardinalDirection.East) ||
+                CanAddRoom(CardinalDirection.West);
+        }
+
         public CardinalDirection[] UnusedDoors()
         {
             return _doors

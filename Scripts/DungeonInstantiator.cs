@@ -14,7 +14,7 @@ namespace RandomDungeons
             int seed = (int)GD.Randi();
             GD.Print(seed);
 
-            var graph = DungeonGenerator.GenerateGraph(seed, 25);
+            var graph = DungeonGenerator.GenerateKeylessGraph(seed, 25);
 
             foreach (var coordinates in graph.AllRoomCoordinates())
             {

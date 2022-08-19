@@ -6,7 +6,7 @@ namespace RandomDungeons.DungeonGraphs
 {
     public static class DungeonGenerator
     {
-        public static DungeonGraph GenerateGraph(int seed, int numRooms)
+        public static DungeonGraph GenerateKeylessGraph(int seed, int numRooms)
         {
             if (numRooms < 1)
                 throw new Exception("You can't have a zero-room dungeon.");

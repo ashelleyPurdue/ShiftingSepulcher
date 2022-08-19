@@ -31,7 +31,7 @@ namespace RandomDungeons.DungeonGraphs
                 childRoom.RoomSeed = rng.Next();
 
                 parentRoom.Doors[dir] = childRoom;
-                childRoom.Doors[OppositeDir(dir)] = parentRoom;
+                childRoom.Doors[dir.Opposite()] = parentRoom;
                 allRooms[childCoords] = childRoom;
             }
 
@@ -60,19 +60,6 @@ namespace RandomDungeons.DungeonGraphs
             {
                 yield return (DoorDirection)dir;
             }
-        }
-
-        private static DoorDirection OppositeDir(DoorDirection dir)
-        {
-            switch (dir)
-            {
-                case DoorDirection.North: return DoorDirection.South;
-                case DoorDirection.South: return DoorDirection.North;
-                case DoorDirection.East: return DoorDirection.West;
-                case DoorDirection.West: return DoorDirection.East;
-            }
-
-            throw new Exception("There are only four cardinal directions, dude.");
         }
     }
 }

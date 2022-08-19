@@ -41,6 +41,8 @@ namespace RandomDungeons.DungeonGraphs
             var dungeon = new DungeonGraph();
             dungeon.CreateRoom(RoomCoordinates.Origin);
 
+            int currentKey = 0;
+
             while (dungeon.RoomCount < numRooms)
             {
                 DungeonRoom startingRoom = ChooseRandomStartRoom();
@@ -70,20 +72,29 @@ namespace RandomDungeons.DungeonGraphs
                 for (int i = 0; i < runLength; i++)
                 {
                     if (dungeon.RoomCount >= numRooms)
-                        return;
+                        break;
 
                     if (!currentRoom.CanAddAnyRooms())
-                        return;
+                        break;
 
                     // Pick a direction.
                     var directions = currentRoom.UnusedDoors();
-
                     int index = rng.Next(0, directions.Length);
                     CardinalDirection dir = directions[index];
+
+                    // Lock the door, if it's the start of the run
+                    if (i == 0)
+                    {
+                        currentRoom.GetDoor(dir).LockId = currentKey;
+                    }
 
                     // Create a new room in that direction
                     currentRoom = currentRoom.AddNeighbor(dir);
                 }
+
+                // Place a key at the end of this run
+                currentKey++;
+                currentRoom.KeyId = currentKey;
             }
         }
     }

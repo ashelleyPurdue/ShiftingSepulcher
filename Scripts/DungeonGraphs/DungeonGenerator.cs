@@ -22,10 +22,8 @@ namespace RandomDungeons.DungeonGraphs
                 int doorIndex = rng.Next(0, unusedDoors.Length);
 
                 (RoomCoordinates parentCoords, CardinalDirection dir) = unusedDoors[doorIndex];
-                RoomCoordinates childCoords = parentCoords.Adjacent(dir);
-
-                DungeonRoom childRoom = dungeon.CreateRoom(childCoords);
-                dungeon.JoinAdjacentRooms(parentCoords, childCoords);
+                DungeonRoom parentRoom = dungeon.GetRoom(parentCoords);
+                DungeonRoom childRoom = parentRoom.AddNeighbor(dir);
 
                 childRoom.RoomSeed = rng.Next();
             }

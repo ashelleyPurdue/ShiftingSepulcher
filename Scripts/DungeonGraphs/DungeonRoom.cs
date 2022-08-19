@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -58,6 +59,18 @@ namespace RandomDungeons.DungeonGraphs
                 .Keys
                 .Where(CanAddRoom)
                 .ToArray();
+        }
+
+        public DungeonRoom AddNeighbor(CardinalDirection dir)
+        {
+            if (!CanAddRoom(dir))
+                throw new Exception("Another room is already there.");
+
+            var neighborPos = Position.Adjacent(dir);
+            var neighbor = Graph.CreateRoom(neighborPos);
+            Graph.JoinAdjacentRooms(this.Position, neighbor.Position);
+
+            return neighbor;
         }
 
         private DungeonRoom NeighborRoom(CardinalDirection dir)

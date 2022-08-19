@@ -4,6 +4,9 @@ namespace RandomDungeons.DungeonGraphs
 {
     public class DungeonRoom
     {
+        public readonly DungeonGraph Graph;
+        public readonly RoomCoordinates Position;
+
         /// <summary>
         /// Seed used to generate this room's content.
         /// This is a separate seed from the one used to lay out all the rooms.
@@ -14,5 +17,11 @@ namespace RandomDungeons.DungeonGraphs
 
         public Dictionary<CardinalDirection, DungeonRoom> Doors = new Dictionary<CardinalDirection, DungeonRoom>();
         public bool IsBossRoom;
+
+        public DungeonRoom(DungeonGraph graph, RoomCoordinates pos)
+        {
+            Graph = graph;
+            Position = pos;
+        }
     }
 }

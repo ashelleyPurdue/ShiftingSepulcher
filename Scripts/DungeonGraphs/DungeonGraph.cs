@@ -23,7 +23,7 @@ namespace RandomDungeons.DungeonGraphs
             if (_rooms.ContainsKey(coords))
                 throw new Exception($"There's already a room at {coords}");
 
-            var room = new DungeonRoom();
+            var room = new DungeonRoom(this, coords);
             _rooms[coords] = room;
 
             return room;

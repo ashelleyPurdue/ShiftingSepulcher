@@ -8,6 +8,11 @@ namespace RandomDungeons.DungeonGraphs
         private Dictionary<RoomCoordinates, DungeonRoom> _rooms
             = new Dictionary<RoomCoordinates, DungeonRoom>();
 
+        public IEnumerable<RoomCoordinates> AllRoomCoordinates()
+        {
+            return _rooms.Keys;
+        }
+
         public DungeonRoom GetRoom(RoomCoordinates coords)
         {
             return _rooms[coords];

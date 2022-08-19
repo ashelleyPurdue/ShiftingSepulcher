@@ -1,3 +1,5 @@
+using System;
+
 namespace RandomDungeons.DungeonGraphs
 {
     public struct RoomCoordinates
@@ -24,6 +26,14 @@ namespace RandomDungeons.DungeonGraphs
             }
 
             return clone;
+        }
+
+        public bool IsAdjacentTo(RoomCoordinates other)
+        {
+            int xDiff = Math.Abs(this.X - other.X);
+            int yDiff = Math.Abs(this.Y - other.Y);
+
+            return (xDiff == 1 && yDiff == 0) || (xDiff == 0 && yDiff == 1);
         }
     }
 }

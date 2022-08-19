@@ -65,26 +65,25 @@ namespace RandomDungeons.DungeonGraphs
 
             void GenerateRun(DungeonRoom startingRoom, int runLength)
             {
-                if (runLength == 0)
-                    return;
+                DungeonRoom currentRoom = startingRoom;
 
-                if (dungeon.RoomCount >= numRooms)
-                    return;
+                for (int i = 0; i < runLength; i++)
+                {
+                    if (dungeon.RoomCount >= numRooms)
+                        return;
 
-                if (!startingRoom.CanAddAnyRooms())
-                    return;
+                    if (!currentRoom.CanAddAnyRooms())
+                        return;
 
-                // Pick a direction.
-                var directions = startingRoom.UnusedDoors();
-                int index = rng.Next(0, directions.Length);
-                CardinalDirection dir = directions[index];
+                    // Pick a direction.
+                    var directions = currentRoom.UnusedDoors();
 
-                // Create a new room in that direction
-                DungeonRoom nextRoom = startingRoom.AddNeighbor(dir);
+                    int index = rng.Next(0, directions.Length);
+                    CardinalDirection dir = directions[index];
 
-                // Continue the run, recursively.
-                // Because I just felt like using recursion today.
-                GenerateRun(nextRoom, runLength - 1);
+                    // Create a new room in that direction
+                    currentRoom = currentRoom.AddNeighbor(dir);
+                }
             }
         }
     }

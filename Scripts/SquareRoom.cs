@@ -19,7 +19,7 @@ namespace RandomDungeons
 
         private void Refresh()
         {
-            this.Position = new Vector2(_graphRoom.Position.X, -_graphRoom.Position.Y) * 64;
+            this.Position = new Vector2(_graphRoom.Position.X, -_graphRoom.Position.Y) * 256;
 
             GetNode<Door>("%NorthDoor").GraphDoor = _graphRoom.NorthDoor;
             GetNode<Door>("%SouthDoor").GraphDoor = _graphRoom.SouthDoor;

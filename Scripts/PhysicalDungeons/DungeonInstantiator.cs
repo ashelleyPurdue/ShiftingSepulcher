@@ -77,24 +77,57 @@ namespace RandomDungeons.PhysicalDungeons
 
         public void EnterRoom(DungeonRoom graphRoom)
         {
-            // We only support one room "fading out" at a time.
-            // If another room is still fading out, skip straight to the end of
-            // it so the next one can start.
+            var prevRoom = _activeRoom;
+            var nextRoom = _graphRoomToRealRoom[graphRoom];
+
+            // EDGE CASE: Trying to re-enter the room that's currently fading out
+            if (nextRoom == _disappearingRoom)
+            {
+                GD.Print("Trying to enter a room that's already fading out");
+
+                _disappearingRoom = prevRoom;
+                _activeRoom = nextRoom;
+
+                MoveCameraToActiveRoom();
+                return;
+            }
+
+            // EDGE CASE: Trying to enter the room we're already in
+            if (nextRoom == prevRoom)
+            {
+                GD.Print("Trying to enter a room we're already in");
+                return;
+            }
+
+            // EDGE CASE: Another room is already fading out.
+            // We only support one room fading out at a time, skip straight to
+            // the end of it so the next one can start.
             if (_disappearingRoom != null)
             {
+                GD.Print("A different room is already fading out.");
+
+                _disappearingRoom.FadePercent = 0;
                 RemoveChild(_disappearingRoom);
                 _disappearingRoom = null;
             }
 
-            // Make the previous room start disappearing
-            _disappearingRoom = _activeRoom;
+            // Start fading out the previous room
+            if (prevRoom != null)
+            {
+                prevRoom.FadePercent = 1;
+                _disappearingRoom = prevRoom;
+            }
 
-            // Load in the new room
-            _activeRoom = _graphRoomToRealRoom[graphRoom];
-            _activeRoom.FadePercent = 0;
-            AddChild(_activeRoom);
+            // Start fading in the next room
+            AddChild(nextRoom);
+            nextRoom.FadePercent = 0;
+            _activeRoom = nextRoom;
 
-            // Yank the camera over here
+            MoveCameraToActiveRoom();
+        }
+
+        private void MoveCameraToActiveRoom()
+        {
             var camera = GetTree()
                 .GetNodesInGroup("Camera")
                 .Cast<Camera2D>()

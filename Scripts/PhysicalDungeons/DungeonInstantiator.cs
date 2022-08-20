@@ -11,6 +11,7 @@ namespace RandomDungeons.PhysicalDungeons
             = new Dictionary<DungeonRoom, SquareRoom>();
 
         private SquareRoom _activeRoom;
+        private SquareRoom _disappearingRoom;
 
         public override void _Ready()
         {
@@ -44,13 +45,43 @@ namespace RandomDungeons.PhysicalDungeons
             EnterRoom(graph.StartRoom);
         }
 
+        public override void _Process(float deltaTime)
+        {
+            // Make the active room gradually fade in
+            // TODO: Make it gradual
+            // TODO: Actually _fade_ it, instead of growing it.
+            _activeRoom.Scale = Vector2.One;
+
+            // Make the previous room gradually fade out
+            // TODO: Actually _fade_ it, instead of shrinking it.
+            if (_disappearingRoom != null)
+            {
+                _disappearingRoom.Scale -= Vector2.One * deltaTime * 4;
+
+                if (_disappearingRoom.Scale.x < 0)
+                {
+                    _disappearingRoom.Scale = Vector2.Zero;
+                    RemoveChild(_disappearingRoom);
+                    _disappearingRoom = null;
+                }
+            }
+        }
+
         public void EnterRoom(DungeonRoom graphRoom)
         {
-            // Unload the current room
-            if (_activeRoom != null)
-                RemoveChild(_activeRoom);
+            // We only support one room "fading out" at a time.
+            // If another room is still fading out, skip straight to the end of
+            // it so the next one can start.
+            if (_disappearingRoom != null)
+            {
+                RemoveChild(_disappearingRoom);
+                _disappearingRoom = null;
+            }
 
-            // Load in the replacement
+            // Make the previous room start disappearing
+            _disappearingRoom = _activeRoom;
+
+            // Load in the new room
             _activeRoom = _graphRoomToRealRoom[graphRoom];
             AddChild(_activeRoom);
 

@@ -6,6 +6,7 @@ namespace RandomDungeons.DungeonGraphs
     public class DungeonGraph
     {
         public int RoomCount => _rooms.Count;
+        public DungeonRoom StartRoom => _rooms[RoomCoordinates.Origin];
 
         private Dictionary<RoomCoordinates, DungeonRoom> _rooms
             = new Dictionary<RoomCoordinates, DungeonRoom>();

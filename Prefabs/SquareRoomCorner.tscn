@@ -1,0 +1,5 @@
+[gd_scene format=2]
+
+[node name="NorthWestCorner" type="Polygon2D"]
+offset = Vector2( 448, 216 )
+polygon = PoolVector2Array( -704, -472, -488, -472, -488, -464, -696, -464, -696, -256, -704, -256 )

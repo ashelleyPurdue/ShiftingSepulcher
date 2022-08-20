@@ -1,83 +1,45 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scripts/SquareRoom.cs" type="Script" id=1]
-[ext_resource path="res://Scripts/Door.cs" type="Script" id=2]
+[ext_resource path="res://Prefabs/SquareRoomCorner.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Prefabs/SquareRoomDoor.tscn" type="PackedScene" id=3]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 1 )
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
-position = Vector2( -288, -288 )
-invert_enable = true
-invert_border = 0.1
-polygon = PoolVector2Array( 64, 64, 192, 64, 192, 32, 384, 32, 384, 64, 512, 64, 512, 192, 544, 192, 544, 384, 512, 384, 512, 512, 384, 512, 384, 544, 192, 544, 192, 512, 64, 512, 64, 384, 32, 384, 32, 192, 64, 192 )
-
-[node name="KeyLabel" type="Label" parent="Polygon2D"]
+[node name="KeyLabel" type="Label" parent="."]
 unique_name_in_owner = true
-margin_left = 256.0
-margin_top = 272.0
-margin_right = 296.0
-margin_bottom = 286.0
+margin_left = -32.0
+margin_top = -16.0
+margin_right = 8.0
+margin_bottom = -2.0
 text = "Key 0"
 
-[node name="NorthDoor" type="Polygon2D" parent="Polygon2D"]
+[node name="NorthWestCorner" parent="." instance=ExtResource( 2 )]
+
+[node name="NorthEastCorner" parent="." instance=ExtResource( 2 )]
+rotation = 1.5708
+
+[node name="SouthEastCorner" parent="." instance=ExtResource( 2 )]
+rotation = 3.14159
+
+[node name="SouthWestCorner" parent="." instance=ExtResource( 2 )]
+rotation = 4.71239
+
+[node name="Position2D" type="Position2D" parent="."]
+position = Vector2( -256, -256 )
+
+[node name="NorthDoor" parent="." instance=ExtResource( 3 )]
 unique_name_in_owner = true
-position = Vector2( 192, 32 )
-scale = Vector2( 2, 2 )
-polygon = PoolVector2Array( 0, 0, 96, 0, 96, 16, 0, 16 )
-script = ExtResource( 2 )
 
-[node name="Label" type="Label" parent="Polygon2D/NorthDoor"]
-margin_left = 32.0
-margin_right = 73.0
-margin_bottom = 14.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Lock 0"
-
-[node name="SouthDoor" type="Polygon2D" parent="Polygon2D"]
+[node name="EastDoor" parent="." instance=ExtResource( 3 )]
 unique_name_in_owner = true
-position = Vector2( 192, 512 )
-scale = Vector2( 2, 2 )
-polygon = PoolVector2Array( 0, 0, 96, 0, 96, 16, 0, 16 )
-script = ExtResource( 2 )
+rotation = 1.5708
 
-[node name="Label" type="Label" parent="Polygon2D/SouthDoor"]
-margin_left = 32.0
-margin_right = 73.0
-margin_bottom = 14.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Lock 0"
-
-[node name="EastDoor" type="Polygon2D" parent="Polygon2D"]
+[node name="SouthDoor" parent="." instance=ExtResource( 3 )]
 unique_name_in_owner = true
-position = Vector2( 512, 192 )
-scale = Vector2( 2, 2 )
-polygon = PoolVector2Array( 0, 0, 16, 0, 16, 96, 0, 96 )
-script = ExtResource( 2 )
+rotation = 3.14159
 
-[node name="Label" type="Label" parent="Polygon2D/EastDoor"]
-margin_left = -16.0
-margin_top = 32.0
-margin_right = 25.0
-margin_bottom = 46.0
-rect_rotation = 89.972
-rect_pivot_offset = Vector2( 20, 8 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Lock 0"
-
-[node name="WestDoor" type="Polygon2D" parent="Polygon2D"]
+[node name="WestDoor" parent="." instance=ExtResource( 3 )]
 unique_name_in_owner = true
-position = Vector2( 32, 192 )
-scale = Vector2( 2, 2 )
-polygon = PoolVector2Array( 0, 0, 16, 0, 16, 96, 0, 96 )
-script = ExtResource( 2 )
-
-[node name="Label" type="Label" parent="Polygon2D/WestDoor"]
-margin_left = -8.0
-margin_top = 32.0
-margin_right = 33.0
-margin_bottom = 46.0
-rect_rotation = -89.7313
-rect_pivot_offset = Vector2( 20, 8 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Lock 0"
+rotation = 4.71239

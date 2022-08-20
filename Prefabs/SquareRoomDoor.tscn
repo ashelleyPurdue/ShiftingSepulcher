@@ -3,7 +3,7 @@
 [ext_resource path="res://Scripts/Door.cs" type="Script" id=1]
 
 [node name="NorthDoor" type="Polygon2D"]
-polygon = PoolVector2Array( -40, -256, 40, -256, 40, -248, -40, -248 )
+polygon = PoolVector2Array( -40, -256, 40, -256, 40, -240, -40, -240 )
 script = ExtResource( 1 )
 
 [node name="Label" type="Label" parent="."]

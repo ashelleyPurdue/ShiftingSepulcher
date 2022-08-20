@@ -8,18 +8,27 @@ namespace RandomDungeons.PhysicalDungeons
     {
         public DungeonDoor GraphDoor;
 
-        public override void _Process(float delta)
+        public override void _Process(float deltaTime)
         {
-            // Hide or show the door
-            var transform = GetNode<Node2D>("%Door").Transform;
+            UpdateDoorOpen(deltaTime);
+            UpdateLockDisplay(deltaTime);
+        }
+
+        private void UpdateDoorOpen(float deltaTime)
+        {
+            var door = GetNode<Node2D>("%Door");
+
+            var transform = door.Transform;
 
             transform.Scale = GraphDoor.Destination != null && !GraphDoor.IsLocked
                 ? Vector2.Zero
                 : Vector2.One;
 
-            GetNode<Node2D>("%Door").Transform = transform;
+            door.Transform = transform;
+        }
 
-            // Display which lock is on this door
+        private void UpdateLockDisplay(float deltaTime)
+        {
             var label = GetNode<Label>("Label");
             GetNode<Label>("Label").Text = GraphDoor.IsLocked
                 ? $"Lock {GraphDoor.LockId}"

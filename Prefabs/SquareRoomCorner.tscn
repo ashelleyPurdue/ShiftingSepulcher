@@ -1,5 +1,10 @@
 [gd_scene format=2]
 
-[node name="NorthWestCorner" type="Polygon2D"]
+[node name="SquareRoomCorner" type="Polygon2D"]
 offset = Vector2( 448, 216 )
 polygon = PoolVector2Array( -704, -472, -488, -472, -488, -456, -688, -456, -688, -256, -704, -256 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PoolVector2Array( -256, -256, -40, -256, -40, -240, -240, -240, -240, -40, -256, -40 )

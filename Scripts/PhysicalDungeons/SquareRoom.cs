@@ -37,20 +37,6 @@ namespace RandomDungeons.PhysicalDungeons
                 GetNode<Label>("%KeyLabel").Text += "*";
             }
         }
-
-        private void _on_CameraSnapTrigger_body_entered(object body)
-        {
-            if (!(body is Player))
-                return;
-
-            // Yank the camera over here
-            var camera = GetTree()
-                .GetNodesInGroup("Camera")
-                .Cast<Camera2D>()
-                .First();
-
-            camera.GlobalPosition = GlobalPosition;
-        }
     }
 }
 

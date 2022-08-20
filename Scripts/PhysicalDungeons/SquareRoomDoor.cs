@@ -8,6 +8,14 @@ namespace RandomDungeons.PhysicalDungeons
     {
         public DungeonDoor GraphDoor;
 
+        public override void _EnterTree()
+        {
+            // To prevent the player from rapidly "jittering" between two rooms
+            // during a transition, the warp trigger is disabled until the
+            // player passes through an "enabling" trigger in front of the door.
+            EnableWarp(false);
+        }
+
         public override void _Process(float deltaTime)
         {
             UpdateDoorOpen(deltaTime);
@@ -35,6 +43,11 @@ namespace RandomDungeons.PhysicalDungeons
                 : "";
         }
 
+        private void EnableWarp(bool enable)
+        {
+            GetNode<Area2D>("%WarpTrigger").Monitoring = enable;
+        }
+
         // This signal is connected with the "deferred" flag, so it won't
         // actually trigger until the frame _after_ the player enters the
         // trigger.  This is because Godot forbids messing with the scene
@@ -50,6 +63,12 @@ namespace RandomDungeons.PhysicalDungeons
 
                 instantiator.EnterRoom(GraphDoor.Destination);
             }
+        }
+
+        private void WarpEnableTriggerBodyEntered(object body)
+        {
+            if (body is Player)
+                EnableWarp(true);
         }
     }
 }

@@ -1,12 +1,18 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scripts/PhysicalDungeons/SquareRoomDoor.cs" type="Script" id=1]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 40, 8 )
 
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 64, 9 )
+
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 64, 12 )
+extents = Vector2( 64, 28 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 64, 28 )
 
 [node name="SquareRoomDoor" type="Node2D"]
 script = ExtResource( 1 )
@@ -21,11 +27,25 @@ polygon = PoolVector2Array( -40, -256, 40, -256, 40, -240, -40, -240 )
 position = Vector2( 0, -248 )
 shape = SubResource( 1 )
 
+[node name="WarpDisabledGuard" type="StaticBody2D" parent="."]
+
+[node name="WarpDisabledGuard" type="CollisionShape2D" parent="WarpDisabledGuard"]
+unique_name_in_owner = true
+position = Vector2( 0, -265 )
+shape = SubResource( 4 )
+
 [node name="WarpTrigger" type="Area2D" parent="."]
+unique_name_in_owner = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WarpTrigger"]
-position = Vector2( 0, -292 )
+position = Vector2( 0, -284 )
 shape = SubResource( 2 )
+
+[node name="WarpEnableTrigger" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WarpEnableTrigger"]
+position = Vector2( 0, -212 )
+shape = SubResource( 3 )
 
 [node name="Label" type="Label" parent="."]
 margin_left = -24.0
@@ -36,3 +56,4 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Lock 0"
 
 [connection signal="body_entered" from="WarpTrigger" to="." method="WarpTriggerBodyEntered" flags=3]
+[connection signal="body_entered" from="WarpEnableTrigger" to="." method="WarpEnableTriggerBodyEntered" flags=3]

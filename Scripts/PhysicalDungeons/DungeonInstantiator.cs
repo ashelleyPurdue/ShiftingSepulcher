@@ -68,33 +68,73 @@ namespace RandomDungeons.PhysicalDungeons
                 );
 
                 if (_disappearingRoom.FadePercent <= 0)
-                {
-                    RemoveChild(_disappearingRoom);
-                    _disappearingRoom = null;
-                }
+                    FinishFadingOut();
             }
         }
 
         public void EnterRoom(DungeonRoom graphRoom)
         {
-            // We only support one room "fading out" at a time.
-            // If another room is still fading out, skip straight to the end of
-            // it so the next one can start.
-            if (_disappearingRoom != null)
+            var prevRoom = _activeRoom;
+            var nextRoom = _graphRoomToRealRoom[graphRoom];
+
+            if (nextRoom == _disappearingRoom)
             {
-                RemoveChild(_disappearingRoom);
+                GD.Print("Trying to enter a room that's already fading out");
+                _activeRoom = nextRoom;
                 _disappearingRoom = null;
+
+                MoveCameraToActiveRoom();
             }
 
-            // Make the previous room start disappearing
-            _disappearingRoom = _activeRoom;
+            if (nextRoom == prevRoom)
+            {
+                GD.Print("Trying to enter a room we're already in");
+                return;
+            }
 
-            // Load in the new room
-            _activeRoom = _graphRoomToRealRoom[graphRoom];
-            _activeRoom.FadePercent = 0;
-            AddChild(_activeRoom);
+            StartFadingOut(prevRoom);
+            StartFadingIn(nextRoom);
+            MoveCameraToActiveRoom();
+        }
 
-            // Yank the camera over here
+        private void StartFadingIn(SquareRoom room)
+        {
+            if (room.GetParent() != this)
+            {
+                room.GetParent()?.RemoveChild(room);
+                AddChild(room);
+            }
+
+            room.FadePercent = 0;
+            _activeRoom = room;
+        }
+
+        private void StartFadingOut(SquareRoom room)
+        {
+            if (room == null)
+                return;
+
+            // There can only be one room fading out at a time.
+            // If there already is one, skip to the end of it so the next
+            // one can start fading out.
+            FinishFadingOut();
+
+            room.FadePercent = 1;
+            _disappearingRoom = room;
+        }
+
+        private void FinishFadingOut()
+        {
+            if (_disappearingRoom == null)
+                return;
+
+            _disappearingRoom.FadePercent = 0;
+            RemoveChild(_disappearingRoom);
+            _disappearingRoom = null;
+        }
+
+        private void MoveCameraToActiveRoom()
+        {
             var camera = GetTree()
                 .GetNodesInGroup("Camera")
                 .Cast<Camera2D>()

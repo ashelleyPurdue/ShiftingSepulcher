@@ -6,7 +6,7 @@
 extents = Vector2( 40, 8 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 64, 12 )
+extents = Vector2( 64, 28 )
 
 [node name="SquareRoomDoor" type="Node2D"]
 script = ExtResource( 1 )
@@ -24,7 +24,7 @@ shape = SubResource( 1 )
 [node name="WarpTrigger" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WarpTrigger"]
-position = Vector2( 0, -292 )
+position = Vector2( 0, -284 )
 shape = SubResource( 2 )
 
 [node name="Label" type="Label" parent="."]

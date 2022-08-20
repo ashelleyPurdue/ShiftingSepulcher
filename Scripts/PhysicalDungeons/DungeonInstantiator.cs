@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Godot;
 using RandomDungeons.DungeonGraphs;
 
-namespace RandomDungeons
+namespace RandomDungeons.PhysicalDungeons
 {
     public class DungeonInstantiator : Node
     {

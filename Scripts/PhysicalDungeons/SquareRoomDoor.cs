@@ -1,7 +1,7 @@
 using Godot;
 using RandomDungeons.DungeonGraphs;
 
-namespace RandomDungeons
+namespace RandomDungeons.PhysicalDungeons
 {
     public class SquareRoomDoor : Node2D
     {

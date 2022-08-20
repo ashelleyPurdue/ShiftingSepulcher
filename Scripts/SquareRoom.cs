@@ -22,10 +22,10 @@ namespace RandomDungeons
         {
             this.Position = new Vector2(_graphRoom.Position.X, -_graphRoom.Position.Y) * 512;
 
-            GetNode<Door>("%NorthDoor").GraphDoor = _graphRoom.NorthDoor;
-            GetNode<Door>("%SouthDoor").GraphDoor = _graphRoom.SouthDoor;
-            GetNode<Door>("%EastDoor").GraphDoor = _graphRoom.EastDoor;
-            GetNode<Door>("%WestDoor").GraphDoor = _graphRoom.WestDoor;
+            GetNode<SquareRoomDoor>("%NorthDoor").GraphDoor = _graphRoom.NorthDoor;
+            GetNode<SquareRoomDoor>("%SouthDoor").GraphDoor = _graphRoom.SouthDoor;
+            GetNode<SquareRoomDoor>("%EastDoor").GraphDoor = _graphRoom.EastDoor;
+            GetNode<SquareRoomDoor>("%WestDoor").GraphDoor = _graphRoom.WestDoor;
 
             GetNode<Label>("%KeyLabel").Text = _graphRoom.HasKey
                 ? $"Key {_graphRoom.KeyId}"

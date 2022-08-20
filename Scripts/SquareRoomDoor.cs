@@ -3,7 +3,7 @@ using RandomDungeons.DungeonGraphs;
 
 namespace RandomDungeons
 {
-    public class Door : Node2D
+    public class SquareRoomDoor : Node2D
     {
         public DungeonDoor GraphDoor;
 

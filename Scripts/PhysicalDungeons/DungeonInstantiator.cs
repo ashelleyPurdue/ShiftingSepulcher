@@ -7,6 +7,8 @@ namespace RandomDungeons.PhysicalDungeons
 {
     public class DungeonInstantiator : Node
     {
+        private const float FadeTime = 0.25f;
+
         private Dictionary<DungeonRoom, SquareRoom> _graphRoomToRealRoom
             = new Dictionary<DungeonRoom, SquareRoom>();
 
@@ -47,20 +49,26 @@ namespace RandomDungeons.PhysicalDungeons
 
         public override void _Process(float deltaTime)
         {
-            // Make the active room gradually fade in
-            // TODO: Make it gradual
-            // TODO: Actually _fade_ it, instead of growing it.
-            _activeRoom.Scale = Vector2.One;
+            float fadeSpeed = 1 / FadeTime;
 
-            // Make the previous room gradually fade out
-            // TODO: Actually _fade_ it, instead of shrinking it.
+            // Fade the new room in
+            _activeRoom.FadePercent = Mathf.MoveToward(
+                _activeRoom.FadePercent,
+                1,
+                deltaTime * fadeSpeed
+            );
+
+            // Fade the old room out
             if (_disappearingRoom != null)
             {
-                _disappearingRoom.Scale -= Vector2.One * deltaTime * 4;
+                _disappearingRoom.FadePercent = Mathf.MoveToward(
+                    _disappearingRoom.FadePercent,
+                    0,
+                    deltaTime * fadeSpeed
+                );
 
-                if (_disappearingRoom.Scale.x < 0)
+                if (_disappearingRoom.FadePercent <= 0)
                 {
-                    _disappearingRoom.Scale = Vector2.Zero;
                     RemoveChild(_disappearingRoom);
                     _disappearingRoom = null;
                 }
@@ -83,6 +91,7 @@ namespace RandomDungeons.PhysicalDungeons
 
             // Load in the new room
             _activeRoom = _graphRoomToRealRoom[graphRoom];
+            _activeRoom.FadePercent = 0;
             AddChild(_activeRoom);
 
             // Yank the camera over here

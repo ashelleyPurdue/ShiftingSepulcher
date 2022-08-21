@@ -11,13 +11,8 @@ script = ExtResource( 1 )
 color = Color( 0.511719, 0.511719, 0.511719, 1 )
 polygon = PoolVector2Array( -256, -256, 256, -256, 256, 256, -256, 256 )
 
-[node name="KeyLabel" type="Label" parent="."]
+[node name="KeySpawn" type="Position2D" parent="."]
 unique_name_in_owner = true
-margin_left = -32.0
-margin_top = -16.0
-margin_right = 8.0
-margin_bottom = -2.0
-text = "Key 0"
 
 [node name="NorthWestCorner" parent="." instance=ExtResource( 2 )]
 

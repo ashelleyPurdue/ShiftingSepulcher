@@ -41,5 +41,17 @@ namespace RandomDungeons
                 polygon.Modulate = ColorForId(KeyId);
             }
         }
+
+        private void BodyEntered(object body)
+        {
+            if (body is Player)
+            {
+                Global.CollectKey(KeyId);
+                QueueFree();
+            }
+        }
     }
 }
+
+
+

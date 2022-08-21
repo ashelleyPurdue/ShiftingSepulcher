@@ -4,7 +4,7 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class Key : Node
+    public class Key : Node2D
     {
         private static readonly IReadOnlyList<Color> _keyIdColors = new[]
         {

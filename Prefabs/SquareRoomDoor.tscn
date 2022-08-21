@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/PhysicalDungeons/SquareRoomDoor.cs" type="Script" id=1]
 
@@ -13,6 +13,9 @@ extents = Vector2( 40, 8 )
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 64, 28 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 40, 8 )
 
 [node name="SquareRoomDoor" type="Node2D"]
 script = ExtResource( 1 )
@@ -47,13 +50,28 @@ shape = SubResource( 2 )
 position = Vector2( 0, -212 )
 shape = SubResource( 3 )
 
-[node name="Label" type="Label" parent="."]
-margin_left = -24.0
-margin_top = -256.0
-margin_right = 17.0
-margin_bottom = -242.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Lock 0"
+[node name="Lock" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="LockVisuals" type="Polygon2D" parent="Lock"]
+unique_name_in_owner = true
+position = Vector2( 2, -232 )
+scale = Vector2( 0.280001, 0.280001 )
+z_index = 2
+invert_enable = true
+invert_border = 20.0
+polygon = PoolVector2Array( -16, 0, -16, -16, -24, -24, -24, -40, -16, -48, 0, -48, 8, -40, 8, -24, 0, -16, 0, 0 )
+
+[node name="Hole" type="Polygon2D" parent="Lock/LockVisuals"]
+z_index = -1
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( -28.5713, -57.1426, 14.2857, -57.1426, 14.2857, 6.10352e-05, -28.5713, 6.10352e-05 )
+
+[node name="LockCollider" type="StaticBody2D" parent="Lock"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Lock/LockCollider"]
+position = Vector2( 0, -248 )
+shape = SubResource( 5 )
 
 [connection signal="body_entered" from="WarpTrigger" to="." method="WarpTriggerBodyEntered" flags=3]
 [connection signal="body_entered" from="WarpEnableTrigger" to="." method="WarpEnableTriggerBodyEntered" flags=3]

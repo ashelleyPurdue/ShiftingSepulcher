@@ -16,31 +16,34 @@ namespace RandomDungeons.PhysicalDungeons
             EnableWarp(false);
         }
 
-        public override void _Process(float deltaTime)
+        public override void _Ready()
         {
-            UpdateDoorOpen(deltaTime);
-            UpdateLockDisplay(deltaTime);
+            InitDoorOpen();
+            InitLockDisplay();
         }
 
-        private void UpdateDoorOpen(float deltaTime)
+        private void InitDoorOpen()
         {
             var door = GetNode<Node2D>("%Door");
 
             var transform = door.Transform;
 
-            transform.Scale = GraphDoor.Destination != null && !GraphDoor.IsLocked
+            transform.Scale = GraphDoor.Destination != null
                 ? Vector2.Zero
                 : Vector2.One;
 
             door.Transform = transform;
         }
 
-        private void UpdateLockDisplay(float deltaTime)
+        private void InitLockDisplay()
         {
-            var label = GetNode<Label>("Label");
-            GetNode<Label>("Label").Text = GraphDoor.IsLocked
-                ? $"Lock {GraphDoor.LockId}"
-                : "";
+            if (!GraphDoor.IsLocked)
+            {
+                GetNode("%Lock").QueueFree();
+                return;
+            }
+
+            GetNode<Polygon2D>("%LockVisuals").Modulate = Key.ColorForId(GraphDoor.LockId);
         }
 
         private void EnableWarp(bool enable)

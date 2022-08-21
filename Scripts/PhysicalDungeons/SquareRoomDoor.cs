@@ -77,5 +77,13 @@ namespace RandomDungeons.PhysicalDungeons
             if (body is Player)
                 EnableWarp(true);
         }
+
+        private void UnlockTriggerBodyEntered(object body)
+        {
+            if (Global.HasKey(GraphDoor.LockId))
+                GetNode("%Lock").QueueFree();
+        }
     }
 }
+
+

@@ -18,11 +18,19 @@ namespace RandomDungeons.PhysicalDungeons
 
         public override void _Ready()
         {
-            InitDoorOpen();
             InitLockDisplay();
         }
 
-        private void InitDoorOpen()
+        public override void _Process(float delta)
+        {
+            // For some reason this needs to happen during _Process, not _Ready().
+            // Why?  Hell if I know.  All I know is that the player gets "caught"
+            // on something in the center of the room if this code is in _Ready()
+            // instead of _Process().
+            UpdateDoorOpen();
+        }
+
+        private void UpdateDoorOpen()
         {
             var door = GetNode<Node2D>("%Door");
 

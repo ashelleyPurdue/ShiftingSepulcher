@@ -20,12 +20,10 @@ namespace RandomDungeons.PhysicalDungeons
             var roomPrefab = GD.Load<PackedScene>("res://Prefabs/SquareRoom.tscn");
 
             // Generate a dungeon graph
-            GD.Randomize();
-            int seed = (int)GD.Randi();
-            GD.Print(seed);
+            GD.Print(TitleScreen.ChosenSeed);
 
             var graph = DungeonGenerator.GenerateUsingRuns(
-                seed: seed,
+                seed: TitleScreen.ChosenSeed,
                 minRunSize: 3,
                 maxRunSize: 5,
                 numRooms: 25

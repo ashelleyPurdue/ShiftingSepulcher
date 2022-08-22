@@ -21,6 +21,10 @@ namespace RandomDungeons
 
         private void Play()
         {
+            bool isNumber = int.TryParse(_seedTextBox.Text, out ChosenSeed);
+            if (!isNumber)
+                ChosenSeed = (int)_seedTextBox.Text.Hash();
+
             GetTree().ChangeScene("res://Maps/Main.tscn");
         }
 

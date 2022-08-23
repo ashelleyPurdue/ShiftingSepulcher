@@ -25,8 +25,8 @@ namespace RandomDungeons.PhysicalDungeons
             var graph = DungeonGenerator.GenerateUsingRuns(
                 seed: TitleScreen.ChosenSeed,
                 minRunSize: 3,
-                maxRunSize: 5,
-                numRooms: 25
+                maxRunSize: 3,
+                numRooms: 5
             );
 
             // Create a "real" version of each room, but don't add it to the

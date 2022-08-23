@@ -41,10 +41,21 @@ namespace RandomDungeons.PhysicalDungeons
             // Spawn the key
             if (_graphRoom.HasKey)
             {
-                var key = GD.Load<PackedScene>("res://Prefabs/Key.tscn").Instance<Key>();
+                var key = GD.Load<PackedScene>("res://Prefabs/Key.tscn")
+                    .Instance<Key>();
                 key.KeyId = _graphRoom.KeyId;
                 key.Position = GetNode<Node2D>("%KeySpawn").Position;
                 AddChild(key);
+            }
+
+            // Spawn the victory chest, if this is a boss room
+            // TODO: Put a boss in here instead of a chest.  That'll teach 'em!
+            if (_graphRoom.IsBossRoom)
+            {
+                var chest = GD.Load<PackedScene>("res://Prefabs/VictoryChest.tscn")
+                    .Instance<VictoryChest>();
+                chest.Position = GetNode<Node2D>("%KeySpawn").Position;
+                AddChild(chest);
             }
         }
 

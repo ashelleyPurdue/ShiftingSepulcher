@@ -18,7 +18,7 @@ namespace RandomDungeons.DungeonGraphs
 
             var rng = new Random(seed);
             var dungeon = new DungeonGraph();
-            dungeon.CreateRoom(RoomCoordinates.Origin);
+            var lastCreatedRoom = dungeon.CreateRoom(RoomCoordinates.Origin);
 
             int currentKey = 0;
             int roomsTilKey = rng.Next(minRoomsWithoutKey, maxRoomsWithoutKey + 1);
@@ -34,6 +34,7 @@ namespace RandomDungeons.DungeonGraphs
                 DungeonRoom parentRoom = dungeon.GetRoom(parentCoords);
                 DungeonRoom childRoom = parentRoom.AddNeighbor(dir);
                 childRoom.RoomSeed = rng.Next();
+                lastCreatedRoom = childRoom;
 
                 // Lock the door if we just placed a key on the previous loop
                 if (lastRoomPlacedKey)
@@ -54,6 +55,12 @@ namespace RandomDungeons.DungeonGraphs
                 }
             }
 
+            // Mark the last-created room as a boss room.
+            // If it has a key, remove it, since we won't have created the lock
+            // that goes with it.
+            lastCreatedRoom.IsBossRoom = true;
+            lastCreatedRoom.KeyId = 0;
+
             return dungeon;
         }
 
@@ -66,17 +73,23 @@ namespace RandomDungeons.DungeonGraphs
         {
             var rng = new Random(seed);
             var dungeon = new DungeonGraph();
-            dungeon.CreateRoom(RoomCoordinates.Origin);
+            var lastCreatedRoom = dungeon.CreateRoom(RoomCoordinates.Origin);
 
             int currentKey = 0;
 
             while (dungeon.RoomCount < numRooms)
             {
-                DungeonRoom startingRoom = ChooseRandomStartRoom();
+                DungeonRoom runStartRoom = ChooseRandomStartRoom();
                 int runLength = rng.Next(minRunSize, maxRunSize + 1);
 
-                GenerateRun(startingRoom, runLength);
+                GenerateRun(runStartRoom, runLength);
             }
+
+            // Mark the last-created room as a boss room.
+            // If it has a key, remove it, since we won't have created the lock
+            // that goes with it.
+            lastCreatedRoom.IsBossRoom = true;
+            lastCreatedRoom.KeyId = 0;
 
             return dungeon;
 
@@ -117,6 +130,7 @@ namespace RandomDungeons.DungeonGraphs
 
                     // Create a new room in that direction
                     currentRoom = currentRoom.AddNeighbor(dir);
+                    lastCreatedRoom = currentRoom;
                 }
 
                 // Place a key at the end of this run

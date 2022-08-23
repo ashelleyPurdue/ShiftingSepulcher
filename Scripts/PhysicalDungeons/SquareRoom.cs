@@ -38,14 +38,13 @@ namespace RandomDungeons.PhysicalDungeons
             GetNode<SquareRoomDoor>("%EastDoor").GraphDoor = _graphRoom.EastDoor;
             GetNode<SquareRoomDoor>("%WestDoor").GraphDoor = _graphRoom.WestDoor;
 
-            GetNode<Label>("%KeyLabel").Text = _graphRoom.HasKey
-                ? $"Key {_graphRoom.KeyId}"
-                : "";
-
-            // Highlight this room if it's the starting room
-            if (GraphRoom.Position.Equals(RoomCoordinates.Origin))
+            // Spawn the key
+            if (_graphRoom.HasKey)
             {
-                GetNode<Label>("%KeyLabel").Text += "*";
+                var key = GD.Load<PackedScene>("res://Prefabs/Key.tscn").Instance<Key>();
+                key.KeyId = _graphRoom.KeyId;
+                key.Position = GetNode<Node2D>("%KeySpawn").Position;
+                AddChild(key);
             }
         }
 

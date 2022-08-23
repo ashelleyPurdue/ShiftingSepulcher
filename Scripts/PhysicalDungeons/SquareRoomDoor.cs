@@ -16,31 +16,42 @@ namespace RandomDungeons.PhysicalDungeons
             EnableWarp(false);
         }
 
-        public override void _Process(float deltaTime)
+        public override void _Ready()
         {
-            UpdateDoorOpen(deltaTime);
-            UpdateLockDisplay(deltaTime);
+            InitLockDisplay();
         }
 
-        private void UpdateDoorOpen(float deltaTime)
+        public override void _Process(float delta)
+        {
+            // For some reason this needs to happen during _Process, not _Ready().
+            // Why?  Hell if I know.  All I know is that the player gets "caught"
+            // on something in the center of the room if this code is in _Ready()
+            // instead of _Process().
+            UpdateDoorOpen();
+        }
+
+        private void UpdateDoorOpen()
         {
             var door = GetNode<Node2D>("%Door");
 
             var transform = door.Transform;
 
-            transform.Scale = GraphDoor.Destination != null && !GraphDoor.IsLocked
+            transform.Scale = GraphDoor.Destination != null
                 ? Vector2.Zero
                 : Vector2.One;
 
             door.Transform = transform;
         }
 
-        private void UpdateLockDisplay(float deltaTime)
+        private void InitLockDisplay()
         {
-            var label = GetNode<Label>("Label");
-            GetNode<Label>("Label").Text = GraphDoor.IsLocked
-                ? $"Lock {GraphDoor.LockId}"
-                : "";
+            if (!GraphDoor.IsLocked)
+            {
+                GetNode("%Lock").QueueFree();
+                return;
+            }
+
+            GetNode<Polygon2D>("%LockVisuals").Modulate = Key.ColorForId(GraphDoor.LockId);
         }
 
         private void EnableWarp(bool enable)
@@ -74,5 +85,13 @@ namespace RandomDungeons.PhysicalDungeons
             if (body is Player)
                 EnableWarp(true);
         }
+
+        private void UnlockTriggerBodyEntered(object body)
+        {
+            if ((body is Player) && (Global.HasKey(GraphDoor.LockId)))
+                GetNode("%Lock").QueueFree();
+        }
     }
 }
+
+

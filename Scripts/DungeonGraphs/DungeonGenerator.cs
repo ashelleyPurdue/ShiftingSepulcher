@@ -73,7 +73,7 @@ namespace RandomDungeons.DungeonGraphs
             while (dungeon.RoomCount < numRooms)
             {
                 DungeonRoom startingRoom = ChooseRandomStartRoom();
-                int runLength = rng.Next(0, maxRunSize + 1);
+                int runLength = rng.Next(minRunSize, maxRunSize + 1);
 
                 GenerateRun(startingRoom, runLength);
             }

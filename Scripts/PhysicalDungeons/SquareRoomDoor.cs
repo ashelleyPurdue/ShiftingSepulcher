@@ -88,7 +88,7 @@ namespace RandomDungeons.PhysicalDungeons
 
         private void UnlockTriggerBodyEntered(object body)
         {
-            if (Global.HasKey(GraphDoor.LockId))
+            if ((body is Player) && (Global.HasKey(GraphDoor.LockId)))
                 GetNode("%Lock").QueueFree();
         }
     }

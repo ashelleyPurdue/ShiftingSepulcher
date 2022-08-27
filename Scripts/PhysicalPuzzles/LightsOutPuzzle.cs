@@ -13,6 +13,9 @@ namespace RandomDungeons.PhysicalPuzzles
         [Export] public Color OnColor;
         [Export] public Color OffColor;
 
+        public event Action Solved;
+        private bool _isFrozen = false;
+
         private LightsOutGraph _graph;
 
         private Dictionary<Vector2i, LightsOutSwitch> _switches
@@ -35,7 +38,7 @@ namespace RandomDungeons.PhysicalPuzzles
             {
                 var s = SwitchPrefab.Instance<LightsOutSwitch>();
                 s.Position = new Vector2(coords.x - 1, coords.y - 1) * 32 * 2;
-                s.Activated += () => _graph.ActivateLight(coords);
+                s.Activated += () => LightActivated(coords);
 
                 AddChild(s);
 
@@ -50,6 +53,23 @@ namespace RandomDungeons.PhysicalPuzzles
                 _switches[coords].Modulate = _graph.IsLightOn(coords)
                     ? OnColor
                     : OffColor;
+            }
+        }
+
+        private void LightActivated(Vector2i coords)
+        {
+            // Don't respond to input if the puzzle is already solved
+            if (_isFrozen)
+                return;
+
+            // Activate the light
+            _graph.ActivateLight(coords);
+
+            // Fire an event if we just solved the puzzle
+            if (_graph.IsSolved())
+            {
+                _isFrozen = true;
+                Solved?.Invoke();
             }
         }
 

@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using RandomDungeons.MathUtils;
+
 namespace RandomDungeons.DungeonGraphs
 {
     public class DungeonRoom
     {
         public readonly DungeonGraph Graph;
-        public readonly RoomCoordinates Position;
+        public readonly Vector2i Position;
 
         /// <summary>
         /// Seed used to generate this room's content.
@@ -28,7 +30,7 @@ namespace RandomDungeons.DungeonGraphs
 
         private readonly Dictionary<CardinalDirection, DungeonDoor> _doors;
 
-        public DungeonRoom(DungeonGraph graph, RoomCoordinates pos)
+        public DungeonRoom(DungeonGraph graph, Vector2i pos)
         {
             Graph = graph;
             Position = pos;

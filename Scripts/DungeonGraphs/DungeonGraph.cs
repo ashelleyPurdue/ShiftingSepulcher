@@ -1,27 +1,29 @@
 using System;
 using System.Collections.Generic;
 
+using RandomDungeons.MathUtils;
+
 namespace RandomDungeons.DungeonGraphs
 {
     public class DungeonGraph
     {
         public int RoomCount => _rooms.Count;
-        public DungeonRoom StartRoom => _rooms[RoomCoordinates.Origin];
+        public DungeonRoom StartRoom => _rooms[Vector2i.Zero];
 
-        private Dictionary<RoomCoordinates, DungeonRoom> _rooms
-            = new Dictionary<RoomCoordinates, DungeonRoom>();
+        private Dictionary<Vector2i, DungeonRoom> _rooms
+            = new Dictionary<Vector2i, DungeonRoom>();
 
-        public IEnumerable<RoomCoordinates> AllRoomCoordinates()
+        public IEnumerable<Vector2i> AllRoomCoordinates()
         {
             return _rooms.Keys;
         }
 
-        public DungeonRoom GetRoom(RoomCoordinates coords)
+        public DungeonRoom GetRoom(Vector2i coords)
         {
             return _rooms[coords];
         }
 
-        public DungeonRoom CreateRoom(RoomCoordinates coords)
+        public DungeonRoom CreateRoom(Vector2i coords)
         {
             if (_rooms.ContainsKey(coords))
                 throw new Exception($"There's already a room at {coords}");
@@ -32,12 +34,12 @@ namespace RandomDungeons.DungeonGraphs
             return room;
         }
 
-        public bool CoordinatesInUse(RoomCoordinates c)
+        public bool CoordinatesInUse(Vector2i c)
         {
             return _rooms.ContainsKey(c);
         }
 
-        public void JoinAdjacentRooms(RoomCoordinates a, RoomCoordinates b)
+        public void JoinAdjacentRooms(Vector2i a, Vector2i b)
         {
             if (!a.IsAdjacentTo(b))
                 throw new Exception("Those coordinates are not adjacent");
@@ -52,7 +54,7 @@ namespace RandomDungeons.DungeonGraphs
             _rooms[b].GetDoor(b.AdjacentDirection(a)).Destination = _rooms[a];
         }
 
-        public IEnumerable<(RoomCoordinates parentCoords, CardinalDirection dir)> UnusedDoors()
+        public IEnumerable<(Vector2i parentCoords, CardinalDirection dir)> UnusedDoors()
         {
             foreach (var roomCoords in _rooms.Keys)
             {

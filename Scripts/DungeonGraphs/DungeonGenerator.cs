@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using RandomDungeons.MathUtils;
+
 namespace RandomDungeons.DungeonGraphs
 {
     public static class DungeonGenerator
@@ -18,7 +20,7 @@ namespace RandomDungeons.DungeonGraphs
 
             var rng = new Random(seed);
             var dungeon = new DungeonGraph();
-            var lastCreatedRoom = dungeon.CreateRoom(RoomCoordinates.Origin);
+            var lastCreatedRoom = dungeon.CreateRoom(Vector2i.Zero);
 
             int currentKey = 0;
             int roomsTilKey = rng.Next(minRoomsWithoutKey, maxRoomsWithoutKey + 1);
@@ -30,7 +32,7 @@ namespace RandomDungeons.DungeonGraphs
                 var unusedDoors = dungeon.UnusedDoors().ToArray();
                 int doorIndex = rng.Next(0, unusedDoors.Length);
 
-                (RoomCoordinates parentCoords, CardinalDirection dir) = unusedDoors[doorIndex];
+                (Vector2i parentCoords, CardinalDirection dir) = unusedDoors[doorIndex];
                 DungeonRoom parentRoom = dungeon.GetRoom(parentCoords);
                 DungeonRoom childRoom = parentRoom.AddNeighbor(dir);
                 childRoom.RoomSeed = rng.Next();
@@ -73,7 +75,7 @@ namespace RandomDungeons.DungeonGraphs
         {
             var rng = new Random(seed);
             var dungeon = new DungeonGraph();
-            var lastCreatedRoom = dungeon.CreateRoom(RoomCoordinates.Origin);
+            var lastCreatedRoom = dungeon.CreateRoom(Vector2i.Zero);
 
             int currentKey = 0;
 

@@ -7,6 +7,8 @@ namespace RandomDungeons.TestMaps
 {
     public class LightsOutTestMap : Node
     {
+        [Export] public PackedScene VictoryScreen;
+
         private LightsOutPuzzle _physicalPuzzle
             => GetNode<LightsOutPuzzle>("%LightsOutPuzzle");
 
@@ -20,7 +22,12 @@ namespace RandomDungeons.TestMaps
             );
 
             _physicalPuzzle.SetGraph(graph);
-            GD.Print("Set graph");
+            _physicalPuzzle.Solved += OnPuzzleSolved;
+        }
+
+        private void OnPuzzleSolved()
+        {
+            GetTree().ChangeSceneTo(VictoryScreen);
         }
     }
 }

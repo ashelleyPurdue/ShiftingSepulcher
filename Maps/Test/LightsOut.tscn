@@ -11,8 +11,6 @@ VictoryScreen = ExtResource( 5 )
 
 [node name="LightsOutPuzzle" parent="." instance=ExtResource( 1 )]
 unique_name_in_owner = true
-OnColor = Color( 1, 0.74902, 0, 1 )
-OffColor = Color( 0, 0.0823529, 0.470588, 1 )
 
 [node name="Player" parent="." instance=ExtResource( 4 )]
 position = Vector2( 200, 0 )

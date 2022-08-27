@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using RandomDungeons.MathUtils;
 
 namespace RandomDungeons.PuzzleGraphs
@@ -92,17 +91,25 @@ namespace RandomDungeons.PuzzleGraphs
 
         private IEnumerable<Vector2i> NeighboringCoordinates(Vector2i coords)
         {
-            var offsets = new Vector2i[]
+            for (int i = 0; i < 3; i++)
             {
-                Vector2i.Up,
-                Vector2i.Down,
-                Vector2i.Left,
-                Vector2i.Right
-            };
+                for (int j = 0; j < 3; j++)
+                {
+                    var offset = new Vector2i(i - 1, j - 1);
+                    var result = coords + offset;
 
-            return offsets
-                .Select(o => o + coords)
-                .Where(InBounds);
+                    // Skip the original coords, since a point is not its own
+                    // neighbor
+                    if (result == coords)
+                        continue;
+
+                    // Skip any coords that are out-of-bounds
+                    if (!InBounds(result))
+                        continue;
+
+                    yield return result;
+                }
+            }
         }
 
         private bool InBounds(Vector2i point)

@@ -71,8 +71,8 @@ namespace RandomDungeons.PuzzleGraphs
         }
 
         /// <summary>
-        /// The puzzle is considered solved if all lights are "off".
-        /// Hence why it's called "lights out".
+        /// The puzzle is considered solved if all lights are "on".
+        /// Hmmm...the name "lights out" sounds backwards...
         /// </summary>
         /// <returns></returns>
         public bool IsSolved()
@@ -81,7 +81,7 @@ namespace RandomDungeons.PuzzleGraphs
             {
                 for (int y = 0; y < Height; y++)
                 {
-                    if (IsLightOn(new Vector2i(x, y)))
+                    if (!IsLightOn(new Vector2i(x, y)))
                         return false;
                 }
             }

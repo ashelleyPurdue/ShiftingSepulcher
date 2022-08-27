@@ -29,7 +29,7 @@ namespace RandomDungeons
             return new Color(rng.Next(256), rng.Next(256), rng.Next(256));
         }
 
-        public int KeyId;
+        [Export] public int KeyId;
 
         public override void _Ready()
         {

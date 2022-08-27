@@ -18,3 +18,4 @@ texture = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [connection signal="body_entered" from="ActivateTrigger" to="." method="OnActivateTriggerEntered"]
+[connection signal="body_exited" from="ActivateTrigger" to="." method="OnActivateTriggerExited"]

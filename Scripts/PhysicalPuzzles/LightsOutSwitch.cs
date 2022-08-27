@@ -7,11 +7,24 @@ namespace RandomDungeons.PhysicalPuzzles
     {
         public event Action Activated;
 
-        private void OnActivateTriggerEntered(object body)
+        private bool _isBeingHighlighted = false;
+
+        public override void _Process(float delta)
         {
-            if (body is Player)
+            if (_isBeingHighlighted && Input.IsActionJustPressed("ui_accept"))
                 Activated?.Invoke();
         }
 
+        private void OnActivateTriggerEntered(object body)
+        {
+            if (body is Player)
+                _isBeingHighlighted = true;
+        }
+
+        private void OnActivateTriggerExited(object body)
+        {
+            if (body is Player)
+                _isBeingHighlighted = false;
+        }
     }
 }

@@ -34,12 +34,7 @@ namespace RandomDungeons
         public override void _Ready()
         {
             // Color the key according to its id
-            var visuals = GetNode("Visuals");
-            for (int i = 0; i < visuals.GetChildCount(); i++)
-            {
-                var polygon = visuals.GetChild<Polygon2D>(i);
-                polygon.Modulate = ColorForId(KeyId);
-            }
+            Modulate = ColorForId(KeyId);
         }
 
         private void BodyEntered(object body)

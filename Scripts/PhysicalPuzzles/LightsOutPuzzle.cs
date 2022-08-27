@@ -34,7 +34,7 @@ namespace RandomDungeons.PhysicalPuzzles
             foreach(var coords in AllCoordinates())
             {
                 var s = SwitchPrefab.Instance<LightsOutSwitch>();
-                s.Position = new Vector2(coords.x, coords.y) * 32 * 2;
+                s.Position = new Vector2(coords.x - 1, coords.y - 1) * 32 * 2;
                 AddChild(s);
 
                 _switches[coords] = s;

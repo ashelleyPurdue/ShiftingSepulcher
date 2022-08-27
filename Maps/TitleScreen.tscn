@@ -1,11 +1,15 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scripts/TitleScreen.cs" type="Script" id=1]
+[ext_resource path="res://Maps/DungeonMode.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Maps/Test/LightsOut.tscn" type="PackedScene" id=3]
 
 [node name="TitleScreen" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
+DungeonModeScene = ExtResource( 2 )
+LightsOutScene = ExtResource( 3 )
 
 [node name="Title" type="Label" parent="."]
 margin_left = 128.0
@@ -15,33 +19,54 @@ margin_bottom = 78.0
 rect_scale = Vector2( 5, 5 )
 text = "Random Dungeon Game"
 
-[node name="PlayButton" type="Button" parent="."]
-margin_left = 424.0
-margin_top = 384.0
-margin_right = 544.0
-margin_bottom = 404.0
-text = "Play"
-
-[node name="SeedTextBox" type="LineEdit" parent="."]
-unique_name_in_owner = true
-margin_left = 424.0
-margin_top = 320.0
-margin_right = 584.0
-margin_bottom = 344.0
-
-[node name="Label" type="Label" parent="."]
-margin_left = 424.0
+[node name="PlayButtons" type="VBoxContainer" parent="."]
+margin_left = 200.0
 margin_top = 304.0
-margin_right = 464.0
-margin_bottom = 318.0
+margin_right = 355.0
+margin_bottom = 368.0
+custom_constants/separation = 5
+
+[node name="Label" type="Label" parent="PlayButtons"]
+margin_right = 155.0
+margin_bottom = 14.0
+text = "Select Game Mode"
+
+[node name="PlayDungeonButton" type="Button" parent="PlayButtons"]
+margin_top = 19.0
+margin_right = 155.0
+margin_bottom = 39.0
+text = "Play Dungeon"
+
+[node name="PlayLightsOutButton" type="Button" parent="PlayButtons"]
+margin_top = 44.0
+margin_right = 155.0
+margin_bottom = 64.0
+text = "Play Lights-Out Puzzle"
+
+[node name="SeedEntry" type="VBoxContainer" parent="."]
+margin_left = 512.0
+margin_top = 304.0
+margin_right = 673.0
+margin_bottom = 372.0
+custom_constants/separation = 5
+
+[node name="Label" type="Label" parent="SeedEntry"]
+margin_right = 161.0
+margin_bottom = 14.0
 text = "Seed"
 
-[node name="RandomSeedButton" type="Button" parent="."]
-margin_left = 424.0
-margin_top = 352.0
-margin_right = 585.0
-margin_bottom = 372.0
+[node name="SeedTextBox" type="LineEdit" parent="SeedEntry"]
+unique_name_in_owner = true
+margin_top = 19.0
+margin_right = 161.0
+margin_bottom = 43.0
+
+[node name="RandomSeedButton" type="Button" parent="SeedEntry"]
+margin_top = 48.0
+margin_right = 161.0
+margin_bottom = 68.0
 text = "Choose a Random Seed"
 
-[connection signal="pressed" from="PlayButton" to="." method="Play"]
-[connection signal="pressed" from="RandomSeedButton" to="." method="RandomizeSeed"]
+[connection signal="pressed" from="PlayButtons/PlayDungeonButton" to="." method="PlayDungeonMode"]
+[connection signal="pressed" from="PlayButtons/PlayLightsOutButton" to="." method="PlayLightsOutMode"]
+[connection signal="pressed" from="SeedEntry/RandomSeedButton" to="." method="RandomizeSeed"]

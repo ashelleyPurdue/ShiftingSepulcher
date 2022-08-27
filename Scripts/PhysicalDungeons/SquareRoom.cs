@@ -31,7 +31,7 @@ namespace RandomDungeons.PhysicalDungeons
 
         private void Refresh()
         {
-            this.Position = new Vector2(_graphRoom.Position.X, -_graphRoom.Position.Y) * 512;
+            this.Position = new Vector2(_graphRoom.Position.x, -_graphRoom.Position.y) * 512;
 
             GetNode<SquareRoomDoor>("%NorthDoor").GraphDoor = _graphRoom.NorthDoor;
             GetNode<SquareRoomDoor>("%SouthDoor").GraphDoor = _graphRoom.SouthDoor;

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace RandomDungeons.DungeonGraphs
+namespace RandomDungeons.MathUtils
 {
     public enum CardinalDirection
     {

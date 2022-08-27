@@ -1,0 +1,16 @@
+<svg viewBox="0 0 50 50" width="50" height="50" xmlns="http://www.w3.org/2000/svg">
+    <rect x="20" width="4" height="30" style="fill: rgb(255, 255, 255);"></rect>
+    <rect x="24" y="5" width="3" height="7" style="fill: rgb(255, 255, 255);"></rect>
+    <rect x="26" y="4" width="7" height="3" style="fill: rgb(255, 255, 255);"></rect>
+    <rect x="26" y="10" width="7" height="3" style="fill: rgb(255, 255, 255);"></rect>
+    <rect x="19" y="2" width="6" height="2" style="fill: rgb(255, 255, 255);"></rect>
+    <rect x="19" y="20" width="6" height="3" style="fill: rgb(255, 255, 255);"></rect>
+    <ellipse style="stroke: rgb(255, 255, 255); fill: none; stroke-width: 3px;" cx="22" cy="36" rx="4" ry="5"></ellipse>
+    <ellipse style="stroke: rgb(255, 255, 255); fill: none; stroke-width: 3px;" cx="22" cy="36" rx="5" ry="5"></ellipse>
+    <rect x="20" width="1" height="30" style="fill: rgb(181, 181, 181);"></rect>
+    <rect x="27" y="6" width="6" height="1" style="fill: rgb(181, 181, 181);"></rect>
+    <rect x="26" y="12" width="7" height="1" style="fill: rgb(181, 181, 181);"></rect>
+    <rect x="19" y="20" width="2" height="3" style="fill: rgb(181, 181, 181);"></rect>
+    <rect x="19" y="2" width="2" height="2" style="fill: rgb(181, 181, 181);"></rect>
+    <path style="fill: rgb(181, 181, 181);" d="M 15.1183 36.3879 C 15.0941 36.6016 15.1488 37.257 15.2453 37.7356 C 15.3589 38.2993 15.5755 38.6888 15.6277 38.8626 C 16.6475 42.2553 20.7276 43.7952 23.1491 43.3411 C 23.9537 43.1902 24.902 42.9035 26 42.509 C 26.6537 41.9226 27.282 41.1672 27.1834 41.2171 C 26.0744 41.7787 25.9099 41.9316 24.9573 42.2095 C 23.736 42.5658 22.3151 42.5972 21.5632 42.4073 C 18.7062 41.6859 16.8034 39.3058 16.8182 36.3879"></path>
+</svg>

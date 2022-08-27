@@ -9,13 +9,13 @@ namespace RandomDungeons
         private static readonly IReadOnlyList<Color> _keyIdColors = new[]
         {
             new Color(0, 0, 0),
-            new Color(214, 214, 214),
-            new Color(255, 0, 0),
-            new Color(0, 255, 0),
-            new Color(0, 0, 255),
-            new Color(255, 255, 0),
-            new Color(0, 255, 255),
-            new Color(255, 127, 0)
+            new Color(0.84f, 0.84f, 0.84f),
+            new Color(1, 0, 0),
+            new Color(0, 1, 0),
+            new Color(0, 0, 1),
+            new Color(1, 1, 0),
+            new Color(0, 1, 1),
+            new Color(1, 0.5f, 0)
         };
         public static Color ColorForId(int keyId)
         {
@@ -29,17 +29,12 @@ namespace RandomDungeons
             return new Color(rng.Next(256), rng.Next(256), rng.Next(256));
         }
 
-        public int KeyId;
+        [Export] public int KeyId;
 
         public override void _Ready()
         {
             // Color the key according to its id
-            var visuals = GetNode("Visuals");
-            for (int i = 0; i < visuals.GetChildCount(); i++)
-            {
-                var polygon = visuals.GetChild<Polygon2D>(i);
-                polygon.Modulate = ColorForId(KeyId);
-            }
+            Modulate = ColorForId(KeyId);
         }
 
         private void BodyEntered(object body)

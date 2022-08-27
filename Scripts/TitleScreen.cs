@@ -6,6 +6,9 @@ namespace RandomDungeons
     {
         public static int ChosenSeed;
 
+        [Export] public PackedScene DungeonModeScene;
+        [Export] public PackedScene LightsOutScene;
+
         private LineEdit _seedTextBox => GetNode<LineEdit>("%SeedTextBox");
 
         public override void _Ready()
@@ -19,13 +22,29 @@ namespace RandomDungeons
             _seedTextBox.Text = "" + GD.Randi();
         }
 
-        private void Play()
+        private void PlayDungeonMode()
         {
-            bool isNumber = int.TryParse(_seedTextBox.Text, out ChosenSeed);
-            if (!isNumber)
-                ChosenSeed = (int)_seedTextBox.Text.Hash();
+            ChooseMode(DungeonModeScene);
+        }
 
-            GetTree().ChangeScene("res://Maps/Main.tscn");
+        private void PlayLightsOutMode()
+        {
+            ChooseMode(LightsOutScene);
+        }
+
+        private void ChooseMode(PackedScene modeScene)
+        {
+            ChosenSeed = ParseSeedTextbox();
+            GetTree().ChangeSceneTo(modeScene);
+        }
+
+        private int ParseSeedTextbox()
+        {
+            bool isNumber = int.TryParse(_seedTextBox.Text, out int seed);
+            if (!isNumber)
+                seed = (int)_seedTextBox.Text.Hash();
+
+            return seed;
         }
 
     }

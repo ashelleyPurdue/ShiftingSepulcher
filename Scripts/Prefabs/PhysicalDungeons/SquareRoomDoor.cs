@@ -1,6 +1,7 @@
 using System.Linq;
 using Godot;
 using RandomDungeons.Graphs;
+using RandomDungeons.Prefabs.Elements;
 
 namespace RandomDungeons.PhysicalDungeons
 {

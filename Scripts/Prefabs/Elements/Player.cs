@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RandomDungeons
+namespace RandomDungeons.Prefabs.Elements
 {
     public class Player : KinematicBody2D
     {

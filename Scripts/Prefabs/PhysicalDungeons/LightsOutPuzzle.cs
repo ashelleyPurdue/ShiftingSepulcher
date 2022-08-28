@@ -4,6 +4,7 @@ using Godot;
 
 using RandomDungeons.MathUtils;
 using RandomDungeons.Graphs;
+using RandomDungeons.Prefabs.Elements;
 
 namespace RandomDungeons.PhysicalPuzzles
 {

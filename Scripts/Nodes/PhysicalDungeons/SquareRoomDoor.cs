@@ -1,9 +1,10 @@
 using System.Linq;
 using Godot;
+
 using RandomDungeons.Graphs;
 using RandomDungeons.Nodes.Elements;
-
 using RandomDungeons.Services;
+using RandomDungeons.Utils;
 
 namespace RandomDungeons.PhysicalDungeons
 {
@@ -54,7 +55,7 @@ namespace RandomDungeons.PhysicalDungeons
                 return;
             }
 
-            GetNode<Polygon2D>("%LockVisuals").Modulate = Key.ColorForId(GraphDoor.LockId);
+            GetNode<Polygon2D>("%LockVisuals").Modulate = KeyColors.ForId(GraphDoor.LockId);
         }
 
         private void EnableWarp(bool enable)

@@ -3,7 +3,7 @@ using Godot;
 using RandomDungeons.PhysicalPuzzles;
 using RandomDungeons.Graphs;
 
-namespace RandomDungeons.TestMaps
+namespace RandomDungeons.Maps
 {
     public class LightsOutTestMap : Node
     {

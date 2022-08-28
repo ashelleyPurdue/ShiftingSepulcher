@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using Godot;
 using RandomDungeons.Graphs;
-using RandomDungeons.Prefabs.Elements;
+using RandomDungeons.Nodes.Elements;
 
 namespace RandomDungeons.PhysicalDungeons
 {

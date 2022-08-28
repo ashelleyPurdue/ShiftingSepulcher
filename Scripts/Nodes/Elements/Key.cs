@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Godot;
 
-namespace RandomDungeons.Prefabs.Elements
+namespace RandomDungeons.Nodes.Elements
 {
     public class Key : Node2D
     {

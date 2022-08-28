@@ -1,10 +1,14 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Nodes/Maps/SlidingIcePuzzleTestMap.cs" type="Script" id=2]
+[ext_resource path="res://Prefabs/Puzzles/SlidingIcePuzzle.tscn" type="PackedScene" id=3]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 2 )
+
+[node name="SlidingIcePuzzle" parent="." instance=ExtResource( 3 )]
+unique_name_in_owner = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true

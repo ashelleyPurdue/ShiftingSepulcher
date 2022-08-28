@@ -3,6 +3,8 @@ using Godot;
 using RandomDungeons.Graphs;
 using RandomDungeons.Nodes.Elements;
 
+using RandomDungeons.Services;
+
 namespace RandomDungeons.PhysicalDungeons
 {
     public class SquareRoomDoor : Node2D
@@ -89,7 +91,7 @@ namespace RandomDungeons.PhysicalDungeons
 
         private void UnlockTriggerBodyEntered(object body)
         {
-            if ((body is Player) && (Global.HasKey(GraphDoor.LockId)))
+            if ((body is Player) && (PlayerInventory.HasKey(GraphDoor.LockId)))
                 GetNode("%Lock").QueueFree();
         }
     }

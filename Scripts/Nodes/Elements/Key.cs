@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using Godot;
 
+using RandomDungeons.Services;
+
 namespace RandomDungeons.Nodes.Elements
 {
     public class Key : Node2D
@@ -41,7 +43,7 @@ namespace RandomDungeons.Nodes.Elements
         {
             if (body is Player)
             {
-                Global.CollectKey(KeyId);
+                PlayerInventory.CollectKey(KeyId);
                 QueueFree();
             }
         }

@@ -1,5 +1,7 @@
 using Godot;
 
+using RandomDungeons.Services;
+
 namespace RandomDungeons.Nodes.Elements
 {
     public class Player : KinematicBody2D
@@ -8,12 +10,7 @@ namespace RandomDungeons.Nodes.Elements
 
         public override void _Process(float deltaTime)
         {
-            var leftStick = new Vector2(
-                Input.GetAxis("MoveLeft", "MoveRight"),
-                Input.GetAxis("MoveUp", "MoveDown")
-            );
-
-            this.MoveAndSlide(leftStick * WalkSpeed);
+            this.MoveAndSlide(InputService.LeftStick * WalkSpeed);
         }
     }
 }

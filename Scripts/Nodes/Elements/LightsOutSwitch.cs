@@ -1,6 +1,8 @@
 using System;
 using Godot;
 
+using RandomDungeons.Services;
+
 namespace RandomDungeons.Nodes.Elements
 {
     public class LightsOutSwitch : Node2D
@@ -11,7 +13,7 @@ namespace RandomDungeons.Nodes.Elements
 
         public override void _Process(float delta)
         {
-            if (_isBeingHighlighted && Input.IsActionJustPressed("ui_accept"))
+            if (_isBeingHighlighted && InputService.ActivatePressed)
                 Activated?.Invoke();
         }
 

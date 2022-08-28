@@ -1,9 +1,9 @@
 using Godot;
 
 using RandomDungeons.PhysicalPuzzles;
-using RandomDungeons.PuzzleGraphs;
+using RandomDungeons.Graphs;
 
-namespace RandomDungeons.TestMaps
+namespace RandomDungeons.Nodes.Maps
 {
     public class LightsOutTestMap : Node
     {

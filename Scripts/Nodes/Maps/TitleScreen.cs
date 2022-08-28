@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RandomDungeons
+namespace RandomDungeons.Nodes.Maps
 {
     public class TitleScreen : Control
     {

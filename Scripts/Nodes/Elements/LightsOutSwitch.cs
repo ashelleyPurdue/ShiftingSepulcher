@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-namespace RandomDungeons.PhysicalPuzzles
+namespace RandomDungeons.Nodes.Elements
 {
     public class LightsOutSwitch : Node2D
     {

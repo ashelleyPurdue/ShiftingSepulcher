@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RandomDungeons.PhysicalDungeons
+namespace RandomDungeons.Nodes.Elements
 {
     public class VictoryChest : Node2D
     {

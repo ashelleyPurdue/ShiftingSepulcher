@@ -1,6 +1,10 @@
 using System.Linq;
 using Godot;
-using RandomDungeons.DungeonGraphs;
+
+using RandomDungeons.Graphs;
+using RandomDungeons.Nodes.Elements;
+using RandomDungeons.Services;
+using RandomDungeons.Utils;
 
 namespace RandomDungeons.PhysicalDungeons
 {
@@ -51,7 +55,7 @@ namespace RandomDungeons.PhysicalDungeons
                 return;
             }
 
-            GetNode<Polygon2D>("%LockVisuals").Modulate = Key.ColorForId(GraphDoor.LockId);
+            GetNode<Polygon2D>("%LockVisuals").Modulate = KeyColors.ForId(GraphDoor.LockId);
         }
 
         private void EnableWarp(bool enable)
@@ -88,7 +92,7 @@ namespace RandomDungeons.PhysicalDungeons
 
         private void UnlockTriggerBodyEntered(object body)
         {
-            if ((body is Player) && (Global.HasKey(GraphDoor.LockId)))
+            if ((body is Player) && (PlayerInventory.HasKey(GraphDoor.LockId)))
                 GetNode("%Lock").QueueFree();
         }
     }

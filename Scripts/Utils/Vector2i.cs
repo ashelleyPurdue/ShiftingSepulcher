@@ -1,6 +1,6 @@
 using System;
 
-namespace RandomDungeons.MathUtils
+namespace RandomDungeons.Utils
 {
     public struct Vector2i
     {

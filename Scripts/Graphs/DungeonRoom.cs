@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using RandomDungeons.MathUtils;
+using RandomDungeons.Utils;
 
-namespace RandomDungeons.DungeonGraphs
+namespace RandomDungeons.Graphs
 {
     public class DungeonRoom
     {

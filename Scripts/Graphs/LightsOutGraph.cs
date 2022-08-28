@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using RandomDungeons.MathUtils;
+using RandomDungeons.Utils;
 
-namespace RandomDungeons.PuzzleGraphs
+namespace RandomDungeons.Graphs
 {
     public class LightsOutGraph
     {

@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using RandomDungeons.DungeonGraphs;
+using RandomDungeons.Graphs;
+using RandomDungeons.Nodes.Maps;
 
 namespace RandomDungeons.PhysicalDungeons
 {

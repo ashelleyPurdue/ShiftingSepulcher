@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using Godot;
 
-namespace RandomDungeons
+namespace RandomDungeons.Utils
 {
-    public class Key : Node2D
+    public static class KeyColors
     {
         private static readonly IReadOnlyList<Color> _keyIdColors = new[]
         {
@@ -17,7 +17,7 @@ namespace RandomDungeons
             new Color(0, 1, 1),
             new Color(1, 0.5f, 0)
         };
-        public static Color ColorForId(int keyId)
+        public static Color ForId(int keyId)
         {
             if (keyId < _keyIdColors.Count)
             {
@@ -28,25 +28,5 @@ namespace RandomDungeons
             var rng = new Random(keyId);
             return new Color(rng.Next(256), rng.Next(256), rng.Next(256));
         }
-
-        [Export] public int KeyId;
-
-        public override void _Ready()
-        {
-            // Color the key according to its id
-            Modulate = ColorForId(KeyId);
-        }
-
-        private void BodyEntered(object body)
-        {
-            if (body is Player)
-            {
-                Global.CollectKey(KeyId);
-                QueueFree();
-            }
-        }
     }
 }
-
-
-

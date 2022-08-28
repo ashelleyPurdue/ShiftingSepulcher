@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using RandomDungeons.MathUtils;
 
-namespace RandomDungeons.PuzzleGraphs
+namespace RandomDungeons.Graphs
 {
     public class LightsOutGraph
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using RandomDungeons.MathUtils;
 
-namespace RandomDungeons.DungeonGraphs
+namespace RandomDungeons.Graphs
 {
     public class DungeonGraph
     {

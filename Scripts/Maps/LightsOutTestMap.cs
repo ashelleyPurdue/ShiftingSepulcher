@@ -1,7 +1,7 @@
 using Godot;
 
 using RandomDungeons.PhysicalPuzzles;
-using RandomDungeons.PuzzleGraphs;
+using RandomDungeons.Graphs;
 
 namespace RandomDungeons.TestMaps
 {

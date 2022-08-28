@@ -1,4 +1,4 @@
-namespace RandomDungeons.DungeonGraphs
+namespace RandomDungeons.Graphs
 {
     public class DungeonDoor
     {

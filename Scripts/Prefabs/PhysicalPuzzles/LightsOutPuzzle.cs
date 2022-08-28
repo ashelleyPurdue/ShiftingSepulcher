@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Godot;
 
 using RandomDungeons.MathUtils;
-using RandomDungeons.PuzzleGraphs;
+using RandomDungeons.Graphs;
 
 namespace RandomDungeons.PhysicalPuzzles
 {

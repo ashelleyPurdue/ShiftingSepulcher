@@ -4,7 +4,7 @@ using System.Linq;
 
 using RandomDungeons.MathUtils;
 
-namespace RandomDungeons.DungeonGraphs
+namespace RandomDungeons.Graphs
 {
     public static class DungeonGenerator
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace RandomDungeons.MathUtils
+namespace RandomDungeons.Utils
 {
     public static class Vector2iExtensions
     {

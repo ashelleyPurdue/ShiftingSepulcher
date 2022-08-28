@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Godot;
 
-using RandomDungeons.MathUtils;
+using RandomDungeons.Utils;
 using RandomDungeons.Graphs;
 using RandomDungeons.Nodes.Elements;
 

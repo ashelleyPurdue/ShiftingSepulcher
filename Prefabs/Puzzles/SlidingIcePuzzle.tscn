@@ -21,9 +21,6 @@ margin_bottom = 32.0
 texture = ExtResource( 6 )
 stretch_mode = 2
 
-[node name="PuzzleElements" type="Node2D" parent="."]
-unique_name_in_owner = true
-
 [node name="NorthBorder" parent="." instance=ExtResource( 5 )]
 unique_name_in_owner = true
 position = Vector2( 0, -32 )
@@ -39,3 +36,6 @@ position = Vector2( 32, 0 )
 [node name="WestBorder" parent="." instance=ExtResource( 5 )]
 unique_name_in_owner = true
 position = Vector2( -32, 0 )
+
+[node name="PuzzleElements" type="Node2D" parent="."]
+unique_name_in_owner = true

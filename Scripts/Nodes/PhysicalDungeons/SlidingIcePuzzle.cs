@@ -13,8 +13,15 @@ namespace RandomDungeons.PhysicalDungeons
         [Export] public PackedScene EndingSlotPrefab;
         [Export] public PackedScene DirtPatchPrefab;
 
+        private TextureRect _floor => GetNode<TextureRect>("%Floor");
+        private Node2D _puzzleElements => GetNode<Node2D>("%PuzzleElements");
+
         public void SetGraph(SlidingIceGraph graph)
         {
+            // Resize the floor to match the graph's size
+            _floor.MarginRight = graph.Width * 32;
+            _floor.MarginBottom = graph.Width * 32;
+
             // TODO: Clear out existing children
 
             // Add the surrounding dirt-patches
@@ -44,7 +51,7 @@ namespace RandomDungeons.PhysicalDungeons
         private void Create(PackedScene prefab, Vector2i pos)
         {
             var node = prefab.Instance<Node2D>();
-            AddChild(node);
+            _puzzleElements.AddChild(node);
             node.Position = ToRealPos(pos);
         }
 

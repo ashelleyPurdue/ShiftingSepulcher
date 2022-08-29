@@ -8,6 +8,7 @@ namespace RandomDungeons.Nodes.Maps
 
         [Export] public PackedScene DungeonModeScene;
         [Export] public PackedScene LightsOutScene;
+        [Export] public PackedScene SlidingIceModeScene;
 
         private LineEdit _seedTextBox => GetNode<LineEdit>("%SeedTextBox");
 
@@ -30,6 +31,11 @@ namespace RandomDungeons.Nodes.Maps
         private void PlayLightsOutMode()
         {
             ChooseMode(LightsOutScene);
+        }
+
+        private void PlaySlidingIceMode()
+        {
+            ChooseMode(SlidingIceModeScene);
         }
 
         private void ChooseMode(PackedScene modeScene)

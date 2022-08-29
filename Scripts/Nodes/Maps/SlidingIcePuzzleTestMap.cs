@@ -10,7 +10,7 @@ namespace RandomDungeons.Nodes.Maps
         public override void _Ready()
         {
             var graph = SlidingIceGraph.Generate(
-                seed: 1337,
+                seed: TitleScreen.ChosenSeed,
                 width: 10,
                 height: 10,
                 numPushes: 3

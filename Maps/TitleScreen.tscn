@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scripts/Nodes/Maps/TitleScreen.cs" type="Script" id=1]
 [ext_resource path="res://Maps/DungeonMode.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Maps/Test/LightsOut.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Maps/Test/SlidingIcePuzzleTest.tscn" type="PackedScene" id=4]
 
 [node name="TitleScreen" type="Control"]
 anchor_right = 1.0
@@ -10,6 +11,7 @@ anchor_bottom = 1.0
 script = ExtResource( 1 )
 DungeonModeScene = ExtResource( 2 )
 LightsOutScene = ExtResource( 3 )
+SlidingIceModeScene = ExtResource( 4 )
 
 [node name="Title" type="Label" parent="."]
 margin_left = 128.0
@@ -43,6 +45,12 @@ margin_right = 155.0
 margin_bottom = 64.0
 text = "Play Lights-Out Puzzle"
 
+[node name="PlaySlidingIceButton" type="Button" parent="PlayButtons"]
+margin_top = 69.0
+margin_right = 155.0
+margin_bottom = 89.0
+text = "Play Sliding Ice Puzzle"
+
 [node name="SeedEntry" type="VBoxContainer" parent="."]
 margin_left = 512.0
 margin_top = 304.0
@@ -69,4 +77,5 @@ text = "Choose a Random Seed"
 
 [connection signal="pressed" from="PlayButtons/PlayDungeonButton" to="." method="PlayDungeonMode"]
 [connection signal="pressed" from="PlayButtons/PlayLightsOutButton" to="." method="PlayLightsOutMode"]
+[connection signal="pressed" from="PlayButtons/PlaySlidingIceButton" to="." method="PlaySlidingIceMode"]
 [connection signal="pressed" from="SeedEntry/RandomSeedButton" to="." method="RandomizeSeed"]

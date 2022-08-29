@@ -46,8 +46,10 @@ namespace RandomDungeons.Graphs
                     break;
 
                 Vector2i dir = rng.PickFrom(pushableDirs);
-                int maxDist = graph.MaxPushDistance(graph.EndPos, dir);
-                int dist = rng.Next(0, maxDist) + 1;
+
+                // Pick a random distance to push it.
+                var legalDists = graph.LegalPushDistances(graph.EndPos, dir);
+                int dist = rng.PickFrom(legalDists);
 
                 graph.Push(dir, dist);
             }
@@ -104,6 +106,24 @@ namespace RandomDungeons.Graphs
         }
 
         /// <summary>
+        /// Returns a list of all distances that an imaginary block in position
+        /// <paramref name="pos"/> could be pushed in direction
+        /// <paramref name="dir"/>, without the puzzle becoming impossible.
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="dir"></param>
+        /// <returns></returns>
+        private IEnumerable<int> LegalPushDistances(Vector2i pos, Vector2i dir)
+        {
+            int maxDist = MaxPushDistance(pos, dir);
+            for (int i = 0; i < maxDist; i++)
+            {
+                if (!_criticalPathPositions.Contains(pos))
+                    yield return (i + 1);
+            }
+        }
+
+        /// <summary>
         /// Returns all the directions an imaginary block in the given position
         /// can be pushed
         /// </summary>
@@ -120,7 +140,7 @@ namespace RandomDungeons.Graphs
             };
 
             return allDirs
-                .Where(d => MaxPushDistance(pos, d) > 0);
+                .Where(d => LegalPushDistances(pos, d).Any());
         }
 
         private bool IsInBounds(Vector2i pos)

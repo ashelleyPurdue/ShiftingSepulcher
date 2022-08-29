@@ -120,6 +120,8 @@ namespace RandomDungeons.Graphs
             {
                 if (!_criticalPathPositions.Contains(pos))
                     yield return (i + 1);
+
+                pos += dir;
             }
         }
 

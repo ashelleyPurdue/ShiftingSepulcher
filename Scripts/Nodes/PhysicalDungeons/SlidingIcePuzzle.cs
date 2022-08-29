@@ -15,6 +15,10 @@ namespace RandomDungeons.PhysicalDungeons
 
         private TextureRect _floor => GetNode<TextureRect>("%Floor");
         private Node2D _puzzleElements => GetNode<Node2D>("%PuzzleElements");
+        private Node2D _northBorder => GetNode<Node2D>("%NorthBorder");
+        private Node2D _southBorder => GetNode<Node2D>("%SouthBorder");
+        private Node2D _eastBorder => GetNode<Node2D>("%EastBorder");
+        private Node2D _westBorder => GetNode<Node2D>("%WestBorder");
 
         public void SetGraph(SlidingIceGraph graph)
         {
@@ -25,17 +29,13 @@ namespace RandomDungeons.PhysicalDungeons
             // TODO: Clear out existing children
 
             // Add the surrounding dirt-patches
-            // TODO: Use fewer objects
-            for (int x = 0; x <= graph.Width; x++)
-            {
-                Create(DirtPatchPrefab, new Vector2i(x, -1));
-                Create(DirtPatchPrefab, new Vector2i(x, graph.Height + 1));
-            }
-            for (int y = 0; y <= graph.Height; y++)
-            {
-                Create(DirtPatchPrefab, new Vector2i(-1, y));
-                Create(DirtPatchPrefab, new Vector2i(graph.Width + 1, y));
-            }
+            _northBorder.Scale = new Vector2(graph.Width, 1);
+            _southBorder.Scale = new Vector2(graph.Width, 1);
+            _eastBorder.Scale  = new Vector2(1, graph.Height);
+            _westBorder.Scale  = new Vector2(1, graph.Height);
+
+            _southBorder.Position = new Vector2(0, graph.Height) * 32;
+            _eastBorder.Position  = new Vector2(graph.Width, 0) * 32;
 
             // Place the ice block and goal
             Create(IceBlockPrefab, graph.StartPos);

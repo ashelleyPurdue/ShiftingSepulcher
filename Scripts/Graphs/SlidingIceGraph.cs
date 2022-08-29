@@ -16,6 +16,7 @@ namespace RandomDungeons.Graphs
 
         public IEnumerable<Vector2i> RockPositions => _rockPositions;
         private HashSet<Vector2i> _rockPositions = new HashSet<Vector2i>();
+        private HashSet<Vector2i> _criticalPathPositions = new HashSet<Vector2i>();
 
         public static SlidingIceGraph Generate(
             int seed,
@@ -65,9 +66,13 @@ namespace RandomDungeons.Graphs
 
         private void Push(Vector2i dir, int dist)
         {
-            // Slide the goal in some direction, as if we were pushing the ice
-            // block.
-            EndPos += dir * dist;
+            // Slide the goal in the given direction, as if we were pushing the
+            // ice block.
+            for (int i = 0; i < dist; i++)
+            {
+                EndPos += dir;
+                _criticalPathPositions.Add(EndPos);
+            }
 
             // Place a rock in the tile right after it, to stop the imaginary
             // ice block

@@ -9,6 +9,7 @@ script = ExtResource( 2 )
 
 [node name="SlidingIcePuzzle" parent="." instance=ExtResource( 3 )]
 unique_name_in_owner = true
+position = Vector2( -224, -136 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true

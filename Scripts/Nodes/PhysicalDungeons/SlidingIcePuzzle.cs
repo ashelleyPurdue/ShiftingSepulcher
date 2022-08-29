@@ -10,6 +10,7 @@ namespace RandomDungeons.PhysicalDungeons
     {
         [Export] public PackedScene IceBlockPrefab;
         [Export] public PackedScene RockPrefab;
+        [Export] public PackedScene EndingSlotPrefab;
 
         public void SetGraph(SlidingIceGraph graph)
         {
@@ -18,6 +19,7 @@ namespace RandomDungeons.PhysicalDungeons
             // TODO: Add the ending pos
 
             Create(IceBlockPrefab, graph.StartPos);
+            Create(EndingSlotPrefab, graph.EndPos);
 
             foreach (var rockPos in graph.RockPositions)
             {

@@ -96,8 +96,11 @@ namespace RandomDungeons.Graphs
             }
 
             // Place a rock in the tile right after it, to stop the imaginary
-            // ice block
-            AddRock(EndPos + dir);
+            // ice block.  Unless that spot would be out-of-bounds; in that
+            // case, the dirt border would do the job of stopping the block.
+            var rockPos = EndPos + dir;
+            if (IsInBounds(rockPos))
+                AddRock(EndPos + dir);
         }
 
         private void AddRock(Vector2i pos)

@@ -102,6 +102,10 @@ namespace RandomDungeons.Graphs
 
         private void AddRock(Vector2i pos)
         {
+            if (!IsInBounds(pos))
+            {
+                throw new Exception($"Trying to add a rock out-of-bounds {pos}");
+            }
             _rockPositions.Add(pos);
         }
 
@@ -142,7 +146,7 @@ namespace RandomDungeons.Graphs
             int maxDist = MaxPushDistance(pos, dir);
             for (int i = 0; i < maxDist; i++)
             {
-                if (!_criticalPathPositions.Contains(pos))
+                if (IsLegalToPutEndPosAt(pos) && IsLegalToPutRockAt(pos + dir))
                     yield return (i + 1);
 
                 pos += dir;
@@ -205,6 +209,23 @@ namespace RandomDungeons.Graphs
         private bool IsRock(Vector2i pos)
         {
             return _rockPositions.Contains(pos);
+        }
+
+        private bool IsLegalToPutEndPosAt(Vector2i pos)
+        {
+            return IsLegalToPutRockAt(pos);
+        }
+
+        private bool IsLegalToPutRockAt(Vector2i pos)
+        {
+            return
+                IsInBounds(pos) &&
+                pos != StartPos &&
+                pos != EndPos &&
+                !_criticalPathPositions.Contains(pos);
+
+            // NOTE: It _is_ legal to put a rock in a spot that already has a
+            // rock.
         }
     }
 }

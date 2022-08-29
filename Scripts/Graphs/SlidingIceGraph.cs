@@ -22,7 +22,8 @@ namespace RandomDungeons.Graphs
             int seed,
             int width,
             int height,
-            int numPushes
+            int numPushes,
+            int numRedHerringRocks
         )
         {
             var rng = new Random(seed);
@@ -54,6 +55,24 @@ namespace RandomDungeons.Graphs
                 graph.Push(dir, dist);
             }
 
+            // Place a bunch of red herring rocks, so the solution isn't
+            // immediately obvious.  And if that just so happens to add an
+            // alternate solution by sheer happenstance, then so be it!
+            //
+            // This method of picking red herring spots is crazily inefficient,
+            // but I really don't care.  CPUs have fans for a reason!
+            for (int i = 0; i < numRedHerringRocks; i++)
+            {
+                Vector2i[] redHerringCandidates = graph.PlacesWeCouldPutARedHerringRock()
+                    .ToArray();
+
+                if (redHerringCandidates.Length == 0)
+                    break;
+
+                Vector2i redHerringPos = rng.PickFrom(redHerringCandidates);
+                graph.AddRock(redHerringPos);
+            }
+
             return graph;
         }
 
@@ -78,7 +97,12 @@ namespace RandomDungeons.Graphs
 
             // Place a rock in the tile right after it, to stop the imaginary
             // ice block
-            _rockPositions.Add(EndPos + dir);
+            AddRock(EndPos + dir);
+        }
+
+        private void AddRock(Vector2i pos)
+        {
+            _rockPositions.Add(pos);
         }
 
         /// <summary>
@@ -143,6 +167,32 @@ namespace RandomDungeons.Graphs
 
             return allDirs
                 .Where(d => LegalPushDistances(pos, d).Any());
+        }
+
+        private IEnumerable<Vector2i> PlacesWeCouldPutARedHerringRock()
+        {
+            // Yeah, this is _crazily_ inefficient, but I really don't care.
+            // CPU go BRRRRRRRR
+            for (int x = 0; x < Width; x++)
+            {
+                for (int y = 0; y < Height; y++)
+                {
+                    var pos = new Vector2i(x, y);
+
+                    if (RedHerringRockCouldBePlacedAt(pos))
+                        yield return pos;
+                }
+            }
+        }
+
+        private bool RedHerringRockCouldBePlacedAt(Vector2i pos)
+        {
+            return
+                IsInBounds(pos) &&
+                !IsRock(pos) &&
+                pos != StartPos &&
+                pos != EndPos &&
+                !_criticalPathPositions.Contains(pos);
         }
 
         private bool IsInBounds(Vector2i pos)

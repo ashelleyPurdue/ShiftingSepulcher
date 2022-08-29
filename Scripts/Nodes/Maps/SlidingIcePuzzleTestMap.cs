@@ -13,7 +13,8 @@ namespace RandomDungeons.Nodes.Maps
                 seed: TitleScreen.ChosenSeed,
                 width: 10,
                 height: 10,
-                numPushes: 3
+                numPushes: 3,
+                numRedHerringRocks: 5
             );
 
             GetNode<SlidingIcePuzzle>("%SlidingIcePuzzle").SetGraph(graph);

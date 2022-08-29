@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using RandomDungeons.Utils;
 
@@ -23,32 +24,31 @@ namespace RandomDungeons.Graphs
             int numPushes
         )
         {
-            // TODO: use The Algorithm (tm) to generate an always-completable
-            // puzzle.
-            // Right now, we're just randomly throwing things in there without
-            // a care.
-
             var rng = new Random(seed);
 
             var startPos = new Vector2i(
                 rng.Next(0, width),
                 rng.Next(0, height)
             );
-            var endPos = new Vector2i(
-                rng.Next(0, width),
-                rng.Next(0, height)
-            );
 
             var graph = new SlidingIceGraph(width, height, startPos);
-            graph.EndPos = endPos;
 
             for (int i = 0; i < numPushes; i++)
             {
-                var rockPos = new Vector2i(
-                    rng.Next(0, width),
-                    rng.Next(0, height)
-                );
-                graph._rockPositions.Add(rockPos);
+                // Pick a random pushable direction.
+                // If no directions are pushable, then stop the puzzle early.
+                Vector2i[] pushableDirs = graph
+                    .PushableDirs(graph.EndPos)
+                    .ToArray();
+
+                if (pushableDirs.Length == 0)
+                    break;
+
+                Vector2i dir = rng.PickFrom(pushableDirs);
+                int maxDist = graph.MaxPushDistance(graph.EndPos, dir);
+                int dist = rng.Next(0, maxDist) + 1;
+
+                graph.Push(dir, dist);
             }
 
             return graph;
@@ -96,6 +96,26 @@ namespace RandomDungeons.Graphs
             }
 
             return dist;
+        }
+
+        /// <summary>
+        /// Returns all the directions an imaginary block in the given position
+        /// can be pushed
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
+        private IEnumerable<Vector2i> PushableDirs(Vector2i pos)
+        {
+            var allDirs = new Vector2i[]
+            {
+                Vector2i.Up,
+                Vector2i.Down,
+                Vector2i.Left,
+                Vector2i.Right
+            };
+
+            return allDirs
+                .Where(d => MaxPushDistance(pos, d) > 0);
         }
 
         private bool IsInBounds(Vector2i pos)

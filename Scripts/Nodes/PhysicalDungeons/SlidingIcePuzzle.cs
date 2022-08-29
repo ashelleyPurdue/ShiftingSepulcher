@@ -11,16 +11,30 @@ namespace RandomDungeons.PhysicalDungeons
         [Export] public PackedScene IceBlockPrefab;
         [Export] public PackedScene RockPrefab;
         [Export] public PackedScene EndingSlotPrefab;
+        [Export] public PackedScene DirtPatchPrefab;
 
         public void SetGraph(SlidingIceGraph graph)
         {
             // TODO: Clear out existing children
-            // TODO: Add the surrounding walls
-            // TODO: Add the ending pos
 
+            // Add the surrounding dirt-patches
+            // TODO: Use fewer objects
+            for (int x = 0; x <= graph.Width; x++)
+            {
+                Create(DirtPatchPrefab, new Vector2i(x, -1));
+                Create(DirtPatchPrefab, new Vector2i(x, graph.Height + 1));
+            }
+            for (int y = 0; y <= graph.Height; y++)
+            {
+                Create(DirtPatchPrefab, new Vector2i(-1, y));
+                Create(DirtPatchPrefab, new Vector2i(graph.Width + 1, y));
+            }
+
+            // Place the ice block and goal
             Create(IceBlockPrefab, graph.StartPos);
             Create(EndingSlotPrefab, graph.EndPos);
 
+            // Place all the rocks
             foreach (var rockPos in graph.RockPositions)
             {
                 Create(RockPrefab, rockPos);

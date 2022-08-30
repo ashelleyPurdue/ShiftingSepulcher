@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/Nodes/PhysicalDungeons/SlidingIcePuzzle.cs" type="Script" id=1]
 [ext_resource path="res://Prefabs/SlidingIceBlock.tscn" type="PackedScene" id=2]
@@ -6,6 +6,10 @@
 [ext_resource path="res://Prefabs/BlockGoalSlot.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Prefabs/DirtPatch.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Sprites/IceFloorTile.png" type="Texture" id=6]
+[ext_resource path="res://Scripts/Nodes/Elements/InteractableZone.cs" type="Script" id=7]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 16, 16 )
 
 [node name="SlidingIcePuzzle" type="Node2D"]
 script = ExtResource( 1 )
@@ -21,21 +25,45 @@ margin_bottom = 32.0
 texture = ExtResource( 6 )
 stretch_mode = 2
 
-[node name="NorthBorder" parent="." instance=ExtResource( 5 )]
+[node name="ResetButton" type="Node2D" parent="."]
+position = Vector2( 0, -96 )
+
+[node name="Polygon2D" type="Polygon2D" parent="ResetButton"]
+polygon = PoolVector2Array( 16, 0, 32, 16, 16, 32, 0, 16 )
+
+[node name="Label" type="Label" parent="ResetButton"]
+margin_top = 8.0
+margin_right = 40.0
+margin_bottom = 22.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Reset"
+
+[node name="InteractableZone" type="Area2D" parent="ResetButton"]
+script = ExtResource( 7 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ResetButton/InteractableZone"]
+position = Vector2( 16, 16 )
+shape = SubResource( 1 )
+
+[node name="Border" type="Node2D" parent="."]
+
+[node name="NorthBorder" parent="Border" instance=ExtResource( 5 )]
 unique_name_in_owner = true
 position = Vector2( 0, -32 )
 
-[node name="SouthBorder" parent="." instance=ExtResource( 5 )]
+[node name="SouthBorder" parent="Border" instance=ExtResource( 5 )]
 unique_name_in_owner = true
 position = Vector2( 0, 32 )
 
-[node name="EastBorder" parent="." instance=ExtResource( 5 )]
-unique_name_in_owner = true
-position = Vector2( 32, 0 )
-
-[node name="WestBorder" parent="." instance=ExtResource( 5 )]
+[node name="WestBorder" parent="Border" instance=ExtResource( 5 )]
 unique_name_in_owner = true
 position = Vector2( -32, 0 )
 
+[node name="EastBorder" parent="Border" instance=ExtResource( 5 )]
+unique_name_in_owner = true
+position = Vector2( 32, 0 )
+
 [node name="PuzzleElements" type="Node2D" parent="."]
 unique_name_in_owner = true
+
+[connection signal="Interacted" from="ResetButton/InteractableZone" to="." method="ResetPuzzle"]

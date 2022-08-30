@@ -6,6 +6,8 @@ namespace RandomDungeons.Nodes.Elements
     {
         private const float SlideSpeed = 32 * 10;
 
+        public bool IsSliding => _currentState == State.Sliding;
+
         private RayCast2D _wallDetector => GetNode<RayCast2D>("%WallDetector");
         private CollisionShape2D _collider => GetNode<CollisionShape2D>("%Collider");
 

@@ -3,6 +3,7 @@ using Godot;
 
 using RandomDungeons.Graphs;
 using RandomDungeons.Utils;
+using RandomDungeons.Nodes.Elements;
 
 namespace RandomDungeons.PhysicalDungeons
 {
@@ -19,6 +20,8 @@ namespace RandomDungeons.PhysicalDungeons
         private Node2D _southBorder => GetNode<Node2D>("%SouthBorder");
         private Node2D _eastBorder => GetNode<Node2D>("%EastBorder");
         private Node2D _westBorder => GetNode<Node2D>("%WestBorder");
+
+        private SlidingIceBlock _iceBlock;
 
         private SlidingIceGraph _graph;
 
@@ -52,21 +55,36 @@ namespace RandomDungeons.PhysicalDungeons
             _eastBorder.Position  = new Vector2(_graph.Width, 0) * 32;
 
             // Place the ice block and goal
-            Create(EndingSlotPrefab, _graph.EndPos);
-            Create(IceBlockPrefab, _graph.StartPos);
+            Create<Node2D>(EndingSlotPrefab, _graph.EndPos);
+            _iceBlock = Create<SlidingIceBlock>(IceBlockPrefab, _graph.StartPos);
 
             // Place all the rocks
             foreach (var rockPos in _graph.RockPositions)
             {
-                Create(RockPrefab, rockPos);
+                Create<Node2D>(RockPrefab, rockPos);
             }
         }
 
-        private void Create(PackedScene prefab, Vector2i pos)
+        public bool IsSolved()
         {
-            var node = prefab.Instance<Node2D>();
+            if (_graph == null)
+                return false;
+
+            Vector2 endPos = ToRealPos(_graph.EndPos);
+            float endPosDist = _iceBlock.Position.DistanceTo(endPos);
+
+            return
+                endPosDist < 0.01f &&
+                !_iceBlock.IsSliding;
+        }
+
+        private T Create<T>(PackedScene prefab, Vector2i pos) where T : Node2D
+        {
+            var node = prefab.Instance<T>();
             _puzzleElements.AddChild(node);
             node.Position = ToRealPos(pos);
+
+            return node;
         }
 
         private Vector2 ToRealPos(Vector2i puzzlePos)

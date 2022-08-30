@@ -52,8 +52,8 @@ namespace RandomDungeons.PhysicalDungeons
             _eastBorder.Position  = new Vector2(_graph.Width, 0) * 32;
 
             // Place the ice block and goal
-            Create(IceBlockPrefab, _graph.StartPos);
             Create(EndingSlotPrefab, _graph.EndPos);
+            Create(IceBlockPrefab, _graph.StartPos);
 
             // Place all the rocks
             foreach (var rockPos in _graph.RockPositions)

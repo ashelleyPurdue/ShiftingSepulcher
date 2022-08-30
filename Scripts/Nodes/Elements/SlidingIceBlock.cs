@@ -2,22 +2,73 @@ using Godot;
 
 namespace RandomDungeons.Nodes.Elements
 {
-    public class SlidingIceBlock : KinematicBody2D
+    public class SlidingIceBlock : Node2D
     {
-        private Vector2 _velocity;
+        private const float SlideSpeed = 32 * 10;
 
-        public override void _Process(float delta)
+        private RayCast2D _wallDetector => GetNode<RayCast2D>("%WallDetector");
+        private CollisionShape2D _collider => GetNode<CollisionShape2D>("%Collider");
+
+        private Vector2 _velocity;
+        private State _currentState = State.Resting;
+        private enum State
         {
-            var collision = MoveAndCollide(_velocity);
-            if (collision != null)
+            Resting,
+            Sliding
+        }
+
+        public override void _PhysicsProcess(float delta)
+        {
+            switch (_currentState)
             {
-                _velocity = Vector2.Zero;
+                case State.Sliding:
+                {
+                    if (_wallDetector.IsColliding())
+                    {
+                        StartResting();
+                        break;
+                    }
+
+                    Position += _velocity * delta;
+                    break;
+                }
             }
+        }
+
+        private void StartResting()
+        {
+            _currentState = State.Resting;
+            _velocity = Vector2.Zero;
+            _collider.Disabled = false;
+            _wallDetector.Enabled = false;
+
+            SnapToGrid();
+        }
+
+        private void SnapToGrid()
+        {
+            var pos = Position;
+            pos.x = Mathf.RoundToInt(pos.x / 32) * 32;
+            pos.y = Mathf.RoundToInt(pos.y / 32) * 32;
+
+            Position = pos;
         }
 
         private void Push(Vector2 dir)
         {
-            _velocity = dir.Normalized() * 5;
+            dir = dir.Normalized();
+
+            if (_currentState != State.Resting)
+                return;
+
+            _currentState = State.Sliding;
+            _velocity = dir * SlideSpeed;
+            _collider.Disabled = true;
+
+            _wallDetector.Enabled = true;
+            _wallDetector.CastTo = dir;
+            _wallDetector.Position = new Vector2(16, 16) + (dir * 16);
+            _wallDetector.ForceRaycastUpdate();
         }
 
         private void OnPushedLeft() => Push(Vector2.Left);

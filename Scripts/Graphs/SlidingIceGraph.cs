@@ -26,6 +26,7 @@ namespace RandomDungeons.Graphs
             int numRedHerringRocks
         )
         {
+            Godot.GD.Print($"Generating ice puzzle with seed {seed}");
             var rng = new Random(seed);
 
             var startPos = new Vector2i(
@@ -106,34 +107,15 @@ namespace RandomDungeons.Graphs
         private void AddRock(Vector2i pos)
         {
             if (!IsInBounds(pos))
-            {
-                throw new Exception($"Trying to add a rock out-of-bounds {pos}");
-            }
+                throw new Exception($"{pos} is illegal because it's out of bounds");
+            if (pos == StartPos)
+                throw new Exception($"{pos} is illegal because it's the start pos");
+            if (pos == EndPos)
+                throw new Exception($"{pos} is illegal because it is the end pos");
+            if (_criticalPathPositions.Contains(pos))
+                throw new Exception($"{pos} is illegal because it's in the critical path");
+
             _rockPositions.Add(pos);
-        }
-
-        /// <summary>
-        /// Returns the maximum number of tiles an imaginary ice block, starting
-        /// at <paramref name="pos"/>, can be pushed in direction
-        /// <paramref name="dir"/>, before it hits a rock or the edge of the
-        /// board.
-        /// </summary>
-        /// <param name="pos"></param>
-        /// <param name="dir"></param>
-        /// <returns></returns>
-        private int MaxPushDistance(Vector2i pos, Vector2i dir)
-        {
-            int dist = 0;
-
-            Vector2i nextPos = pos + dir;
-            while (IsInBounds(nextPos) && !IsRock(nextPos))
-            {
-                dist++;
-                pos += dir;
-                nextPos += dir;
-            }
-
-            return dist;
         }
 
         /// <summary>
@@ -146,14 +128,39 @@ namespace RandomDungeons.Graphs
         /// <returns></returns>
         private IEnumerable<int> LegalPushDistances(Vector2i pos, Vector2i dir)
         {
-            int maxDist = MaxPushDistance(pos, dir);
-            for (int i = 0; i < maxDist; i++)
+            for (int i = 0; i < Math.Max(Width, Height); i++)
             {
-                if (IsLegalToPutEndPosAt(pos) && IsLegalToPutRockAt(pos + dir))
-                    yield return (i + 1);
+                Vector2i currentPos = pos + (dir * i);
 
-                pos += dir;
+                if (IsLegalToPushTo(currentPos, dir))
+                    yield return i;
             }
+        }
+
+        private bool IsLegalToPushTo(Vector2i pos, Vector2i dir)
+        {
+            // Make sure there's nothing on this spot
+            bool destinationIsFree =
+                pos != StartPos &&
+                pos != EndPos &&
+                !_criticalPathPositions.Contains(pos) &&
+                !IsRock(pos) &&
+                IsInBounds(pos);
+
+            // Make sure it's OK for a rock to be put in the place that would
+            // stop the block from sliding.
+            Vector2i rockPos = pos + dir;
+            bool rockPosIsFree =
+                rockPos != StartPos &&
+                rockPos != EndPos &&
+                !_criticalPathPositions.Contains(rockPos);
+            // Also, it's OK if there's already a rock there; we'll just use the
+            // existing one.
+            //
+            // Also, it's OK if the rockPos is out-of-bounds.  The dirt border
+            // will act like a rock in that case.
+
+            return destinationIsFree && rockPosIsFree;
         }
 
         /// <summary>
@@ -212,23 +219,6 @@ namespace RandomDungeons.Graphs
         private bool IsRock(Vector2i pos)
         {
             return _rockPositions.Contains(pos);
-        }
-
-        private bool IsLegalToPutEndPosAt(Vector2i pos)
-        {
-            return IsLegalToPutRockAt(pos);
-        }
-
-        private bool IsLegalToPutRockAt(Vector2i pos)
-        {
-            return
-                IsInBounds(pos) &&
-                pos != StartPos &&
-                pos != EndPos &&
-                !_criticalPathPositions.Contains(pos);
-
-            // NOTE: It _is_ legal to put a rock in a spot that already has a
-            // rock.
         }
     }
 }

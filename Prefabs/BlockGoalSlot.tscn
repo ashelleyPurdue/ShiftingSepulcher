@@ -1,0 +1,15 @@
+[gd_scene format=2]
+
+[node name="BlockGoalSlot" type="Node2D"]
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2( 20, 16 )
+scale = Vector2( 0.875, 1 )
+color = Color( 1, 0.92549, 0.305882, 1 )
+polygon = PoolVector2Array( -22.8571, -16, 13.7143, -16, 13.7143, 16, -22.8571, 16 )
+
+[node name="Polygon2D2" type="Polygon2D" parent="."]
+position = Vector2( 20, 16 )
+scale = Vector2( 0.875, 1 )
+color = Color( 0.71, 0.573207, 0.2272, 1 )
+polygon = PoolVector2Array( -20.5714, -14, 11.4286, -14, 11.4286, 14, -20.5714, 14 )

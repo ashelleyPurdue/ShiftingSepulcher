@@ -180,6 +180,8 @@ namespace RandomDungeons.Graphs
             };
 
             return allDirs
+                .Where(d => !IsRock(pos + d))   // Don't push straight into adjacent rock
+                .Where(d => !IsRock(pos - d))   // Make sure the player can actually stand there
                 .Where(d => LegalPushDistances(pos, d).Any());
         }
 

@@ -119,6 +119,30 @@ namespace RandomDungeons.Graphs
         }
 
         /// <summary>
+        /// Returns the maximum number of tiles an imaginary ice block, starting
+        /// at <paramref name="pos"/>, can be pushed in direction
+        /// <paramref name="dir"/>, before it hits a rock or the edge of the
+        /// board.
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="dir"></param>
+        /// <returns></returns>
+        private int MaxPushDistance(Vector2i pos, Vector2i dir)
+        {
+            int dist = 0;
+
+            Vector2i nextPos = pos + dir;
+            while (IsInBounds(nextPos) && !IsRock(nextPos))
+            {
+                dist++;
+                pos += dir;
+                nextPos += dir;
+            }
+
+            return dist;
+        }
+
+        /// <summary>
         /// Returns a list of all distances that an imaginary block in position
         /// <paramref name="pos"/> could be pushed in direction
         /// <paramref name="dir"/>, without the puzzle becoming impossible.
@@ -128,7 +152,8 @@ namespace RandomDungeons.Graphs
         /// <returns></returns>
         private IEnumerable<int> LegalPushDistances(Vector2i pos, Vector2i dir)
         {
-            for (int i = 0; i < Math.Max(Width, Height); i++)
+            int maxDist = MaxPushDistance(pos, dir);
+            for (int i = 0; i < maxDist; i++)
             {
                 Vector2i currentPos = pos + (dir * i);
 

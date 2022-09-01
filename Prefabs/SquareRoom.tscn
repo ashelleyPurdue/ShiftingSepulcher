@@ -1,11 +1,16 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scripts/Nodes/PhysicalDungeons/SquareRoom.cs" type="Script" id=1]
 [ext_resource path="res://Prefabs/SquareRoomCorner.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Prefabs/SquareRoomDoor.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Prefabs/Doors/DoorWall.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Prefabs/Doors/DoorLock.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Prefabs/Doors/DoorWarp.tscn" type="PackedScene" id=6]
 
 [node name="SquareRoom" type="Node2D"]
 script = ExtResource( 1 )
+DoorWallPrefab = ExtResource( 4 )
+DoorLockPrefab = ExtResource( 5 )
+DoorWarpPrefab = ExtResource( 6 )
 
 [node name="Floor" type="Polygon2D" parent="."]
 color = Color( 0.511719, 0.511719, 0.511719, 1 )
@@ -25,25 +30,26 @@ rotation = 3.14159
 [node name="SouthWestCorner" parent="." instance=ExtResource( 2 )]
 rotation = 4.71239
 
-[node name="Position2D" type="Position2D" parent="."]
-position = Vector2( -256, -256 )
-
-[node name="NorthDoor" parent="." instance=ExtResource( 3 )]
+[node name="NorthDoorSpawn" type="Position2D" parent="."]
 unique_name_in_owner = true
+position = Vector2( 0, -256 )
 
-[node name="EastDoor" parent="." instance=ExtResource( 3 )]
+[node name="EastDoorSpawn" type="Position2D" parent="."]
 unique_name_in_owner = true
+position = Vector2( 256, 0 )
 rotation = 1.5708
 
-[node name="SouthDoor" parent="." instance=ExtResource( 3 )]
+[node name="SouthDoorSpawn" type="Position2D" parent="."]
 unique_name_in_owner = true
+position = Vector2( 0, 256 )
 rotation = 3.14159
 
-[node name="WestDoor" parent="." instance=ExtResource( 3 )]
+[node name="WestDoorSpawn" type="Position2D" parent="."]
 unique_name_in_owner = true
+position = Vector2( -256, 0 )
 rotation = 4.71239
 
 [node name="FadeCurtain" type="Polygon2D" parent="."]
 unique_name_in_owner = true
 visible = false
-polygon = PoolVector2Array( -256, -256, 256, -256, 256, 256, -256, 256 )
+polygon = PoolVector2Array( -288, -288, 288, -288, 288, 288, -288, 288 )

@@ -9,9 +9,9 @@ namespace RandomDungeons.PhysicalDungeons
 {
     public class DoorWarp : Node2D
     {
-        private DungeonDoor _graphDoor;
+        private DungeonGraphDoor _graphDoor;
 
-        public void SetGraphDoor(DungeonDoor graphDoor)
+        public void SetGraphDoor(DungeonGraphDoor graphDoor)
         {
             _graphDoor = graphDoor;
         }

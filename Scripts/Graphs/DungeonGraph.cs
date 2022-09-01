@@ -8,27 +8,27 @@ namespace RandomDungeons.Graphs
     public class DungeonGraph
     {
         public int RoomCount => _rooms.Count;
-        public DungeonRoom StartRoom => _rooms[Vector2i.Zero];
+        public DungeonGraphRoom StartRoom => _rooms[Vector2i.Zero];
 
-        private Dictionary<Vector2i, DungeonRoom> _rooms
-            = new Dictionary<Vector2i, DungeonRoom>();
+        private Dictionary<Vector2i, DungeonGraphRoom> _rooms
+            = new Dictionary<Vector2i, DungeonGraphRoom>();
 
         public IEnumerable<Vector2i> AllRoomCoordinates()
         {
             return _rooms.Keys;
         }
 
-        public DungeonRoom GetRoom(Vector2i coords)
+        public DungeonGraphRoom GetRoom(Vector2i coords)
         {
             return _rooms[coords];
         }
 
-        public DungeonRoom CreateRoom(Vector2i coords)
+        public DungeonGraphRoom CreateRoom(Vector2i coords)
         {
             if (_rooms.ContainsKey(coords))
                 throw new Exception($"There's already a room at {coords}");
 
-            var room = new DungeonRoom(this, coords);
+            var room = new DungeonGraphRoom(this, coords);
             _rooms[coords] = room;
 
             return room;

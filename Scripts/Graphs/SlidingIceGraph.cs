@@ -182,7 +182,8 @@ namespace RandomDungeons.Graphs
             bool rockPosIsFree =
                 rockPos != StartPos &&
                 rockPos != EndPos &&
-                !_criticalPathPositions.Contains(rockPos);
+                !_criticalPathPositions.Contains(rockPos) &&
+                !_playerStandPositions.Contains(rockPos);
             // Also, it's OK if there's already a rock there; we'll just use the
             // existing one.
             //

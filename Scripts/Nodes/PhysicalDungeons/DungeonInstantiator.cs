@@ -10,8 +10,8 @@ namespace RandomDungeons.PhysicalDungeons
     {
         private const float FadeTime = 0.25f;
 
-        private Dictionary<DungeonRoom, SquareRoom> _graphRoomToRealRoom
-            = new Dictionary<DungeonRoom, SquareRoom>();
+        private Dictionary<DungeonGraphRoom, SquareRoom> _graphRoomToRealRoom
+            = new Dictionary<DungeonGraphRoom, SquareRoom>();
 
         private SquareRoom _activeRoom;
         private SquareRoom _disappearingRoom;
@@ -71,7 +71,7 @@ namespace RandomDungeons.PhysicalDungeons
             }
         }
 
-        public void EnterRoom(DungeonRoom graphRoom)
+        public void EnterRoom(DungeonGraphRoom graphRoom)
         {
             var prevRoom = _activeRoom;
             var nextRoom = _graphRoomToRealRoom[graphRoom];

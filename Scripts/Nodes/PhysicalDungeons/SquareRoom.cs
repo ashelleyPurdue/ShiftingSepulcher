@@ -12,7 +12,7 @@ namespace RandomDungeons.PhysicalDungeons
         [Export] public PackedScene DoorLockPrefab;
         [Export] public PackedScene DoorWarpPrefab;
 
-        private DungeonRoom _graphRoom;
+        private DungeonGraphRoom _graphRoom;
 
         private Node2D _northDoorSpawn => GetNode<Node2D>("%NorthDoorSpawn");
         private Node2D _southDoorSpawn => GetNode<Node2D>("%SouthDoorSpawn");
@@ -30,7 +30,7 @@ namespace RandomDungeons.PhysicalDungeons
             curtain.Modulate = GetBackgroundColor(1 - FadePercent);
         }
 
-        public void SetGraphRoom(DungeonRoom graphRoom)
+        public void SetGraphRoom(DungeonGraphRoom graphRoom)
         {
             _graphRoom = graphRoom;
 
@@ -63,7 +63,7 @@ namespace RandomDungeons.PhysicalDungeons
             }
         }
 
-        private void SetDoor(Node2D spawn, DungeonDoor graphDoor)
+        private void SetDoor(Node2D spawn, DungeonGraphDoor graphDoor)
         {
             // If the door doesn't go anywhere, just put a wall here.
             if (graphDoor.Destination == null)

@@ -10,7 +10,7 @@ namespace RandomDungeons.PhysicalDungeons
 {
     public class SquareRoomDoor : Node2D
     {
-        public DungeonDoor GraphDoor;
+        public DungeonGraphDoor GraphDoor;
 
         public override void _EnterTree()
         {

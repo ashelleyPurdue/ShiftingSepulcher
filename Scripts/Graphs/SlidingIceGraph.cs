@@ -17,6 +17,7 @@ namespace RandomDungeons.Graphs
         public IEnumerable<Vector2i> RockPositions => _rockPositions;
         private HashSet<Vector2i> _rockPositions = new HashSet<Vector2i>();
         private HashSet<Vector2i> _criticalPathPositions = new HashSet<Vector2i>();
+        private HashSet<Vector2i> _playerStandPositions = new HashSet<Vector2i>();
 
         public static SlidingIceGraph Generate(
             int seed,
@@ -88,6 +89,9 @@ namespace RandomDungeons.Graphs
 
         private void Push(Vector2i dir, int dist)
         {
+            // Reserve the spot that the player would need to stand
+            _playerStandPositions.Add(EndPos - dir);
+
             // Slide the goal in the given direction, as if we were pushing the
             // ice block.
             for (int i = 0; i < dist; i++)
@@ -119,6 +123,30 @@ namespace RandomDungeons.Graphs
         }
 
         /// <summary>
+        /// Returns the maximum number of tiles an imaginary ice block, starting
+        /// at <paramref name="pos"/>, can be pushed in direction
+        /// <paramref name="dir"/>, before it hits a rock or the edge of the
+        /// board.
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="dir"></param>
+        /// <returns></returns>
+        private int MaxPushDistance(Vector2i pos, Vector2i dir)
+        {
+            int dist = 0;
+
+            Vector2i nextPos = pos + dir;
+            while (IsInBounds(nextPos) && !IsRock(nextPos))
+            {
+                dist++;
+                pos += dir;
+                nextPos += dir;
+            }
+
+            return dist;
+        }
+
+        /// <summary>
         /// Returns a list of all distances that an imaginary block in position
         /// <paramref name="pos"/> could be pushed in direction
         /// <paramref name="dir"/>, without the puzzle becoming impossible.
@@ -128,7 +156,8 @@ namespace RandomDungeons.Graphs
         /// <returns></returns>
         private IEnumerable<int> LegalPushDistances(Vector2i pos, Vector2i dir)
         {
-            for (int i = 0; i < Math.Max(Width, Height); i++)
+            int maxDist = MaxPushDistance(pos, dir);
+            for (int i = 0; i < maxDist; i++)
             {
                 Vector2i currentPos = pos + (dir * i);
 
@@ -153,7 +182,8 @@ namespace RandomDungeons.Graphs
             bool rockPosIsFree =
                 rockPos != StartPos &&
                 rockPos != EndPos &&
-                !_criticalPathPositions.Contains(rockPos);
+                !_criticalPathPositions.Contains(rockPos) &&
+                !_playerStandPositions.Contains(rockPos);
             // Also, it's OK if there's already a rock there; we'll just use the
             // existing one.
             //
@@ -180,13 +210,13 @@ namespace RandomDungeons.Graphs
             };
 
             return allDirs
+                .Where(d => !IsRock(pos + d))   // Don't push straight into adjacent rock
+                .Where(d => !IsRock(pos - d))   // Make sure the player can actually stand there
                 .Where(d => LegalPushDistances(pos, d).Any());
         }
 
         private IEnumerable<Vector2i> PlacesWeCouldPutARedHerringRock()
         {
-            // Yeah, this is _crazily_ inefficient, but I really don't care.
-            // CPU go BRRRRRRRR
             for (int x = 0; x < Width; x++)
             {
                 for (int y = 0; y < Height; y++)
@@ -206,7 +236,8 @@ namespace RandomDungeons.Graphs
                 !IsRock(pos) &&
                 pos != StartPos &&
                 pos != EndPos &&
-                !_criticalPathPositions.Contains(pos);
+                !_criticalPathPositions.Contains(pos) &&
+                !_playerStandPositions.Contains(pos);
         }
 
         private bool IsInBounds(Vector2i pos)

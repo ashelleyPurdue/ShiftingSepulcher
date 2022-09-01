@@ -39,6 +39,11 @@ namespace RandomDungeons.Utils
             );
         }
 
+        public static Vector2i operator -(Vector2i a, Vector2i b)
+        {
+            return a + (b * -1);
+        }
+
         public static Vector2i operator *(Vector2i v, int scalar)
         {
             return new Vector2i(

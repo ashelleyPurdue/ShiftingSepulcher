@@ -17,6 +17,7 @@ namespace RandomDungeons.Graphs
         public IEnumerable<Vector2i> RockPositions => _rockPositions;
         private HashSet<Vector2i> _rockPositions = new HashSet<Vector2i>();
         private HashSet<Vector2i> _criticalPathPositions = new HashSet<Vector2i>();
+        private HashSet<Vector2i> _playerStandPositions = new HashSet<Vector2i>();
 
         public static SlidingIceGraph Generate(
             int seed,
@@ -88,6 +89,9 @@ namespace RandomDungeons.Graphs
 
         private void Push(Vector2i dir, int dist)
         {
+            // Reserve the spot that the player would need to stand
+            _playerStandPositions.Add(EndPos - dir);
+
             // Slide the goal in the given direction, as if we were pushing the
             // ice block.
             for (int i = 0; i < dist; i++)
@@ -212,8 +216,6 @@ namespace RandomDungeons.Graphs
 
         private IEnumerable<Vector2i> PlacesWeCouldPutARedHerringRock()
         {
-            // Yeah, this is _crazily_ inefficient, but I really don't care.
-            // CPU go BRRRRRRRR
             for (int x = 0; x < Width; x++)
             {
                 for (int y = 0; y < Height; y++)
@@ -233,7 +235,8 @@ namespace RandomDungeons.Graphs
                 !IsRock(pos) &&
                 pos != StartPos &&
                 pos != EndPos &&
-                !_criticalPathPositions.Contains(pos);
+                !_criticalPathPositions.Contains(pos) &&
+                !_playerStandPositions.Contains(pos);
         }
 
         private bool IsInBounds(Vector2i pos)

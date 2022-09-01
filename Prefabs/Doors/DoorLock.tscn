@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scripts/Nodes/Elements/DoorLock.cs" type="Script" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 64, 16 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 32, 16 )
+
+[node name="DoorLock" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="DoorVisuals" type="Polygon2D" parent="."]
+color = Color( 0.796078, 0.796078, 0.796078, 1 )
+polygon = PoolVector2Array( -64, -32, 64, -32, 64, 0, -64, 0 )
+
+[node name="DoorCollider" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorCollider"]
+position = Vector2( 0, -16 )
+shape = SubResource( 1 )
+
+[node name="LockVisuals" type="Node2D" parent="."]
+position = Vector2( 0, -8 )
+
+[node name="Base" type="Polygon2D" parent="LockVisuals"]
+polygon = PoolVector2Array( 12, 16, -12, 16, -12, -16, 12, -16 )
+
+[node name="Hole" type="Polygon2D" parent="LockVisuals"]
+position = Vector2( 0, -2 )
+scale = Vector2( 0.25, 0.25 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( -8, -20, 8, -20, 16, -12, 16, 4, 8, 12, 8, 28, -8, 28, -8, 12, -16, 4, -16, -12 )
+
+[node name="UnlockTrigger" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UnlockTrigger"]
+position = Vector2( 0, 16 )
+shape = SubResource( 2 )
+
+[connection signal="body_entered" from="UnlockTrigger" to="." method="OnUnlockTriggerBodyEnter"]

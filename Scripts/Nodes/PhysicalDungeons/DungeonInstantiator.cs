@@ -38,7 +38,7 @@ namespace RandomDungeons.PhysicalDungeons
                 var graphRoom = graph.GetRoom(coordinates);
                 var realRoom = roomPrefab.Instance<SquareRoom>();
 
-                realRoom.GraphRoom = graphRoom;
+                realRoom.SetGraphRoom(graphRoom);
                 _graphRoomToRealRoom[graphRoom] = realRoom;
             }
 

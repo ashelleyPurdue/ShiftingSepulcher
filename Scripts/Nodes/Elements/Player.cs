@@ -6,7 +6,7 @@ namespace RandomDungeons.Nodes.Elements
 {
     public class Player : KinematicBody2D
     {
-        public const float WalkSpeed = 200;
+        public const float WalkSpeed = 283;
 
         public override void _Process(float deltaTime)
         {

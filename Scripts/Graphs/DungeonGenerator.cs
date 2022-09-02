@@ -133,6 +133,7 @@ namespace RandomDungeons.Graphs
                     // Create a new room in that direction
                     currentRoom = currentRoom.AddNeighbor(dir);
                     lastCreatedRoom = currentRoom;
+                    currentRoom.RoomSeed = rng.Next();
                 }
 
                 // Place a key at the end of this run

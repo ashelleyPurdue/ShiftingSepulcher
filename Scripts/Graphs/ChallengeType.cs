@@ -4,6 +4,7 @@ namespace RandomDungeons.Graphs
     {
         None,
         Puzzle,
+        Loot,
         Boss
     }
 }

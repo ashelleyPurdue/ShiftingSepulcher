@@ -75,12 +75,20 @@ namespace RandomDungeons.Graphs
                     // Create a new room in that direction
                     currentRoom = currentRoom.AddNeighbor(dir);
                     lastCreatedRoom = currentRoom;
+
+                    // Choose a random challenge type for this room
+                    // TODO: Don't hardcode these probabilities
+                    currentRoom.ChallengeType = rng.PickFromWeighted(
+                        (ChallengeType.None, 2),
+                        (ChallengeType.Puzzle, 1)
+                    );
                     currentRoom.RoomSeed = rng.Next();
                 }
 
                 // Place a key at the end of this run
                 currentKey++;
                 currentRoom.KeyId = currentKey;
+                currentRoom.ChallengeType = ChallengeType.Loot;
             }
         }
     }

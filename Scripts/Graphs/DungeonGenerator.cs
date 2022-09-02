@@ -32,7 +32,7 @@ namespace RandomDungeons.Graphs
             // Mark the last-created room as a boss room.
             // If it has a key, remove it, since we won't have created the lock
             // that goes with it.
-            lastCreatedRoom.IsBossRoom = true;
+            lastCreatedRoom.ChallengeType = ChallengeType.Boss;
             lastCreatedRoom.KeyId = 0;
 
             return dungeon;

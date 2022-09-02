@@ -54,7 +54,7 @@ namespace RandomDungeons.PhysicalDungeons
 
             // Spawn the victory chest, if this is a boss room
             // TODO: Put a boss in here instead of a chest.  That'll teach 'em!
-            if (_graphRoom.IsBossRoom)
+            if (_graphRoom.ChallengeType == ChallengeType.Boss)
             {
                 var chest = GD.Load<PackedScene>("res://Prefabs/VictoryChest.tscn")
                     .Instance<VictoryChest>();

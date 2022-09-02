@@ -12,5 +12,27 @@ namespace RandomDungeons.Utils
             int i = rng.Next(0, optionsArray.Length);
             return optionsArray[i];
         }
+
+        public static T PickFromWeighted<T>(
+            this Random rng,
+            params (T value, int weight)[] weights
+        )
+        {
+            int maxRoll = weights
+                .Select(w => w.weight)
+                .Sum();
+
+            int roll = rng.Next(maxRoll);
+
+            int sum = 0;
+            foreach (var w in weights)
+            {
+                sum += w.weight;
+                if (roll < sum)
+                    return w.value;
+            }
+
+            throw new Exception("Uhh...I didn't think this through, apparently");
+        }
     }
 }

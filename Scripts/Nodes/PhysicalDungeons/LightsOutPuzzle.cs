@@ -38,7 +38,7 @@ namespace RandomDungeons.PhysicalDungeons
             foreach(var coords in AllCoordinates())
             {
                 var s = SwitchPrefab.Instance<LightsOutSwitch>();
-                s.Position = new Vector2(coords.x - 1, coords.y - 1) * 32 * 2;
+                s.Position = ToRealPos(coords);
                 s.Activated += () => LightActivated(coords);
 
                 AddChild(s);
@@ -83,6 +83,13 @@ namespace RandomDungeons.PhysicalDungeons
                     yield return new Vector2i(x, y);
                 }
             }
+        }
+
+        private Vector2 ToRealPos(Vector2i puzzlePos)
+        {
+            var unshifted = new Vector2(puzzlePos.x, puzzlePos.y) * 32 * 2;
+            var offset = new Vector2(_graph.Width, _graph.Height) * -32;
+            return unshifted + offset;
         }
     }
 }

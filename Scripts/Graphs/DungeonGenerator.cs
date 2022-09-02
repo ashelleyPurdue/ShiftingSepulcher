@@ -33,8 +33,8 @@ namespace RandomDungeons.Graphs
                 int doorIndex = rng.Next(0, unusedDoors.Length);
 
                 (Vector2i parentCoords, CardinalDirection dir) = unusedDoors[doorIndex];
-                DungeonRoom parentRoom = dungeon.GetRoom(parentCoords);
-                DungeonRoom childRoom = parentRoom.AddNeighbor(dir);
+                DungeonGraphRoom parentRoom = dungeon.GetRoom(parentCoords);
+                DungeonGraphRoom childRoom = parentRoom.AddNeighbor(dir);
                 childRoom.RoomSeed = rng.Next();
                 lastCreatedRoom = childRoom;
 
@@ -81,7 +81,7 @@ namespace RandomDungeons.Graphs
 
             while (dungeon.RoomCount < numRooms)
             {
-                DungeonRoom runStartRoom = ChooseRandomStartRoom();
+                DungeonGraphRoom runStartRoom = ChooseRandomStartRoom();
                 int runLength = rng.Next(minRunSize, maxRunSize + 1);
 
                 GenerateRun(runStartRoom, runLength);
@@ -95,7 +95,7 @@ namespace RandomDungeons.Graphs
 
             return dungeon;
 
-            DungeonRoom ChooseRandomStartRoom()
+            DungeonGraphRoom ChooseRandomStartRoom()
             {
                 var possibleStartingRooms = dungeon
                     .AllRoomCoordinates()
@@ -107,9 +107,9 @@ namespace RandomDungeons.Graphs
                 return possibleStartingRooms[index];
             }
 
-            void GenerateRun(DungeonRoom startingRoom, int runLength)
+            void GenerateRun(DungeonGraphRoom startingRoom, int runLength)
             {
-                DungeonRoom currentRoom = startingRoom;
+                DungeonGraphRoom currentRoom = startingRoom;
 
                 for (int i = 0; i < runLength; i++)
                 {

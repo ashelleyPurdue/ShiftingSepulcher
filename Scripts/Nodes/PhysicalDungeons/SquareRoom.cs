@@ -8,16 +8,16 @@ namespace RandomDungeons.PhysicalDungeons
 {
     public class SquareRoom : Node2D
     {
-        public DungeonRoom GraphRoom
-        {
-            get => _graphRoom;
-            set
-            {
-                _graphRoom = value;
-                Refresh();
-            }
-        }
-        private DungeonRoom _graphRoom;
+        [Export] public PackedScene DoorWallPrefab;
+        [Export] public PackedScene DoorLockPrefab;
+        [Export] public PackedScene DoorWarpPrefab;
+
+        private DungeonGraphRoom _graphRoom;
+
+        private Node2D _northDoorSpawn => GetNode<Node2D>("%NorthDoorSpawn");
+        private Node2D _southDoorSpawn => GetNode<Node2D>("%SouthDoorSpawn");
+        private Node2D _eastDoorSpawn => GetNode<Node2D>("%EastDoorSpawn");
+        private Node2D _westDoorSpawn => GetNode<Node2D>("%WestDoorSpawn");
 
         public float FadePercent {get; set;}
 
@@ -30,14 +30,17 @@ namespace RandomDungeons.PhysicalDungeons
             curtain.Modulate = GetBackgroundColor(1 - FadePercent);
         }
 
-        private void Refresh()
+        public void SetGraphRoom(DungeonGraphRoom graphRoom)
         {
+            _graphRoom = graphRoom;
+
             this.Position = new Vector2(_graphRoom.Position.x, -_graphRoom.Position.y) * 512;
 
-            GetNode<SquareRoomDoor>("%NorthDoor").GraphDoor = _graphRoom.NorthDoor;
-            GetNode<SquareRoomDoor>("%SouthDoor").GraphDoor = _graphRoom.SouthDoor;
-            GetNode<SquareRoomDoor>("%EastDoor").GraphDoor = _graphRoom.EastDoor;
-            GetNode<SquareRoomDoor>("%WestDoor").GraphDoor = _graphRoom.WestDoor;
+            // Fill in all the door slots
+            SetDoor(_northDoorSpawn, _graphRoom.NorthDoor);
+            SetDoor(_southDoorSpawn, _graphRoom.SouthDoor);
+            SetDoor(_eastDoorSpawn, _graphRoom.EastDoor);
+            SetDoor(_westDoorSpawn, _graphRoom.WestDoor);
 
             // Spawn the key
             if (_graphRoom.HasKey)
@@ -58,6 +61,33 @@ namespace RandomDungeons.PhysicalDungeons
                 chest.Position = GetNode<Node2D>("%KeySpawn").Position;
                 AddChild(chest);
             }
+        }
+
+        private void SetDoor(Node2D spawn, DungeonGraphDoor graphDoor)
+        {
+            // If the door doesn't go anywhere, just put a wall here.
+            if (graphDoor.Destination == null)
+            {
+                Create<Node2D>(spawn, DoorWallPrefab);
+                return;
+            }
+
+            var warp = Create<DoorWarp>(spawn, DoorWarpPrefab);
+            warp.SetGraphDoor(graphDoor);
+
+            // Spawn a lock, if the door is locked
+            if (graphDoor.IsLocked)
+            {
+                var doorLock = Create<DoorLock>(spawn, DoorLockPrefab);
+                doorLock.KeyId = graphDoor.LockId;
+            }
+        }
+
+        private T Create<T>(Node2D parent, PackedScene prefab) where T : Node2D
+        {
+            var node = prefab.Instance<T>();
+            parent.AddChild(node);
+            return node;
         }
 
         private Color GetBackgroundColor(float alpha)

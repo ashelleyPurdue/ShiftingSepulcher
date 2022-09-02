@@ -1,16 +1,20 @@
+using System;
 using System.Linq;
 using Godot;
 
 using RandomDungeons.Graphs;
 using RandomDungeons.Nodes.Elements;
-using RandomDungeons.Services;
-using RandomDungeons.Utils;
 
 namespace RandomDungeons.PhysicalDungeons
 {
-    public class SquareRoomDoor : Node2D
+    public class DoorWarp : Node2D
     {
-        public DungeonDoor GraphDoor;
+        private DungeonGraphDoor _graphDoor;
+
+        public void SetGraphDoor(DungeonGraphDoor graphDoor)
+        {
+            _graphDoor = graphDoor;
+        }
 
         public override void _EnterTree()
         {
@@ -18,44 +22,6 @@ namespace RandomDungeons.PhysicalDungeons
             // during a transition, the warp trigger is disabled until the
             // player passes through an "enabling" trigger in front of the door.
             EnableWarp(false);
-        }
-
-        public override void _Ready()
-        {
-            InitLockDisplay();
-        }
-
-        public override void _Process(float delta)
-        {
-            // For some reason this needs to happen during _Process, not _Ready().
-            // Why?  Hell if I know.  All I know is that the player gets "caught"
-            // on something in the center of the room if this code is in _Ready()
-            // instead of _Process().
-            UpdateDoorOpen();
-        }
-
-        private void UpdateDoorOpen()
-        {
-            var door = GetNode<Node2D>("%Door");
-
-            var transform = door.Transform;
-
-            transform.Scale = GraphDoor.Destination != null
-                ? Vector2.Zero
-                : Vector2.One;
-
-            door.Transform = transform;
-        }
-
-        private void InitLockDisplay()
-        {
-            if (!GraphDoor.IsLocked)
-            {
-                GetNode("%Lock").QueueFree();
-                return;
-            }
-
-            GetNode<Polygon2D>("%LockVisuals").Modulate = KeyColors.ForId(GraphDoor.LockId);
         }
 
         private void EnableWarp(bool enable)
@@ -80,22 +46,22 @@ namespace RandomDungeons.PhysicalDungeons
                     .Cast<DungeonInstantiator>()
                     .First();
 
-                instantiator.EnterRoom(GraphDoor.Destination);
+                instantiator.EnterRoom(_graphDoor.Destination);
             }
         }
 
+        // This signal is _also_ conencted with the "deferred" flag.
+        // This is to avoid a "Can't change this state while flushing queries".
+        //
+        // tl;dr: Godot forbids messing with collision data from within a
+        // collision notification, and EnableWarp() messes with collision data
+        // (specifically, it disables a collision shape).
+        //
+        // Rules, rules, rules...
         private void WarpEnableTriggerBodyEntered(object body)
         {
             if (body is Player)
                 EnableWarp(true);
         }
-
-        private void UnlockTriggerBodyEntered(object body)
-        {
-            if ((body is Player) && (PlayerInventory.HasKey(GraphDoor.LockId)))
-                GetNode("%Lock").QueueFree();
-        }
     }
 }
-
-

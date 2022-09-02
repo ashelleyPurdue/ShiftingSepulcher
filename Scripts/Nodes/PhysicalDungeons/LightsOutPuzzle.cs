@@ -6,7 +6,7 @@ using RandomDungeons.Utils;
 using RandomDungeons.Graphs;
 using RandomDungeons.Nodes.Elements;
 
-namespace RandomDungeons.PhysicalPuzzles
+namespace RandomDungeons.PhysicalDungeons
 {
     public class LightsOutPuzzle : Node2D
     {

@@ -1,6 +1,6 @@
 using Godot;
 
-using RandomDungeons.PhysicalPuzzles;
+using RandomDungeons.PhysicalDungeons;
 using RandomDungeons.Graphs;
 
 namespace RandomDungeons.Nodes.Maps

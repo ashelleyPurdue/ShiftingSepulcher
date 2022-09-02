@@ -18,52 +18,55 @@ RockPrefab = ExtResource( 3 )
 EndingSlotPrefab = ExtResource( 4 )
 DirtPatchPrefab = ExtResource( 5 )
 
-[node name="Floor" type="TextureRect" parent="."]
+[node name="PuzzleOffset" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Floor" type="TextureRect" parent="PuzzleOffset"]
 unique_name_in_owner = true
 margin_right = 32.0
 margin_bottom = 32.0
 texture = ExtResource( 6 )
 stretch_mode = 2
 
-[node name="ResetButton" type="Node2D" parent="."]
+[node name="ResetButton" type="Node2D" parent="PuzzleOffset"]
 position = Vector2( 0, -96 )
 
-[node name="Polygon2D" type="Polygon2D" parent="ResetButton"]
+[node name="Polygon2D" type="Polygon2D" parent="PuzzleOffset/ResetButton"]
 polygon = PoolVector2Array( 16, 0, 32, 16, 16, 32, 0, 16 )
 
-[node name="Label" type="Label" parent="ResetButton"]
+[node name="Label" type="Label" parent="PuzzleOffset/ResetButton"]
 margin_top = 8.0
 margin_right = 40.0
 margin_bottom = 22.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Reset"
 
-[node name="InteractableZone" type="Area2D" parent="ResetButton"]
+[node name="InteractableZone" type="Area2D" parent="PuzzleOffset/ResetButton"]
 script = ExtResource( 7 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ResetButton/InteractableZone"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PuzzleOffset/ResetButton/InteractableZone"]
 position = Vector2( 16, 16 )
 shape = SubResource( 1 )
 
-[node name="Border" type="Node2D" parent="."]
+[node name="Border" type="Node2D" parent="PuzzleOffset"]
 
-[node name="NorthBorder" parent="Border" instance=ExtResource( 5 )]
+[node name="NorthBorder" parent="PuzzleOffset/Border" instance=ExtResource( 5 )]
 unique_name_in_owner = true
 position = Vector2( 0, -32 )
 
-[node name="SouthBorder" parent="Border" instance=ExtResource( 5 )]
+[node name="SouthBorder" parent="PuzzleOffset/Border" instance=ExtResource( 5 )]
 unique_name_in_owner = true
 position = Vector2( 0, 32 )
 
-[node name="WestBorder" parent="Border" instance=ExtResource( 5 )]
+[node name="WestBorder" parent="PuzzleOffset/Border" instance=ExtResource( 5 )]
 unique_name_in_owner = true
 position = Vector2( -32, 0 )
 
-[node name="EastBorder" parent="Border" instance=ExtResource( 5 )]
+[node name="EastBorder" parent="PuzzleOffset/Border" instance=ExtResource( 5 )]
 unique_name_in_owner = true
 position = Vector2( 32, 0 )
 
-[node name="PuzzleElements" type="Node2D" parent="."]
+[node name="PuzzleElements" type="Node2D" parent="PuzzleOffset"]
 unique_name_in_owner = true
 
-[connection signal="Interacted" from="ResetButton/InteractableZone" to="." method="ResetPuzzle"]
+[connection signal="Interacted" from="PuzzleOffset/ResetButton/InteractableZone" to="." method="ResetPuzzle"]

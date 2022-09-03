@@ -1,18 +1,17 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Nodes/Maps/SlidingIcePuzzleTestMap.cs" type="Script" id=2]
 [ext_resource path="res://Prefabs/Puzzles/SlidingIcePuzzle.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Maps/VictoryScreen.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scripts/Nodes/Elements/PanZoomCamera.cs" type="Script" id=5]
+[ext_resource path="res://Prefabs/VictoryChest.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Prefabs/Doors/DoorBars.tscn" type="PackedScene" id=7]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 2 )
-VictoryScreen = ExtResource( 4 )
 
 [node name="SlidingIcePuzzle" parent="." instance=ExtResource( 3 )]
 unique_name_in_owner = true
-position = Vector2( -320, -96 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
@@ -24,4 +23,17 @@ __meta__ = {
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 136, 0 )
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="DoorBars" parent="." instance=ExtResource( 7 )]
+unique_name_in_owner = true
+position = Vector2( -352, -128 )
+
+[node name="VictoryChest" parent="." instance=ExtResource( 6 )]
+position = Vector2( -352, -192 )
+
+[node name="VictoryChestWalls" type="Polygon2D" parent="."]
+polygon = PoolVector2Array( -416, -128, -448, -128, -448, -256, -256, -256, -256, -128, -288, -128, -288, -160, -288, -224, -416, -224 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="VictoryChestWalls"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VictoryChestWalls/StaticBody2D"]
+polygon = PoolVector2Array( -416, -128, -448, -128, -448, -256, -256, -256, -256, -128, -288, -128, -288, -224, -416, -224 )

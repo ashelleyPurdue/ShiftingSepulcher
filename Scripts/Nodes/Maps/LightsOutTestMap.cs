@@ -1,16 +1,15 @@
 using Godot;
 
 using RandomDungeons.PhysicalDungeons;
+using RandomDungeons.Nodes.Elements;
 using RandomDungeons.Graphs;
 
 namespace RandomDungeons.Nodes.Maps
 {
     public class LightsOutTestMap : Node
     {
-        [Export] public PackedScene VictoryScreen;
-
-        private LightsOutPuzzle _physicalPuzzle
-            => GetNode<LightsOutPuzzle>("%LightsOutPuzzle");
+        private LightsOutPuzzle _puzzle => GetNode<LightsOutPuzzle>("%LightsOutPuzzle");
+        private DoorBars _bars => GetNode<DoorBars>("%DoorBars");
 
         public override void _Ready()
         {
@@ -21,13 +20,8 @@ namespace RandomDungeons.Nodes.Maps
                 numFlips: 10
             );
 
-            _physicalPuzzle.SetGraph(graph);
-            _physicalPuzzle.Solved += OnPuzzleSolved;
-        }
-
-        private void OnPuzzleSolved()
-        {
-            GetTree().ChangeSceneTo(VictoryScreen);
+            _puzzle.SetGraph(graph);
+            _bars.Challenge = _puzzle;
         }
     }
 }

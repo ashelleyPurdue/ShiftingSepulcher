@@ -7,7 +7,7 @@ using RandomDungeons.Nodes.Elements;
 
 namespace RandomDungeons.PhysicalDungeons
 {
-    public class SlidingIcePuzzle : Node2D
+    public class SlidingIcePuzzle : Node2D, IDungeonRoomChallenge
     {
         [Export] public PackedScene IceBlockPrefab;
         [Export] public PackedScene RockPrefab;

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/Nodes/PhysicalDungeons/SquareRoom.cs" type="Script" id=1]
 [ext_resource path="res://Prefabs/SquareRoomCorner.tscn" type="PackedScene" id=2]
@@ -9,12 +9,14 @@
 [ext_resource path="res://Prefabs/Key.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Prefabs/Puzzles/LightsOutPuzzle.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Prefabs/VictoryChest.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Prefabs/Doors/DoorBars.tscn" type="PackedScene" id=10]
 
 [node name="SquareRoom" type="Node2D"]
 script = ExtResource( 1 )
 DoorWallPrefab = ExtResource( 4 )
 DoorLockPrefab = ExtResource( 5 )
 DoorWarpPrefab = ExtResource( 6 )
+DoorBarsPrefab = ExtResource( 10 )
 KeyPrefab = ExtResource( 7 )
 LightsOutPuzzlePrefab = ExtResource( 8 )
 SlidingIcePuzzlePrefab = ExtResource( 3 )

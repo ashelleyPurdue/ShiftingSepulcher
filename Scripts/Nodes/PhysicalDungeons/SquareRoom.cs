@@ -12,6 +12,7 @@ namespace RandomDungeons.PhysicalDungeons
         [Export] public PackedScene DoorWallPrefab;
         [Export] public PackedScene DoorLockPrefab;
         [Export] public PackedScene DoorWarpPrefab;
+        [Export] public PackedScene DoorBarsPrefab;
 
         [Export] public PackedScene KeyPrefab;
         [Export] public PackedScene LightsOutPuzzlePrefab;
@@ -19,6 +20,7 @@ namespace RandomDungeons.PhysicalDungeons
         [Export] public PackedScene VictoryChestPrefab;
 
         private DungeonGraphRoom _graphRoom;
+        private IDungeonRoomChallenge _challenge;
 
         private Node2D _northDoorSpawn => GetNode<Node2D>("%NorthDoorSpawn");
         private Node2D _southDoorSpawn => GetNode<Node2D>("%SouthDoorSpawn");
@@ -55,7 +57,7 @@ namespace RandomDungeons.PhysicalDungeons
             {
                 case ChallengeType.Puzzle:
                 {
-                    GeneratePuzzle();
+                    _challenge = GeneratePuzzle();
                     break;
                 }
 
@@ -77,6 +79,15 @@ namespace RandomDungeons.PhysicalDungeons
                     Create<Node2D>(_contentSpawn, VictoryChestPrefab);
                     break;
                 }
+            }
+
+            // Spawn the bars on the doors, if this is a challenge room
+            if (_challenge != null)
+            {
+                SpawnDoorBars(_northDoorSpawn, graphRoom.NorthDoor);
+                SpawnDoorBars(_southDoorSpawn, graphRoom.SouthDoor);
+                SpawnDoorBars(_eastDoorSpawn, graphRoom.EastDoor);
+                SpawnDoorBars(_westDoorSpawn, graphRoom.WestDoor);
             }
         }
 
@@ -107,7 +118,7 @@ namespace RandomDungeons.PhysicalDungeons
             return node;
         }
 
-        private void GeneratePuzzle()
+        private IDungeonRoomChallenge GeneratePuzzle()
         {
             // TODO: This sucks.  Do something less tedious.
             var rng = new Random(_graphRoom.RoomSeed);
@@ -127,6 +138,7 @@ namespace RandomDungeons.PhysicalDungeons
                 );
                 var puzzle = Create<SlidingIcePuzzle>(_contentSpawn, SlidingIcePuzzlePrefab);
                 puzzle.SetGraph(graph);
+                return puzzle;
             }
             else if (puzzlePrefab == LightsOutPuzzlePrefab)
             {
@@ -138,7 +150,20 @@ namespace RandomDungeons.PhysicalDungeons
                 );
                 var puzzle = Create<LightsOutPuzzle>(_contentSpawn, LightsOutPuzzlePrefab);
                 puzzle.SetGraph(graph);
+                return puzzle;
             }
+
+            throw new Exception("Somehow, a third prefab was chosen.");
+        }
+
+        private void SpawnDoorBars(Node2D parent, DungeonGraphDoor graphDoor)
+        {
+            // Don't spawn bars on plain walls
+            if (graphDoor.Destination == null)
+                return;
+
+            var bars = Create<DoorBars>(parent, DoorBarsPrefab);
+            bars.Challenge = _challenge;
         }
 
         private Color GetBackgroundColor(float alpha)

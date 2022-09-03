@@ -8,7 +8,7 @@ using RandomDungeons.Nodes.Elements;
 
 namespace RandomDungeons.PhysicalDungeons
 {
-    public class LightsOutPuzzle : Node2D
+    public class LightsOutPuzzle : Node2D, IDungeonRoomChallenge
     {
         [Export] public PackedScene SwitchPrefab;
         [Export] public Color OnColor;
@@ -21,6 +21,8 @@ namespace RandomDungeons.PhysicalDungeons
 
         private Dictionary<Vector2i, LightsOutSwitch> _switches
             = new Dictionary<Vector2i, LightsOutSwitch>();
+
+        public bool IsSolved() => _graph?.IsSolved() ?? true;
 
         public void SetGraph(LightsOutGraph graph)
         {

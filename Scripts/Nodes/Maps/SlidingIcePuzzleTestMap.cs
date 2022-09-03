@@ -2,14 +2,14 @@ using Godot;
 
 using RandomDungeons.Graphs;
 using RandomDungeons.PhysicalDungeons;
+using RandomDungeons.Nodes.Elements;
 
 namespace RandomDungeons.Nodes.Maps
 {
     public class SlidingIcePuzzleTestMap : Node2D
     {
-        [Export] public PackedScene VictoryScreen;
-
         private SlidingIcePuzzle _puzzle => GetNode<SlidingIcePuzzle>("%SlidingIcePuzzle");
+        private DoorBars _bars => GetNode<DoorBars>("%DoorBars");
 
         public override void _Ready()
         {
@@ -22,12 +22,7 @@ namespace RandomDungeons.Nodes.Maps
             );
 
             _puzzle.SetGraph(graph);
-        }
-
-        public override void _Process(float delta)
-        {
-            if (_puzzle.IsSolved())
-                GetTree().ChangeSceneTo(VictoryScreen);
+            _bars.Challenge = _puzzle;
         }
     }
 }

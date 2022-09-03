@@ -20,6 +20,7 @@ namespace RandomDungeons.PhysicalDungeons
         private Node2D _southBorder => GetNode<Node2D>("%SouthBorder");
         private Node2D _eastBorder => GetNode<Node2D>("%EastBorder");
         private Node2D _westBorder => GetNode<Node2D>("%WestBorder");
+        private Node2D _puzzleOffset => GetNode<Node2D>("%PuzzleOffset");
 
         private SlidingIceBlock _iceBlock;
 
@@ -63,6 +64,10 @@ namespace RandomDungeons.PhysicalDungeons
             {
                 Create<Node2D>(RockPrefab, rockPos);
             }
+
+            // Shift everything so the center of the puzzle matches the center
+            // of this node
+            _puzzleOffset.Position = new Vector2(_graph.Width, _graph.Height) * -16;
         }
 
         public bool IsSolved()

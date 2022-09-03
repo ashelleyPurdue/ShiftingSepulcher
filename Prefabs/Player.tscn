@@ -1,8 +1,13 @@
-[gd_scene load_steps=77 format=2]
+[gd_scene load_steps=79 format=2]
 
 [ext_resource path="res://Scripts/Nodes/Elements/Player.cs" type="Script" id=1]
 [ext_resource path="res://Sprites/Player/RunSheet.png" type="Texture" id=2]
 [ext_resource path="res://Prefabs/Components/EightDirectionalSprite.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scripts/Nodes/Elements/PlayerSword.cs" type="Script" id=4]
+
+[sub_resource type="CapsuleShape2D" id=75]
+radius = 4.0
+height = 18.0
 
 [sub_resource type="AtlasTexture" id=1]
 flags = 4
@@ -394,6 +399,42 @@ extents = Vector2( 8, 8 )
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 4
 script = ExtResource( 1 )
+
+[node name="Sword" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource( 4 )
+
+[node name="Visuals" type="Node2D" parent="Sword"]
+
+[node name="Swoosh" type="Node2D" parent="Sword/Visuals"]
+modulate = Color( 0.811765, 0.811765, 0.811765, 1 )
+
+[node name="0" type="Polygon2D" parent="Sword/Visuals/Swoosh"]
+polygon = PoolVector2Array( 8, -1, 10, -4, 32, -5, 32, 0 )
+vertex_colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0.74902, 1, 1, 1, 1 )
+
+[node name="1" type="Polygon2D" parent="Sword/Visuals/Swoosh"]
+polygon = PoolVector2Array( 10, -4, 12, -6, 31, -10, 32, -5 )
+vertex_colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0.501961, 1, 1, 1, 0.74902 )
+
+[node name="2" type="Polygon2D" parent="Sword/Visuals/Swoosh"]
+polygon = PoolVector2Array( 12, -6, 31, -10, 27, -17, 14, -12 )
+vertex_colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 0.501961, 1, 1, 1, 0.25098, 1, 1, 1, 0 )
+
+[node name="3" type="Polygon2D" parent="Sword/Visuals/Swoosh"]
+polygon = PoolVector2Array( 14, -12, 14, -17, 14, -23, 27, -17 )
+vertex_colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0.25098 )
+
+[node name="Blade" type="Polygon2D" parent="Sword/Visuals"]
+color = Color( 0.811765, 0.811765, 0.811765, 1 )
+polygon = PoolVector2Array( 8, -1, 8, 1, 30, 1, 32, 0, 30, -1 )
+
+[node name="SwordArea" type="Area2D" parent="Sword"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/SwordArea"]
+position = Vector2( 20, 0 )
+rotation = 1.5708
+shape = SubResource( 75 )
 
 [node name="Sprite" parent="." instance=ExtResource( 3 )]
 unique_name_in_owner = true

@@ -18,7 +18,7 @@ namespace RandomDungeons.Graphs
         /// cause the overall layout of the dungeon to change.
         /// </summary>
         public int RoomSeed;
-        public bool IsBossRoom;
+        public ChallengeType ChallengeType;
 
         public int KeyId = 0;
         public bool HasKey => KeyId > 0;

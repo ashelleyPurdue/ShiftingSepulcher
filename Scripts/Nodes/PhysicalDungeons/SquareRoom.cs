@@ -3,6 +3,7 @@ using System.Linq;
 using Godot;
 using RandomDungeons.Graphs;
 using RandomDungeons.Nodes.Elements;
+using RandomDungeons.Utils;
 
 namespace RandomDungeons.PhysicalDungeons
 {
@@ -11,13 +12,22 @@ namespace RandomDungeons.PhysicalDungeons
         [Export] public PackedScene DoorWallPrefab;
         [Export] public PackedScene DoorLockPrefab;
         [Export] public PackedScene DoorWarpPrefab;
+        [Export] public PackedScene DoorBarsPrefab;
+
+        [Export] public PackedScene KeyPrefab;
+        [Export] public PackedScene LightsOutPuzzlePrefab;
+        [Export] public PackedScene SlidingIcePuzzlePrefab;
+        [Export] public PackedScene VictoryChestPrefab;
 
         private DungeonGraphRoom _graphRoom;
+        private IDungeonRoomChallenge _challenge;
 
         private Node2D _northDoorSpawn => GetNode<Node2D>("%NorthDoorSpawn");
         private Node2D _southDoorSpawn => GetNode<Node2D>("%SouthDoorSpawn");
         private Node2D _eastDoorSpawn => GetNode<Node2D>("%EastDoorSpawn");
         private Node2D _westDoorSpawn => GetNode<Node2D>("%WestDoorSpawn");
+
+        private Node2D _contentSpawn => GetNode<Node2D>("%ContentSpawn");
 
         public float FadePercent {get; set;}
 
@@ -42,24 +52,42 @@ namespace RandomDungeons.PhysicalDungeons
             SetDoor(_eastDoorSpawn, _graphRoom.EastDoor);
             SetDoor(_westDoorSpawn, _graphRoom.WestDoor);
 
-            // Spawn the key
-            if (_graphRoom.HasKey)
+            // Spawn the room's content
+            switch (_graphRoom.ChallengeType)
             {
-                var key = GD.Load<PackedScene>("res://Prefabs/Key.tscn")
-                    .Instance<Key>();
-                key.KeyId = _graphRoom.KeyId;
-                key.Position = GetNode<Node2D>("%KeySpawn").Position;
-                AddChild(key);
+                case ChallengeType.Puzzle:
+                {
+                    _challenge = GeneratePuzzle();
+                    break;
+                }
+
+                case ChallengeType.Loot:
+                {
+                    if (_graphRoom.HasKey)
+                    {
+                        var key = Create<Key>(_contentSpawn, KeyPrefab);
+                        key.KeyId = _graphRoom.KeyId;
+                    }
+
+                    break;
+                }
+
+                case ChallengeType.Boss:
+                {
+                    // TODO: Put a boss here instead of a chest.  That'll teach
+                    // 'em!
+                    Create<Node2D>(_contentSpawn, VictoryChestPrefab);
+                    break;
+                }
             }
 
-            // Spawn the victory chest, if this is a boss room
-            // TODO: Put a boss in here instead of a chest.  That'll teach 'em!
-            if (_graphRoom.IsBossRoom)
+            // Spawn the bars on the doors, if this is a challenge room
+            if (_challenge != null)
             {
-                var chest = GD.Load<PackedScene>("res://Prefabs/VictoryChest.tscn")
-                    .Instance<VictoryChest>();
-                chest.Position = GetNode<Node2D>("%KeySpawn").Position;
-                AddChild(chest);
+                SpawnDoorBars(_northDoorSpawn, graphRoom.NorthDoor);
+                SpawnDoorBars(_southDoorSpawn, graphRoom.SouthDoor);
+                SpawnDoorBars(_eastDoorSpawn, graphRoom.EastDoor);
+                SpawnDoorBars(_westDoorSpawn, graphRoom.WestDoor);
             }
         }
 
@@ -88,6 +116,54 @@ namespace RandomDungeons.PhysicalDungeons
             var node = prefab.Instance<T>();
             parent.AddChild(node);
             return node;
+        }
+
+        private IDungeonRoomChallenge GeneratePuzzle()
+        {
+            // TODO: This sucks.  Do something less tedious.
+            var rng = new Random(_graphRoom.RoomSeed);
+            var puzzlePrefab = rng.PickFromWeighted(
+                (SlidingIcePuzzlePrefab, 3),
+                (LightsOutPuzzlePrefab, 1)
+            );
+
+            if (puzzlePrefab == SlidingIcePuzzlePrefab)
+            {
+                var graph = SlidingIceGraph.Generate(
+                    seed: _graphRoom.RoomSeed,
+                    width: 10,
+                    height: 10,
+                    numPushes: 5,
+                    numRedHerringRocks: 3
+                );
+                var puzzle = Create<SlidingIcePuzzle>(_contentSpawn, SlidingIcePuzzlePrefab);
+                puzzle.SetGraph(graph);
+                return puzzle;
+            }
+            else if (puzzlePrefab == LightsOutPuzzlePrefab)
+            {
+                var graph = LightsOutGraph.Generate(
+                    seed: _graphRoom.RoomSeed,
+                    width: 4,
+                    height: 4,
+                    numFlips: 3
+                );
+                var puzzle = Create<LightsOutPuzzle>(_contentSpawn, LightsOutPuzzlePrefab);
+                puzzle.SetGraph(graph);
+                return puzzle;
+            }
+
+            throw new Exception("Somehow, a third prefab was chosen.");
+        }
+
+        private void SpawnDoorBars(Node2D parent, DungeonGraphDoor graphDoor)
+        {
+            // Don't spawn bars on plain walls
+            if (graphDoor.Destination == null)
+                return;
+
+            var bars = Create<DoorBars>(parent, DoorBarsPrefab);
+            bars.Challenge = _challenge;
         }
 
         private Color GetBackgroundColor(float alpha)

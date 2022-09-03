@@ -1,22 +1,32 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/Nodes/PhysicalDungeons/SquareRoom.cs" type="Script" id=1]
 [ext_resource path="res://Prefabs/SquareRoomCorner.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Prefabs/Puzzles/SlidingIcePuzzle.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Prefabs/Doors/DoorWall.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Prefabs/Doors/DoorLock.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Prefabs/Doors/DoorWarp.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Prefabs/Key.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Prefabs/Puzzles/LightsOutPuzzle.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Prefabs/VictoryChest.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Prefabs/Doors/DoorBars.tscn" type="PackedScene" id=10]
 
 [node name="SquareRoom" type="Node2D"]
 script = ExtResource( 1 )
 DoorWallPrefab = ExtResource( 4 )
 DoorLockPrefab = ExtResource( 5 )
 DoorWarpPrefab = ExtResource( 6 )
+DoorBarsPrefab = ExtResource( 10 )
+KeyPrefab = ExtResource( 7 )
+LightsOutPuzzlePrefab = ExtResource( 8 )
+SlidingIcePuzzlePrefab = ExtResource( 3 )
+VictoryChestPrefab = ExtResource( 9 )
 
 [node name="Floor" type="Polygon2D" parent="."]
 color = Color( 0.511719, 0.511719, 0.511719, 1 )
 polygon = PoolVector2Array( -256, -256, 256, -256, 256, 256, -256, 256 )
 
-[node name="KeySpawn" type="Position2D" parent="."]
+[node name="ContentSpawn" type="Position2D" parent="."]
 unique_name_in_owner = true
 
 [node name="NorthWestCorner" parent="." instance=ExtResource( 2 )]

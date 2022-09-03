@@ -32,7 +32,7 @@ namespace RandomDungeons.Graphs
             // Mark the last-created room as a boss room.
             // If it has a key, remove it, since we won't have created the lock
             // that goes with it.
-            lastCreatedRoom.IsBossRoom = true;
+            lastCreatedRoom.ChallengeType = ChallengeType.Boss;
             lastCreatedRoom.KeyId = 0;
 
             return dungeon;
@@ -75,12 +75,20 @@ namespace RandomDungeons.Graphs
                     // Create a new room in that direction
                     currentRoom = currentRoom.AddNeighbor(dir);
                     lastCreatedRoom = currentRoom;
+
+                    // Choose a random challenge type for this room
+                    // TODO: Don't hardcode these probabilities
+                    currentRoom.ChallengeType = rng.PickFromWeighted(
+                        (ChallengeType.None, 2),
+                        (ChallengeType.Puzzle, 1)
+                    );
                     currentRoom.RoomSeed = rng.Next();
                 }
 
                 // Place a key at the end of this run
                 currentKey++;
                 currentRoom.KeyId = currentKey;
+                currentRoom.ChallengeType = ChallengeType.Loot;
             }
         }
     }

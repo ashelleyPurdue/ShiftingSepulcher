@@ -32,5 +32,16 @@ namespace RandomDungeons.Utils
                 default: return Vector2.Zero;
             }
         }
+
+        public static float ToAngleRad(this EightDirection dir)
+        {
+            return dir.ToVector2().Angle();
+        }
+
+        public static float ToAngleDeg(this EightDirection dir)
+        {
+            float angleRad = dir.ToVector2().Angle();
+            return Mathf.Rad2Deg(angleRad);
+        }
     }
 }

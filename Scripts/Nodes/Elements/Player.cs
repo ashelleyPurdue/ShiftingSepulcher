@@ -28,6 +28,12 @@ namespace RandomDungeons.Nodes.Elements
 
         private void WalkControls(float deltaTime)
         {
+            if (_sword.IsSwinging)
+            {
+                _sprite.SpeedScale = 0;
+                return;
+            }
+
             // Move with the left stick
             var cappedLeftStick = CapMagnitude(InputService.LeftStick, 1);
             this.MoveAndSlide(cappedLeftStick * WalkSpeed);

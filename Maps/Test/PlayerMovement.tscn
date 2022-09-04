@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Prefabs/Elements/BreakablePot.tscn" type="PackedScene" id=2]
 
 [node name="Node2D" type="Node2D"]
 
@@ -8,3 +9,15 @@
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
+
+[node name="BreakablePot" parent="." instance=ExtResource( 2 )]
+position = Vector2( -128, 0 )
+
+[node name="BreakablePot2" parent="." instance=ExtResource( 2 )]
+position = Vector2( -128, -64 )
+
+[node name="BreakablePot3" parent="." instance=ExtResource( 2 )]
+position = Vector2( -128, -128 )
+
+[node name="BreakablePot4" parent="." instance=ExtResource( 2 )]
+position = Vector2( -128, -192 )

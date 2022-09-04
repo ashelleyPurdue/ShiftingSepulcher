@@ -1,9 +1,10 @@
-[gd_scene load_steps=79 format=2]
+[gd_scene load_steps=80 format=2]
 
 [ext_resource path="res://Scripts/Nodes/Elements/Player.cs" type="Script" id=1]
 [ext_resource path="res://Sprites/Player/RunSheet.png" type="Texture" id=2]
 [ext_resource path="res://Prefabs/Components/EightDirectionalSprite.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/Nodes/Elements/PlayerSword.cs" type="Script" id=4]
+[ext_resource path="res://Scripts/Nodes/Components/HitBox.cs" type="Script" id=5]
 
 [sub_resource type="CapsuleShape2D" id=75]
 radius = 4.0
@@ -429,9 +430,10 @@ vertex_colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0.2
 color = Color( 0.811765, 0.811765, 0.811765, 1 )
 polygon = PoolVector2Array( 8, -1, 8, 1, 30, 1, 32, 0, 30, -1 )
 
-[node name="SwordArea" type="Area2D" parent="Sword"]
+[node name="HitBox" type="Area2D" parent="Sword"]
+script = ExtResource( 5 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/SwordArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/HitBox"]
 position = Vector2( 20, 0 )
 rotation = 1.5708
 shape = SubResource( 75 )
@@ -451,3 +453,5 @@ NorthWest = SubResource( 74 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 20 )
+
+[connection signal="DealtDamage" from="Sword/HitBox" to="Sword" method="OnDealtDamage"]

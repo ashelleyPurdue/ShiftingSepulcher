@@ -7,7 +7,6 @@ namespace RandomDungeons.Nodes.Elements
     public class BreakablePot : KinematicBody2D
     {
         private const float Friction = 500;
-        private const float KnockbackSpeed = 300;
         private const float MinSpeedForCollisionDamage = 90;
 
         private Vector2 _velocity = Vector2.Zero;
@@ -32,8 +31,7 @@ namespace RandomDungeons.Nodes.Elements
 
         public void OnTookDamage(HitBox hitBox)
         {
-            var dir = hitBox.GlobalPosition.DirectionTo(GlobalPosition);
-            _velocity = KnockbackSpeed * dir;
+            _velocity = hitBox.KnockbackVelocity;
         }
     }
 }

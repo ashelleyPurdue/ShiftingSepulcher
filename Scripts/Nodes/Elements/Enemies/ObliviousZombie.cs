@@ -1,10 +1,11 @@
 using Godot;
 
 using RandomDungeons.Nodes.Components;
+using RandomDungeons.StateMachines;
 
 namespace RandomDungeons.Nodes.Elements.Enemies
 {
-    public class ObliviousZombie : KinematicBody2D
+    public class ObliviousZombie : KinematicBody2D, IStateMachine
     {
         [Export] public int Health = 5;
 
@@ -13,7 +14,7 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         [Export] public float WanderTime = 3;
         [Export] public float WanderSpeed = 32;
 
-        private State _currentState;
+        private IState _currentState;
         private float _hurtboxCooldownTimer;
 
         public override void _Ready()
@@ -21,7 +22,7 @@ namespace RandomDungeons.Nodes.Elements.Enemies
             ChangeState(Idle);
         }
 
-        private void ChangeState(State state)
+        public void ChangeState(IState state)
         {
             state.Owner = this;
 
@@ -61,22 +62,8 @@ namespace RandomDungeons.Nodes.Elements.Enemies
             }
         }
 
-        private abstract class State
-        {
-            public ObliviousZombie Owner;
-            public virtual void _Process(float delta) {}
-            public virtual void _PhysicsProcess(float delta) {}
-            public virtual void _StateEntered() {}
-            public virtual void _StateExited() {}
-
-            protected void ChangeState(State state)
-            {
-                Owner.ChangeState(state);
-            }
-        }
-
         private readonly IdleState Idle = new IdleState();
-        private class IdleState : State
+        private class IdleState : State<ObliviousZombie>
         {
             private float _timer;
 
@@ -98,7 +85,7 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         }
 
         private readonly WanderState Wander = new WanderState();
-        private class WanderState : State
+        private class WanderState : State<ObliviousZombie>
         {
             private float _timer;
             private Vector2 _velocity;
@@ -129,7 +116,7 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         }
 
         private readonly KnockedBackState KnockedBack = new KnockedBackState();
-        private class KnockedBackState : State
+        private class KnockedBackState : State<ObliviousZombie>
         {
             private const float Friction = 500;
             private const float MinSpeedForCollisionDamage = 90;

@@ -23,6 +23,9 @@ namespace RandomDungeons.Nodes.Elements.Enemies
             KnockedBack.HitWall += OnHitWall;
             KnockedBack.StoppedMoving += OnKnockbackFinished;
 
+            DeathAnimation.AnimationEnded += OnDeathAnimationFinished;
+            DeathAnimation.AnimationTarget = GetNode<Node2D>("%Visuals");
+
             ChangeState(Idle);
         }
 
@@ -47,10 +50,9 @@ namespace RandomDungeons.Nodes.Elements.Enemies
             _hurtboxCooldownTimer -= delta;
             _currentState?._PhysicsProcess(delta);
 
-            if (Health <= 0)
+            if (Health <= 0 && _currentState != DeathAnimation)
             {
-                // TODO: Play a death animation
-                QueueFree();
+                ChangeState(DeathAnimation);
             }
         }
 
@@ -75,6 +77,11 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         public void OnKnockbackFinished()
         {
             ChangeState(Idle);
+        }
+
+        public void OnDeathAnimationFinished()
+        {
+            QueueFree();
         }
 
         private readonly IdleState Idle = new IdleState();
@@ -131,5 +138,6 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         }
 
         private readonly KnockedBackState<ObliviousZombie> KnockedBack = new KnockedBackState<ObliviousZombie>();
+        private readonly DeathAnimationState DeathAnimation = new DeathAnimationState();
     }
 }

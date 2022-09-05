@@ -15,16 +15,5 @@ namespace RandomDungeons.Utils
 
             return (EightDirection)dir;
         }
-
-        public static Vector2 MoveToward(
-            this Vector2 from,
-            Vector2 to,
-            float maxDelta)
-        {
-            if (from.DistanceTo(to) < maxDelta)
-                return to;
-
-            return from + (from.DirectionTo(to) * maxDelta);
-        }
     }
 }

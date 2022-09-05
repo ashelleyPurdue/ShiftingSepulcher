@@ -1,63 +1,59 @@
 using Godot;
 
 using RandomDungeons.Nodes.Components;
+using RandomDungeons.StateMachines;
+using RandomDungeons.StateMachines.CommonStates;
 
 namespace RandomDungeons.Nodes.Elements
 {
-    public class BreakablePot : KinematicBody2D
+    public class BreakablePot : KinematicBody2D, IStateMachine
     {
-        private const float Friction = 500;
-        private const float MinSpeedForCollisionDamage = 90;
-        private const float DeathAnimationDuration = 0.1f;
-
         [Export] public int Health = 2;
 
-        private Vector2 _velocity = Vector2.Zero;
         private float _invulnerableTimer = 0;
+        private IState _currentState = null;
+
+        private readonly KnockedBackState<BreakablePot> KnockedBack = new KnockedBackState<BreakablePot>();
+        private readonly DeathAnimationState DeathAnimation = new DeathAnimationState();
+
+        public override void _Ready()
+        {
+            KnockedBack.StoppedMoving += () => ChangeState(null);
+            KnockedBack.HitWall += () =>
+            {
+                Health--;
+                ChangeState(null);
+            };
+
+            DeathAnimation.AnimationEnded += () => QueueFree();
+            DeathAnimation.AnimationTarget = GetNode<Node2D>("%Visuals");
+        }
+
+        public void ChangeState(IState state)
+        {
+            state.Owner = this;
+
+            var prevState = _currentState;
+            _currentState = state;
+
+            prevState?._StateExited();
+            _currentState._StateEntered();
+        }
+
+        public override void _Process(float delta)
+        {
+            _currentState?._Process(delta);
+        }
 
         public override void _PhysicsProcess(float delta)
         {
-            if (Health > 0)
-                WhileAlive(delta);
-            else
-                WhileDead(delta);
-        }
-
-        private void WhileAlive(float delta)
-        {
+            _currentState?._PhysicsProcess(delta);
             _invulnerableTimer -= delta;
 
-            // Move
-            var prevVel = _velocity;
-            _velocity = MoveAndSlide(_velocity);
-            _velocity = _velocity.MoveToward(Vector2.Zero, Friction * delta);
-
-            // Take damage when hitting a wall
-            bool wasGoingFastEnough = prevVel.Length() > MinSpeedForCollisionDamage;
-
-            if (GetSlideCount() > 0 && wasGoingFastEnough)
+            if (Health <= 0 && _currentState != DeathAnimation)
             {
-                Health--;
-                return;
+                ChangeState(DeathAnimation);
             }
-        }
-
-        private void WhileDead(float delta)
-        {
-            // Play the death animation
-            float animSpeed = delta / DeathAnimationDuration;
-            Scale = Scale.MoveToward(Vector2.One * 2, animSpeed);
-
-            var color = Modulate;
-            color.a -= animSpeed;
-
-            if (color.a <= 0)
-            {
-                color.a = 0;
-                QueueFree();
-            }
-
-            Modulate = color;
         }
 
         public void OnTookDamage(HitBox hitBox)
@@ -67,7 +63,9 @@ namespace RandomDungeons.Nodes.Elements
 
             Health -= hitBox.Damage;
             _invulnerableTimer = hitBox.InvlunerabilityTime;
-            _velocity = hitBox.KnockbackVelocity;
+
+            KnockedBack.Velocity = hitBox.KnockbackVelocity;
+            ChangeState(KnockedBack);
         }
     }
 }

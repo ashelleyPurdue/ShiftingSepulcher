@@ -11,12 +11,33 @@ namespace RandomDungeons.Nodes.Elements
         public const float WalkSpeed = 283;
 
         private EightDirectionalSprite _sprite => GetNode<EightDirectionalSprite>("%Sprite");
+        private PlayerSword _sword => GetNode<PlayerSword>("%Sword");
 
         public override void _Process(float deltaTime)
         {
+            SwordControls(deltaTime);
+            WalkControls(deltaTime);
+        }
+
+        private void SwordControls(float deltaTime)
+        {
+            if (InputService.AttackPressed && !_sword.IsSwinging)
+                _sword.StartSwinging(_sprite.Direction);
+        }
+
+        private void WalkControls(float deltaTime)
+        {
+            if (_sword.IsSwinging)
+            {
+                _sprite.SpeedScale = 0;
+                return;
+            }
+
+            // Move with the left stick
             var cappedLeftStick = CapMagnitude(InputService.LeftStick, 1);
             this.MoveAndSlide(cappedLeftStick * WalkSpeed);
 
+            // Update the sprite
             if (cappedLeftStick.Length() > 0.01)
                 _sprite.Direction = cappedLeftStick.ToNearestEightDirection();
 

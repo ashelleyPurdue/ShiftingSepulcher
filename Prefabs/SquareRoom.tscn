@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/Nodes/PhysicalDungeons/SquareRoom.cs" type="Script" id=1]
 [ext_resource path="res://Prefabs/SquareRoomCorner.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Prefabs/Puzzles/LightsOutPuzzle.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Prefabs/VictoryChest.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Prefabs/Doors/DoorBars.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Prefabs/Elements/BreakablePot.tscn" type="PackedScene" id=11]
 
 [node name="SquareRoom" type="Node2D"]
 script = ExtResource( 1 )
@@ -63,3 +64,15 @@ rotation = 4.71239
 unique_name_in_owner = true
 visible = false
 polygon = PoolVector2Array( -288, -288, 288, -288, 288, 288, -288, 288 )
+
+[node name="BreakablePot" parent="." instance=ExtResource( 11 )]
+position = Vector2( -224, -224 )
+
+[node name="BreakablePot2" parent="." instance=ExtResource( 11 )]
+position = Vector2( 192, -224 )
+
+[node name="BreakablePot3" parent="." instance=ExtResource( 11 )]
+position = Vector2( 192, 192 )
+
+[node name="BreakablePot4" parent="." instance=ExtResource( 11 )]
+position = Vector2( -224, 192 )

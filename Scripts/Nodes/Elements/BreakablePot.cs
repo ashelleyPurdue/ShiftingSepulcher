@@ -17,6 +17,14 @@ namespace RandomDungeons.Nodes.Elements
 
         public override void _PhysicsProcess(float delta)
         {
+            if (Health > 0)
+                WhileAlive(delta);
+            else
+                WhileDead(delta);
+        }
+
+        private void WhileAlive(float delta)
+        {
             _invulnerableTimer -= delta;
 
             // Move
@@ -32,27 +40,24 @@ namespace RandomDungeons.Nodes.Elements
                 Health--;
                 return;
             }
+        }
 
-            // Die when out of health
-            if (Health <= 0)
+        private void WhileDead(float delta)
+        {
+            // Play the death animation
+            float animSpeed = delta / DeathAnimationDuration;
+            Scale = Scale.MoveToward(Vector2.One * 2, animSpeed);
+
+            var color = Modulate;
+            color.a -= animSpeed;
+
+            if (color.a <= 0)
             {
-                CollisionLayer = 0;
-                CollisionMask = 0;
-
-                float animSpeed = delta / DeathAnimationDuration;
-                Scale = Scale.MoveToward(Vector2.One * 2, animSpeed);
-
-                var color = Modulate;
-                color.a -= animSpeed;
-
-                if (color.a <= 0)
-                {
-                    color.a = 0;
-                    QueueFree();
-                }
-
-                Modulate = color;
+                color.a = 0;
+                QueueFree();
             }
+
+            Modulate = color;
         }
 
         public void OnTookDamage(HitBox hitBox)

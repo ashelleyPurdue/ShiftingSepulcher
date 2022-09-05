@@ -21,10 +21,7 @@ namespace RandomDungeons.Nodes.Elements
         public override void _Ready()
         {
             DeathAnimation.AnimationTarget = _sprite;
-            DeathAnimation.AnimationEnded += () =>
-            {
-                GetTree().ChangeScene("res://Maps/TitleScreen.tscn");
-            };
+            DeathAnimation.AnimationEnded += () => ChangeState(AfterDeathAnimation);
 
             ChangeState(Walking);
         }
@@ -96,7 +93,32 @@ namespace RandomDungeons.Nodes.Elements
             }
         }
 
-        private readonly DeathAnimationState DeathAnimation = new DeathAnimationState();
+        private readonly IState AfterDeathAnimation = new AfterDeathAnimationState();
+        private class AfterDeathAnimationState : State<Player>
+        {
+            private const float Duration = 2;
+            private float _timer;
 
+            public override void _StateEntered()
+            {
+                _timer = Duration;
+            }
+
+            public override void _Process(float delta)
+            {
+                // Hang out for a little bit before going back to the title
+                // screen
+                _timer -= delta;
+
+                if (_timer < 0)
+                {
+                    // TODO: Respawn the player in the starting room, instead
+                    // of taking them back to the title screen
+                    Owner.GetTree().ChangeScene("res://Maps/TitleScreen.tscn");
+                }
+            }
+        }
+
+        private readonly DeathAnimationState DeathAnimation = new DeathAnimationState();
     }
 }

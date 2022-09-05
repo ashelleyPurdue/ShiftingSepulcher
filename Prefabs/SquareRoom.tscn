@@ -66,13 +66,13 @@ visible = false
 polygon = PoolVector2Array( -288, -288, 288, -288, 288, 288, -288, 288 )
 
 [node name="BreakablePot" parent="." instance=ExtResource( 11 )]
-position = Vector2( -224, -224 )
+position = Vector2( -192, -192 )
 
 [node name="BreakablePot2" parent="." instance=ExtResource( 11 )]
-position = Vector2( 192, -224 )
+position = Vector2( 192, -192 )
 
 [node name="BreakablePot3" parent="." instance=ExtResource( 11 )]
 position = Vector2( 192, 192 )
 
 [node name="BreakablePot4" parent="." instance=ExtResource( 11 )]
-position = Vector2( -224, 192 )
+position = Vector2( -192, 192 )

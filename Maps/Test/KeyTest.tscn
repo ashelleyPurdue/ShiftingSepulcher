@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Prefabs/Key.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Prefabs/Elements/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Prefabs/Elements/Key.tscn" type="PackedScene" id=2]
 
 [node name="Node2D" type="Node2D"]
 

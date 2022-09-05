@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using RandomDungeons.Services;
 
-namespace RandomDungeons.Nodes.Elements
+using RandomDungeons.Services;
+using RandomDungeons.Nodes.Elements;
+
+namespace RandomDungeons.Nodes.Components
 {
     public class InteractableZone : Area2D
     {

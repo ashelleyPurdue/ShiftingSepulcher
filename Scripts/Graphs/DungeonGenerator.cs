@@ -79,7 +79,8 @@ namespace RandomDungeons.Graphs
                     // Choose a random challenge type for this room
                     // TODO: Don't hardcode these probabilities
                     currentRoom.ChallengeType = rng.PickFromWeighted(
-                        (ChallengeType.None, 2),
+                        (ChallengeType.None, 1),
+                        (ChallengeType.Combat, 1),
                         (ChallengeType.Puzzle, 1)
                     );
                     currentRoom.RoomSeed = rng.Next();

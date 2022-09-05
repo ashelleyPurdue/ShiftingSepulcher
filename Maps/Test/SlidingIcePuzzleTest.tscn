@@ -4,7 +4,7 @@
 [ext_resource path="res://Scripts/Nodes/Maps/SlidingIcePuzzleTestMap.cs" type="Script" id=2]
 [ext_resource path="res://Prefabs/Puzzles/SlidingIcePuzzle.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/Nodes/Elements/PanZoomCamera.cs" type="Script" id=5]
-[ext_resource path="res://Prefabs/VictoryChest.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Prefabs/Elements/VictoryChest.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Prefabs/Doors/DoorBars.tscn" type="PackedScene" id=7]
 
 [node name="Node2D" type="Node2D"]

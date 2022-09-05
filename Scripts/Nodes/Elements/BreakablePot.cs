@@ -8,6 +8,7 @@ namespace RandomDungeons.Nodes.Elements
     {
         private const float Friction = 500;
         private const float MinSpeedForCollisionDamage = 90;
+        private const float DeathAnimationDuration = 0.1f;
 
         [Export] public int Health = 2;
 
@@ -34,7 +35,24 @@ namespace RandomDungeons.Nodes.Elements
 
             // Die when out of health
             if (Health <= 0)
-                QueueFree();
+            {
+                CollisionLayer = 0;
+                CollisionMask = 0;
+
+                float animSpeed = delta / DeathAnimationDuration;
+                Scale = Scale.MoveToward(Vector2.One * 2, animSpeed);
+
+                var color = Modulate;
+                color.a -= animSpeed;
+
+                if (color.a <= 0)
+                {
+                    color.a = 0;
+                    QueueFree();
+                }
+
+                Modulate = color;
+            }
         }
 
         public void OnTookDamage(HitBox hitBox)

@@ -9,8 +9,8 @@ namespace RandomDungeons.Nodes.Elements.Enemies
     {
         [Export] public float MinIdleTime = 1f;
         [Export] public float MaxIdleTime = 2f;
-        [Export] public float WanderTime = 3;
-        [Export] public float WanderSpeed = 32;
+        [Export] public float WanderTime = 1;
+        [Export] public float WanderSpeed = 32 * 3;
 
         protected override Node2D Visuals() => GetNode<Node2D>("%Visuals");
         protected override HurtBox Hurtbox() => GetNode<HurtBox>("%HurtBox");

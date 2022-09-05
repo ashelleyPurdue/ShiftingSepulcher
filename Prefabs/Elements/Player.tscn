@@ -453,5 +453,3 @@ NorthWest = SubResource( 74 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 20 )
-
-[connection signal="DealtDamage" from="Sword/HitBox" to="Sword" method="OnDealtDamage"]

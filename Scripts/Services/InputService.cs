@@ -10,5 +10,6 @@ namespace RandomDungeons.Services
         );
 
         public static bool ActivatePressed => Input.IsActionJustPressed("ui_accept");
+        public static bool AttackPressed => Input.IsActionJustPressed("Attack");
     }
 }

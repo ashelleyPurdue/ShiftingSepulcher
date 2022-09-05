@@ -21,8 +21,7 @@ namespace RandomDungeons.Nodes.Elements
 
         private void SwordControls(float deltaTime)
         {
-            // TODO: use a separate "attack" button for this
-            if (InputService.ActivatePressed && !_sword.IsSwinging)
+            if (InputService.AttackPressed && !_sword.IsSwinging)
                 _sword.StartSwinging(_sprite.Direction);
         }
 

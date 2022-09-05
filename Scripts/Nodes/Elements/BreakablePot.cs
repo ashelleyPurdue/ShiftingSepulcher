@@ -62,15 +62,12 @@ namespace RandomDungeons.Nodes.Elements
 
         public void OnTookDamage(HitBox hitBox)
         {
-            // Invulnerability only protects you from damage.
-            // It doesn't protect you from knockback.
-            _velocity = hitBox.KnockbackVelocity;
-
             if (_invulnerableTimer > 0)
                 return;
 
             Health -= hitBox.Damage;
             _invulnerableTimer = hitBox.InvlunerabilityTime;
+            _velocity = hitBox.KnockbackVelocity;
         }
     }
 }

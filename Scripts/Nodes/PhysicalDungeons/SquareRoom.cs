@@ -19,6 +19,8 @@ namespace RandomDungeons.PhysicalDungeons
         [Export] public PackedScene SlidingIcePuzzlePrefab;
         [Export] public PackedScene VictoryChestPrefab;
 
+        [Export] public PackedScene ObliviousZombiePrefab;
+
         private DungeonGraphRoom _graphRoom;
         private IDungeonRoomChallenge _challenge;
 
@@ -58,6 +60,14 @@ namespace RandomDungeons.PhysicalDungeons
                 case ChallengeType.Puzzle:
                 {
                     _challenge = GeneratePuzzle();
+                    break;
+                }
+
+                case ChallengeType.Combat:
+                {
+                    // TODO: Spawn a random assortment of enemies, and a random
+                    // assortment of walls/pits/whatnot.
+                    Create<Node2D>(_contentSpawn, ObliviousZombiePrefab);
                     break;
                 }
 

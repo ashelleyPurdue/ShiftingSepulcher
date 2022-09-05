@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scripts/Nodes/PhysicalDungeons/SquareRoom.cs" type="Script" id=1]
 [ext_resource path="res://Prefabs/SquareRoomCorner.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Prefabs/Elements/VictoryChest.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Prefabs/Doors/DoorBars.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Prefabs/Elements/BreakablePot.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Prefabs/Elements/Enemies/ObliviousZombie.tscn" type="PackedScene" id=12]
 
 [node name="SquareRoom" type="Node2D"]
 script = ExtResource( 1 )
@@ -22,6 +23,7 @@ KeyPrefab = ExtResource( 7 )
 LightsOutPuzzlePrefab = ExtResource( 8 )
 SlidingIcePuzzlePrefab = ExtResource( 3 )
 VictoryChestPrefab = ExtResource( 9 )
+ObliviousZombiePrefab = ExtResource( 12 )
 
 [node name="Floor" type="Polygon2D" parent="."]
 color = Color( 0.511719, 0.511719, 0.511719, 1 )

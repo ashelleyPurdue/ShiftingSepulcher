@@ -1,10 +1,11 @@
-[gd_scene load_steps=80 format=2]
+[gd_scene load_steps=82 format=2]
 
 [ext_resource path="res://Scripts/Nodes/Elements/Player.cs" type="Script" id=1]
 [ext_resource path="res://Sprites/Player/RunSheet.png" type="Texture" id=2]
 [ext_resource path="res://Prefabs/Components/EightDirectionalSprite.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/Nodes/Elements/PlayerSword.cs" type="Script" id=4]
 [ext_resource path="res://Scripts/Nodes/Components/HitBox.cs" type="Script" id=5]
+[ext_resource path="res://Scripts/Nodes/Components/HurtBox.cs" type="Script" id=6]
 
 [sub_resource type="CapsuleShape2D" id=75]
 radius = 4.0
@@ -397,6 +398,9 @@ animations = [ {
 [sub_resource type="RectangleShape2D" id=20]
 extents = Vector2( 8, 8 )
 
+[sub_resource type="RectangleShape2D" id=76]
+extents = Vector2( 8, 8 )
+
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 4
 script = ExtResource( 1 )
@@ -453,3 +457,11 @@ NorthWest = SubResource( 74 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 20 )
+
+[node name="HurtBox" type="Area2D" parent="."]
+script = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource( 76 )
+
+[connection signal="TookDamage" from="HurtBox" to="." method="OnTookDamage"]

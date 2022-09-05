@@ -51,6 +51,12 @@ namespace RandomDungeons.Nodes.Elements
             _currentState._PhysicsProcess(deltaTime);
         }
 
+        public void OnTookDamage(HitBox hitBox)
+        {
+            // TODO: Take more than one hit to die
+            ChangeState(DeathAnimation);
+        }
+
         private readonly IState Walking = new WalkingState();
         private class WalkingState : State<Player>
         {

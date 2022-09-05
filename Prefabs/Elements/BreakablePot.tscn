@@ -11,11 +11,13 @@ extents = Vector2( 16, 16 )
 
 [node name="BreakablePot" type="KinematicBody2D"]
 script = ExtResource( 2 )
+Health = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
 [node name="HurtBox" type="Area2D" parent="."]
+unique_name_in_owner = true
 position = Vector2( -16, -16 )
 script = ExtResource( 1 )
 

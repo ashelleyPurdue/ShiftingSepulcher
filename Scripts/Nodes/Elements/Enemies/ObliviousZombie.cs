@@ -2,87 +2,19 @@ using Godot;
 
 using RandomDungeons.Nodes.Components;
 using RandomDungeons.StateMachines;
-using RandomDungeons.StateMachines.CommonStates;
 
 namespace RandomDungeons.Nodes.Elements.Enemies
 {
-    public class ObliviousZombie : KinematicBody2D, IStateMachine
+    public class ObliviousZombie : BaseEnemy
     {
-        [Export] public int Health = 5;
-
         [Export] public float MinIdleTime = 1f;
         [Export] public float MaxIdleTime = 2f;
         [Export] public float WanderTime = 3;
         [Export] public float WanderSpeed = 32;
 
-        private IState _currentState;
-        private float _hurtboxCooldownTimer;
-
-        public override void _Ready()
-        {
-            KnockedBack.HitWall += OnHitWall;
-            KnockedBack.StoppedMoving += OnKnockbackFinished;
-
-            DeathAnimation.AnimationEnded += OnDeathAnimationFinished;
-            DeathAnimation.AnimationTarget = GetNode<Node2D>("%Visuals");
-
-            ChangeState(Idle);
-        }
-
-        public void ChangeState(IState state)
-        {
-            state.Owner = this;
-
-            var prevState = _currentState;
-            _currentState = state;
-
-            prevState?._StateExited();
-            _currentState._StateEntered();
-        }
-
-        public override void _Process(float delta)
-        {
-            _currentState?._Process(delta);
-        }
-
-        public override void _PhysicsProcess(float delta)
-        {
-            _hurtboxCooldownTimer -= delta;
-            _currentState?._PhysicsProcess(delta);
-
-            if (Health <= 0 && _currentState != DeathAnimation)
-            {
-                ChangeState(DeathAnimation);
-            }
-        }
-
-        public void OnTookDamage(HitBox hitBox)
-        {
-            if (_hurtboxCooldownTimer <= 0)
-            {
-                Health -= hitBox.Damage;
-                _hurtboxCooldownTimer = hitBox.InvlunerabilityTime;
-                KnockedBack.Velocity = hitBox.KnockbackVelocity;
-
-                ChangeState(KnockedBack);
-            }
-        }
-
-        public void OnHitWall()
-        {
-            ChangeState(Idle);
-            Health--;
-        }
-
-        public void OnKnockbackFinished()
-        {
-            ChangeState(Idle);
-        }
-
-        public void OnDeathAnimationFinished()
-        {
-            QueueFree();
-        }
+        protected override Node2D Visuals() => GetNode<Node2D>("%Visuals");
+        protected override HurtBox Hurtbox() => GetNode<HurtBox>("%HurtBox");
+        protected override IState InitialState() => Idle;
 
         private readonly IdleState Idle = new IdleState();
         private class IdleState : State<ObliviousZombie>
@@ -136,8 +68,5 @@ namespace RandomDungeons.Nodes.Elements.Enemies
                     ChangeState(Owner.Idle);
             }
         }
-
-        private readonly KnockedBackState<ObliviousZombie> KnockedBack = new KnockedBackState<ObliviousZombie>();
-        private readonly DeathAnimationState DeathAnimation = new DeathAnimationState();
     }
 }

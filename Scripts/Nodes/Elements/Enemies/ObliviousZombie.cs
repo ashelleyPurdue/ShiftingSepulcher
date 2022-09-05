@@ -2,6 +2,7 @@ using Godot;
 
 using RandomDungeons.Nodes.Components;
 using RandomDungeons.StateMachines;
+using RandomDungeons.StateMachines.CommonStates;
 
 namespace RandomDungeons.Nodes.Elements.Enemies
 {
@@ -19,6 +20,9 @@ namespace RandomDungeons.Nodes.Elements.Enemies
 
         public override void _Ready()
         {
+            KnockedBack.HitWall += OnHitWall;
+            KnockedBack.StoppedMoving += OnKnockbackFinished;
+
             ChangeState(Idle);
         }
 
@@ -60,6 +64,17 @@ namespace RandomDungeons.Nodes.Elements.Enemies
 
                 ChangeState(KnockedBack);
             }
+        }
+
+        public void OnHitWall()
+        {
+            ChangeState(Idle);
+            Health--;
+        }
+
+        public void OnKnockbackFinished()
+        {
+            ChangeState(Idle);
         }
 
         private readonly IdleState Idle = new IdleState();
@@ -115,32 +130,6 @@ namespace RandomDungeons.Nodes.Elements.Enemies
             }
         }
 
-        private readonly KnockedBackState KnockedBack = new KnockedBackState();
-        private class KnockedBackState : State<ObliviousZombie>
-        {
-            private const float Friction = 500;
-            private const float MinSpeedForCollisionDamage = 90;
-
-            public Vector2 Velocity;
-
-            public override void _PhysicsProcess(float delta)
-            {
-                // Move
-                var prevVel = Velocity;
-                Velocity = Owner.MoveAndSlide(Velocity);
-                Velocity = Velocity.MoveToward(Vector2.Zero, Friction * delta);
-
-                // Take damage upon hitting a wall too hard
-                bool fastEnough = prevVel.Length() > MinSpeedForCollisionDamage;
-                if (Owner.GetSlideCount() > 0 && fastEnough)
-                {
-                    Owner.Health--;
-                }
-
-                // Resume normal behavior after coming to a stop
-                if (Velocity == Vector2.Zero)
-                    ChangeState(Owner.Idle);
-            }
-        }
+        private readonly KnockedBackState<ObliviousZombie> KnockedBack = new KnockedBackState<ObliviousZombie>();
     }
 }

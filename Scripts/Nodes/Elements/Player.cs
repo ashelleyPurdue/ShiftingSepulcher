@@ -34,7 +34,7 @@ namespace RandomDungeons.Nodes.Elements
             }
 
             // Move with the left stick
-            var cappedLeftStick = CapMagnitude(InputService.LeftStick, 1);
+            var cappedLeftStick = InputService.LeftStick.LimitLength(1);
             this.MoveAndSlide(cappedLeftStick * WalkSpeed);
 
             // Update the sprite
@@ -42,16 +42,6 @@ namespace RandomDungeons.Nodes.Elements
                 _sprite.Direction = cappedLeftStick.ToNearestEightDirection();
 
             _sprite.SpeedScale = cappedLeftStick.Length();
-        }
-
-        private Vector2 CapMagnitude(Vector2 v, float maxMagnitude)
-        {
-            float magnitude = v.Length();
-
-            if (magnitude > maxMagnitude)
-                magnitude = maxMagnitude;
-
-            return v.Normalized() * magnitude;
         }
     }
 }

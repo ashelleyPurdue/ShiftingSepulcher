@@ -9,6 +9,8 @@ namespace RandomDungeons.PhysicalDungeons
 {
     public class SquareRoom : Node2D
     {
+        public event Action<DungeonGraphRoom> DoorUsed;
+
         [Export] public PackedScene DoorWallPrefab;
         [Export] public PackedScene DoorLockPrefab;
         [Export] public PackedScene DoorWarpPrefab;
@@ -112,6 +114,7 @@ namespace RandomDungeons.PhysicalDungeons
 
             var warp = Create<DoorWarp>(spawn, DoorWarpPrefab);
             warp.SetGraphDoor(graphDoor);
+            warp.DoorUsed += dest => DoorUsed?.Invoke(dest);
 
             // Spawn a lock, if the door is locked
             if (graphDoor.IsLocked)

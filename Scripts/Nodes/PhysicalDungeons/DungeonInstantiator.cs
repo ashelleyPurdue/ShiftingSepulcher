@@ -39,6 +39,8 @@ namespace RandomDungeons.PhysicalDungeons
                 var realRoom = roomPrefab.Instance<SquareRoom>();
 
                 realRoom.SetGraphRoom(graphRoom);
+                realRoom.DoorUsed += EnterRoom;
+
                 _graphRoomToRealRoom[graphRoom] = realRoom;
             }
 

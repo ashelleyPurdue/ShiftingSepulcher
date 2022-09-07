@@ -32,6 +32,24 @@ polygon = PoolVector2Array( -256, -256, 256, -256, 256, 256, -256, 256 )
 [node name="ContentSpawn" type="Position2D" parent="."]
 unique_name_in_owner = true
 
+[node name="DoorSpawns" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="North" type="Position2D" parent="DoorSpawns"]
+position = Vector2( 0, -256 )
+
+[node name="South" type="Position2D" parent="DoorSpawns"]
+position = Vector2( 0, 256 )
+rotation = 3.14159
+
+[node name="East" type="Position2D" parent="DoorSpawns"]
+position = Vector2( 256, 0 )
+rotation = 1.5708
+
+[node name="West" type="Position2D" parent="DoorSpawns"]
+position = Vector2( -256, 0 )
+rotation = -1.5708
+
 [node name="NorthWestCorner" parent="." instance=ExtResource( 2 )]
 
 [node name="NorthEastCorner" parent="." instance=ExtResource( 2 )]
@@ -41,25 +59,6 @@ rotation = 1.5708
 rotation = 3.14159
 
 [node name="SouthWestCorner" parent="." instance=ExtResource( 2 )]
-rotation = 4.71239
-
-[node name="NorthDoorSpawn" type="Position2D" parent="."]
-unique_name_in_owner = true
-position = Vector2( 0, -256 )
-
-[node name="EastDoorSpawn" type="Position2D" parent="."]
-unique_name_in_owner = true
-position = Vector2( 256, 0 )
-rotation = 1.5708
-
-[node name="SouthDoorSpawn" type="Position2D" parent="."]
-unique_name_in_owner = true
-position = Vector2( 0, 256 )
-rotation = 3.14159
-
-[node name="WestDoorSpawn" type="Position2D" parent="."]
-unique_name_in_owner = true
-position = Vector2( -256, 0 )
 rotation = 4.71239
 
 [node name="FadeCurtain" type="Polygon2D" parent="."]

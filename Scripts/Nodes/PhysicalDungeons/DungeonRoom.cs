@@ -48,8 +48,6 @@ namespace RandomDungeons.PhysicalDungeons
         {
             GraphRoom = graphRoom;
 
-            this.Position = new Vector2(GraphRoom.Position.x, -GraphRoom.Position.y) * 512;
-
             // Fill in all the door slots
             SetDoor(CardinalDirection.North);
             SetDoor(CardinalDirection.South);

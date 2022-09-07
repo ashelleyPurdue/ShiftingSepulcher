@@ -88,6 +88,11 @@ namespace RandomDungeons.PhysicalDungeons
             var prevRoom = _activeRoom;
             var nextRoom = _graphRoomToRealRoom[graphRoom];
 
+            nextRoom.Position = 512 * new Vector2(
+                nextRoom.GraphRoom.Position.x,
+                -nextRoom.GraphRoom.Position.y
+            );
+
             if (nextRoom == _disappearingRoom)
             {
                 GD.Print("Trying to enter a room that's already fading out");

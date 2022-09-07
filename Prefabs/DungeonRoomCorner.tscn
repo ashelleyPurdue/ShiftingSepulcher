@@ -1,6 +1,6 @@
 [gd_scene format=2]
 
-[node name="SquareRoomCorner" type="Polygon2D"]
+[node name="DungeonRoomCorner" type="Polygon2D"]
 offset = Vector2( 448, 216 )
 polygon = PoolVector2Array( -736, -504, -512, -504, -512, -472, -704, -472, -704, -280, -736, -280 )
 

@@ -7,8 +7,10 @@ using RandomDungeons.Utils;
 
 namespace RandomDungeons.PhysicalDungeons
 {
-    public class SquareRoom : Node2D
+    public class DungeonRoom : Node2D
     {
+        public event Action<CardinalDirection> DoorUsed;
+
         [Export] public PackedScene DoorWallPrefab;
         [Export] public PackedScene DoorLockPrefab;
         [Export] public PackedScene DoorWarpPrefab;
@@ -21,17 +23,17 @@ namespace RandomDungeons.PhysicalDungeons
 
         [Export] public PackedScene ObliviousZombiePrefab;
 
-        private DungeonGraphRoom _graphRoom;
+        public DungeonGraphRoom GraphRoom {get; private set;}
         private IDungeonRoomChallenge _challenge;
-
-        private Node2D _northDoorSpawn => GetNode<Node2D>("%NorthDoorSpawn");
-        private Node2D _southDoorSpawn => GetNode<Node2D>("%SouthDoorSpawn");
-        private Node2D _eastDoorSpawn => GetNode<Node2D>("%EastDoorSpawn");
-        private Node2D _westDoorSpawn => GetNode<Node2D>("%WestDoorSpawn");
 
         private Node2D _contentSpawn => GetNode<Node2D>("%ContentSpawn");
 
         public float FadePercent {get; set;}
+
+        public Node2D GetDoorSpawn(CardinalDirection dir)
+        {
+            return GetNode<Node2D>($"%DoorSpawns/{dir}");
+        }
 
         public override void _Process(float deltaTime)
         {
@@ -44,18 +46,16 @@ namespace RandomDungeons.PhysicalDungeons
 
         public void SetGraphRoom(DungeonGraphRoom graphRoom)
         {
-            _graphRoom = graphRoom;
-
-            this.Position = new Vector2(_graphRoom.Position.x, -_graphRoom.Position.y) * 512;
+            GraphRoom = graphRoom;
 
             // Fill in all the door slots
-            SetDoor(_northDoorSpawn, _graphRoom.NorthDoor);
-            SetDoor(_southDoorSpawn, _graphRoom.SouthDoor);
-            SetDoor(_eastDoorSpawn, _graphRoom.EastDoor);
-            SetDoor(_westDoorSpawn, _graphRoom.WestDoor);
+            SetDoor(CardinalDirection.North);
+            SetDoor(CardinalDirection.South);
+            SetDoor(CardinalDirection.East);
+            SetDoor(CardinalDirection.West);
 
             // Spawn the room's content
-            switch (_graphRoom.ChallengeType)
+            switch (GraphRoom.ChallengeType)
             {
                 case ChallengeType.Puzzle:
                 {
@@ -73,10 +73,10 @@ namespace RandomDungeons.PhysicalDungeons
 
                 case ChallengeType.Loot:
                 {
-                    if (_graphRoom.HasKey)
+                    if (GraphRoom.HasKey)
                     {
                         var key = Create<Key>(_contentSpawn, KeyPrefab);
-                        key.KeyId = _graphRoom.KeyId;
+                        key.KeyId = GraphRoom.KeyId;
                     }
 
                     break;
@@ -94,15 +94,18 @@ namespace RandomDungeons.PhysicalDungeons
             // Spawn the bars on the doors, if this is a challenge room
             if (_challenge != null)
             {
-                SpawnDoorBars(_northDoorSpawn, graphRoom.NorthDoor);
-                SpawnDoorBars(_southDoorSpawn, graphRoom.SouthDoor);
-                SpawnDoorBars(_eastDoorSpawn, graphRoom.EastDoor);
-                SpawnDoorBars(_westDoorSpawn, graphRoom.WestDoor);
+                SpawnDoorBars(CardinalDirection.North);
+                SpawnDoorBars(CardinalDirection.South);
+                SpawnDoorBars(CardinalDirection.East);
+                SpawnDoorBars(CardinalDirection.West);
             }
         }
 
-        private void SetDoor(Node2D spawn, DungeonGraphDoor graphDoor)
+        private void SetDoor(CardinalDirection dir)
         {
+            var spawn = GetDoorSpawn(dir);
+            var graphDoor = GraphRoom.GetDoor(dir);
+
             // If the door doesn't go anywhere, just put a wall here.
             if (graphDoor.Destination == null)
             {
@@ -111,7 +114,7 @@ namespace RandomDungeons.PhysicalDungeons
             }
 
             var warp = Create<DoorWarp>(spawn, DoorWarpPrefab);
-            warp.SetGraphDoor(graphDoor);
+            warp.DoorUsed += () => DoorUsed?.Invoke(dir);
 
             // Spawn a lock, if the door is locked
             if (graphDoor.IsLocked)
@@ -131,7 +134,7 @@ namespace RandomDungeons.PhysicalDungeons
         private IDungeonRoomChallenge GeneratePuzzle()
         {
             // TODO: This sucks.  Do something less tedious.
-            var rng = new Random(_graphRoom.RoomSeed);
+            var rng = new Random(GraphRoom.RoomSeed);
             var puzzlePrefab = rng.PickFromWeighted(
                 (SlidingIcePuzzlePrefab, 3),
                 (LightsOutPuzzlePrefab, 1)
@@ -140,7 +143,7 @@ namespace RandomDungeons.PhysicalDungeons
             if (puzzlePrefab == SlidingIcePuzzlePrefab)
             {
                 var graph = SlidingIceGraph.Generate(
-                    seed: _graphRoom.RoomSeed,
+                    seed: GraphRoom.RoomSeed,
                     width: 10,
                     height: 10,
                     numPushes: 5,
@@ -153,7 +156,7 @@ namespace RandomDungeons.PhysicalDungeons
             else if (puzzlePrefab == LightsOutPuzzlePrefab)
             {
                 var graph = LightsOutGraph.Generate(
-                    seed: _graphRoom.RoomSeed,
+                    seed: GraphRoom.RoomSeed,
                     width: 4,
                     height: 4,
                     numFlips: 3
@@ -166,8 +169,11 @@ namespace RandomDungeons.PhysicalDungeons
             throw new Exception("Somehow, a third prefab was chosen.");
         }
 
-        private void SpawnDoorBars(Node2D parent, DungeonGraphDoor graphDoor)
+        private void SpawnDoorBars(CardinalDirection dir)
         {
+            var parent = GetDoorSpawn(dir);
+            var graphDoor = GraphRoom.GetDoor(dir);
+
             // Don't spawn bars on plain walls
             if (graphDoor.Destination == null)
                 return;

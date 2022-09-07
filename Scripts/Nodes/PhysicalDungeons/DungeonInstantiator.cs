@@ -3,6 +3,7 @@ using System.Linq;
 using Godot;
 using RandomDungeons.Graphs;
 using RandomDungeons.Nodes.Maps;
+using RandomDungeons.Utils;
 
 namespace RandomDungeons.PhysicalDungeons
 {
@@ -10,15 +11,15 @@ namespace RandomDungeons.PhysicalDungeons
     {
         private const float FadeTime = 0.25f;
 
-        private Dictionary<DungeonGraphRoom, SquareRoom> _graphRoomToRealRoom
-            = new Dictionary<DungeonGraphRoom, SquareRoom>();
+        private Dictionary<DungeonGraphRoom, DungeonRoom> _graphRoomToRealRoom
+            = new Dictionary<DungeonGraphRoom, DungeonRoom>();
 
-        private SquareRoom _activeRoom;
-        private SquareRoom _disappearingRoom;
+        private DungeonRoom _activeRoom;
+        private DungeonRoom _disappearingRoom;
 
         public override void _Ready()
         {
-            var roomPrefab = GD.Load<PackedScene>("res://Prefabs/SquareRoom.tscn");
+            var roomPrefab = GD.Load<PackedScene>("res://Prefabs/DungeonRoom.tscn");
 
             // Generate a dungeon graph
             GD.Print(TitleScreen.ChosenSeed);
@@ -36,10 +37,11 @@ namespace RandomDungeons.PhysicalDungeons
             foreach (var coordinates in graph.AllRoomCoordinates())
             {
                 var graphRoom = graph.GetRoom(coordinates);
-                var realRoom = roomPrefab.Instance<SquareRoom>();
+                var realRoom = roomPrefab.Instance<DungeonRoom>();
+                _graphRoomToRealRoom[graphRoom] = realRoom;
 
                 realRoom.SetGraphRoom(graphRoom);
-                _graphRoomToRealRoom[graphRoom] = realRoom;
+                realRoom.DoorUsed += OnDoorUsed;
             }
 
             // Start in the starting room
@@ -71,6 +73,27 @@ namespace RandomDungeons.PhysicalDungeons
             }
         }
 
+        private void OnDoorUsed(CardinalDirection dir)
+        {
+            DungeonGraphRoom nextGraphRoom = _activeRoom
+                .GraphRoom
+                .GetDoor(dir)
+                .Destination;
+
+            var prevRoom = _activeRoom;
+            var nextRoom = _graphRoomToRealRoom[nextGraphRoom];
+
+            if (prevRoom != null)
+            {
+                var prevDoorSpawn = prevRoom.GetDoorSpawn(dir);
+                var nextDoorSpawn = nextRoom.GetDoorSpawn(dir.Opposite());
+
+                nextRoom.Position = prevDoorSpawn.GlobalPosition - nextDoorSpawn.Position;
+            }
+
+            EnterRoom(nextGraphRoom);
+        }
+
         public void EnterRoom(DungeonGraphRoom graphRoom)
         {
             var prevRoom = _activeRoom;
@@ -96,7 +119,7 @@ namespace RandomDungeons.PhysicalDungeons
             MoveCameraToActiveRoom();
         }
 
-        private void StartFadingIn(SquareRoom room)
+        private void StartFadingIn(DungeonRoom room)
         {
             if (room.GetParent() != this)
             {
@@ -108,7 +131,7 @@ namespace RandomDungeons.PhysicalDungeons
             _activeRoom = room;
         }
 
-        private void StartFadingOut(SquareRoom room)
+        private void StartFadingOut(DungeonRoom room)
         {
             if (room == null)
                 return;

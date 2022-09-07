@@ -9,14 +9,7 @@ namespace RandomDungeons.PhysicalDungeons
 {
     public class DoorWarp : Node2D
     {
-        public event Action<DungeonGraphRoom> DoorUsed;
-
-        private DungeonGraphDoor _graphDoor;
-
-        public void SetGraphDoor(DungeonGraphDoor graphDoor)
-        {
-            _graphDoor = graphDoor;
-        }
+        public event Action DoorUsed;
 
         public override void _EnterTree()
         {
@@ -43,7 +36,7 @@ namespace RandomDungeons.PhysicalDungeons
         {
             if (body is Player)
             {
-                DoorUsed?.Invoke(_graphDoor.Destination);
+                DoorUsed?.Invoke();
             }
         }
 

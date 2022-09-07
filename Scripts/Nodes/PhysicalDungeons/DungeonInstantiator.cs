@@ -3,6 +3,7 @@ using System.Linq;
 using Godot;
 using RandomDungeons.Graphs;
 using RandomDungeons.Nodes.Maps;
+using RandomDungeons.Utils;
 
 namespace RandomDungeons.PhysicalDungeons
 {
@@ -37,11 +38,10 @@ namespace RandomDungeons.PhysicalDungeons
             {
                 var graphRoom = graph.GetRoom(coordinates);
                 var realRoom = roomPrefab.Instance<DungeonRoom>();
+                _graphRoomToRealRoom[graphRoom] = realRoom;
 
                 realRoom.SetGraphRoom(graphRoom);
-                realRoom.DoorUsed += EnterRoom;
-
-                _graphRoomToRealRoom[graphRoom] = realRoom;
+                realRoom.DoorUsed += OnDoorUsed;
             }
 
             // Start in the starting room
@@ -71,6 +71,16 @@ namespace RandomDungeons.PhysicalDungeons
                 if (_disappearingRoom.FadePercent <= 0)
                     FinishFadingOut();
             }
+        }
+
+        private void OnDoorUsed(CardinalDirection dir)
+        {
+            DungeonGraphRoom nextGraphRoom = _activeRoom
+                .GraphRoom
+                .GetDoor(dir)
+                .Destination;
+
+            EnterRoom(nextGraphRoom);
         }
 
         public void EnterRoom(DungeonGraphRoom graphRoom)

@@ -80,6 +80,17 @@ namespace RandomDungeons.PhysicalDungeons
                 .GetDoor(dir)
                 .Destination;
 
+            var prevRoom = _activeRoom;
+            var nextRoom = _graphRoomToRealRoom[nextGraphRoom];
+
+            if (prevRoom != null)
+            {
+                var prevDoorSpawn = prevRoom.GetDoorSpawn(dir);
+                var nextDoorSpawn = nextRoom.GetDoorSpawn(dir.Opposite());
+
+                nextRoom.Position = prevDoorSpawn.GlobalPosition - nextDoorSpawn.Position;
+            }
+
             EnterRoom(nextGraphRoom);
         }
 
@@ -87,11 +98,6 @@ namespace RandomDungeons.PhysicalDungeons
         {
             var prevRoom = _activeRoom;
             var nextRoom = _graphRoomToRealRoom[graphRoom];
-
-            nextRoom.Position = 512 * new Vector2(
-                nextRoom.GraphRoom.Position.x,
-                -nextRoom.GraphRoom.Position.y
-            );
 
             if (nextRoom == _disappearingRoom)
             {

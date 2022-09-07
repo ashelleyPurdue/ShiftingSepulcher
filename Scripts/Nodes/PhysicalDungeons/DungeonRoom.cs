@@ -7,7 +7,7 @@ using RandomDungeons.Utils;
 
 namespace RandomDungeons.PhysicalDungeons
 {
-    public class SquareRoom : Node2D
+    public class DungeonRoom : Node2D
     {
         public event Action<DungeonGraphRoom> DoorUsed;
 

@@ -10,15 +10,15 @@ namespace RandomDungeons.PhysicalDungeons
     {
         private const float FadeTime = 0.25f;
 
-        private Dictionary<DungeonGraphRoom, SquareRoom> _graphRoomToRealRoom
-            = new Dictionary<DungeonGraphRoom, SquareRoom>();
+        private Dictionary<DungeonGraphRoom, DungeonRoom> _graphRoomToRealRoom
+            = new Dictionary<DungeonGraphRoom, DungeonRoom>();
 
-        private SquareRoom _activeRoom;
-        private SquareRoom _disappearingRoom;
+        private DungeonRoom _activeRoom;
+        private DungeonRoom _disappearingRoom;
 
         public override void _Ready()
         {
-            var roomPrefab = GD.Load<PackedScene>("res://Prefabs/SquareRoom.tscn");
+            var roomPrefab = GD.Load<PackedScene>("res://Prefabs/DungeonRoom.tscn");
 
             // Generate a dungeon graph
             GD.Print(TitleScreen.ChosenSeed);
@@ -36,7 +36,7 @@ namespace RandomDungeons.PhysicalDungeons
             foreach (var coordinates in graph.AllRoomCoordinates())
             {
                 var graphRoom = graph.GetRoom(coordinates);
-                var realRoom = roomPrefab.Instance<SquareRoom>();
+                var realRoom = roomPrefab.Instance<DungeonRoom>();
 
                 realRoom.SetGraphRoom(graphRoom);
                 realRoom.DoorUsed += EnterRoom;
@@ -98,7 +98,7 @@ namespace RandomDungeons.PhysicalDungeons
             MoveCameraToActiveRoom();
         }
 
-        private void StartFadingIn(SquareRoom room)
+        private void StartFadingIn(DungeonRoom room)
         {
             if (room.GetParent() != this)
             {
@@ -110,7 +110,7 @@ namespace RandomDungeons.PhysicalDungeons
             _activeRoom = room;
         }
 
-        private void StartFadingOut(SquareRoom room)
+        private void StartFadingOut(DungeonRoom room)
         {
             if (room == null)
                 return;

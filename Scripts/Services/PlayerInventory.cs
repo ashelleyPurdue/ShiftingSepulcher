@@ -14,6 +14,13 @@ namespace RandomDungeons.Services
         private class Content
         {
             public HashSet<int> HeldKeys = new HashSet<int>();
+            public int Health = 3;
+        }
+
+        public static int Health
+        {
+            get => _content.Health;
+            set => _content.Health = value;
         }
 
         public static void Reset() => _content = new Content();

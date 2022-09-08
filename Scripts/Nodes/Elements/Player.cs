@@ -47,13 +47,15 @@ namespace RandomDungeons.Nodes.Elements
 
         public override void _PhysicsProcess(float deltaTime)
         {
-            _currentState._PhysicsProcess(deltaTime);
+            _currentState?._PhysicsProcess(deltaTime);
         }
 
         public void OnTookDamage(HitBox hitBox)
         {
-            // TODO: Take more than one hit to die
-            ChangeState(DeathAnimation);
+            PlayerInventory.Health -= hitBox.Damage;
+
+            if (PlayerInventory.Health <= 0)
+                ChangeState(DeathAnimation);
         }
 
         private readonly IState Walking = new WalkingState();

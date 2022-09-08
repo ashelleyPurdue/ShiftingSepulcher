@@ -20,11 +20,17 @@ namespace RandomDungeons.Nodes.Components
             {
                 foreach (var other in GetOverlappingAreas())
                 {
-                    if (other is HurtBox hurtBox && !IsIgnored(hurtBox))
-                    {
-                        hurtBox.TakeDamage(this);
-                        EmitSignal(nameof(DealtDamage), hurtBox);
-                    }
+                    if (!(other is HurtBox hurtBox))
+                        continue;
+
+                    if (IsIgnored(hurtBox))
+                        continue;
+
+                    if (hurtBox.IsInvulnerable)
+                        continue;
+
+                    hurtBox.TakeDamage(this);
+                    EmitSignal(nameof(DealtDamage), hurtBox);
                 }
             }
         }

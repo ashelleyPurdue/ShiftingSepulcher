@@ -4,7 +4,7 @@ using Godot;
 namespace RandomDungeons.StateMachines.CommonStates
 {
     public class KnockedBackState<TOwner> : State<TOwner>
-        where TOwner : KinematicBody2D, IStateMachine
+        where TOwner : KinematicBody2D
     {
         private const float Friction = 500;
         private const float MinSpeedForCollisionDamage = 90;

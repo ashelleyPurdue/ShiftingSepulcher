@@ -1,8 +1,10 @@
 namespace RandomDungeons.StateMachines
 {
-    public abstract class State<TOwner> : IState where TOwner : IStateMachine
+    public abstract class State<TOwner> : IState
     {
-        IStateMachine IState.Owner
+        public StateMachine StateMachine {get; set;}
+
+        object IState.Owner
         {
             get => this.Owner;
             set => this.Owner = (TOwner)value;
@@ -12,7 +14,7 @@ namespace RandomDungeons.StateMachines
 
         protected void ChangeState(IState state)
         {
-            Owner.ChangeState(state);
+            StateMachine.ChangeState(state);
         }
 
         public virtual void _Process(float delta) {}

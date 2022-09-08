@@ -5,7 +5,7 @@ using RandomDungeons.Nodes.Components;
 
 namespace RandomDungeons.Nodes.Elements.Enemies
 {
-    public abstract class BaseEnemy : KinematicBody2D, IStateMachine
+    public abstract class BaseEnemy : KinematicBody2D
     {
         [Export] public int Health;
 
@@ -13,7 +13,7 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         protected abstract HurtBox Hurtbox();
         protected abstract IState InitialState();
 
-        private IState _currentState;
+        protected StateMachine _sm;
 
         private readonly KnockedBackState<BaseEnemy> KnockedBack = new KnockedBackState<BaseEnemy>();
         private readonly DeathAnimationState DeathAnimation = new DeathAnimationState();
@@ -36,37 +36,14 @@ namespace RandomDungeons.Nodes.Elements.Enemies
                 method: nameof(OnTookDamage)
             );
 
-            ChangeState(InitialState());
-        }
-
-        public void ChangeState(IState state)
-        {
-            if (state != null)
-            {
-                state.StateMachine = this;
-                state.Owner = this;
-            }
-
-            var prevState = _currentState;
-            _currentState = state;
-
-            prevState?._StateExited();
-            _currentState?._StateEntered();
-        }
-
-        public override void _Process(float delta)
-        {
-            _currentState?._Process(delta);
+            _sm = new StateMachine(this);
+            _sm.ChangeState(InitialState());
         }
 
         public override void _PhysicsProcess(float delta)
         {
-            _currentState?._PhysicsProcess(delta);
-
-            if (Health <= 0 && _currentState != DeathAnimation)
-            {
-                ChangeState(DeathAnimation);
-            }
+            if (Health <= 0 && _sm.CurrentState != DeathAnimation)
+                _sm.ChangeState(DeathAnimation);
         }
 
         protected virtual void OnTookDamage(HitBox hitBox)
@@ -74,10 +51,10 @@ namespace RandomDungeons.Nodes.Elements.Enemies
             Health -= hitBox.Damage;
             KnockedBack.Velocity = hitBox.GetKnockbackVelocity(this);
 
-            ChangeState(KnockedBack);
+            _sm.ChangeState(KnockedBack);
         }
 
-        protected virtual void OnHitWall() => ChangeState(InitialState());
-        protected virtual void OnKnockbackFinished() => ChangeState(InitialState());
+        protected virtual void OnHitWall() => _sm.ChangeState(InitialState());
+        protected virtual void OnKnockbackFinished() => _sm.ChangeState(InitialState());
     }
 }

@@ -16,8 +16,8 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         protected override HurtBox Hurtbox() => GetNode<HurtBox>("%HurtBox");
         protected override IState InitialState() => Idle;
 
-        protected override void OnHitWall() => ChangeState(Wander);
-        protected override void OnKnockbackFinished() => ChangeState(Wander);
+        protected override void OnHitWall() => _sm.ChangeState(Wander);
+        protected override void OnKnockbackFinished() => _sm.ChangeState(Wander);
 
         private readonly IdleState Idle = new IdleState();
         private class IdleState : State<ObliviousZombie>

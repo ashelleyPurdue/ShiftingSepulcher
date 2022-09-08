@@ -25,6 +25,8 @@ namespace RandomDungeons.Nodes.Elements
             DeathAnimation.AnimationTarget = _sprite;
             DeathAnimation.AnimationEnded += () => ChangeState(AfterDeathAnimation);
 
+            KnockedBack.StoppedMoving += () => ChangeState(Walking);
+
             ChangeState(Walking);
         }
 
@@ -53,6 +55,9 @@ namespace RandomDungeons.Nodes.Elements
         public void OnTookDamage(HitBox hitBox)
         {
             PlayerInventory.Health -= hitBox.Damage;
+
+            KnockedBack.Velocity = hitBox.GetKnockbackVelocity(this);
+            ChangeState(KnockedBack);
 
             if (PlayerInventory.Health <= 0)
                 ChangeState(DeathAnimation);
@@ -123,6 +128,7 @@ namespace RandomDungeons.Nodes.Elements
             }
         }
 
+        private readonly KnockedBackState<Player> KnockedBack = new KnockedBackState<Player>();
         private readonly DeathAnimationState DeathAnimation = new DeathAnimationState();
     }
 }

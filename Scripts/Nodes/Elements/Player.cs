@@ -20,8 +20,12 @@ namespace RandomDungeons.Nodes.Elements
 
         public override void _Ready()
         {
+            PlayerInventory.Reset();
+
             DeathAnimation.AnimationTarget = _sprite;
             DeathAnimation.AnimationEnded += () => ChangeState(AfterDeathAnimation);
+
+            KnockedBack.StoppedMoving += () => ChangeState(Walking);
 
             ChangeState(Walking);
         }
@@ -45,13 +49,18 @@ namespace RandomDungeons.Nodes.Elements
 
         public override void _PhysicsProcess(float deltaTime)
         {
-            _currentState._PhysicsProcess(deltaTime);
+            _currentState?._PhysicsProcess(deltaTime);
         }
 
         public void OnTookDamage(HitBox hitBox)
         {
-            // TODO: Take more than one hit to die
-            ChangeState(DeathAnimation);
+            PlayerInventory.Health -= hitBox.Damage;
+
+            KnockedBack.Velocity = hitBox.GetKnockbackVelocity(this);
+            ChangeState(KnockedBack);
+
+            if (PlayerInventory.Health <= 0)
+                ChangeState(DeathAnimation);
         }
 
         private readonly IState Walking = new WalkingState();
@@ -119,6 +128,7 @@ namespace RandomDungeons.Nodes.Elements
             }
         }
 
+        private readonly KnockedBackState<Player> KnockedBack = new KnockedBackState<Player>();
         private readonly DeathAnimationState DeathAnimation = new DeathAnimationState();
     }
 }

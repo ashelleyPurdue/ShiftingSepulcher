@@ -14,7 +14,6 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         protected abstract IState InitialState();
 
         private IState _currentState;
-        private float _hurtboxCooldownTimer;
 
         private readonly KnockedBackState<BaseEnemy> KnockedBack = new KnockedBackState<BaseEnemy>();
         private readonly DeathAnimationState DeathAnimation = new DeathAnimationState();
@@ -59,7 +58,6 @@ namespace RandomDungeons.Nodes.Elements.Enemies
 
         public override void _PhysicsProcess(float delta)
         {
-            _hurtboxCooldownTimer -= delta;
             _currentState?._PhysicsProcess(delta);
 
             if (Health <= 0 && _currentState != DeathAnimation)
@@ -70,14 +68,10 @@ namespace RandomDungeons.Nodes.Elements.Enemies
 
         protected virtual void OnTookDamage(HitBox hitBox)
         {
-            if (_hurtboxCooldownTimer <= 0)
-            {
-                Health -= hitBox.Damage;
-                _hurtboxCooldownTimer = hitBox.InvlunerabilityTime;
-                KnockedBack.Velocity = hitBox.KnockbackVelocity;
+            Health -= hitBox.Damage;
+            KnockedBack.Velocity = hitBox.GetKnockbackVelocity(this);
 
-                ChangeState(KnockedBack);
-            }
+            ChangeState(KnockedBack);
         }
 
         protected virtual void OnHitWall() => ChangeState(InitialState());

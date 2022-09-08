@@ -26,10 +26,6 @@ namespace RandomDungeons.Nodes.Elements
             Visible = IsSwinging;
             _hitBox.Monitoring  = IsSwinging;
             _hitBox.Monitorable = IsSwinging;
-            _hitBox.KnockbackVelocity = KnockbackSpeed * new Vector2(
-                Mathf.Cos(Rotation),
-                Mathf.Sin(Rotation)
-            );
         }
 
         public void StartSwinging(EightDirection dir)

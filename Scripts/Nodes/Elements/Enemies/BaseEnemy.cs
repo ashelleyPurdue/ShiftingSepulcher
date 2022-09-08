@@ -42,7 +42,10 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         public void ChangeState(IState state)
         {
             if (state != null)
+            {
+                state.StateMachine = this;
                 state.Owner = this;
+            }
 
             var prevState = _currentState;
             _currentState = state;

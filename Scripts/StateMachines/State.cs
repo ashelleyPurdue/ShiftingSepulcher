@@ -2,7 +2,7 @@ namespace RandomDungeons.StateMachines
 {
     public abstract class State<TOwner> : IState
     {
-        public IStateMachine StateMachine {get; set;}
+        public StateMachine StateMachine {get; set;}
 
         object IState.Owner
         {

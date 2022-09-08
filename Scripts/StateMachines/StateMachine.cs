@@ -2,7 +2,7 @@ using Godot;
 
 namespace RandomDungeons.StateMachines
 {
-    public class StateMachine : Node, IStateMachine
+    public class StateMachine : Node
     {
         public IState CurrentState {get; private set;}
         private readonly Node _owner;

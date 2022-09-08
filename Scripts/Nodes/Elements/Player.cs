@@ -9,50 +9,26 @@ using RandomDungeons.StateMachines.CommonStates;
 
 namespace RandomDungeons.Nodes.Elements
 {
-    public class Player : KinematicBody2D, IStateMachine
+    public class Player : KinematicBody2D
     {
         public const float WalkSpeed = 283;
 
         private EightDirectionalSprite _sprite => GetNode<EightDirectionalSprite>("%Sprite");
         private PlayerSword _sword => GetNode<PlayerSword>("%Sword");
 
-        private IState _currentState;
+        private StateMachine _sm;
 
         public override void _Ready()
         {
             PlayerInventory.Reset();
 
             DeathAnimation.AnimationTarget = _sprite;
-            DeathAnimation.AnimationEnded += () => ChangeState(AfterDeathAnimation);
+            DeathAnimation.AnimationEnded += () => _sm.ChangeState(AfterDeathAnimation);
 
-            KnockedBack.StoppedMoving += () => ChangeState(Walking);
+            KnockedBack.StoppedMoving += () => _sm.ChangeState(Walking);
 
-            ChangeState(Walking);
-        }
-
-        public void ChangeState(IState state)
-        {
-            if (state != null)
-            {
-                state.StateMachine = this;
-                state.Owner = this;
-            }
-
-            var prevState = _currentState;
-            _currentState = state;
-
-            prevState?._StateExited();
-            _currentState?._StateEntered();
-        }
-
-        public override void _Process(float deltaTime)
-        {
-            _currentState?._Process(deltaTime);
-        }
-
-        public override void _PhysicsProcess(float deltaTime)
-        {
-            _currentState?._PhysicsProcess(deltaTime);
+            _sm = new StateMachine(this);
+            _sm.ChangeState(Walking);
         }
 
         public void OnTookDamage(HitBox hitBox)
@@ -60,10 +36,10 @@ namespace RandomDungeons.Nodes.Elements
             PlayerInventory.Health -= hitBox.Damage;
 
             KnockedBack.Velocity = hitBox.GetKnockbackVelocity(this);
-            ChangeState(KnockedBack);
+            _sm.ChangeState(KnockedBack);
 
             if (PlayerInventory.Health <= 0)
-                ChangeState(DeathAnimation);
+                _sm.ChangeState(DeathAnimation);
         }
 
         private readonly IState Walking = new WalkingState();

@@ -3,7 +3,7 @@ using Godot;
 
 namespace RandomDungeons.StateMachines.CommonStates
 {
-    public class DeathAnimationState : State<IStateMachine>
+    public class DeathAnimationState : State<object>
     {
         private const float EndScaleMultiplier = 2;
         private const float AnimationDuration = 0.1f;

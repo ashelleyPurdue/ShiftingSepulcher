@@ -69,7 +69,7 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         protected virtual void OnTookDamage(HitBox hitBox)
         {
             Health -= hitBox.Damage;
-            KnockedBack.Velocity = hitBox.KnockbackVelocity;
+            KnockedBack.Velocity = hitBox.GetKnockbackVelocity(this);
 
             ChangeState(KnockedBack);
         }

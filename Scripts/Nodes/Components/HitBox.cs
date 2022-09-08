@@ -10,7 +10,7 @@ namespace RandomDungeons.Nodes.Components
 
         [Export] public int Damage = 1;
         [Export] public float InvlunerabilityTime = 0.5f;
-        [Export] public Vector2 KnockbackVelocity = Vector2.Zero;
+        [Export] public float KnockbackSpeed = 300;
 
         [Export] public NodePath[] IgnoredHurtBoxes = new NodePath[] {};
 
@@ -33,6 +33,12 @@ namespace RandomDungeons.Nodes.Components
                     EmitSignal(nameof(DealtDamage), hurtBox);
                 }
             }
+        }
+
+        public Vector2 GetKnockbackVelocity(Node2D victim)
+        {
+            Vector2 dir = (victim.GlobalPosition - GlobalPosition).Normalized();
+            return dir * KnockbackSpeed;
         }
 
         private bool IsIgnored(HurtBox hurtBox)

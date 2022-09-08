@@ -20,6 +20,8 @@ namespace RandomDungeons.Nodes.Elements
 
         public override void _Ready()
         {
+            PlayerInventory.Reset();
+
             DeathAnimation.AnimationTarget = _sprite;
             DeathAnimation.AnimationEnded += () => ChangeState(AfterDeathAnimation);
 

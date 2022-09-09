@@ -13,6 +13,8 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         protected abstract HurtBox Hurtbox();
         protected abstract IState InitialState();
 
+        private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
+
         protected StateMachine _sm;
 
         private readonly KnockedBackState<BaseEnemy> KnockedBack = new KnockedBackState<BaseEnemy>();
@@ -52,6 +54,9 @@ namespace RandomDungeons.Nodes.Elements.Enemies
             KnockedBack.Velocity = hitBox.GetKnockbackVelocity(this);
 
             _sm.ChangeState(KnockedBack);
+
+            if (Health > 0)
+                _hurtFlasher?.Flash();
         }
 
         protected virtual void OnHitWall() => _sm.ChangeState(InitialState());

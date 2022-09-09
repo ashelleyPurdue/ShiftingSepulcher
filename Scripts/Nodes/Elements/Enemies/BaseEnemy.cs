@@ -13,6 +13,8 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         protected abstract HurtBox Hurtbox();
         protected abstract IState InitialState();
 
+        private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
+
         protected StateMachine _sm;
 
         private readonly KnockedBackState<BaseEnemy> KnockedBack = new KnockedBackState<BaseEnemy>();
@@ -23,6 +25,8 @@ namespace RandomDungeons.Nodes.Elements.Enemies
             KnockedBack.HitWall += () =>
             {
                 Health--;
+                _hurtFlasher.Flash();
+
                 OnHitWall();
             };
             KnockedBack.StoppedMoving += OnKnockbackFinished;
@@ -43,14 +47,18 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         public override void _PhysicsProcess(float delta)
         {
             if (Health <= 0 && _sm.CurrentState != DeathAnimation)
+            {
+                _hurtFlasher.Cancel();
                 _sm.ChangeState(DeathAnimation);
+            }
         }
 
         protected virtual void OnTookDamage(HitBox hitBox)
         {
             Health -= hitBox.Damage;
-            KnockedBack.Velocity = hitBox.GetKnockbackVelocity(this);
+            _hurtFlasher?.Flash();
 
+            KnockedBack.Velocity = hitBox.GetKnockbackVelocity(this);
             _sm.ChangeState(KnockedBack);
         }
 

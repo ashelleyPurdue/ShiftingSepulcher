@@ -15,6 +15,7 @@ namespace RandomDungeons.Nodes.Elements
 
         private EightDirectionalSprite _sprite => GetNode<EightDirectionalSprite>("%Sprite");
         private PlayerSword _sword => GetNode<PlayerSword>("%Sword");
+        private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
 
         private StateMachine _sm;
 
@@ -34,12 +35,16 @@ namespace RandomDungeons.Nodes.Elements
         public void OnTookDamage(HitBox hitBox)
         {
             PlayerInventory.Health -= hitBox.Damage;
+            _hurtFlasher.Flash();
 
             KnockedBack.Velocity = hitBox.GetKnockbackVelocity(this);
             _sm.ChangeState(KnockedBack);
 
             if (PlayerInventory.Health <= 0)
+            {
+                _hurtFlasher.Cancel();
                 _sm.ChangeState(DeathAnimation);
+            }
         }
 
         private readonly IState Walking = new WalkingState();

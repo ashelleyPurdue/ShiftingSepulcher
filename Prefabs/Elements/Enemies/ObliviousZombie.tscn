@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/Nodes/Components/HurtBox.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Nodes/Elements/Enemies/ObliviousZombie.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/Nodes/Components/HitBox.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/Nodes/Components/HurtFlasher.cs" type="Script" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 16 )
@@ -41,3 +42,8 @@ IgnoredHurtBoxes = [ NodePath("../HurtBox") ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 shape = SubResource( 3 )
+
+[node name="HurtFlasher" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource( 4 )
+VisualsPath = NodePath("../Visuals")

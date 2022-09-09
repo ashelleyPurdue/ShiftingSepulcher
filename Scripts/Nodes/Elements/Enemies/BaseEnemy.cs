@@ -25,6 +25,10 @@ namespace RandomDungeons.Nodes.Elements.Enemies
             KnockedBack.HitWall += () =>
             {
                 Health--;
+
+                if (Health >= 0)
+                    _hurtFlasher.Flash();
+
                 OnHitWall();
             };
             KnockedBack.StoppedMoving += OnKnockbackFinished;

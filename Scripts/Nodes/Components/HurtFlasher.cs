@@ -44,5 +44,14 @@ namespace RandomDungeons.Nodes.Components
             _visuals.Modulate = FlashColor;
             _timer = FlashDuration;
         }
+
+        public void Cancel()
+        {
+            if (!_isFlashing)
+                return;
+
+            _visuals.Modulate = _originalColor;
+            _isFlashing = false;
+        }
     }
 }

@@ -25,9 +25,7 @@ namespace RandomDungeons.Nodes.Elements.Enemies
             KnockedBack.HitWall += () =>
             {
                 Health--;
-
-                if (Health >= 0)
-                    _hurtFlasher.Flash();
+                _hurtFlasher.Flash();
 
                 OnHitWall();
             };
@@ -49,18 +47,19 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         public override void _PhysicsProcess(float delta)
         {
             if (Health <= 0 && _sm.CurrentState != DeathAnimation)
+            {
+                _hurtFlasher.Cancel();
                 _sm.ChangeState(DeathAnimation);
+            }
         }
 
         protected virtual void OnTookDamage(HitBox hitBox)
         {
             Health -= hitBox.Damage;
+            _hurtFlasher?.Flash();
+
             KnockedBack.Velocity = hitBox.GetKnockbackVelocity(this);
-
             _sm.ChangeState(KnockedBack);
-
-            if (Health > 0)
-                _hurtFlasher?.Flash();
         }
 
         protected virtual void OnHitWall() => _sm.ChangeState(InitialState());

@@ -3,18 +3,16 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 16 )
 
-[node name="DirtPatch" type="Node2D"]
+[node name="DirtPatch" type="StaticBody2D"]
+collision_layer = 2
+collision_mask = 2
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 16, 16 )
+shape = SubResource( 1 )
+
+[node name="Visuals" type="Polygon2D" parent="."]
 position = Vector2( 16, 16 )
 scale = Vector2( 0.5, 0.5 )
 color = Color( 0.654902, 0.572549, 0.427451, 1 )
 polygon = PoolVector2Array( -32, -32, 32, -32, 32, 32, -32, 32 )
-
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-collision_layer = 2
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2( 16, 16 )
-shape = SubResource( 1 )

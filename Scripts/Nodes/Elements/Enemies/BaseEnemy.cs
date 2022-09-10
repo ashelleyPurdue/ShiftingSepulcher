@@ -48,7 +48,7 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         {
             if (Health <= 0 && _sm.CurrentState != DeathAnimation)
             {
-                _hurtFlasher.Cancel();
+                _hurtFlasher?.Cancel();
                 _sm.ChangeState(DeathAnimation);
             }
         }

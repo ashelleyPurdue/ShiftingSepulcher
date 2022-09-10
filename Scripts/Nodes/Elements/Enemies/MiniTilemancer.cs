@@ -99,10 +99,13 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         private void SummonTile()
         {
             var tile = TilePrefab.Instance<AnimatedTile>();
-            AddChild(tile);
+            GetParent().AddChild(tile);
 
             tile.GlobalPosition = RandomTileSpawnPos();
             tile.Target = _target;
+            tile.SpinUpTime = TileSpinUpTime;
+            tile.HoldTime = TileHoldTime;
+            tile.FlySpeed = TileFlySpeed;
         }
 
         private Vector2 RandomTileSpawnPos()

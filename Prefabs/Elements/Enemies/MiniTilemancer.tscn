@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/Nodes/Components/HitBox.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Nodes/Components/HurtBox.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/Nodes/Elements/Enemies/MiniTilemancer.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/Nodes/Components/HurtFlasher.cs" type="Script" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.0
@@ -76,3 +77,8 @@ polygon = PoolVector2Array( -5, -13, 7, -16, 14, -10, 9, -1, -2, -2 )
 [node name="Sleeve" type="Polygon2D" parent="Visuals/Offset/RightHand"]
 color = Color( 0.788235, 0.619608, 0.262745, 1 )
 polygon = PoolVector2Array( -3, -7, -2, -3, 9, -1, 14, -10, 12, 0, 6, 4, -1, 11, -1, 5 )
+
+[node name="HurtFlasher" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource( 4 )
+VisualsPath = NodePath("../Visuals")

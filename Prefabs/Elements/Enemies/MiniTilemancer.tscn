@@ -16,7 +16,6 @@ radius = 16.0
 [node name="MiniTilemancer" type="KinematicBody2D"]
 collision_layer = 0
 script = ExtResource( 3 )
-Health = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )

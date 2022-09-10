@@ -77,3 +77,10 @@ position = Vector2( 192, 192 )
 
 [node name="BreakablePot4" parent="." instance=ExtResource( 11 )]
 position = Vector2( -192, 192 )
+
+[node name="EnemyContainmentBarrier" type="StaticBody2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="EnemyContainmentBarrier"]
+polygon = PoolVector2Array( -288, -288, 288, -288, 288, 288, -288, 288, -256, 256, 256, 256, 256, -256, -256, -256, -256, 256, -288, 288 )

@@ -7,7 +7,7 @@ namespace RandomDungeons.Nodes.Elements.Enemies
 {
     public abstract class BaseEnemy : KinematicBody2D
     {
-        [Export] public int Health;
+        [Export] public int Health = 1;
 
         protected abstract Node2D Visuals();
         protected abstract HurtBox Hurtbox();

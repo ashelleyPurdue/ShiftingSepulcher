@@ -51,7 +51,10 @@ namespace RandomDungeons.Nodes.Elements.Enemies
 
         private Vector2 RandomTileSpawnPos()
         {
-            float angle = Mathf.Deg2Rad(GD.Randf() * 360);
+            float angleDeg = Mathf.Rad2Deg(GetAngleTo(_target.GlobalPosition));
+            angleDeg += (GD.Randf() * 180) - 90;
+
+            float angle = Mathf.Deg2Rad(angleDeg);
             var dir = new Vector2(
                 Mathf.Cos(angle),
                 Mathf.Sin(angle)

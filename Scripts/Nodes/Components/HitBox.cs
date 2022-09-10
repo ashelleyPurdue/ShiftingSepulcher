@@ -58,7 +58,7 @@ namespace RandomDungeons.Nodes.Components
 
         private bool IsIgnored(HurtBox hurtBox)
         {
-            return _ignoredHurtBoxes.Contains(hurtBox);
+            return _ignoredHurtBoxes.Contains(hurtBox) || hurtBox.IsIgnoring(this);
         }
     }
 }

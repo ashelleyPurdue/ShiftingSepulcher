@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Godot;
 
 namespace RandomDungeons.Nodes.Components
@@ -9,6 +10,8 @@ namespace RandomDungeons.Nodes.Components
         public bool IsInvulnerable => _cooldownTimer > 0;
         private float _cooldownTimer = 0;
 
+        private HashSet<HitBox> _ignoredHitboxes = new HashSet<HitBox>();
+
         public override void _PhysicsProcess(float delta)
         {
             if (IsInvulnerable)
@@ -19,6 +22,16 @@ namespace RandomDungeons.Nodes.Components
         {
             _cooldownTimer = hitBox.InvlunerabilityTime;
             EmitSignal(nameof(TookDamage), hitBox);
+        }
+
+        public void IgnoreHitBox(HitBox hitBox)
+        {
+            _ignoredHitboxes.Add(hitBox);
+        }
+
+        public bool IsIgnoring(HitBox hitBox)
+        {
+            return _ignoredHitboxes.Contains(hitBox);
         }
     }
 }

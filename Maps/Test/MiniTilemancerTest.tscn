@@ -27,4 +27,3 @@ polygon = PoolVector2Array( -352, -288, 352, -288, 352, 272, -352, 272, -320, 24
 [node name="MiniTilemancer" parent="." instance=ExtResource( 3 )]
 position = Vector2( -16, -112 )
 TilePrefab = ExtResource( 2 )
-TargetPath = NodePath("../Player")

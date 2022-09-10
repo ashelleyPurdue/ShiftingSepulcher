@@ -18,8 +18,7 @@ namespace RandomDungeons.Nodes.Elements.Enemies
 
         [Export] public PackedScene TilePrefab;
 
-        [Export] public NodePath TargetPath;    // TODO: Find the target some other way
-        private Node2D _target => GetNode<Node2D>(TargetPath);
+        private Node2D _target => FindPlayer();
 
         protected override HurtBox Hurtbox() => GetNode<HurtBox>("%HurtBox");
         protected override Node2D Visuals() => GetNode<Node2D>("%Visuals");

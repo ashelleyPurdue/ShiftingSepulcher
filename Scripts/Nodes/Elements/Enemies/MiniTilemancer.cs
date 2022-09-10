@@ -18,17 +18,26 @@ namespace RandomDungeons.Nodes.Elements.Enemies
 
         protected override HurtBox Hurtbox() => GetNode<HurtBox>("%HurtBox");
         protected override Node2D Visuals() => GetNode<Node2D>("%Visuals");
-        protected override IState InitialState() => Idle;
+        protected override IState InitialState() => SummoningTile;
 
-        public override void _Ready()
+        private readonly IState SummoningTile = new SummoningTileState();
+        private class SummoningTileState : State<MiniTilemancer>
         {
-            base._Ready();
-            SummonTile();
-        }
+            private float _timer;
 
-        private readonly IState Idle = new IdleState();
-        private class IdleState : State<MiniTilemancer>
-        {
+            public override void _StateEntered()
+            {
+                _timer = Owner.TileSpinUpTime + Owner.TileHoldTime;
+                Owner.SummonTile();
+            }
+
+            public override void _PhysicsProcess(float delta)
+            {
+                _timer -= delta;
+
+                if (_timer <= 0)
+                    ChangeState(Owner.SummoningTile);
+            }
         }
 
         private void SummonTile()

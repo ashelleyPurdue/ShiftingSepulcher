@@ -9,6 +9,7 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         [Export] public float TileSpawnRadius = 32 * 2;
         [Export] public float TileSpinUpTime = 1;
         [Export] public float TileHoldTime = 2;
+        [Export] public float TileSpawnCooldownTime = 1;
         [Export] public float TileFlySpeed = 600;
 
         [Export] public PackedScene TilePrefab;
@@ -27,7 +28,11 @@ namespace RandomDungeons.Nodes.Elements.Enemies
 
             public override void _StateEntered()
             {
-                _timer = Owner.TileSpinUpTime + Owner.TileHoldTime;
+                _timer =
+                    Owner.TileSpinUpTime +
+                    Owner.TileHoldTime +
+                    Owner.TileSpawnCooldownTime;
+
                 Owner.SummonTile();
             }
 

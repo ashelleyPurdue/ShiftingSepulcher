@@ -12,6 +12,10 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         [Export] public float TileSpawnCooldownTime = 1;
         [Export] public float TileFlySpeed = 600;
 
+        [Export] public float WanderSpeed = 32;
+        [Export] public float WanderTime = 1;
+        [Export] public float WanderPauseTime = 1;
+
         [Export] public PackedScene TilePrefab;
 
         [Export] public NodePath TargetPath;    // TODO: Find the target some other way
@@ -34,6 +38,53 @@ namespace RandomDungeons.Nodes.Elements.Enemies
                     Owner.TileSpawnCooldownTime;
 
                 Owner.SummonTile();
+            }
+
+            public override void _PhysicsProcess(float delta)
+            {
+                _timer -= delta;
+
+                if (_timer <= 0)
+                    ChangeState(Owner.Wandering);
+            }
+        }
+
+        private readonly IState Wandering = new WanderingState();
+        private class WanderingState : State<MiniTilemancer>
+        {
+            private float _timer;
+            private Vector2 _velocity;
+
+            public override void _StateEntered()
+            {
+                _timer = Owner.WanderTime;
+
+                float angle = Mathf.Deg2Rad(GD.Randf() * 360);
+                _velocity = Owner.WanderSpeed * new Vector2(
+                    Mathf.Cos(angle),
+                    Mathf.Sin(angle)
+                );
+            }
+
+            public override void _PhysicsProcess(float delta)
+            {
+                Owner.MoveAndSlide(_velocity);
+
+                _timer -= delta;
+
+                if (_timer <= 0)
+                    ChangeState(Owner.Pausing);
+            }
+        }
+
+        private readonly IState Pausing = new PausingState();
+        private class PausingState : State<MiniTilemancer>
+        {
+            private float _timer;
+
+            public override void _StateEntered()
+            {
+                _timer = Owner.WanderPauseTime;
             }
 
             public override void _PhysicsProcess(float delta)

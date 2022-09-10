@@ -4,8 +4,8 @@
 extents = Vector2( 16, 16 )
 
 [node name="DirtPatch" type="StaticBody2D"]
-collision_layer = 2
-collision_mask = 2
+collision_layer = 4
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 16, 16 )

@@ -25,7 +25,7 @@ namespace RandomDungeons.Nodes.Elements.Enemies
             KnockedBack.HitWall += () =>
             {
                 Health--;
-                _hurtFlasher.Flash();
+                _hurtFlasher?.Flash();
 
                 OnHitWall();
             };

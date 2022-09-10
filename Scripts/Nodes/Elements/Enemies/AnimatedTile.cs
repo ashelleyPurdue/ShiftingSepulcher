@@ -11,7 +11,8 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         [Export] public float SpinUpTime = 1;
         [Export] public float HoldTime = 2;
         [Export] public float FlySpeed = 600;
-        [Export] public NodePath TargetPath;
+
+        public Node2D Target;
 
         private const float MinRotSpeed = 360;
         private const float MaxRotSpeed = 800;
@@ -19,8 +20,6 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         private Node2D _tile => GetNode<Node2D>("%Tile");
         private Vector2 _hoverPos => GetNode<Node2D>("%TileHoverPos").Position;
         private Vector2 _restPos => GetNode<Node2D>("%TileRestPos").Position;
-
-        private Vector2 _targetPos => GetNode<Node2D>(TargetPath).Position;
 
         private float _rotSpeed = 360;
 
@@ -114,7 +113,7 @@ namespace RandomDungeons.Nodes.Elements.Enemies
 
             public override void _StateEntered()
             {
-                Vector2 dir = (Owner._targetPos - Owner.Position).Normalized();
+                Vector2 dir = (Owner.Target.GlobalPosition - Owner.GlobalPosition).Normalized();
                 _velocity = dir * Owner.FlySpeed;
             }
 

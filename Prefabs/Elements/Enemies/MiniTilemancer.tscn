@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/Nodes/Components/HitBox.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Nodes/Components/HurtBox.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/Nodes/Elements/Enemies/MiniTilemancer.cs" type="Script" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.0
@@ -13,11 +14,13 @@ radius = 16.0
 radius = 16.0
 
 [node name="MiniTilemancer" type="KinematicBody2D"]
+script = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
 [node name="HitBox" type="Area2D" parent="."]
+unique_name_in_owner = true
 script = ExtResource( 1 )
 IgnoredHurtBoxes = [ NodePath("../HurtBox") ]
 
@@ -25,12 +28,14 @@ IgnoredHurtBoxes = [ NodePath("../HurtBox") ]
 shape = SubResource( 2 )
 
 [node name="HurtBox" type="Area2D" parent="."]
+unique_name_in_owner = true
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 shape = SubResource( 3 )
 
 [node name="Visuals" type="Node2D" parent="."]
+unique_name_in_owner = true
 position = Vector2( -3, -16 )
 scale = Vector2( 0.281711, 0.28 )
 

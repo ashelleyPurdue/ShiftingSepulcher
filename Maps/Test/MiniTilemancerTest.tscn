@@ -14,10 +14,6 @@ __meta__ = {
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 
-[node name="AnimatedTile" parent="." instance=ExtResource( 2 )]
-position = Vector2( -112, -112 )
-TargetPath = NodePath("../Player")
-
 [node name="Walls" type="Polygon2D" parent="."]
 invert_enable = true
 invert_border = 32.0
@@ -30,3 +26,5 @@ polygon = PoolVector2Array( -352, -288, 352, -288, 352, 272, -352, 272, -320, 24
 
 [node name="MiniTilemancer" parent="." instance=ExtResource( 3 )]
 position = Vector2( -16, -112 )
+TilePrefab = ExtResource( 2 )
+TargetPath = NodePath("../Player")

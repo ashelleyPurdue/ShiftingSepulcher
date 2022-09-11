@@ -1,7 +1,9 @@
 using Godot;
-using RandomDungeons.Graphs;
 
-namespace RandomDungeons.PhysicalDungeons
+using RandomDungeons.Graphs;
+using RandomDungeons.PhysicalDungeons;
+
+namespace RandomDungeons.Nodes.DungeonRooms
 {
     public class DungeonRoomFactory : Node
     {

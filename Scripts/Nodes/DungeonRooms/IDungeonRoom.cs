@@ -4,7 +4,7 @@ using Godot;
 using RandomDungeons.Utils;
 using RandomDungeons.Graphs;
 
-namespace RandomDungeons.PhysicalDungeons
+namespace RandomDungeons.Nodes.DungeonRooms
 {
     // I know, I know.  This is an abstract class, but I prefixed its name with
     // "I".  I _really_ wanted this to be an interface, but I couldn't because

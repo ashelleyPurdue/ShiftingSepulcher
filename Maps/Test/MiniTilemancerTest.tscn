@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Prefabs/Elements/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Prefabs/Elements/Enemies/AnimatedTile.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Prefabs/Elements/Enemies/MiniTilemancer.tscn" type="PackedScene" id=3]
+
+[node name="MiniTilemancerTest" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+
+[node name="Walls" type="Polygon2D" parent="."]
+invert_enable = true
+invert_border = 32.0
+polygon = PoolVector2Array( -320, -256, 320, -256, 320, 240, -320, 240 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Walls"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Walls/StaticBody2D"]
+polygon = PoolVector2Array( -352, -288, 352, -288, 352, 272, -352, 272, -320, 240, 320, 240, 320, -256, -320, -256, -320, 240, -352, 272 )
+
+[node name="MiniTilemancer" parent="." instance=ExtResource( 3 )]
+position = Vector2( -16, -112 )
+TilePrefab = ExtResource( 2 )

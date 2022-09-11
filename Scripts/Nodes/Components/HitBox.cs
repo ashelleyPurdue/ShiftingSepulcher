@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
@@ -13,6 +14,20 @@ namespace RandomDungeons.Nodes.Components
         [Export] public float KnockbackSpeed = 300;
 
         [Export] public NodePath[] IgnoredHurtBoxes = new NodePath[] {};
+        private HashSet<HurtBox> _ignoredHurtBoxes = new HashSet<HurtBox>();
+
+        public override void _Ready()
+        {
+            foreach (var path in IgnoredHurtBoxes)
+            {
+                _ignoredHurtBoxes.Add(GetNode<HurtBox>(path));
+            }
+        }
+
+        public void IgnoreHurtBox(HurtBox hurtBox)
+        {
+            _ignoredHurtBoxes.Add(hurtBox);
+        }
 
         public override void _PhysicsProcess(float delta)
         {
@@ -43,7 +58,7 @@ namespace RandomDungeons.Nodes.Components
 
         private bool IsIgnored(HurtBox hurtBox)
         {
-            return IgnoredHurtBoxes.Any(p => GetNode(p) == hurtBox);
+            return _ignoredHurtBoxes.Contains(hurtBox) || hurtBox.IsIgnoring(this);
         }
     }
 }

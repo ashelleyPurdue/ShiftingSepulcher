@@ -17,5 +17,7 @@ namespace RandomDungeons.Nodes.DungeonRooms
         public abstract float FadePercent {get; set;}
 
         public abstract Node2D GetDoorSpawn(CardinalDirection dir);
+
+        public abstract void SetGraphRoom(DungeonGraphRoom graphRoom);
     }
 }

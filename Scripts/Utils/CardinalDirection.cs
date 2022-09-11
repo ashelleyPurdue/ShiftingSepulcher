@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Godot;
 
 namespace RandomDungeons.Utils
 {
@@ -24,6 +25,18 @@ namespace RandomDungeons.Utils
             }
 
             throw new Exception("There are only four cardinal directions, dude.");
+        }
+
+        public static Vector2 ToVector2(this CardinalDirection dir)
+        {
+            switch (dir)
+            {
+                case CardinalDirection.North: return Vector2.Up;
+                case CardinalDirection.South: return Vector2.Down;
+                case CardinalDirection.East: return Vector2.Right;
+                case CardinalDirection.West: return Vector2.Left;
+                default: throw new Exception($"Unexpected cardinal direction {dir}");
+            }
         }
     }
 

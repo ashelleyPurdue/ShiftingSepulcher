@@ -1,20 +1,42 @@
 using Godot;
 
 using RandomDungeons.Graphs;
-using RandomDungeons.PhysicalDungeons;
 
 namespace RandomDungeons.Nodes.DungeonRooms
 {
     public class DungeonRoomFactory : Node
     {
         [Export] public PackedScene LegacyRoom;
+        [Export] public PackedScene EmptyRoom;
+        [Export] public PackedScene SingleZombieRoom;
 
         public IDungeonRoom BuildRoom(DungeonGraphRoom graphRoom)
         {
-            // TODO: Delegate to different "sub" builders depending on the
-            // the challenge type
+            switch (graphRoom.ChallengeType)
+            {
+                case ChallengeType.None: return BuildEmptyRoom(graphRoom);
+                case ChallengeType.Combat: return BuildCombatRoom(graphRoom);
+                default: return BuildLegacyRoom(graphRoom);
+            }
+        }
 
-            var realRoom = LegacyRoom.Instance<LegacyDungeonRoom>();
+        private IDungeonRoom BuildEmptyRoom(DungeonGraphRoom graphRoom)
+        {
+            var realRoom = EmptyRoom.Instance<IDungeonRoom>();
+            realRoom.SetGraphRoom(graphRoom);
+            return realRoom;
+        }
+
+        private IDungeonRoom BuildCombatRoom(DungeonGraphRoom graphRoom)
+        {
+            var realRoom = SingleZombieRoom.Instance<IDungeonRoom>();
+            realRoom.SetGraphRoom(graphRoom);
+            return realRoom;
+        }
+
+        private IDungeonRoom BuildLegacyRoom(DungeonGraphRoom graphRoom)
+        {
+            var realRoom = LegacyRoom.Instance<IDungeonRoom>();
             realRoom.SetGraphRoom(graphRoom);
             return realRoom;
         }

@@ -22,18 +22,21 @@ z_index = 1
 [node name="Visuals" type="Node2D" parent="Walls"]
 
 [node name="NorthWest" type="Polygon2D" parent="Walls/Visuals"]
-polygon = PoolVector2Array( -64, -256, -256, -256, -256, -64, -288, -64, -288, -288, -64, -288 )
+polygon = PoolVector2Array( -64, -256, -256, -256, -256, -64, -272, -64, -272, -272, -64, -272 )
 
 [node name="NorthEast" type="Polygon2D" parent="Walls/Visuals"]
-polygon = PoolVector2Array( 64, -256, 64, -288, 288, -288, 288, -64, 256, -64, 256, -256 )
+polygon = PoolVector2Array( 64, -256, 64, -272, 272, -272, 272, -64, 256, -64, 256, -256 )
 
 [node name="SouthWest" type="Polygon2D" parent="Walls/Visuals"]
-polygon = PoolVector2Array( -288, 64, -256, 64, -256, 256, -64, 256, -64, 288, -288, 288 )
+polygon = PoolVector2Array( -272, 64, -256, 64, -256, 256, -64, 256, -64, 272, -272, 272 )
 
 [node name="SouthEast" type="Polygon2D" parent="Walls/Visuals"]
-polygon = PoolVector2Array( 64, 288, 64, 256, 256, 256, 256, 64, 288, 64, 288, 288 )
+polygon = PoolVector2Array( 64, 272, 64, 256, 256, 256, 256, 64, 272, 64, 272, 272 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Walls"]
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="NorthWest" type="CollisionPolygon2D" parent="Walls/StaticBody2D"]
 polygon = PoolVector2Array( -288, -64, -256, -64, -256, -256, -64, -256, -64, -288, -288, -288 )
@@ -76,5 +79,5 @@ polygon = PoolVector2Array( -288, -288, 288, -288, 288, 288, -288, 288, -256, 25
 unique_name_in_owner = true
 visible = false
 z_index = 2
-polygon = PoolVector2Array( -288, -288, 288, -288, 288, 288, -288, 288 )
+polygon = PoolVector2Array( -272, -272, 272, -272, 272, 272, -272, 272 )
 script = ExtResource( 1 )

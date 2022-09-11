@@ -69,6 +69,7 @@ namespace RandomDungeons.PhysicalDungeons
                 var nextDoorSpawn = nextRoom.GetDoorSpawn(dir.Opposite());
 
                 nextRoom.Position = prevDoorSpawn.GlobalPosition - nextDoorSpawn.Position;
+                nextRoom.Position += dir.ToVector2() * 32;
             }
 
             EnterRoom(nextGraphRoom);

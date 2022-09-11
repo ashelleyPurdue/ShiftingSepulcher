@@ -4,7 +4,7 @@ using RandomDungeons.Utils;
 
 namespace RandomDungeons.Nodes.Components
 {
-    [Tool]
+    // [Tool]
     public class EightDirectionalSprite : Node2D
     {
         [Export] public EightDirection Direction;

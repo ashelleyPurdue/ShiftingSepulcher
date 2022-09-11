@@ -30,20 +30,11 @@ namespace RandomDungeons.PhysicalDungeons
 
         private Node2D _contentSpawn => GetNode<Node2D>("%ContentSpawn");
 
-        public override float FadePercent {get; set;}
+        public override FadeCurtain FadeCurtain => GetNode<FadeCurtain>("%FadeCurtain");
 
         public override Node2D GetDoorSpawn(CardinalDirection dir)
         {
             return GetNode<Node2D>($"%DoorSpawns/{dir}");
-        }
-
-        public override void _Process(float deltaTime)
-        {
-            // Adjust the fade curtain's transparency
-            var curtain = GetNode<Polygon2D>("%FadeCurtain");
-
-            curtain.Visible = FadePercent > 0;
-            curtain.Modulate = GetBackgroundColor(1 - FadePercent);
         }
 
         public override void SetGraphRoom(DungeonGraphRoom graphRoom)
@@ -182,14 +173,6 @@ namespace RandomDungeons.PhysicalDungeons
 
             var bars = Create<DoorBars>(parent, DoorBarsPrefab);
             bars.Challenge = _challenge;
-        }
-
-        private Color GetBackgroundColor(float alpha)
-        {
-            var c = (Color)ProjectSettings.GetSetting("rendering/environment/default_clear_color");
-            c.a = alpha;
-
-            return c;
         }
     }
 }

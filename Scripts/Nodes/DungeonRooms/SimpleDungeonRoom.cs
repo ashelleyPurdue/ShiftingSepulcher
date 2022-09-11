@@ -19,20 +19,11 @@ namespace RandomDungeons.Nodes.DungeonRooms
 
         public override DungeonGraphRoom GraphRoom {get; protected set;}
 
-        public override float FadePercent {get; set;}
+        public override FadeCurtain FadeCurtain => GetNode<FadeCurtain>("%FadeCurtain");
 
         public override Node2D GetDoorSpawn(CardinalDirection dir)
         {
             return GetNode<Node2D>($"%DoorSpawns/{dir}");
-        }
-
-        public override void _Process(float deltaTime)
-        {
-            // Adjust the fade curtain's transparency
-            var curtain = GetNode<Polygon2D>("%FadeCurtain");
-
-            curtain.Visible = FadePercent > 0;
-            curtain.Modulate = GetBackgroundColor(1 - FadePercent);
         }
 
         public override void SetGraphRoom(DungeonGraphRoom graphRoom)
@@ -74,14 +65,6 @@ namespace RandomDungeons.Nodes.DungeonRooms
             var node = prefab.Instance<T>();
             parent.AddChild(node);
             return node;
-        }
-
-        private Color GetBackgroundColor(float alpha)
-        {
-            var c = (Color)ProjectSettings.GetSetting("rendering/environment/default_clear_color");
-            c.a = alpha;
-
-            return c;
         }
     }
 }

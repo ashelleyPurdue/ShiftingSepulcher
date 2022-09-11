@@ -3,6 +3,7 @@ using Godot;
 
 using RandomDungeons.Utils;
 using RandomDungeons.Graphs;
+using RandomDungeons.Nodes.Elements;
 
 namespace RandomDungeons.Nodes.DungeonRooms
 {
@@ -14,7 +15,7 @@ namespace RandomDungeons.Nodes.DungeonRooms
         public abstract event Action<CardinalDirection> DoorUsed;
 
         public abstract DungeonGraphRoom GraphRoom {get; protected set;}
-        public abstract float FadePercent {get; set;}
+        public abstract FadeCurtain FadeCurtain {get;}
 
         public abstract Node2D GetDoorSpawn(CardinalDirection dir);
 

@@ -54,8 +54,8 @@ namespace RandomDungeons.PhysicalDungeons
             float fadeSpeed = 1 / FadeTime;
 
             // Fade the new room in
-            _activeRoom.FadePercent = Mathf.MoveToward(
-                _activeRoom.FadePercent,
+            _activeRoom.FadeCurtain.FadePercent = Mathf.MoveToward(
+                _activeRoom.FadeCurtain.FadePercent,
                 1,
                 deltaTime * fadeSpeed
             );
@@ -63,13 +63,13 @@ namespace RandomDungeons.PhysicalDungeons
             // Fade the old room out
             if (_disappearingRoom != null)
             {
-                _disappearingRoom.FadePercent = Mathf.MoveToward(
-                    _disappearingRoom.FadePercent,
+                _disappearingRoom.FadeCurtain.FadePercent = Mathf.MoveToward(
+                    _disappearingRoom.FadeCurtain.FadePercent,
                     0,
                     deltaTime * fadeSpeed
                 );
 
-                if (_disappearingRoom.FadePercent <= 0)
+                if (_disappearingRoom.FadeCurtain.FadePercent <= 0)
                     FinishFadingOut();
             }
         }
@@ -128,7 +128,7 @@ namespace RandomDungeons.PhysicalDungeons
                 AddChild(room);
             }
 
-            room.FadePercent = 0;
+            room.FadeCurtain.FadePercent = 0;
             _activeRoom = room;
         }
 
@@ -142,7 +142,7 @@ namespace RandomDungeons.PhysicalDungeons
             // one can start fading out.
             FinishFadingOut();
 
-            room.FadePercent = 1;
+            room.FadeCurtain.FadePercent = 1;
             _disappearingRoom = room;
         }
 
@@ -151,7 +151,7 @@ namespace RandomDungeons.PhysicalDungeons
             if (_disappearingRoom == null)
                 return;
 
-            _disappearingRoom.FadePercent = 0;
+            _disappearingRoom.FadeCurtain.FadePercent = 0;
             RemoveChild(_disappearingRoom);
             _disappearingRoom = null;
         }

@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
+[ext_resource path="res://Scripts/Nodes/Elements/FadeCurtain.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Nodes/DungeonRooms/SimpleDungeonRoom.cs" type="Script" id=2]
 [ext_resource path="res://Prefabs/Doors/DoorWall.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Prefabs/Doors/DoorLock.tscn" type="PackedScene" id=4]
@@ -74,3 +75,4 @@ polygon = PoolVector2Array( -288, -288, 288, -288, 288, 288, -288, 288, -256, 25
 unique_name_in_owner = true
 visible = false
 polygon = PoolVector2Array( -288, -288, 288, -288, 288, 288, -288, 288 )
+script = ExtResource( 1 )

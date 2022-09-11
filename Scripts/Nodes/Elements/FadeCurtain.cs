@@ -4,6 +4,10 @@ namespace RandomDungeons.Nodes.Elements
 {
     public class FadeCurtain : Node2D
     {
+        private const float FadeTime = 0.25f;
+
+        public bool DoneFadingOut => FadePercent <= 0;
+
         public float FadePercent;
 
         public override void _Process(float delta)

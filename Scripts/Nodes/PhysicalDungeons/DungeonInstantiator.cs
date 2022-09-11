@@ -69,7 +69,7 @@ namespace RandomDungeons.PhysicalDungeons
                     deltaTime * fadeSpeed
                 );
 
-                if (_disappearingRoom.FadeCurtain.FadePercent <= 0)
+                if (_disappearingRoom.FadeCurtain.DoneFadingOut)
                     FinishFadingOut();
             }
         }

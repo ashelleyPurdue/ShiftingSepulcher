@@ -17,6 +17,7 @@ color = Color( 0.511719, 0.511719, 0.511719, 1 )
 polygon = PoolVector2Array( -256, -256, 256, -256, 256, 256, -256, 256 )
 
 [node name="Walls" type="Node2D" parent="."]
+z_index = 1
 
 [node name="Visuals" type="Node2D" parent="Walls"]
 
@@ -74,5 +75,6 @@ polygon = PoolVector2Array( -288, -288, 288, -288, 288, 288, -288, 288, -256, 25
 [node name="FadeCurtain" type="Polygon2D" parent="."]
 unique_name_in_owner = true
 visible = false
+z_index = 2
 polygon = PoolVector2Array( -288, -288, 288, -288, 288, 288, -288, 288 )
 script = ExtResource( 1 )

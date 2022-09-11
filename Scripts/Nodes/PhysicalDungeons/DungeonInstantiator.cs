@@ -11,8 +11,6 @@ namespace RandomDungeons.PhysicalDungeons
 {
     public class DungeonInstantiator : Node
     {
-        private const float FadeTime = 0.25f;
-
         private DungeonRoomFactory _roomFactory => GetNode<DungeonRoomFactory>("%RoomFactory");
 
         private Dictionary<DungeonGraphRoom, IDungeonRoom> _graphRoomToRealRoom
@@ -51,27 +49,8 @@ namespace RandomDungeons.PhysicalDungeons
 
         public override void _Process(float deltaTime)
         {
-            float fadeSpeed = 1 / FadeTime;
-
-            // Fade the new room in
-            _activeRoom.FadeCurtain.FadePercent = Mathf.MoveToward(
-                _activeRoom.FadeCurtain.FadePercent,
-                1,
-                deltaTime * fadeSpeed
-            );
-
-            // Fade the old room out
-            if (_disappearingRoom != null)
-            {
-                _disappearingRoom.FadeCurtain.FadePercent = Mathf.MoveToward(
-                    _disappearingRoom.FadeCurtain.FadePercent,
-                    0,
-                    deltaTime * fadeSpeed
-                );
-
-                if (_disappearingRoom.FadeCurtain.DoneFadingOut)
-                    FinishFadingOut();
-            }
+            if (_disappearingRoom != null && _disappearingRoom.FadeCurtain.DoneFadingOut)
+                FinishFadingOut();
         }
 
         private void OnDoorUsed(CardinalDirection dir)
@@ -128,7 +107,7 @@ namespace RandomDungeons.PhysicalDungeons
                 AddChild(room);
             }
 
-            room.FadeCurtain.FadePercent = 0;
+            room.FadeCurtain.FadeIn();
             _activeRoom = room;
         }
 
@@ -142,7 +121,7 @@ namespace RandomDungeons.PhysicalDungeons
             // one can start fading out.
             FinishFadingOut();
 
-            room.FadeCurtain.FadePercent = 1;
+            room.FadeCurtain.FadeOut();
             _disappearingRoom = room;
         }
 
@@ -151,7 +130,6 @@ namespace RandomDungeons.PhysicalDungeons
             if (_disappearingRoom == null)
                 return;
 
-            _disappearingRoom.FadeCurtain.FadePercent = 0;
             RemoveChild(_disappearingRoom);
             _disappearingRoom = null;
         }

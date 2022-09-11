@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://Scripts/Nodes/PhysicalDungeons/DungeonRoom.cs" type="Script" id=1]
-[ext_resource path="res://Prefabs/DungeonRoomCorner.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scripts/Nodes/PhysicalDungeons/LegacyDungeonRoom.cs" type="Script" id=1]
+[ext_resource path="res://Prefabs/LegacyDungeonRoomCorner.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Prefabs/Puzzles/SlidingIcePuzzle.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Prefabs/Doors/DoorWall.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Prefabs/Doors/DoorLock.tscn" type="PackedScene" id=5]

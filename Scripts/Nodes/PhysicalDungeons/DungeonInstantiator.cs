@@ -13,11 +13,11 @@ namespace RandomDungeons.PhysicalDungeons
 
         private DungeonRoomFactory _roomFactory => GetNode<DungeonRoomFactory>("%RoomFactory");
 
-        private Dictionary<DungeonGraphRoom, DungeonRoom> _graphRoomToRealRoom
-            = new Dictionary<DungeonGraphRoom, DungeonRoom>();
+        private Dictionary<DungeonGraphRoom, IDungeonRoom> _graphRoomToRealRoom
+            = new Dictionary<DungeonGraphRoom, IDungeonRoom>();
 
-        private DungeonRoom _activeRoom;
-        private DungeonRoom _disappearingRoom;
+        private IDungeonRoom _activeRoom;
+        private IDungeonRoom _disappearingRoom;
 
         public override void _Ready()
         {
@@ -118,7 +118,7 @@ namespace RandomDungeons.PhysicalDungeons
             MoveCameraToActiveRoom();
         }
 
-        private void StartFadingIn(DungeonRoom room)
+        private void StartFadingIn(IDungeonRoom room)
         {
             if (room.GetParent() != this)
             {
@@ -130,7 +130,7 @@ namespace RandomDungeons.PhysicalDungeons
             _activeRoom = room;
         }
 
-        private void StartFadingOut(DungeonRoom room)
+        private void StartFadingOut(IDungeonRoom room)
         {
             if (room == null)
                 return;

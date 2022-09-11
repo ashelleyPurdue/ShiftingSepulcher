@@ -3,7 +3,7 @@
 [ext_resource path="res://Scripts/Nodes/PhysicalDungeons/DungeonInstantiator.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Nodes/PhysicalDungeons/DungeonRoomFactory.cs" type="Script" id=2]
 [ext_resource path="res://Prefabs/Elements/Player.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Prefabs/DungeonRoom.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Prefabs/LegacyDungeonRoom.tscn" type="PackedScene" id=4]
 
 [node name="Node2D" type="Node2D"]
 

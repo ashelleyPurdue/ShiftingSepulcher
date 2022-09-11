@@ -7,9 +7,9 @@ using RandomDungeons.Utils;
 
 namespace RandomDungeons.PhysicalDungeons
 {
-    public class DungeonRoom : Node2D
+    public class LegacyDungeonRoom : IDungeonRoom
     {
-        public event Action<CardinalDirection> DoorUsed;
+        public override event Action<CardinalDirection> DoorUsed;
 
         [Export] public PackedScene DoorWallPrefab;
         [Export] public PackedScene DoorLockPrefab;
@@ -23,14 +23,14 @@ namespace RandomDungeons.PhysicalDungeons
 
         [Export] public PackedScene ObliviousZombiePrefab;
 
-        public DungeonGraphRoom GraphRoom {get; private set;}
+        public override DungeonGraphRoom GraphRoom {get; protected set;}
         private IDungeonRoomChallenge _challenge;
 
         private Node2D _contentSpawn => GetNode<Node2D>("%ContentSpawn");
 
-        public float FadePercent {get; set;}
+        public override float FadePercent {get; set;}
 
-        public Node2D GetDoorSpawn(CardinalDirection dir)
+        public override Node2D GetDoorSpawn(CardinalDirection dir)
         {
             return GetNode<Node2D>($"%DoorSpawns/{dir}");
         }

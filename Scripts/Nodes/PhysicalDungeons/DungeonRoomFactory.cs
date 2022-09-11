@@ -7,12 +7,12 @@ namespace RandomDungeons.PhysicalDungeons
     {
         [Export] public PackedScene LegacyRoom;
 
-        public DungeonRoom BuildRoom(DungeonGraphRoom graphRoom)
+        public IDungeonRoom BuildRoom(DungeonGraphRoom graphRoom)
         {
             // TODO: Delegate to different "sub" builders depending on the
             // the challenge type
 
-            var realRoom = LegacyRoom.Instance<DungeonRoom>();
+            var realRoom = LegacyRoom.Instance<LegacyDungeonRoom>();
             realRoom.SetGraphRoom(graphRoom);
             return realRoom;
         }

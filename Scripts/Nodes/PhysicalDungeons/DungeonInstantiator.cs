@@ -11,6 +11,8 @@ namespace RandomDungeons.PhysicalDungeons
     {
         private const float FadeTime = 0.25f;
 
+        private DungeonRoomFactory _roomFactory => GetNode<DungeonRoomFactory>("%RoomFactory");
+
         private Dictionary<DungeonGraphRoom, DungeonRoom> _graphRoomToRealRoom
             = new Dictionary<DungeonGraphRoom, DungeonRoom>();
 
@@ -19,8 +21,6 @@ namespace RandomDungeons.PhysicalDungeons
 
         public override void _Ready()
         {
-            var roomPrefab = GD.Load<PackedScene>("res://Prefabs/DungeonRoom.tscn");
-
             // Generate a dungeon graph
             GD.Print(TitleScreen.ChosenSeed);
 
@@ -37,10 +37,9 @@ namespace RandomDungeons.PhysicalDungeons
             foreach (var coordinates in graph.AllRoomCoordinates())
             {
                 var graphRoom = graph.GetRoom(coordinates);
-                var realRoom = roomPrefab.Instance<DungeonRoom>();
+                var realRoom = _roomFactory.BuildRoom(graphRoom);
                 _graphRoomToRealRoom[graphRoom] = realRoom;
 
-                realRoom.SetGraphRoom(graphRoom);
                 realRoom.DoorUsed += OnDoorUsed;
             }
 

@@ -16,17 +16,11 @@ namespace RandomDungeons.PhysicalDungeons
         [Export] public PackedScene DoorWallPrefab;
         [Export] public PackedScene DoorLockPrefab;
         [Export] public PackedScene DoorWarpPrefab;
-        [Export] public PackedScene DoorBarsPrefab;
 
         [Export] public PackedScene KeyPrefab;
-        [Export] public PackedScene LightsOutPuzzlePrefab;
-        [Export] public PackedScene SlidingIcePuzzlePrefab;
         [Export] public PackedScene VictoryChestPrefab;
 
-        [Export] public PackedScene ObliviousZombiePrefab;
-
         public override DungeonGraphRoom GraphRoom {get; protected set;}
-        private IDungeonRoomChallenge _challenge;
 
         private Node2D _contentSpawn => GetNode<Node2D>("%ContentSpawn");
 
@@ -59,20 +53,6 @@ namespace RandomDungeons.PhysicalDungeons
             // Spawn the room's content
             switch (GraphRoom.ChallengeType)
             {
-                case ChallengeType.Puzzle:
-                {
-                    _challenge = GeneratePuzzle();
-                    break;
-                }
-
-                case ChallengeType.Combat:
-                {
-                    // TODO: Spawn a random assortment of enemies, and a random
-                    // assortment of walls/pits/whatnot.
-                    Create<Node2D>(_contentSpawn, ObliviousZombiePrefab);
-                    break;
-                }
-
                 case ChallengeType.Loot:
                 {
                     if (GraphRoom.HasKey)
@@ -91,15 +71,6 @@ namespace RandomDungeons.PhysicalDungeons
                     Create<Node2D>(_contentSpawn, VictoryChestPrefab);
                     break;
                 }
-            }
-
-            // Spawn the bars on the doors, if this is a challenge room
-            if (_challenge != null)
-            {
-                SpawnDoorBars(CardinalDirection.North);
-                SpawnDoorBars(CardinalDirection.South);
-                SpawnDoorBars(CardinalDirection.East);
-                SpawnDoorBars(CardinalDirection.West);
             }
         }
 
@@ -131,57 +102,6 @@ namespace RandomDungeons.PhysicalDungeons
             var node = prefab.Instance<T>();
             parent.AddChild(node);
             return node;
-        }
-
-        private IDungeonRoomChallenge GeneratePuzzle()
-        {
-            // TODO: This sucks.  Do something less tedious.
-            var rng = new Random(GraphRoom.RoomSeed);
-            var puzzlePrefab = rng.PickFromWeighted(
-                (SlidingIcePuzzlePrefab, 3),
-                (LightsOutPuzzlePrefab, 1)
-            );
-
-            if (puzzlePrefab == SlidingIcePuzzlePrefab)
-            {
-                var graph = SlidingIceGraph.Generate(
-                    seed: GraphRoom.RoomSeed,
-                    width: 10,
-                    height: 10,
-                    numPushes: 5,
-                    numRedHerringRocks: 3
-                );
-                var puzzle = Create<SlidingIcePuzzle>(_contentSpawn, SlidingIcePuzzlePrefab);
-                puzzle.SetGraph(graph);
-                return puzzle;
-            }
-            else if (puzzlePrefab == LightsOutPuzzlePrefab)
-            {
-                var graph = LightsOutGraph.Generate(
-                    seed: GraphRoom.RoomSeed,
-                    width: 4,
-                    height: 4,
-                    numFlips: 3
-                );
-                var puzzle = Create<LightsOutPuzzle>(_contentSpawn, LightsOutPuzzlePrefab);
-                puzzle.SetGraph(graph);
-                return puzzle;
-            }
-
-            throw new Exception("Somehow, a third prefab was chosen.");
-        }
-
-        private void SpawnDoorBars(CardinalDirection dir)
-        {
-            var parent = GetDoorSpawn(dir);
-            var graphDoor = GraphRoom.GetDoor(dir);
-
-            // Don't spawn bars on plain walls
-            if (graphDoor.Destination == null)
-                return;
-
-            var bars = Create<DoorBars>(parent, DoorBarsPrefab);
-            bars.Challenge = _challenge;
         }
 
         private Color GetBackgroundColor(float alpha)

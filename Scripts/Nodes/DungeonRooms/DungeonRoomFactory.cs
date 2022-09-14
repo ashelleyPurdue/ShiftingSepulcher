@@ -13,7 +13,6 @@ namespace RandomDungeons.Nodes.DungeonRooms
         private const string RoomTemplatesFolder = "res://Prefabs/DungeonRoomTemplates";
         private const string DictHintString = "The key is the name of a .tscn file, minus the file extension, relative to " + RoomTemplatesFolder;
 
-        [Export] public PackedScene LegacyRoom;
         [Export] public PackedScene EmptyRoom;
         [Export] public PackedScene KeyRoom;
 
@@ -36,7 +35,7 @@ namespace RandomDungeons.Nodes.DungeonRooms
                 case ChallengeType.Puzzle: return PickTemplateFrom(PuzzleRoomWeights, graphRoom);
                 case ChallengeType.Boss: return PickTemplateFrom(BossRoomWeights, graphRoom);
 
-                default: return UseTemplate(LegacyRoom, graphRoom);
+                default: return UseTemplate(EmptyRoom, graphRoom);
             }
         }
 

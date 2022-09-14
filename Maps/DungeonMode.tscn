@@ -16,6 +16,10 @@ unique_name_in_owner = true
 script = ExtResource( 2 )
 EmptyRoom = ExtResource( 6 )
 KeyRoom = ExtResource( 5 )
+FillerRoomWeights = {
+"EmptyRoom": 3,
+"Filler/FourPotsRoom": 1
+}
 CombatRoomWeights = {
 "Combat/SingleZombieRoom": 1
 }

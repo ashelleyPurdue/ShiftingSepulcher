@@ -17,6 +17,9 @@ namespace RandomDungeons.Nodes.DungeonRooms
         [Export] public PackedScene KeyRoom;
 
         [Export(hintString: DictHintString)]
+        public Dictionary<string, int> FillerRoomWeights;
+
+        [Export(hintString: DictHintString)]
         public Dictionary<string, int> CombatRoomWeights;
 
         [Export(hintString: DictHintString)]
@@ -29,7 +32,7 @@ namespace RandomDungeons.Nodes.DungeonRooms
         {
             switch (graphRoom.ChallengeType)
             {
-                case ChallengeType.None: return UseTemplate(EmptyRoom, graphRoom);
+                case ChallengeType.None: return PickTemplateFrom(FillerRoomWeights, graphRoom);
                 case ChallengeType.Loot: return UseTemplate(KeyRoom, graphRoom);
                 case ChallengeType.Combat: return PickTemplateFrom(CombatRoomWeights, graphRoom);
                 case ChallengeType.Puzzle: return PickTemplateFrom(PuzzleRoomWeights, graphRoom);

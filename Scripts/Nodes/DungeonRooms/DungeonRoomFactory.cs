@@ -44,7 +44,7 @@ namespace RandomDungeons.Nodes.DungeonRooms
             DungeonGraphRoom graphRoom
         )
         {
-            var weights = PuzzleRoomWeights
+            var weights = templateWeights
                 .Select(kvp => (value: kvp.Key, weight: kvp.Value))
                 .ToArray();
 

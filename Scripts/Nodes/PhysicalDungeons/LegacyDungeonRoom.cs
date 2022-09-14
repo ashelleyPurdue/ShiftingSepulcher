@@ -17,8 +17,6 @@ namespace RandomDungeons.PhysicalDungeons
         [Export] public PackedScene DoorLockPrefab;
         [Export] public PackedScene DoorWarpPrefab;
 
-        [Export] public PackedScene KeyPrefab;
-
         public override DungeonGraphRoom GraphRoom {get; protected set;}
 
         private Node2D _contentSpawn => GetNode<Node2D>("%ContentSpawn");
@@ -48,21 +46,6 @@ namespace RandomDungeons.PhysicalDungeons
             SetDoor(CardinalDirection.South);
             SetDoor(CardinalDirection.East);
             SetDoor(CardinalDirection.West);
-
-            // Spawn the room's content
-            switch (GraphRoom.ChallengeType)
-            {
-                case ChallengeType.Loot:
-                {
-                    if (GraphRoom.HasKey)
-                    {
-                        var key = Create<Key>(_contentSpawn, KeyPrefab);
-                        key.KeyId = GraphRoom.KeyId;
-                    }
-
-                    break;
-                }
-            }
         }
 
         private void SetDoor(CardinalDirection dir)

@@ -7,5 +7,5 @@
 [node name="KeyRoom" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
 
-[node name="Key" parent="." index="5" instance=ExtResource( 2 )]
+[node name="Key" parent="." index="2" instance=ExtResource( 2 )]
 unique_name_in_owner = true

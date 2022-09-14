@@ -10,5 +10,5 @@ script = ExtResource( 4 )
 DoorBarsPrefab = ExtResource( 3 )
 LightsOutPuzzlePrefab = ExtResource( 2 )
 
-[node name="ContentSpawn" type="Position2D" parent="." index="5"]
+[node name="ContentSpawn" type="Position2D" parent="." index="2"]
 unique_name_in_owner = true

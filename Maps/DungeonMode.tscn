@@ -17,14 +17,14 @@ script = ExtResource( 2 )
 EmptyRoom = ExtResource( 6 )
 KeyRoom = ExtResource( 5 )
 CombatRoomWeights = {
-"SingleZombieRoom": 1
+"Combat/SingleZombieRoom": 1
 }
 PuzzleRoomWeights = {
-"LightsOutRoom": 1,
-"SlidingIcePuzzleRoom": 3
+"Puzzle/LightsOutRoom": 1,
+"Puzzle/SlidingIcePuzzleRoom": 3
 }
 BossRoomWeights = {
-"VictoryChestRoom": 1
+"Boss/VictoryChestRoom": 1
 }
 
 [node name="Player" parent="." instance=ExtResource( 3 )]

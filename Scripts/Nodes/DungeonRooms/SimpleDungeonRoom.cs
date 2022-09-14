@@ -69,7 +69,7 @@ namespace RandomDungeons.Nodes.DungeonRooms
             }
         }
 
-        private T Create<T>(Node2D parent, PackedScene prefab) where T : Node2D
+        protected T Create<T>(Node2D parent, PackedScene prefab) where T : Node2D
         {
             var node = prefab.Instance<T>();
             parent.AddChild(node);

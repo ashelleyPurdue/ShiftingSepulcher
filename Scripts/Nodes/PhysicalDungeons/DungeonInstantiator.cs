@@ -89,7 +89,7 @@ namespace RandomDungeons.PhysicalDungeons
                 var prevDoorSpawn = prevRoom.GetDoorSpawn(dir);
                 var nextDoorSpawn = nextRoom.GetDoorSpawn(dir.Opposite());
 
-                nextRoom.Position = prevDoorSpawn.GlobalPosition - nextDoorSpawn.Position;
+                nextRoom.Node.Position = prevDoorSpawn.GlobalPosition - nextDoorSpawn.Position;
             }
 
             EnterRoom(nextGraphRoom);
@@ -122,10 +122,12 @@ namespace RandomDungeons.PhysicalDungeons
 
         private void StartFadingIn(IDungeonRoom room)
         {
-            if (room.GetParent() != this)
+            var node = room.Node;
+
+            if (node.GetParent() != this)
             {
-                room.GetParent()?.RemoveChild(room);
-                AddChild(room);
+                node.GetParent()?.RemoveChild(node);
+                AddChild(node);
             }
 
             room.FadePercent = 0;
@@ -152,7 +154,7 @@ namespace RandomDungeons.PhysicalDungeons
                 return;
 
             _disappearingRoom.FadePercent = 0;
-            RemoveChild(_disappearingRoom);
+            RemoveChild(_disappearingRoom.Node);
             _disappearingRoom = null;
         }
 
@@ -163,7 +165,7 @@ namespace RandomDungeons.PhysicalDungeons
                 .Cast<Camera2D>()
                 .First();
 
-            camera.GlobalPosition = _activeRoom.GlobalPosition;
+            camera.GlobalPosition = _activeRoom.Node.GlobalPosition;
         }
     }
 }

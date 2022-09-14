@@ -9,19 +9,21 @@ using RandomDungeons.PhysicalDungeons;
 
 namespace RandomDungeons.Nodes.DungeonRooms
 {
-    public class SimpleDungeonRoom : IDungeonRoom
+    public class SimpleDungeonRoom : Node2D, IDungeonRoom
     {
-        public override event Action<CardinalDirection> DoorUsed;
+        public Node2D Node => this;
+
+        public event Action<CardinalDirection> DoorUsed;
 
         [Export] public PackedScene DoorWallPrefab;
         [Export] public PackedScene DoorLockPrefab;
         [Export] public PackedScene DoorWarpPrefab;
 
-        public override DungeonGraphRoom GraphRoom {get; protected set;}
+        public DungeonGraphRoom GraphRoom {get; protected set;}
 
-        public override float FadePercent {get; set;}
+        public float FadePercent {get; set;}
 
-        public override Node2D GetDoorSpawn(CardinalDirection dir)
+        public Node2D GetDoorSpawn(CardinalDirection dir)
         {
             return GetNode<Node2D>($"%DoorSpawns/{dir}");
         }
@@ -35,7 +37,7 @@ namespace RandomDungeons.Nodes.DungeonRooms
             curtain.Modulate = GetBackgroundColor(1 - FadePercent);
         }
 
-        public override void Populate(DungeonGraphRoom graphRoom)
+        public virtual void Populate(DungeonGraphRoom graphRoom)
         {
             GraphRoom = graphRoom;
 

@@ -23,6 +23,9 @@ PuzzleRoomWeights = {
 "LightsOutRoom": 1,
 "SlidingIcePuzzleRoom": 3
 }
+BossRoomWeights = {
+"VictoryChestRoom": 1
+}
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 

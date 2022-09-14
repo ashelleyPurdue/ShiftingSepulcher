@@ -18,7 +18,6 @@ namespace RandomDungeons.PhysicalDungeons
         [Export] public PackedScene DoorWarpPrefab;
 
         [Export] public PackedScene KeyPrefab;
-        [Export] public PackedScene VictoryChestPrefab;
 
         public override DungeonGraphRoom GraphRoom {get; protected set;}
 
@@ -61,14 +60,6 @@ namespace RandomDungeons.PhysicalDungeons
                         key.KeyId = GraphRoom.KeyId;
                     }
 
-                    break;
-                }
-
-                case ChallengeType.Boss:
-                {
-                    // TODO: Put a boss here instead of a chest.  That'll teach
-                    // 'em!
-                    Create<Node2D>(_contentSpawn, VictoryChestPrefab);
                     break;
                 }
             }

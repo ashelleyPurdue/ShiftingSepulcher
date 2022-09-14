@@ -22,6 +22,9 @@ namespace RandomDungeons.Nodes.DungeonRooms
         [Export(hintString: DictHintString)]
         public Dictionary<string, int> PuzzleRoomWeights;
 
+        [Export(hintString: DictHintString)]
+        public Dictionary<string, int> BossRoomWeights;
+
         public IDungeonRoom BuildRoom(DungeonGraphRoom graphRoom)
         {
             switch (graphRoom.ChallengeType)
@@ -29,6 +32,7 @@ namespace RandomDungeons.Nodes.DungeonRooms
                 case ChallengeType.None: return UseTemplate(EmptyRoom, graphRoom);
                 case ChallengeType.Combat: return PickTemplateFrom(CombatRoomWeights, graphRoom);
                 case ChallengeType.Puzzle: return PickTemplateFrom(PuzzleRoomWeights, graphRoom);
+                case ChallengeType.Boss: return PickTemplateFrom(BossRoomWeights, graphRoom);
 
                 default: return UseTemplate(LegacyRoom, graphRoom);
             }

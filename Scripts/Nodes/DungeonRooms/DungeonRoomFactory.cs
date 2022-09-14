@@ -23,21 +23,21 @@ namespace RandomDungeons.Nodes.DungeonRooms
         private IDungeonRoom BuildEmptyRoom(DungeonGraphRoom graphRoom)
         {
             var realRoom = EmptyRoom.Instance<IDungeonRoom>();
-            realRoom.SetGraphRoom(graphRoom);
+            realRoom.Populate(graphRoom);
             return realRoom;
         }
 
         private IDungeonRoom BuildCombatRoom(DungeonGraphRoom graphRoom)
         {
             var realRoom = SingleZombieRoom.Instance<IDungeonRoom>();
-            realRoom.SetGraphRoom(graphRoom);
+            realRoom.Populate(graphRoom);
             return realRoom;
         }
 
         private IDungeonRoom BuildLegacyRoom(DungeonGraphRoom graphRoom)
         {
             var realRoom = LegacyRoom.Instance<IDungeonRoom>();
-            realRoom.SetGraphRoom(graphRoom);
+            realRoom.Populate(graphRoom);
             return realRoom;
         }
     }

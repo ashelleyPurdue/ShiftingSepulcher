@@ -46,7 +46,7 @@ namespace RandomDungeons.PhysicalDungeons
             curtain.Modulate = GetBackgroundColor(1 - FadePercent);
         }
 
-        public override void SetGraphRoom(DungeonGraphRoom graphRoom)
+        public override void Populate(DungeonGraphRoom graphRoom)
         {
             GraphRoom = graphRoom;
 

@@ -18,6 +18,6 @@ namespace RandomDungeons.Nodes.DungeonRooms
 
         public abstract Node2D GetDoorSpawn(CardinalDirection dir);
 
-        public abstract void SetGraphRoom(DungeonGraphRoom graphRoom);
+        public abstract void Populate(DungeonGraphRoom graphRoom);
     }
 }

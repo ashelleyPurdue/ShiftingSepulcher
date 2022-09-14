@@ -1,0 +1,14 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Prefabs/DungeonRoomTemplates/EmptyRoom.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Prefabs/Puzzles/LightsOutPuzzle.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Prefabs/Doors/DoorBars.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scripts/Nodes/DungeonRooms/LightsOutRoom.cs" type="Script" id=4]
+
+[node name="LightsOutRoom" instance=ExtResource( 1 )]
+script = ExtResource( 4 )
+DoorBarsPrefab = ExtResource( 3 )
+LightsOutPuzzlePrefab = ExtResource( 2 )
+
+[node name="ContentSpawn" type="Position2D" parent="." index="2"]
+unique_name_in_owner = true

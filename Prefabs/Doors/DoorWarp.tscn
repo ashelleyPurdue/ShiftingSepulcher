@@ -15,10 +15,10 @@ extents = Vector2( 64, 16 )
 script = ExtResource( 1 )
 
 [node name="LeftGuide" type="Polygon2D" parent="."]
-polygon = PoolVector2Array( -64, -32, -64, 0, -192, 0, -192, -32 )
+polygon = PoolVector2Array( -64, -32, -64, 0, -96, 0, -96, -32 )
 
 [node name="RightGuide" type="Polygon2D" parent="."]
-polygon = PoolVector2Array( 64, 0, 64, -32, 192, -32, 192, 0 )
+polygon = PoolVector2Array( 64, 0, 64, -32, 96, -32, 96, 0 )
 
 [node name="WarpTrigger" type="Area2D" parent="."]
 unique_name_in_owner = true

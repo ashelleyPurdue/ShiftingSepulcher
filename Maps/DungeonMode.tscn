@@ -19,7 +19,8 @@ KeyRoom = ExtResource( 5 )
 FillerRoomWeights = {
 "EmptyRoom": 3,
 "Filler/FourPotsRoom": 1,
-"Filler/PlusShapedRoom": 1
+"Filler/PlusShapedRoom": 1,
+"Filler/CentralPillarRoom": 1
 }
 CombatRoomWeights = {
 "Combat/SingleZombieRoom": 1

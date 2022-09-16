@@ -18,10 +18,14 @@ EmptyRoom = ExtResource( 6 )
 KeyRoom = ExtResource( 5 )
 FillerRoomWeights = {
 "EmptyRoom": 3,
-"Filler/FourPotsRoom": 1
+"Filler/FourPotsRoom": 1,
+"Filler/PlusShapedRoom": 1,
+"Filler/CentralPillarRoom": 1,
+"Filler/FourPillarsRoom": 1
 }
 CombatRoomWeights = {
-"Combat/SingleZombieRoom": 1
+"Combat/SingleZombieRoom": 1,
+"Combat/FourTilemancersRoom": 1
 }
 PuzzleRoomWeights = {
 "Puzzle/LightsOutRoom": 1,

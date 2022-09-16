@@ -24,7 +24,8 @@ FillerRoomWeights = {
 "Filler/FourPillarsRoom": 1
 }
 CombatRoomWeights = {
-"Combat/SingleZombieRoom": 1
+"Combat/SingleZombieRoom": 1,
+"Combat/FourTilemancersRoom": 1
 }
 PuzzleRoomWeights = {
 "Puzzle/LightsOutRoom": 1,

@@ -15,4 +15,16 @@ namespace RandomDungeons.Graphs
             KeyId = keyId;
         }
     }
+
+    public class OneWayOpenSideGraphDoor : IDungeonGraphDoor
+    {
+        public DungeonGraphRoom Destination {get; set;}
+        public OneWayClosedSideGraphDoor OtherSide {get; set;}
+    }
+
+    public class OneWayClosedSideGraphDoor : IDungeonGraphDoor
+    {
+        public DungeonGraphRoom Destination {get; set;}
+        public OneWayOpenSideGraphDoor OtherSide {get; set;}
+    }
 }

@@ -17,10 +17,12 @@ namespace RandomDungeons.Graphs
         {
             var rng = new Random(seed);
             var dungeon = new DungeonGraph();
-            var lastCreatedRoom = dungeon.CreateRoom(Vector2i.Zero);
-
             int currentKey = 0;
+            int sequenceNum = 0;
 
+            var lastCreatedRoom = dungeon.CreateRoom(Vector2i.Zero, sequenceNum);
+            sequenceNum++;
+            
             while (dungeon.RoomCount < numRooms)
             {
                 DungeonGraphRoom runStartRoom = ChooseRandomStartRoom();
@@ -76,8 +78,9 @@ namespace RandomDungeons.Graphs
                     }
 
                     // Create a new room in that direction
-                    currentRoom = currentRoom.AddNeighbor(dir);
+                    currentRoom = currentRoom.AddNeighbor(dir, sequenceNum);
                     lastCreatedRoom = currentRoom;
+                    sequenceNum++;
 
                     // Choose a random challenge type for this room
                     // TODO: Don't hardcode these probabilities

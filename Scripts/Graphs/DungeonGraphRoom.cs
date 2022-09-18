@@ -20,6 +20,7 @@ namespace RandomDungeons.Graphs
         public int RoomSeed;
         public ChallengeType ChallengeType;
 
+        public readonly int SequenceNumber;
         public int KeyId = 0;
         public bool HasKey => KeyId > 0;
 
@@ -30,10 +31,15 @@ namespace RandomDungeons.Graphs
 
         private readonly Dictionary<CardinalDirection, IDungeonGraphDoor> _doors;
 
-        public DungeonGraphRoom(DungeonGraph graph, Vector2i pos)
+        public DungeonGraphRoom(
+            DungeonGraph graph,
+            Vector2i pos,
+            int sequenceNumber
+        )
         {
             Graph = graph;
             Position = pos;
+            SequenceNumber = sequenceNumber;
 
             _doors = new Dictionary<CardinalDirection, IDungeonGraphDoor>
             {
@@ -77,13 +83,16 @@ namespace RandomDungeons.Graphs
                 .ToArray();
         }
 
-        public DungeonGraphRoom AddNeighbor(CardinalDirection dir)
+        public DungeonGraphRoom AddNeighbor(
+            CardinalDirection dir,
+            int sequenceNumber
+        )
         {
             if (!CanAddRoom(dir))
                 throw new Exception("Another room is already there.");
 
             var neighborPos = Position.Adjacent(dir);
-            var neighbor = Graph.CreateRoom(neighborPos);
+            var neighbor = Graph.CreateRoom(neighborPos, SequenceNumber);
             Graph.JoinAdjacentRooms(this.Position, neighbor.Position);
 
             return neighbor;

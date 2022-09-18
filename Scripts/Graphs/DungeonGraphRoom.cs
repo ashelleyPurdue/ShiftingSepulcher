@@ -87,7 +87,7 @@ namespace RandomDungeons.Graphs
         {
             // Return all adjacent rooms that are earlier in the sequence
             // but that don't have a door connecting to this room.
-            foreach (var dir in _doors.Keys)
+            foreach (var dir in CardinalDirectionUtils.All())
             {
                 if (!(_doors[dir] is DungeonGraphDoor door))
                     continue;

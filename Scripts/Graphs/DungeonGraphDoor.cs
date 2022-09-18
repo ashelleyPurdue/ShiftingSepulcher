@@ -1,8 +1,8 @@
 namespace RandomDungeons.Graphs
 {
-    public class DungeonGraphDoor
+    public class DungeonGraphDoor : IDungeonGraphDoor
     {
-        public DungeonGraphRoom Destination;
+        public DungeonGraphRoom Destination {get; set;}
         public bool IsLocked => LockId > 0;
 
         public int LockId = 0;

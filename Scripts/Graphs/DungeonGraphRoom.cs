@@ -110,14 +110,14 @@ namespace RandomDungeons.Graphs
 
         public DungeonGraphRoom AddNeighbor(
             CardinalDirection dir,
-            int sequenceNumber
+            int sequenceNum
         )
         {
             if (!CanAddRoom(dir))
                 throw new Exception("Another room is already there.");
 
             var neighborPos = Position.Adjacent(dir);
-            var neighbor = Graph.CreateRoom(neighborPos, SequenceNumber);
+            var neighbor = Graph.CreateRoom(neighborPos, sequenceNum);
             Graph.JoinAdjacentRooms(this.Position, neighbor.Position);
 
             return neighbor;

@@ -51,6 +51,19 @@ namespace RandomDungeons.Graphs
                 return possibleStartingRooms[index];
             }
 
+            IEnumerable<(CardinalDirection dir, int weight)> NextRoomDirectionWeights(DungeonGraphRoom room)
+            {
+                foreach (var dir in room.UnusedDoors())
+                {
+                    Vector2i pos = room.Position.Adjacent(dir);
+
+                    if (dungeon.CoordinatesInUse(pos))
+                        continue;
+                    
+                    yield return (dir, dungeon.SurroundingRoomCount(pos));
+                }
+            }
+
             void GenerateRun(DungeonGraphRoom startingRoom, int runLength)
             {
                 DungeonGraphRoom currentRoom = startingRoom;
@@ -64,9 +77,9 @@ namespace RandomDungeons.Graphs
                         break;
 
                     // Pick a direction.
-                    var directions = currentRoom.UnusedDoors();
-                    int index = rng.Next(0, directions.Length);
-                    CardinalDirection dir = directions[index];
+                    CardinalDirection dir = rng.PickFromWeighted(
+                        NextRoomDirectionWeights(currentRoom).ToArray()
+                    );
 
                     // Lock the door, if it's the start of the run
                     if (i == 0 && currentKey != 0)
@@ -96,6 +109,7 @@ namespace RandomDungeons.Graphs
                     // one-way door, to act as a shortcut.
                     foreach (var shortcutDir in currentRoom.PotentialOneWayDoors())
                     {
+                        Godot.GD.Print("Creating a shortcut");
                         currentRoom.AddOneWayDoor(shortcutDir);
                     }
                 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using RandomDungeons.Utils;
 
@@ -64,6 +65,19 @@ namespace RandomDungeons.Graphs
                         yield return (roomCoords, dir);
                 }
             }
+        }
+
+        /// <summary>
+        /// Returns the number of rooms surrounding the given coordinates,
+        /// regardless of if they're connected by doors or not.
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
+        public int SurroundingRoomCount(Vector2i pos)
+        {
+            return CardinalDirectionUtils.All()
+                .Where(dir => CoordinatesInUse(pos.Adjacent(dir)))
+                .Count();
         }
     }
 }

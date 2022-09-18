@@ -1,13 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Prefabs/DungeonRoomTemplates/EmptyRoom.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Nodes/DungeonRooms/SlidingIcePuzzleRoom.cs" type="Script" id=2]
 [ext_resource path="res://Prefabs/Puzzles/SlidingIcePuzzle.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Prefabs/Doors/DoorBars.tscn" type="PackedScene" id=4]
 
 [node name="SlidingIcePuzzleRoom" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-DoorBarsPrefab = ExtResource( 4 )
 SlidingIcePuzzlePrefab = ExtResource( 3 )
 
 [node name="ContentSpawn" type="Position2D" parent="." index="2"]

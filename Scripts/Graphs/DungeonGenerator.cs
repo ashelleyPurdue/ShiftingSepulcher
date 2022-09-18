@@ -37,6 +37,17 @@ namespace RandomDungeons.Graphs
             lastCreatedRoom.ChallengeType = ChallengeType.Boss;
             lastCreatedRoom.KeyId = 0;
 
+            // Demolish walls and build one-way doors to create shortcuts from
+            // late rooms to early rooms.
+            foreach (var pos in dungeon.AllRoomCoordinates())
+            {
+                var room = dungeon.GetRoom(pos);
+                foreach (var dir in room.PotentialOneWayDoors())
+                {
+                    room.AddOneWayDoor(dir);
+                }
+            }
+
             return dungeon;
 
             DungeonGraphRoom ChooseRandomStartRoom()
@@ -59,7 +70,7 @@ namespace RandomDungeons.Graphs
 
                     if (dungeon.CoordinatesInUse(pos))
                         continue;
-                    
+
                     yield return (dir, dungeon.SurroundingRoomCount(pos));
                 }
             }
@@ -103,15 +114,6 @@ namespace RandomDungeons.Graphs
                         (ChallengeType.Puzzle, 1)
                     );
                     currentRoom.RoomSeed = rng.Next();
-
-                    // If there are any nearby rooms that are earlier in the
-                    // sequence, demolish the wall between them and build a
-                    // one-way door, to act as a shortcut.
-                    foreach (var shortcutDir in currentRoom.PotentialOneWayDoors())
-                    {
-                        Godot.GD.Print("Creating a shortcut");
-                        currentRoom.AddOneWayDoor(shortcutDir);
-                    }
                 }
 
                 // Place a key at the end of this run

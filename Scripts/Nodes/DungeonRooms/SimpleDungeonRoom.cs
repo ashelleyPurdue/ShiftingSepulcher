@@ -62,11 +62,19 @@ namespace RandomDungeons.Nodes.DungeonRooms
             var warp = Create<DoorWarp>(spawn, DoorPrefabs.Warp);
             warp.DoorUsed += () => DoorUsed?.Invoke(dir);
 
-            // Spawn a lock, if the door is locked
+            // Spawn the correct kind of door
             if (graphDoor is KeyDungeonGraphDoor lockedDoor)
             {
                 var doorLock = Create<DoorLock>(spawn, DoorPrefabs.Lock);
                 doorLock.KeyId = lockedDoor.KeyId;
+            }
+            else if (graphDoor is OneWayClosedSideGraphDoor)
+            {
+                Create<Node2D>(spawn, DoorPrefabs.OneWayClosedSide);
+            }
+            else if (graphDoor is OneWayOpenSideGraphDoor)
+            {
+                Create<Node2D>(spawn, DoorPrefabs.OneWayOpenSide);
             }
         }
 

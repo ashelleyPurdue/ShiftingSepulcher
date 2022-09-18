@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=6 format=2]
+
+[ext_resource path="res://Scripts/Resources/DoorPrefabCollection.cs" type="Script" id=1]
+[ext_resource path="res://Prefabs/Doors/DoorWall.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Prefabs/Doors/DoorLock.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Prefabs/Doors/DoorWarp.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Prefabs/Doors/DoorBars.tscn" type="PackedScene" id=5]
+
+[resource]
+script = ExtResource( 1 )
+Wall = ExtResource( 2 )
+Lock = ExtResource( 3 )
+Warp = ExtResource( 4 )
+Bars = ExtResource( 5 )

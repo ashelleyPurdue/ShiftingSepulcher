@@ -8,7 +8,6 @@ namespace RandomDungeons.Nodes.DungeonRooms
 {
     public class LightsOutRoom : SimpleDungeonRoom
     {
-        [Export] public PackedScene DoorBarsPrefab;
         [Export] public PackedScene LightsOutPuzzlePrefab;
 
         private Node2D _contentSpawn => GetNode<Node2D>("%ContentSpawn");
@@ -43,7 +42,7 @@ namespace RandomDungeons.Nodes.DungeonRooms
             if (graphDoor.Destination == null)
                 return;
 
-            var bars = Create<DoorBars>(parent, DoorBarsPrefab);
+            var bars = Create<DoorBars>(parent, DoorPrefabs.Bars);
             bars.Challenge = challenge;
         }
     }

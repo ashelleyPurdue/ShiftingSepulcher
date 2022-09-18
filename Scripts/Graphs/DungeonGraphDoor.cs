@@ -3,8 +3,16 @@ namespace RandomDungeons.Graphs
     public class DungeonGraphDoor : IDungeonGraphDoor
     {
         public DungeonGraphRoom Destination {get; set;}
-        public bool IsLocked => LockId > 0;
+    }
 
-        public int LockId = 0;
+    public class KeyDungeonGraphDoor : IDungeonGraphDoor
+    {
+        public DungeonGraphRoom Destination {get; set;}
+        public int KeyId;
+
+        public KeyDungeonGraphDoor(int keyId)
+        {
+            KeyId = keyId;
+        }
     }
 }

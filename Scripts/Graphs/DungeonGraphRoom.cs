@@ -23,19 +23,19 @@ namespace RandomDungeons.Graphs
         public int KeyId = 0;
         public bool HasKey => KeyId > 0;
 
-        public DungeonGraphDoor NorthDoor => GetDoor(CardinalDirection.North);
-        public DungeonGraphDoor SouthDoor => GetDoor(CardinalDirection.South);
-        public DungeonGraphDoor EastDoor => GetDoor(CardinalDirection.East);
-        public DungeonGraphDoor WestDoor => GetDoor(CardinalDirection.West);
+        public IDungeonGraphDoor NorthDoor => GetDoor(CardinalDirection.North);
+        public IDungeonGraphDoor SouthDoor => GetDoor(CardinalDirection.South);
+        public IDungeonGraphDoor EastDoor => GetDoor(CardinalDirection.East);
+        public IDungeonGraphDoor WestDoor => GetDoor(CardinalDirection.West);
 
-        private readonly Dictionary<CardinalDirection, DungeonGraphDoor> _doors;
+        private readonly Dictionary<CardinalDirection, IDungeonGraphDoor> _doors;
 
         public DungeonGraphRoom(DungeonGraph graph, Vector2i pos)
         {
             Graph = graph;
             Position = pos;
 
-            _doors = new Dictionary<CardinalDirection, DungeonGraphDoor>
+            _doors = new Dictionary<CardinalDirection, IDungeonGraphDoor>
             {
                 {CardinalDirection.North, new DungeonGraphDoor()},
                 {CardinalDirection.South, new DungeonGraphDoor()},
@@ -44,9 +44,14 @@ namespace RandomDungeons.Graphs
             };
         }
 
-        public DungeonGraphDoor GetDoor(CardinalDirection dir)
+        public IDungeonGraphDoor GetDoor(CardinalDirection dir)
         {
             return _doors[dir];
+        }
+
+        public void SetDoor(CardinalDirection dir, IDungeonGraphDoor door)
+        {
+            _doors[dir] = door;
         }
 
         public bool CanAddRoom(CardinalDirection dir)

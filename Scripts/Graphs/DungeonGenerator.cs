@@ -67,9 +67,12 @@ namespace RandomDungeons.Graphs
                     CardinalDirection dir = directions[index];
 
                     // Lock the door, if it's the start of the run
-                    if (i == 0)
+                    if (i == 0 && currentKey != 0)
                     {
-                        currentRoom.GetDoor(dir).LockId = currentKey;
+                        currentRoom.SetDoor(
+                            dir,
+                            new KeyDungeonGraphDoor(currentKey)
+                        );
                     }
 
                     // Create a new room in that direction

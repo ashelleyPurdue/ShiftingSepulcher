@@ -64,10 +64,10 @@ namespace RandomDungeons.Nodes.DungeonRooms
             warp.DoorUsed += () => DoorUsed?.Invoke(dir);
 
             // Spawn a lock, if the door is locked
-            if (graphDoor.IsLocked)
+            if (graphDoor is KeyDungeonGraphDoor lockedDoor)
             {
                 var doorLock = Create<DoorLock>(spawn, DoorLockPrefab);
-                doorLock.KeyId = graphDoor.LockId;
+                doorLock.KeyId = lockedDoor.KeyId;
             }
         }
 

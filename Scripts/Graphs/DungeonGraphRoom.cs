@@ -126,7 +126,7 @@ namespace RandomDungeons.Graphs
         public void AddOneWayDoor(CardinalDirection dir)
         {
             var neighborPos = Position.Adjacent(dir);
-            var neighbor = Graph.CreateRoom(neighborPos, SequenceNumber);
+            var neighbor = Graph.GetRoom(neighborPos);
 
             var openSideDoor = new OneWayOpenSideGraphDoor();
             var closedSideDoor = new OneWayClosedSideGraphDoor();

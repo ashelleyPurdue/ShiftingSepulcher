@@ -20,11 +20,15 @@ namespace RandomDungeons.Graphs
     {
         public DungeonGraphRoom Destination {get; set;}
         public OneWayClosedSideGraphDoor OtherSide {get; set;}
+
+        public bool IsOpened;
     }
 
     public class OneWayClosedSideGraphDoor : IDungeonGraphDoor
     {
         public DungeonGraphRoom Destination {get; set;}
         public OneWayOpenSideGraphDoor OtherSide {get; set;}
+
+        public bool IsOpened => OtherSide.IsOpened;
     }
 }

@@ -68,13 +68,15 @@ namespace RandomDungeons.Nodes.DungeonRooms
                 var doorLock = Create<DoorLock>(spawn, DoorPrefabs.Lock);
                 doorLock.KeyId = lockedDoor.KeyId;
             }
-            else if (graphDoor is OneWayClosedSideGraphDoor)
+            else if (graphDoor is OneWayClosedSideGraphDoor closedSideGraphDoor)
             {
-                Create<Node2D>(spawn, DoorPrefabs.OneWayClosedSide);
+                var door = Create<OneWayDoorClosedSide>(spawn, DoorPrefabs.OneWayClosedSide);
+                door.SetGraphDoor(closedSideGraphDoor);
             }
-            else if (graphDoor is OneWayOpenSideGraphDoor)
+            else if (graphDoor is OneWayOpenSideGraphDoor openSideGraphDoor)
             {
-                Create<Node2D>(spawn, DoorPrefabs.OneWayOpenSide);
+                var door = Create<OneWayDoorOpenSide>(spawn, DoorPrefabs.OneWayOpenSide);
+                door.SetGraphDoor(openSideGraphDoor);
             }
         }
 

@@ -90,6 +90,14 @@ namespace RandomDungeons.Graphs
                         (ChallengeType.Puzzle, 1)
                     );
                     currentRoom.RoomSeed = rng.Next();
+
+                    // If there are any nearby rooms that are earlier in the
+                    // sequence, demolish the wall between them and build a
+                    // one-way door, to act as a shortcut.
+                    foreach (var shortcutDir in currentRoom.PotentialOneWayDoors())
+                    {
+                        currentRoom.AddOneWayDoor(shortcutDir);
+                    }
                 }
 
                 // Place a key at the end of this run

@@ -83,6 +83,31 @@ namespace RandomDungeons.Graphs
                 .ToArray();
         }
 
+        public IEnumerable<CardinalDirection> PotentialOneWayDoors()
+        {
+            // Return all adjacent rooms that are earlier in the sequence
+            // but that don't have a door connecting to this room.
+            foreach (var dir in _doors.Keys)
+            {
+                if (!(_doors[dir] is DungeonGraphDoor door))
+                    continue;
+                
+                bool isWall = door.Destination == null;
+                if (!isWall)
+                    continue;
+                
+                var neighborPos = Position.Adjacent(dir);
+                if (!Graph.CoordinatesInUse(neighborPos))
+                    continue;
+
+                var neighbor = Graph.GetRoom(neighborPos);
+                if (neighbor.SequenceNumber >= this.SequenceNumber)
+                    continue;
+
+                yield return dir;
+            }
+        }
+
         public DungeonGraphRoom AddNeighbor(
             CardinalDirection dir,
             int sequenceNumber
@@ -96,6 +121,24 @@ namespace RandomDungeons.Graphs
             Graph.JoinAdjacentRooms(this.Position, neighbor.Position);
 
             return neighbor;
+        }
+
+        public void AddOneWayDoor(CardinalDirection dir)
+        {
+            var neighborPos = Position.Adjacent(dir);
+            var neighbor = Graph.CreateRoom(neighborPos, SequenceNumber);
+
+            var openSideDoor = new OneWayOpenSideGraphDoor();
+            var closedSideDoor = new OneWayClosedSideGraphDoor();
+
+            _doors[dir] = openSideDoor;
+            neighbor._doors[dir.Opposite()] = closedSideDoor;
+
+            openSideDoor.Destination = neighbor;
+            closedSideDoor.Destination = this;
+
+            openSideDoor.OtherSide = closedSideDoor;
+            closedSideDoor.OtherSide = openSideDoor;
         }
     }
 }

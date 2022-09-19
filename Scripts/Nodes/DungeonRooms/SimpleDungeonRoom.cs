@@ -6,6 +6,7 @@ using RandomDungeons.Graphs;
 using RandomDungeons.Nodes.Elements;
 using RandomDungeons.Utils;
 using RandomDungeons.PhysicalDungeons;
+using RandomDungeons.Resources;
 
 namespace RandomDungeons.Nodes.DungeonRooms
 {
@@ -15,9 +16,7 @@ namespace RandomDungeons.Nodes.DungeonRooms
 
         public event Action<CardinalDirection> DoorUsed;
 
-        [Export] public PackedScene DoorWallPrefab;
-        [Export] public PackedScene DoorLockPrefab;
-        [Export] public PackedScene DoorWarpPrefab;
+        [Export] public DoorPrefabCollection DoorPrefabs;
 
         public DungeonGraphRoom GraphRoom {get; protected set;}
 
@@ -56,18 +55,28 @@ namespace RandomDungeons.Nodes.DungeonRooms
             // If the door doesn't go anywhere, just put a wall here.
             if (graphDoor.Destination == null)
             {
-                Create<Node2D>(spawn, DoorWallPrefab);
+                Create<Node2D>(spawn, DoorPrefabs.Wall);
                 return;
             }
 
-            var warp = Create<DoorWarp>(spawn, DoorWarpPrefab);
+            var warp = Create<DoorWarp>(spawn, DoorPrefabs.Warp);
             warp.DoorUsed += () => DoorUsed?.Invoke(dir);
 
-            // Spawn a lock, if the door is locked
-            if (graphDoor.IsLocked)
+            // Spawn the correct kind of door
+            if (graphDoor is KeyDungeonGraphDoor lockedDoor)
             {
-                var doorLock = Create<DoorLock>(spawn, DoorLockPrefab);
-                doorLock.KeyId = graphDoor.LockId;
+                var doorLock = Create<DoorLock>(spawn, DoorPrefabs.Lock);
+                doorLock.KeyId = lockedDoor.KeyId;
+            }
+            else if (graphDoor is OneWayClosedSideGraphDoor closedSideGraphDoor)
+            {
+                var door = Create<OneWayDoorClosedSide>(spawn, DoorPrefabs.OneWayClosedSide);
+                door.SetGraphDoor(closedSideGraphDoor);
+            }
+            else if (graphDoor is OneWayOpenSideGraphDoor openSideGraphDoor)
+            {
+                var door = Create<OneWayDoorOpenSide>(spawn, DoorPrefabs.OneWayOpenSide);
+                door.SetGraphDoor(openSideGraphDoor);
             }
         }
 

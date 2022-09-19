@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using RandomDungeons.Utils;
 
@@ -23,12 +24,12 @@ namespace RandomDungeons.Graphs
             return _rooms[coords];
         }
 
-        public DungeonGraphRoom CreateRoom(Vector2i coords)
+        public DungeonGraphRoom CreateRoom(Vector2i coords, int sequenceNumber)
         {
             if (_rooms.ContainsKey(coords))
                 throw new Exception($"There's already a room at {coords}");
 
-            var room = new DungeonGraphRoom(this, coords);
+            var room = new DungeonGraphRoom(this, coords, sequenceNumber);
             _rooms[coords] = room;
 
             return room;
@@ -64,6 +65,19 @@ namespace RandomDungeons.Graphs
                         yield return (roomCoords, dir);
                 }
             }
+        }
+
+        /// <summary>
+        /// Returns the number of rooms surrounding the given coordinates,
+        /// regardless of if they're connected by doors or not.
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
+        public int SurroundingRoomCount(Vector2i pos)
+        {
+            return CardinalDirectionUtils.All()
+                .Where(dir => CoordinatesInUse(pos.Adjacent(dir)))
+                .Count();
         }
     }
 }

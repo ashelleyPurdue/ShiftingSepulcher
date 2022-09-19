@@ -39,13 +39,26 @@ namespace RandomDungeons.Graphs
 
             // Demolish walls and build one-way doors to create shortcuts from
             // late rooms to early rooms.
-            foreach (var pos in dungeon.AllRoomCoordinates())
+            //
+            // Since creating lots of shortcuts makes the dungeon harder to
+            // navigate, (so many choices!  ahh!) we impose the following
+            // limits:
+            // * There can no more shortcuts than there are keys
+            for (int i = 0; i < currentKey; i++)
             {
-                var room = dungeon.GetRoom(pos);
-                foreach (var dir in room.PotentialOneWayDoors())
-                {
-                    room.AddOneWayDoor(dir);
-                }
+                DungeonGraphRoom[] roomsThatCanHaveShortcuts = dungeon
+                    .AllRoomCoordinates()
+                    .Select(pos => dungeon.GetRoom(pos))
+                    .Where(r => r.PotentialOneWayDoors().Any())
+                    .ToArray();
+
+                if (!roomsThatCanHaveShortcuts.Any())
+                    break;
+
+                DungeonGraphRoom room = rng.PickFrom(roomsThatCanHaveShortcuts);
+                CardinalDirection dir = rng.PickFrom(room.PotentialOneWayDoors());
+
+                room.AddOneWayDoor(dir);
             }
 
             return dungeon;

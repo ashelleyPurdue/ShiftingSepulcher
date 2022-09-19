@@ -83,29 +83,11 @@ namespace RandomDungeons.Graphs
                 .ToArray();
         }
 
-        public IEnumerable<CardinalDirection> PotentialOneWayDoors()
+        public IEnumerable<CardinalDirection> AllWalls()
         {
-            // Return all adjacent rooms that are earlier in the sequence
-            // but that don't have a door connecting to this room.
-            foreach (var dir in CardinalDirectionUtils.All())
-            {
-                if (!(_doors[dir] is DungeonGraphDoor door))
-                    continue;
-
-                bool isWall = door.Destination == null;
-                if (!isWall)
-                    continue;
-
-                var neighborPos = Position.Adjacent(dir);
-                if (!Graph.CoordinatesInUse(neighborPos))
-                    continue;
-
-                var neighbor = Graph.GetRoom(neighborPos);
-                if (neighbor.SequenceNumber >= this.SequenceNumber)
-                    continue;
-
-                yield return dir;
-            }
+            return CardinalDirectionUtils.All()
+                .Where(dir => _doors[dir] is DungeonGraphDoor)
+                .Where(dir => _doors[dir].Destination == null);
         }
 
         public DungeonGraphRoom AddNeighbor(

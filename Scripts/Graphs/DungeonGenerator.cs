@@ -49,16 +49,25 @@ namespace RandomDungeons.Graphs
                 DungeonGraphRoom[] roomsThatCanHaveShortcuts = dungeon
                     .AllRoomCoordinates()
                     .Select(pos => dungeon.GetRoom(pos))
-                    .Where(r => r.PotentialOneWayDoors().Any())
+                    .Where(r => PotentialOneWayDoors(r).Any())
                     .ToArray();
 
                 if (!roomsThatCanHaveShortcuts.Any())
                     break;
 
                 DungeonGraphRoom room = rng.PickFrom(roomsThatCanHaveShortcuts);
-                CardinalDirection dir = rng.PickFrom(room.PotentialOneWayDoors());
+                CardinalDirection dir = rng.PickFrom(PotentialOneWayDoors(room));
 
                 room.AddOneWayDoor(dir);
+
+                IEnumerable<CardinalDirection> PotentialOneWayDoors(DungeonGraphRoom r)
+                {
+                    return r.AllWalls()
+                        .Where(d => dungeon.CoordinatesInUse(r.Position.Adjacent(d)))
+                        .Select(d => (dir: d, neighbor: dungeon.GetRoom(r.Position.Adjacent(d))))
+                        .Where(door => door.neighbor.SequenceNumber <= r.SequenceNumber)
+                        .Select(door => door.dir);
+                }
             }
 
             return dungeon;

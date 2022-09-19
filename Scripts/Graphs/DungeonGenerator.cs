@@ -43,8 +43,8 @@ namespace RandomDungeons.Graphs
             // Since creating lots of shortcuts makes the dungeon harder to
             // navigate, (so many choices!  ahh!) we impose the following
             // limits:
-            // * There can no more shortcuts than there are keys
-            for (int i = 0; i < currentKey; i++)
+            // * The number of shortcuts is proportional to the number of keys
+            for (int i = 0; i < currentKey / 4; i++)
             {
                 DungeonGraphRoom[] roomsThatCanHaveShortcuts = dungeon
                     .AllRoomCoordinates()

@@ -91,11 +91,11 @@ namespace RandomDungeons.Graphs
             {
                 if (!(_doors[dir] is DungeonGraphDoor door))
                     continue;
-                
+
                 bool isWall = door.Destination == null;
                 if (!isWall)
                     continue;
-                
+
                 var neighborPos = Position.Adjacent(dir);
                 if (!Graph.CoordinatesInUse(neighborPos))
                     continue;

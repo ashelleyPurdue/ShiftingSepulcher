@@ -22,7 +22,7 @@ namespace RandomDungeons.Graphs
 
             var lastCreatedRoom = dungeon.CreateRoom(Vector2i.Zero, sequenceNum);
             sequenceNum++;
-            
+
             while (dungeon.RoomCount < numRooms)
             {
                 DungeonGraphRoom runStartRoom = ChooseRandomStartRoom();

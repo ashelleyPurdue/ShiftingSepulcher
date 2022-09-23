@@ -12,10 +12,10 @@ radius = 4.0
 height = 30.0
 
 [sub_resource type="CircleShape2D" id=77]
-radius = 16.0
+radius = 14.0
 
 [sub_resource type="CircleShape2D" id=78]
-radius = 16.0
+radius = 14.0
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 0
@@ -26,6 +26,7 @@ unique_name_in_owner = true
 
 [node name="Shadow" type="Sprite" parent="Visuals"]
 modulate = Color( 0, 0, 0, 0.662745 )
+scale = Vector2( 0.875, 0.875 )
 texture = ExtResource( 2 )
 
 [node name="Body" type="Node2D" parent="Visuals"]
@@ -127,7 +128,6 @@ color = Color( 0.811765, 0.811765, 0.811765, 1 )
 polygon = PoolVector2Array( 8, -1, 8, 1, 30, 1, 32, 0, 30, -1 )
 
 [node name="HitBox" type="Area2D" parent="Sword"]
-visible = false
 script = ExtResource( 5 )
 IgnoredHurtBoxes = [ NodePath("../../HurtBox") ]
 
@@ -137,11 +137,9 @@ rotation = 1.5708
 shape = SubResource( 75 )
 
 [node name="BodyCollisionShape" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource( 77 )
 
 [node name="HurtBox" type="Area2D" parent="."]
-visible = false
 script = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]

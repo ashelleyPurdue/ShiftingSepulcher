@@ -28,5 +28,6 @@ namespace RandomDungeons.Services
         public static bool HasKey(int keyId) => _content.HeldKeys.Contains(keyId);
         public static void CollectKey(int keyId) => _content.HeldKeys.Add(keyId);
         public static void SpendKey(int keyId) => _content.HeldKeys.Remove(keyId);
+        public static IEnumerable<int> HeldKeys => _content.HeldKeys;
     }
 }

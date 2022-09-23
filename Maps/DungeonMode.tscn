@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/Nodes/PhysicalDungeons/DungeonInstantiator.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Nodes/DungeonRooms/DungeonRoomFactory.cs" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Prefabs/UI/HUD.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Prefabs/DungeonRoomTemplates/KeyRoom.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Prefabs/DungeonRoomTemplates/EmptyRoom.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Audio/Music/DungeonMusic.ogg" type="AudioStream" id=7]
 
 [node name="Node2D" type="Node2D"]
 
@@ -45,3 +46,7 @@ smoothing_enabled = true
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="HUD" parent="CanvasLayer" instance=ExtResource( 4 )]
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+autoplay = true

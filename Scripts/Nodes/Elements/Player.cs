@@ -73,7 +73,7 @@ namespace RandomDungeons.Nodes.Elements
         {
             public override void _StateEntered()
             {
-                Owner._sword.StartSwinging(EightDirection.South);
+                Owner._sword.StartSwinging(Owner._visuals.RotationDegrees);
             }
 
             public override void _PhysicsProcess(float delta)

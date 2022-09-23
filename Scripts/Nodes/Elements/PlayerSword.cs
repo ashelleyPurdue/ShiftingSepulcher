@@ -28,10 +28,10 @@ namespace RandomDungeons.Nodes.Elements
             _hitBox.Monitorable = IsSwinging;
         }
 
-        public void StartSwinging(EightDirection dir)
+        public void StartSwinging(float angleDeg)
         {
             _swingTimer = SwingDuration;
-            RotationDegrees = dir.ToAngleDeg() - (SwingAngleDeg / 2);
+            RotationDegrees = angleDeg - (SwingAngleDeg / 2);
         }
     }
 }

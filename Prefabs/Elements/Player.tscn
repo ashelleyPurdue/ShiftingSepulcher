@@ -63,7 +63,7 @@ shape = SubResource( 75 )
 unique_name_in_owner = true
 
 [node name="Shadow" type="Sprite" parent="Visuals"]
-modulate = Color( 0, 0, 0, 1 )
+modulate = Color( 0, 0, 0, 0.662745 )
 texture = ExtResource( 2 )
 
 [node name="Body" type="Node2D" parent="Visuals"]

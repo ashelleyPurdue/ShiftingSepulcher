@@ -9,7 +9,7 @@ namespace RandomDungeons.Nodes.Elements
         public bool IsSwinging => _swingTimer > 0;
 
         private const float SwingDuration = 0.15f;
-        private const float SwingAngleDeg = 90;
+        private const float SwingAngleDeg = 135;
         private float SwingSpeed => SwingAngleDeg / SwingDuration;
 
         private const float KnockbackSpeed = 300;

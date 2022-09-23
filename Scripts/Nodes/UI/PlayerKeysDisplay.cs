@@ -1,16 +1,19 @@
+using System.Linq;
 using Godot;
 using RandomDungeons.Services;
+using RandomDungeons.Utils;
 
 namespace RandomDungeons.Nodes.UI
 {
-    public class PlayerHealthDisplay : Control
+    public class PlayerKeysDisplay : Control
     {
         [Export] public Texture Image;
         [Export] public Vector2 ImageRectSize = new Vector2(32, 32);
 
         public override void _Draw()
         {
-            for (int i = 0; i < PlayerInventory.Health; i++)
+            int[] heldKeys = PlayerInventory.HeldKeys.ToArray();
+            for (int i = 0; i < heldKeys.Length; i++)
             {
                 var offset = new Vector2(ImageRectSize.x * i, 0);
 
@@ -20,7 +23,8 @@ namespace RandomDungeons.Nodes.UI
                         RectPosition + offset,
                         ImageRectSize
                     ),
-                    tile: false
+                    tile: false,
+                    modulate: KeyColors.ForId(heldKeys[i])
                 );
             }
         }

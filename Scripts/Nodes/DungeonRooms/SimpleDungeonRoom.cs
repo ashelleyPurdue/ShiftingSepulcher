@@ -87,6 +87,21 @@ namespace RandomDungeons.Nodes.DungeonRooms
             return node;
         }
 
+        protected void SpawnDoorBars(IDungeonRoomChallenge challenge)
+        {
+            foreach (CardinalDirection dir in CardinalDirectionUtils.All())
+            {
+                var parent = GetDoorSpawn(dir);
+                var graphDoor = GraphRoom.GetDoor(dir);
+
+                if (graphDoor is ChallengeDungeonGraphDoor)
+                {
+                    var bars = Create<DoorBars>(parent, DoorPrefabs.Bars);
+                    bars.Challenge = challenge;
+                }
+            }
+        }
+
         private Color GetBackgroundColor(float alpha)
         {
             var c = (Color)ProjectSettings.GetSetting("rendering/environment/default_clear_color");

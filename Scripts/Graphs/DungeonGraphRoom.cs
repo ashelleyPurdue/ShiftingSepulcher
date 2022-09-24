@@ -22,12 +22,6 @@ namespace RandomDungeons.Graphs
 
         public readonly int SequenceNumber;
         public int KeyId = 0;
-        public bool HasKey => KeyId > 0;
-
-        public IDungeonGraphDoor NorthDoor => GetDoor(CardinalDirection.North);
-        public IDungeonGraphDoor SouthDoor => GetDoor(CardinalDirection.South);
-        public IDungeonGraphDoor EastDoor => GetDoor(CardinalDirection.East);
-        public IDungeonGraphDoor WestDoor => GetDoor(CardinalDirection.West);
 
         private readonly Dictionary<CardinalDirection, IDungeonGraphDoor> _doors;
 

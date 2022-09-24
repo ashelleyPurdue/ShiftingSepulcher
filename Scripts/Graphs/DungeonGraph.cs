@@ -40,18 +40,6 @@ namespace RandomDungeons.Graphs
             return _rooms.ContainsKey(c);
         }
 
-        public IEnumerable<(Vector2i parentCoords, CardinalDirection dir)> UnusedDoors()
-        {
-            foreach (var roomCoords in _rooms.Keys)
-            {
-                foreach (var dir in CardinalDirectionUtils.All())
-                {
-                    if (!_rooms.ContainsKey(roomCoords.Adjacent(dir)))
-                        yield return (roomCoords, dir);
-                }
-            }
-        }
-
         /// <summary>
         /// Returns the number of rooms surrounding the given coordinates,
         /// regardless of if they're connected by doors or not.

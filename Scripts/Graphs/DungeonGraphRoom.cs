@@ -100,7 +100,9 @@ namespace RandomDungeons.Graphs
 
             var neighborPos = Position.Adjacent(dir);
             var neighbor = Graph.CreateRoom(neighborPos, sequenceNum);
-            Graph.JoinAdjacentRooms(this.Position, neighbor.Position);
+
+            GetDoor(dir).Destination = neighbor;
+            neighbor.GetDoor(dir.Opposite()).Destination = this;
 
             return neighbor;
         }

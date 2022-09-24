@@ -78,8 +78,8 @@ texture = ExtResource( 2 )
 
 [node name="Head" type="Sprite" parent="Visuals/Body"]
 self_modulate = Color( 1, 0.882353, 0.654902, 1 )
-position = Vector2( -2.27374e-13, -26 )
-scale = Vector2( 1.46875, 1.46875 )
+position = Vector2( 0, -18.9387 )
+scale = Vector2( 1.12441, 1.12441 )
 texture = ExtResource( 2 )
 
 [node name="Eyes" type="Node2D" parent="Visuals/Body/Head"]
@@ -98,7 +98,6 @@ texture = ExtResource( 2 )
 
 [node name="Hair" type="Polygon2D" parent="Visuals/Body/Head"]
 position = Vector2( 2.04256, 2.04256 )
-scale = Vector2( 1, 1 )
 color = Color( 0.811765, 0.8, 0, 1 )
 polygon = PoolVector2Array( -14.2979, -3.40425, -14.2979, 0, -8.17021, -3.40425, -8.17021, 0, -1.3617, -4.0851, -2.7234, 0, 3.40426, -3.40425, 3.40426, -0.680851, 8.85106, -2.7234, 9.53192, -7.48936, -2.7234, -11.5745 )
 

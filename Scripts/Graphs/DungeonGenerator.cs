@@ -92,6 +92,8 @@ namespace RandomDungeons.Graphs
                     // Lock the door, if it's the start of the run
                     if (i == 0 && currentKey != 0)
                         prevRoom.LockDoor(dir, currentKey);
+                    else
+                        prevRoom.SetChallengeDoor(dir);
 
                     // Choose a random challenge type for this room
                     // TODO: Don't hardcode these probabilities

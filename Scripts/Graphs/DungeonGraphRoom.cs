@@ -107,7 +107,7 @@ namespace RandomDungeons.Graphs
 
         /// <summary>
         /// Replaces the given door with a locked one, using the given keyId.
-        /// Preserve's the old door's <see cref="IDungeonGraphDoor.Destination"/>
+        /// Preserves the old door's <see cref="IDungeonGraphDoor.Destination"/>
         /// value.
         /// </summary>
         /// <param name="dir"></param>
@@ -116,6 +116,22 @@ namespace RandomDungeons.Graphs
         {
             var oldDoor = GetDoor(dir);
             var newDoor = new KeyDungeonGraphDoor(keyId);
+            newDoor.Destination = oldDoor.Destination;
+
+            _doors[dir] = newDoor;
+        }
+
+        /// <summary>
+        /// Replaces the given door with a challenge door, which should open
+        /// when that room's challenge is completed.
+        /// Preserves the old door's <see cref="IDungeonGraphDoor.Destination"/>
+        /// value.
+        /// </summary>
+        /// <param name="dir"></param>
+        public void SetChallengeDoor(CardinalDirection dir)
+        {
+            var oldDoor = GetDoor(dir);
+            var newDoor = new ChallengeDungeonGraphDoor();
             newDoor.Destination = oldDoor.Destination;
 
             _doors[dir] = newDoor;

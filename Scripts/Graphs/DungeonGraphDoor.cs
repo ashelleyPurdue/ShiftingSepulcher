@@ -10,6 +10,12 @@ namespace RandomDungeons.Graphs
         public DungeonGraphRoom Destination {get; set;}
     }
 
+    public class ChallengeDungeonGraphDoor : IDungeonGraphDoor
+    {
+        public DungeonGraphRoom Destination {get; set;}
+        public bool IsOpened;
+    }
+
     public class KeyDungeonGraphDoor : IDungeonGraphDoor
     {
         public DungeonGraphRoom Destination {get; set;}

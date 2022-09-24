@@ -13,8 +13,9 @@ namespace RandomDungeons.Nodes.Elements
     {
         public const float WalkSpeed = 283;
 
-        private EightDirectionalSprite _sprite => GetNode<EightDirectionalSprite>("%Sprite");
+        private Node2D _visuals => GetNode<Node2D>("%Visuals");
         private PlayerSword _sword => GetNode<PlayerSword>("%Sword");
+        private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
         private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
 
         private StateMachine _sm;
@@ -23,7 +24,7 @@ namespace RandomDungeons.Nodes.Elements
         {
             PlayerInventory.Reset();
 
-            DeathAnimation.AnimationTarget = _sprite;
+            DeathAnimation.AnimationTarget = _visuals;
             DeathAnimation.AnimationEnded += () => _sm.ChangeState(AfterDeathAnimation);
 
             KnockedBack.StoppedMoving += () => _sm.ChangeState(Walking);
@@ -52,6 +53,10 @@ namespace RandomDungeons.Nodes.Elements
         {
             public override void _Process(float delta)
             {
+                Owner._animator.PlaybackSpeed = InputService.LeftStick
+                    .LimitLength(1)
+                    .Length();
+
                 if (InputService.AttackPressed && !Owner._sword.IsSwinging)
                     ChangeState(Owner.SwingingSword);
             }
@@ -62,11 +67,14 @@ namespace RandomDungeons.Nodes.Elements
                 var cappedLeftStick = InputService.LeftStick.LimitLength(1);
                 Owner.MoveAndSlide(cappedLeftStick * WalkSpeed);
 
-                // Update the sprite
+                // Update the rotation of the visuals
                 if (cappedLeftStick.Length() > 0.01)
-                    Owner._sprite.Direction = cappedLeftStick.ToNearestEightDirection();
+                    Owner._visuals.Rotation = cappedLeftStick.Angle();
+            }
 
-                Owner._sprite.SpeedScale = cappedLeftStick.Length();
+            public override void _StateExited()
+            {
+                Owner._animator.PlaybackSpeed = 0;
             }
         }
 
@@ -75,8 +83,7 @@ namespace RandomDungeons.Nodes.Elements
         {
             public override void _StateEntered()
             {
-                Owner._sword.StartSwinging(Owner._sprite.Direction);
-                Owner._sprite.SpeedScale = 0;
+                Owner._sword.StartSwinging(Owner._visuals.RotationDegrees);
             }
 
             public override void _PhysicsProcess(float delta)

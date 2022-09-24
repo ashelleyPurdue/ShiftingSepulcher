@@ -9,7 +9,7 @@ namespace RandomDungeons.Nodes.Elements
         public bool IsSwinging => _swingTimer > 0;
 
         private const float SwingDuration = 0.15f;
-        private const float SwingAngleDeg = 90;
+        private const float SwingAngleDeg = 135;
         private float SwingSpeed => SwingAngleDeg / SwingDuration;
 
         private const float KnockbackSpeed = 300;
@@ -28,10 +28,10 @@ namespace RandomDungeons.Nodes.Elements
             _hitBox.Monitorable = IsSwinging;
         }
 
-        public void StartSwinging(EightDirection dir)
+        public void StartSwinging(float angleDeg)
         {
             _swingTimer = SwingDuration;
-            RotationDegrees = dir.ToAngleDeg() - (SwingAngleDeg / 2);
+            RotationDegrees = angleDeg - (SwingAngleDeg / 2);
         }
     }
 }

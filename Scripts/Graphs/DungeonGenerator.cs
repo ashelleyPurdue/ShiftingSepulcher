@@ -93,7 +93,7 @@ namespace RandomDungeons.Graphs
                     }
 
                     // Create a new room in that direction
-                    currentRoom = currentRoom.AddNeighbor(dir, sequenceNum);
+                    currentRoom = currentRoom.CreateNeighbor(dir, sequenceNum);
                     lastCreatedRoom = currentRoom;
                     sequenceNum++;
 
@@ -136,7 +136,7 @@ namespace RandomDungeons.Graphs
                     DungeonGraphRoom room = rng.PickFrom(roomsThatCanHaveShortcuts);
                     CardinalDirection dir = rng.PickFrom(PotentialShortcuts(room));
 
-                    room.AddOneWayDoor(dir);
+                    room.DrillOneWayDoor(dir);
 
                     IEnumerable<CardinalDirection> PotentialShortcuts(DungeonGraphRoom r)
                     {

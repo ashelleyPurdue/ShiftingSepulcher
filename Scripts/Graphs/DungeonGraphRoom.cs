@@ -84,7 +84,16 @@ namespace RandomDungeons.Graphs
                 .Where(dir => _doors[dir].Destination == null);
         }
 
-        public DungeonGraphRoom AddNeighbor(
+        /// <summary>
+        /// Creates a new room in the given direction, and joins them together
+        /// with a (normal) door.
+        ///
+        /// Fails if there is already a room in that direction.
+        /// </summary>
+        /// <param name="dir"></param>
+        /// <param name="sequenceNum"></param>
+        /// <returns></returns>
+        public DungeonGraphRoom CreateNeighbor(
             CardinalDirection dir,
             int sequenceNum
         )
@@ -101,9 +110,20 @@ namespace RandomDungeons.Graphs
             return neighbor;
         }
 
-        public void AddOneWayDoor(CardinalDirection dir)
+        /// <summary>
+        /// Drills a hole in the given wall, and then fills it with a one-way
+        /// door.
+        ///
+        /// Fails if there is no existing room behind the chosen wall.
+        /// </summary>
+        /// <param name="dir"></param>
+        public void DrillOneWayDoor(CardinalDirection dir)
         {
-            var neighborPos = Position.Adjacent(dir);
+            Vector2i neighborPos = Position.Adjacent(dir);
+
+            if (!Graph.CoordinatesInUse(neighborPos))
+                throw new Exception("Tried to drill a hole into nowhere");
+
             var neighbor = Graph.GetRoom(neighborPos);
 
             var openSideDoor = new OneWayOpenSideGraphDoor();

@@ -1,5 +1,10 @@
 namespace RandomDungeons.Graphs
 {
+    public interface IDungeonGraphDoor
+    {
+        DungeonGraphRoom Destination {get; set;}
+    }
+
     public class DungeonGraphDoor : IDungeonGraphDoor
     {
         public DungeonGraphRoom Destination {get; set;}

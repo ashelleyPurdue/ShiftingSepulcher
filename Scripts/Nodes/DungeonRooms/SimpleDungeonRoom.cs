@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using System.Collections.Generic;
+
 using Godot;
 
 using RandomDungeons.Graphs;
@@ -7,6 +9,7 @@ using RandomDungeons.Nodes.Elements;
 using RandomDungeons.Utils;
 using RandomDungeons.PhysicalDungeons;
 using RandomDungeons.Resources;
+
 
 namespace RandomDungeons.Nodes.DungeonRooms
 {
@@ -34,6 +37,12 @@ namespace RandomDungeons.Nodes.DungeonRooms
 
             curtain.Visible = FadePercent > 0;
             curtain.Modulate = GetBackgroundColor(1 - FadePercent);
+
+            // Open challenge doors if they've been solved
+            foreach (var door in ChallengeDoors())
+            {
+                door.IsOpened = IsChallengeSolved();
+            }
         }
 
         public virtual void Populate(DungeonGraphRoom graphRoom)
@@ -68,6 +77,11 @@ namespace RandomDungeons.Nodes.DungeonRooms
                 var doorLock = Create<DoorLock>(spawn, DoorPrefabs.Lock);
                 doorLock.KeyId = lockedDoor.KeyId;
             }
+            else if (graphDoor is ChallengeDungeonGraphDoor challengeDoor)
+            {
+                var bars = Create<DoorBars>(spawn, DoorPrefabs.Bars);
+                bars.SetGraphDoor(challengeDoor);
+            }
             else if (graphDoor is OneWayClosedSideGraphDoor closedSideGraphDoor)
             {
                 var door = Create<OneWayDoorClosedSide>(spawn, DoorPrefabs.OneWayClosedSide);
@@ -87,19 +101,17 @@ namespace RandomDungeons.Nodes.DungeonRooms
             return node;
         }
 
-        protected void SpawnDoorBars(IDungeonRoomChallenge challenge)
+        public virtual bool IsChallengeSolved()
         {
-            foreach (CardinalDirection dir in CardinalDirectionUtils.All())
-            {
-                var parent = GetDoorSpawn(dir);
-                var graphDoor = GraphRoom.GetDoor(dir);
+            return true;
+        }
 
-                if (graphDoor is ChallengeDungeonGraphDoor)
-                {
-                    var bars = Create<DoorBars>(parent, DoorPrefabs.Bars);
-                    bars.Challenge = challenge;
-                }
-            }
+        private IEnumerable<ChallengeDungeonGraphDoor> ChallengeDoors()
+        {
+            return CardinalDirectionUtils.All()
+                .Select(dir => GraphRoom.GetDoor(dir))
+                .Where(door => door is ChallengeDungeonGraphDoor)
+                .Cast<ChallengeDungeonGraphDoor>();
         }
 
         private Color GetBackgroundColor(float alpha)

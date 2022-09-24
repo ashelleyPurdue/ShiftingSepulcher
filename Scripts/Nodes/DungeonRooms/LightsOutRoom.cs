@@ -1,8 +1,6 @@
 using Godot;
 using RandomDungeons.Graphs;
-using RandomDungeons.Nodes.Elements;
 using RandomDungeons.PhysicalDungeons;
-using RandomDungeons.Utils;
 
 namespace RandomDungeons.Nodes.DungeonRooms
 {
@@ -11,6 +9,7 @@ namespace RandomDungeons.Nodes.DungeonRooms
         [Export] public PackedScene LightsOutPuzzlePrefab;
 
         private Node2D _contentSpawn => GetNode<Node2D>("%ContentSpawn");
+        private LightsOutPuzzle _puzzle;
 
         public override void Populate(DungeonGraphRoom graphRoom)
         {
@@ -22,10 +21,13 @@ namespace RandomDungeons.Nodes.DungeonRooms
                 height: 4,
                 numFlips: 3
             );
-            var puzzle = Create<LightsOutPuzzle>(_contentSpawn, LightsOutPuzzlePrefab);
-            puzzle.SetGraph(graph);
+            _puzzle = Create<LightsOutPuzzle>(_contentSpawn, LightsOutPuzzlePrefab);
+            _puzzle.SetGraph(graph);
+        }
 
-            SpawnDoorBars(puzzle);
+        public override bool IsChallengeSolved()
+        {
+            return _puzzle.IsSolved();
         }
     }
 }

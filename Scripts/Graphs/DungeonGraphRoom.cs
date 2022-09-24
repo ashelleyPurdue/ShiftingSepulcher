@@ -49,11 +49,6 @@ namespace RandomDungeons.Graphs
             return _doors[dir];
         }
 
-        public void SetDoor(CardinalDirection dir, IDungeonGraphDoor door)
-        {
-            _doors[dir] = door;
-        }
-
         public bool CanAddRoom(CardinalDirection dir)
         {
             var newCoords = Position.Adjacent(dir);
@@ -108,6 +103,22 @@ namespace RandomDungeons.Graphs
             neighbor.GetDoor(dir.Opposite()).Destination = this;
 
             return neighbor;
+        }
+
+        /// <summary>
+        /// Replaces the given door with a locked one, using the given keyId.
+        /// Preserve's the old door's <see cref="IDungeonGraphDoor.Destination"/>
+        /// value.
+        /// </summary>
+        /// <param name="dir"></param>
+        /// <param name="keyId"></param>
+        public void LockDoor(CardinalDirection dir, int keyId)
+        {
+            var oldDoor = GetDoor(dir);
+            var newDoor = new KeyDungeonGraphDoor(keyId);
+            newDoor.Destination = oldDoor.Destination;
+
+            _doors[dir] = newDoor;
         }
 
         /// <summary>

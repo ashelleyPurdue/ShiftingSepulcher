@@ -83,19 +83,15 @@ namespace RandomDungeons.Graphs
                         NextRoomDirectionWeights(currentRoom).ToArray()
                     );
 
-                    // Lock the door, if it's the start of the run
-                    if (i == 0 && currentKey != 0)
-                    {
-                        currentRoom.SetDoor(
-                            dir,
-                            new KeyDungeonGraphDoor(currentKey)
-                        );
-                    }
-
                     // Create a new room in that direction
+                    var prevRoom = currentRoom;
                     currentRoom = currentRoom.CreateNeighbor(dir, sequenceNum);
                     lastCreatedRoom = currentRoom;
                     sequenceNum++;
+
+                    // Lock the door, if it's the start of the run
+                    if (i == 0 && currentKey != 0)
+                        prevRoom.LockDoor(dir, currentKey);
 
                     // Choose a random challenge type for this room
                     // TODO: Don't hardcode these probabilities

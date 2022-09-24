@@ -18,5 +18,7 @@ namespace RandomDungeons.Nodes.DungeonRooms
         Node2D GetDoorSpawn(CardinalDirection dir);
 
         void Populate(DungeonGraphRoom graphRoom);
+
+        bool IsChallengeSolved();
     }
 }

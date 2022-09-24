@@ -26,16 +26,11 @@ namespace RandomDungeons.Nodes.DungeonRooms
             );
             _puzzle = Create<SlidingIcePuzzle>(_contentSpawn, SlidingIcePuzzlePrefab);
             _puzzle.SetGraph(graph);
-
-            SpawnDoorBars();
         }
 
-        public override void _PhysicsProcess(float delta)
+        public override bool IsChallengeSolved()
         {
-            foreach (var door in ChallengeDoors())
-            {
-                door.IsOpened = _puzzle.IsSolved();
-            }
+            return _puzzle.IsSolved();
         }
     }
 }

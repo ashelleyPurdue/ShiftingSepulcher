@@ -1,8 +1,19 @@
 namespace RandomDungeons.Graphs
 {
+    public interface IDungeonGraphDoor
+    {
+        DungeonGraphRoom Destination {get; set;}
+    }
+
     public class DungeonGraphDoor : IDungeonGraphDoor
     {
         public DungeonGraphRoom Destination {get; set;}
+    }
+
+    public class ChallengeDungeonGraphDoor : IDungeonGraphDoor
+    {
+        public DungeonGraphRoom Destination {get; set;}
+        public bool IsOpened;
     }
 
     public class KeyDungeonGraphDoor : IDungeonGraphDoor

@@ -26,25 +26,7 @@ namespace RandomDungeons.Nodes.DungeonRooms
             var puzzle = Create<SlidingIcePuzzle>(_contentSpawn, SlidingIcePuzzlePrefab);
             puzzle.SetGraph(graph);
 
-            // TODO: Only spawn bars on the main "forward" door; don't spawn
-            // them on "side" doors or the "go back" door.
-            SpawnDoorBars(CardinalDirection.North, puzzle);
-            SpawnDoorBars(CardinalDirection.South, puzzle);
-            SpawnDoorBars(CardinalDirection.East, puzzle);
-            SpawnDoorBars(CardinalDirection.West, puzzle);
-        }
-
-        private void SpawnDoorBars(CardinalDirection dir, IDungeonRoomChallenge challenge)
-        {
-            var parent = GetDoorSpawn(dir);
-            var graphDoor = GraphRoom.GetDoor(dir);
-
-            // Don't spawn bars on plain walls
-            if (graphDoor.Destination == null)
-                return;
-
-            var bars = Create<DoorBars>(parent, DoorPrefabs.Bars);
-            bars.Challenge = challenge;
+            SpawnDoorBars(puzzle);
         }
     }
 }

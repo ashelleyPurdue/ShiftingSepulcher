@@ -11,6 +11,7 @@ namespace RandomDungeons.Nodes.DungeonRooms
         [Export] public PackedScene SlidingIcePuzzlePrefab;
 
         private Node2D _contentSpawn => GetNode<Node2D>("%ContentSpawn");
+        private SlidingIcePuzzle _puzzle;
 
         public override void Populate(DungeonGraphRoom graphRoom)
         {
@@ -23,10 +24,18 @@ namespace RandomDungeons.Nodes.DungeonRooms
                 numPushes: 5,
                 numRedHerringRocks: 3
             );
-            var puzzle = Create<SlidingIcePuzzle>(_contentSpawn, SlidingIcePuzzlePrefab);
-            puzzle.SetGraph(graph);
+            _puzzle = Create<SlidingIcePuzzle>(_contentSpawn, SlidingIcePuzzlePrefab);
+            _puzzle.SetGraph(graph);
 
-            SpawnDoorBars(puzzle);
+            SpawnDoorBars();
+        }
+
+        public override void _PhysicsProcess(float delta)
+        {
+            foreach (var door in ChallengeDoors())
+            {
+                door.IsOpened = _puzzle.IsSolved();
+            }
         }
     }
 }

@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using System.Collections.Generic;
+
 using Godot;
 
 using RandomDungeons.Graphs;
@@ -7,6 +9,7 @@ using RandomDungeons.Nodes.Elements;
 using RandomDungeons.Utils;
 using RandomDungeons.PhysicalDungeons;
 using RandomDungeons.Resources;
+
 
 namespace RandomDungeons.Nodes.DungeonRooms
 {
@@ -87,19 +90,27 @@ namespace RandomDungeons.Nodes.DungeonRooms
             return node;
         }
 
-        protected void SpawnDoorBars(IDungeonRoomChallenge challenge)
+        protected void SpawnDoorBars()
         {
             foreach (CardinalDirection dir in CardinalDirectionUtils.All())
             {
                 var parent = GetDoorSpawn(dir);
                 var graphDoor = GraphRoom.GetDoor(dir);
 
-                if (graphDoor is ChallengeDungeonGraphDoor)
+                if (graphDoor is ChallengeDungeonGraphDoor challengeDoor)
                 {
                     var bars = Create<DoorBars>(parent, DoorPrefabs.Bars);
-                    bars.Challenge = challenge;
+                    bars.SetGraphDoor(challengeDoor);
                 }
             }
+        }
+
+        protected IEnumerable<ChallengeDungeonGraphDoor> ChallengeDoors()
+        {
+            return CardinalDirectionUtils.All()
+                .Select(dir => GraphRoom.GetDoor(dir))
+                .Where(door => door is ChallengeDungeonGraphDoor)
+                .Cast<ChallengeDungeonGraphDoor>();
         }
 
         private Color GetBackgroundColor(float alpha)

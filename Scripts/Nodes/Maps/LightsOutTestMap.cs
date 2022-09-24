@@ -10,6 +10,7 @@ namespace RandomDungeons.Nodes.Maps
     {
         private LightsOutPuzzle _puzzle => GetNode<LightsOutPuzzle>("%LightsOutPuzzle");
         private DoorBars _bars => GetNode<DoorBars>("%DoorBars");
+        private ChallengeDungeonGraphDoor _graphDoor = new ChallengeDungeonGraphDoor();
 
         public override void _Ready()
         {
@@ -21,7 +22,12 @@ namespace RandomDungeons.Nodes.Maps
             );
 
             _puzzle.SetGraph(graph);
-            _bars.Challenge = _puzzle;
+            _bars.SetGraphDoor(_graphDoor);
+        }
+
+        public override void _PhysicsProcess(float delta)
+        {
+            _graphDoor.IsOpened =_puzzle.IsSolved();
         }
     }
 }

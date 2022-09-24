@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/Nodes/Elements/Player.cs" type="Script" id=1]
 [ext_resource path="res://Sprites/LightsOutSwitch.svg" type="Texture" id=2]
@@ -12,6 +12,110 @@ radius = 14.0
 
 [sub_resource type="CircleShape2D" id=78]
 radius = 14.0
+
+[sub_resource type="Animation" id=80]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body/Hands:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Body/Feet/RightFoot:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 5, 3 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Body/Feet/LeftFoot:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -5, 3 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Body:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.58082, 0.58082 ) ]
+}
+
+[sub_resource type="Animation" id=79]
+resource_name = "WalkAnimation"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body/Hands:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 45.0, -45.0, 45.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Body/Feet/RightFoot:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 5, -6 ), Vector2( 5, 6 ), Vector2( 5, -6 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Body/Feet/LeftFoot:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -5, 6 ), Vector2( -5, -6 ), Vector2( -5, 6 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Body:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.58082, 0.58082 ), Vector2( 0.65, 0.65 ), Vector2( 0.581, 0.581 ), Vector2( 0.65, 0.65 ), Vector2( 0.581, 0.581 ) ]
+}
 
 [sub_resource type="CapsuleShape2D" id=75]
 radius = 4.0
@@ -37,6 +141,12 @@ texture = ExtResource( 2 )
 
 [node name="Visuals" type="Node2D" parent="."]
 unique_name_in_owner = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Visuals"]
+unique_name_in_owner = true
+autoplay = "WalkAnimation"
+anims/RESET = SubResource( 80 )
+anims/WalkAnimation = SubResource( 79 )
 
 [node name="Body" type="Node2D" parent="Visuals"]
 rotation = -1.5708

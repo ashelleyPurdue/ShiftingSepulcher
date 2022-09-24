@@ -15,6 +15,7 @@ namespace RandomDungeons.Nodes.Elements
 
         private Node2D _visuals => GetNode<Node2D>("%Visuals");
         private PlayerSword _sword => GetNode<PlayerSword>("%Sword");
+        private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
         private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
 
         private StateMachine _sm;
@@ -52,6 +53,10 @@ namespace RandomDungeons.Nodes.Elements
         {
             public override void _Process(float delta)
             {
+                Owner._animator.PlaybackSpeed = InputService.LeftStick
+                    .LimitLength(1)
+                    .Length();
+
                 if (InputService.AttackPressed && !Owner._sword.IsSwinging)
                     ChangeState(Owner.SwingingSword);
             }
@@ -65,6 +70,11 @@ namespace RandomDungeons.Nodes.Elements
                 // Update the rotation of the visuals
                 if (cappedLeftStick.Length() > 0.01)
                     Owner._visuals.Rotation = cappedLeftStick.Angle();
+            }
+
+            public override void _StateExited()
+            {
+                Owner._animator.PlaybackSpeed = 0;
             }
         }
 

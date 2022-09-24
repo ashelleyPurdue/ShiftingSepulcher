@@ -8,7 +8,7 @@ using RandomDungeons.Nodes.Elements;
 
 namespace RandomDungeons.PhysicalDungeons
 {
-    public class LightsOutPuzzle : Node2D, IDungeonRoomChallenge
+    public class LightsOutPuzzle : Node2D
     {
         [Export] public PackedScene SwitchPrefab;
         [Export] public Color OnColor;

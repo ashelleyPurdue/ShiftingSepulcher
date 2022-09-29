@@ -1,7 +1,9 @@
+using System;
+using System.Collections.Generic;
 using Godot;
 
 using RandomDungeons.Utils;
-using RandomDungeons.Nodes.Elements.Enemies;
+using RandomDungeons.Nodes.Elements.Projectiles;
 
 namespace RandomDungeons.Nodes.Bosses
 {
@@ -10,6 +12,9 @@ namespace RandomDungeons.Nodes.Bosses
         [Export] public PackedScene TilePrefab;
         [Export] public float ArenaHeight = 32 * 16;
         [Export] public float ArenaWidth = 32 * 16;
+        [Export] public float TileThrowSpeed = 32 * 19;
+
+        private Queue<TilemancerTile> _tilesToThrow = new Queue<TilemancerTile>();
 
         public void SummonTile()
         {
@@ -18,16 +23,18 @@ namespace RandomDungeons.Nodes.Bosses
                 (GD.Randf() * ArenaHeight) - (ArenaHeight / 2)
             );
 
-            var tile = TilePrefab.Instance<AnimatedTile>();
+            var tile = TilePrefab.Instance<TilemancerTile>();
+            _tilesToThrow.Enqueue(tile);
+
             GetParent().AddChild(tile);
             tile.Position = tilePos;
-            tile.Target = GetTree().FindPlayer();
-            tile.HoldTime = 1.6f;
         }
 
         public void ThrowTile()
         {
-            GD.Print("Whoosh!");
+            _tilesToThrow
+                .Dequeue()
+                .Throw(TileThrowSpeed);
         }
     }
 }

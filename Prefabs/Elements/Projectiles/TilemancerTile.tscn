@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Scripts/Nodes/Components/RotateParent.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Nodes/Elements/Projectiles/TilemancerTile.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/Nodes/Components/HitBox.cs" type="Script" id=3]
+
+[sub_resource type="CircleShape2D" id=5]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 16.0
+
+[sub_resource type="Gradient" id=2]
+offsets = PoolRealArray( 0.617089, 0.743671 )
+colors = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 0 )
+
+[sub_resource type="GradientTexture2D" id=3]
+flags = 5
+gradient = SubResource( 2 )
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2( 0.5, 0.5 )
+
+[node name="TilemancerTile" type="KinematicBody2D"]
+collision_layer = 0
+collision_mask = 3
+script = ExtResource( 2 )
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+shape = SubResource( 5 )
+disabled = true
+
+[node name="HitBox" type="Area2D" parent="."]
+unique_name_in_owner = true
+monitoring = false
+script = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource( 4 )
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Shadow" type="Sprite" parent="Visuals"]
+texture = SubResource( 3 )
+
+[node name="Tile" type="Polygon2D" parent="Visuals"]
+position = Vector2( 0, -16 )
+rotation = -2.71225
+polygon = PoolVector2Array( -16, -16, 16, -16, 16, 16, -16, 16 )
+
+[node name="RotateParent" type="Node" parent="Visuals/Tile"]
+script = ExtResource( 1 )

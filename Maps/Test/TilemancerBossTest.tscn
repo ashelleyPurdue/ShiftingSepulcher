@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Maps/Test/EmptyTestRoom.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Nodes/Bosses/Tilemancer.cs" type="Script" id=2]
-[ext_resource path="res://Prefabs/Elements/Enemies/AnimatedTile.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Prefabs/Elements/Projectiles/TilemancerTile.tscn" type="PackedScene" id=3]
 
 [sub_resource type="Animation" id=1]
 resource_name = "SummoningTiles"

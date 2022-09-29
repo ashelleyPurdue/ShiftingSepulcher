@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Maps/Test/EmptyTestRoom.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Nodes/Bosses/Tilemancer.cs" type="Script" id=2]
+[ext_resource path="res://Prefabs/Elements/Enemies/AnimatedTile.tscn" type="PackedScene" id=3]
 
 [sub_resource type="Animation" id=1]
 resource_name = "SummoningTiles"
@@ -51,3 +52,4 @@ tracks/0/keys = {
 autoplay = "SummoningTiles"
 anims/SummoningTiles = SubResource( 1 )
 script = ExtResource( 2 )
+TilePrefab = ExtResource( 3 )

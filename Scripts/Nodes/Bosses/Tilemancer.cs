@@ -7,7 +7,7 @@ using RandomDungeons.Nodes.Elements.Projectiles;
 
 namespace RandomDungeons.Nodes.Bosses
 {
-    public class Tilemancer : AnimationPlayer
+    public class Tilemancer : Node2D
     {
         [Export] public PackedScene TilePrefab;
         [Export] public float ArenaHeight = 32 * 16;

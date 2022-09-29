@@ -10,6 +10,8 @@ namespace RandomDungeons.Nodes.Elements.Projectiles
         private Node2D _target => GetTree().FindPlayer();
         private CollisionShape2D _collider => GetNode<CollisionShape2D>("%Collider");
         private HitBox _hitBox => GetNode<HitBox>("%HitBox");
+        private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
+
         private Vector2 _velocity;
 
         public override void _PhysicsProcess(float delta)
@@ -31,7 +33,10 @@ namespace RandomDungeons.Nodes.Elements.Projectiles
 
         public void Shatter()
         {
-            QueueFree();
+            _animator.Play("Shatter");
+            _hitBox.Monitoring = false;
+            _collider.Disabled = true;
+            _velocity = Vector2.Zero;
         }
 
         public void OnDealtDamage(HurtBox hurtBox) => Shatter();

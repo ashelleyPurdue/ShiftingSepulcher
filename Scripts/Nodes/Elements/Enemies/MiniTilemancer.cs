@@ -1,6 +1,7 @@
 using Godot;
 using RandomDungeons.Nodes.Components;
 using RandomDungeons.StateMachines;
+using RandomDungeons.Utils;
 
 namespace RandomDungeons.Nodes.Elements.Enemies
 {
@@ -18,7 +19,7 @@ namespace RandomDungeons.Nodes.Elements.Enemies
 
         [Export] public PackedScene TilePrefab;
 
-        private Node2D _target => FindPlayer();
+        private Node2D _target => GetTree().FindPlayer();
 
         protected override HurtBox Hurtbox() => GetNode<HurtBox>("%HurtBox");
         protected override Node2D Visuals() => GetNode<Node2D>("%Visuals");

@@ -1,0 +1,52 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Prefabs/Elements/Projectiles/TilemancerTile.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/Nodes/Bosses/Tilemancer.cs" type="Script" id=2]
+
+[sub_resource type="Animation" id=1]
+resource_name = "SummoningTiles"
+length = 3.3
+loop = true
+tracks/0/type = "method"
+tracks/0/path = NodePath("AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4, 0.8, 1.2, 1.6, 2, 2.4, 2.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "SummonTile"
+}, {
+"args": [  ],
+"method": "SummonTile"
+}, {
+"args": [  ],
+"method": "SummonTile"
+}, {
+"args": [  ],
+"method": "SummonTile"
+}, {
+"args": [  ],
+"method": "ThrowTile"
+}, {
+"args": [  ],
+"method": "ThrowTile"
+}, {
+"args": [  ],
+"method": "ThrowTile"
+}, {
+"args": [  ],
+"method": "ThrowTile"
+} ]
+}
+
+[node name="Tilemancer" type="Node2D"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "SummoningTiles"
+anims/SummoningTiles = SubResource( 1 )
+script = ExtResource( 2 )
+TilePrefab = ExtResource( 1 )

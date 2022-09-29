@@ -17,7 +17,7 @@ namespace RandomDungeons.Nodes.Elements.Projectiles
             var collision = MoveAndCollide(_velocity * delta);
 
             if (collision != null)
-                QueueFree();
+                Shatter();
         }
 
         public void Throw(float speed)
@@ -28,5 +28,13 @@ namespace RandomDungeons.Nodes.Elements.Projectiles
             _collider.Disabled = false;
             _hitBox.Monitoring = true;
         }
+
+        public void Shatter()
+        {
+            QueueFree();
+        }
+
+        public void OnDealtDamage(HurtBox hurtBox) => Shatter();
+        public void OnTookDamage(HitBox hitBox) => Shatter();
     }
 }

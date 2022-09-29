@@ -32,9 +32,17 @@ namespace RandomDungeons.Nodes.Bosses
 
         public void ThrowTile()
         {
-            _tilesToThrow
-                .Dequeue()
-                .Throw(TileThrowSpeed);
+            var tile = _tilesToThrow.Dequeue();
+
+            // The tile may have been destroyed before we had time to throw it.
+            // When that happens, a dangling pointer will be left in the queue.
+            //
+            // Yes.  A dangling pointer.  In C#.
+            // That's apparently a thing in Godot.
+            if (!IsInstanceValid(tile))
+                return;
+
+            tile.Throw(TileThrowSpeed);
         }
     }
 }

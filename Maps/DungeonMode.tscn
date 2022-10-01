@@ -34,7 +34,8 @@ PuzzleRoomWeights = {
 "Puzzle/SlidingIcePuzzleRoom": 3
 }
 BossRoomWeights = {
-"Boss/VictoryChestRoom": 1
+"Boss/TilemancerRoom": 1,
+"Boss/VictoryChestRoom": 0
 }
 
 [node name="Player" parent="." instance=ExtResource( 3 )]

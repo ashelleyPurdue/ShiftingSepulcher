@@ -17,10 +17,13 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
         private TilemancerTile _currentTile = null;
 
+        private Vector2 _walkVelocity;
         private bool _isDead = false;
 
         public override void _PhysicsProcess(float delta)
         {
+            MoveAndSlide(_walkVelocity);
+
             if (Health <= 0 && !_isDead)
                 Die();
         }
@@ -28,6 +31,20 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         public void OnTookDamage(HitBox hitBox)
         {
             Health -= hitBox.Damage;
+        }
+
+        public void StartWandering()
+        {
+            float angle = Mathf.Deg2Rad(GD.Randf() * 360);
+            _walkVelocity = WanderSpeed * new Vector2(
+                Mathf.Cos(angle),
+                Mathf.Sin(angle)
+            );
+        }
+
+        public void StopWandering()
+        {
+            _walkVelocity = Vector2.Zero;
         }
 
         public void SummonTile()
@@ -60,6 +77,8 @@ namespace RandomDungeons.Nodes.Elements.Enemies
 
         private void Die()
         {
+            StopWandering();
+
             if (IsInstanceValid(_currentTile))
                 _currentTile.Shatter();
 

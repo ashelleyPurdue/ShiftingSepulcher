@@ -5,6 +5,7 @@ using Godot;
 using RandomDungeons.Utils;
 using RandomDungeons.Nodes.Elements.Projectiles;
 using RandomDungeons.Nodes.Components;
+using RandomDungeons.Nodes.Elements;
 
 namespace RandomDungeons.Nodes.Bosses
 {
@@ -18,7 +19,7 @@ namespace RandomDungeons.Nodes.Bosses
         [Export] public float TileThrowSpeed = 32 * 19;
         [Export] public float JumpProgress;
 
-        private Node2D _player;
+        private Player _player;
         private Vector2 _jumpStartPos;
         private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
         private AnimationPlayer _animationPlayer => GetNode<AnimationPlayer>("%AnimationPlayer");
@@ -30,6 +31,10 @@ namespace RandomDungeons.Nodes.Bosses
         {
             _player = GetTree().FindPlayer();
             _jumpStartPos = GlobalPosition;
+
+            // Freeze the player during the intro animation, so they can't just
+            // kill the boss while he's roaring
+            _player.ControlsEnabled = false;
         }
 
         public override void _PhysicsProcess(float delta)
@@ -56,6 +61,7 @@ namespace RandomDungeons.Nodes.Bosses
 
         public void StartAttackLoop()
         {
+            _player.ControlsEnabled = true;
             _animationPlayer.CurrentAnimation = "AttackLoop";
         }
 

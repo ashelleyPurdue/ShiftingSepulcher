@@ -13,6 +13,14 @@ namespace RandomDungeons.Nodes.Elements
     {
         public const float WalkSpeed = 283;
 
+        /// <summary>
+        /// Set this to false during cutscenes, dialog, etc. to prevent the
+        /// player from doing stuff.
+        ///
+        /// Please use this sparingly.
+        /// </summary>
+        public bool ControlsEnabled = true;
+
         private Node2D _visuals => GetNode<Node2D>("%Visuals");
         private PlayerSword _sword => GetNode<PlayerSword>("%Sword");
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
@@ -64,6 +72,12 @@ namespace RandomDungeons.Nodes.Elements
         {
             public override void _Process(float delta)
             {
+                if (!Owner.ControlsEnabled)
+                {
+                    Owner._animator.PlaybackSpeed = 0;
+                    return;
+                }
+
                 Owner._animator.PlaybackSpeed = InputService.LeftStick
                     .LimitLength(1)
                     .Length();
@@ -74,6 +88,9 @@ namespace RandomDungeons.Nodes.Elements
 
             public override void _PhysicsProcess(float delta)
             {
+                if (!Owner.ControlsEnabled)
+                    return;
+
                 // Move with the left stick
                 var cappedLeftStick = InputService.LeftStick.LimitLength(1);
                 Owner.MoveAndSlide(cappedLeftStick * WalkSpeed);

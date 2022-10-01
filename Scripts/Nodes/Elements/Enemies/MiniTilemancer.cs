@@ -24,19 +24,30 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         private Vector2 _walkVelocity;
         private Vector2 _knockbackVelocity;
         private const float KnockbackFriction = 500;
+        private const float MinSpeedForCollisionDamage = 90;
 
         private bool _isDead = false;
 
         public override void _PhysicsProcess(float delta)
         {
+            // Move
+            Vector2 prevKnockbackVel = _knockbackVelocity;
+            Vector2 totalVelocity = _walkVelocity + _knockbackVelocity;
+            totalVelocity = MoveAndSlide(totalVelocity);
+            _knockbackVelocity = totalVelocity - _walkVelocity;
             _knockbackVelocity = _knockbackVelocity.MoveToward(
                 Vector2.Zero,
                 KnockbackFriction * delta
             );
 
-            Vector2 actualVelocity = _walkVelocity + _knockbackVelocity;
-            actualVelocity = MoveAndSlide(actualVelocity);
-            _knockbackVelocity = actualVelocity - _walkVelocity;
+            // Take damage upon hitting a wall too hard
+            bool hitWall = GetSlideCount() > 0;
+            bool fastEnough = prevKnockbackVel.Length() > MinSpeedForCollisionDamage;
+            if (hitWall && fastEnough)
+            {
+                Health--;
+                _hurtFlasher.Flash();
+            }
 
             if (Health <= 0 && !_isDead)
                 Die();

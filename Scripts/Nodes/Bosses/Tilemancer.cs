@@ -21,6 +21,7 @@ namespace RandomDungeons.Nodes.Bosses
         private Node2D _player;
         private Vector2 _jumpStartPos;
         private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
+        private AnimationPlayer _animationPlayer => GetNode<AnimationPlayer>("%AnimationPlayer");
 
         private Queue<TilemancerTile> _tilesToThrow = new Queue<TilemancerTile>();
         private bool _isDead = false;
@@ -87,9 +88,8 @@ namespace RandomDungeons.Nodes.Bosses
             _jumpStartPos = GlobalPosition;
         }
 
-        private void Die()
+        public void DestoryAllTiles()
         {
-            // Destroy all summoned tiles that have yet to be thrown
             while (_tilesToThrow.Count > 0)
             {
                 var tile = _tilesToThrow.Dequeue();
@@ -97,15 +97,19 @@ namespace RandomDungeons.Nodes.Bosses
                 if (IsInstanceValid(tile))
                     tile.Shatter();
             }
+        }
 
-            // Spawn the victory chest
+        public void SpawnVictoryChest()
+        {
             var chest = VictoryChestPrefab.Instance<Node2D>();
             GetParent().AddChild(chest);
             chest.Position = Vector2.Zero;
+        }
 
-            // Peace out
+        private void Die()
+        {
             _isDead = true;
-            QueueFree();
+            _animationPlayer.CurrentAnimation = "Death";
         }
     }
 }

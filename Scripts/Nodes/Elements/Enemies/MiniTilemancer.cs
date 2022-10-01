@@ -20,11 +20,21 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         private TilemancerTile _currentTile = null;
 
         private Vector2 _walkVelocity;
+        private Vector2 _knockbackVelocity;
+        private const float KnockbackFriction = 500;
+
         private bool _isDead = false;
 
         public override void _PhysicsProcess(float delta)
         {
-            MoveAndSlide(_walkVelocity);
+            _knockbackVelocity = _knockbackVelocity.MoveToward(
+                Vector2.Zero,
+                KnockbackFriction * delta
+            );
+
+            Vector2 actualVelocity = _walkVelocity + _knockbackVelocity;
+            actualVelocity = MoveAndSlide(actualVelocity);
+            _knockbackVelocity = actualVelocity - _walkVelocity;
 
             if (Health <= 0 && !_isDead)
                 Die();
@@ -33,6 +43,7 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         public void OnTookDamage(HitBox hitBox)
         {
             Health -= hitBox.Damage;
+            _knockbackVelocity = hitBox.GetKnockbackVelocity(this);
         }
 
         public void StartWandering()

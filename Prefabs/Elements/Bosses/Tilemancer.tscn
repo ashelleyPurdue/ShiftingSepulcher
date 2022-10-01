@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Prefabs/Elements/Projectiles/TilemancerTile.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Nodes/Bosses/Tilemancer.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/Nodes/Components/HitBox.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/Nodes/Components/HurtBox.cs" type="Script" id=4]
 
 [sub_resource type="Animation" id=11]
 resource_name = "Pattern"
@@ -191,6 +192,9 @@ fill_from = Vector2( 0.5, 0.5 )
 [sub_resource type="CircleShape2D" id=12]
 radius = 64.0
 
+[sub_resource type="CircleShape2D" id=13]
+radius = 64.0
+
 [node name="Tilemancer" type="Node2D"]
 script = ExtResource( 2 )
 TilePrefab = ExtResource( 1 )
@@ -231,6 +235,15 @@ polygon = PoolVector2Array( -64, -128, -32, -160, 32, -160, 64, -128, 32, -96, -
 
 [node name="HitBox" type="Area2D" parent="Body"]
 script = ExtResource( 3 )
+IgnoredHurtBoxes = [ NodePath("../HurtBox") ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Body/HitBox"]
 shape = SubResource( 12 )
+
+[node name="HurtBox" type="Area2D" parent="Body"]
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body/HurtBox"]
+shape = SubResource( 13 )
+
+[connection signal="TookDamage" from="Body/HurtBox" to="." method="OnTookDamage"]

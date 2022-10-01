@@ -4,12 +4,14 @@ using Godot;
 
 using RandomDungeons.Utils;
 using RandomDungeons.Nodes.Elements.Projectiles;
+using RandomDungeons.Nodes.Components;
 
 namespace RandomDungeons.Nodes.Bosses
 {
     public class Tilemancer : Node2D
     {
         [Export] public PackedScene TilePrefab;
+        [Export] public int Health = 9;
         [Export] public float ArenaHeight = 32 * 16;
         [Export] public float ArenaWidth = 32 * 16;
         [Export] public float TileThrowSpeed = 32 * 19;
@@ -34,6 +36,14 @@ namespace RandomDungeons.Nodes.Bosses
                     Mathf.SmoothStep(0, 1, JumpProgress)
                 );
             }
+        }
+
+        public void OnTookDamage(HitBox hitBox)
+        {
+            Health--;
+
+            if (Health <= 0)
+                QueueFree();
         }
 
         public void SummonTile()

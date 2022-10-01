@@ -1,6 +1,6 @@
 using Godot;
 using RandomDungeons.Nodes.Components;
-using RandomDungeons.StateMachines;
+using RandomDungeons.Nodes.Elements.Projectiles;
 using RandomDungeons.Utils;
 
 namespace RandomDungeons.Nodes.Elements.Enemies
@@ -13,7 +13,36 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         [Export] public PackedScene TilePrefab;
 
         private Node2D _target => GetTree().FindPlayer();
+        private TilemancerTile _currentTile = null;
 
+
+        public void SummonTile()
+        {
+            // Failsafe: immediately throw the existing tile, if it's already there
+            if (IsInstanceValid(_currentTile))
+            {
+                GD.Print("Already have a summoned tile.  Throwing it now.");
+                ThrowTile();
+            }
+
+            _currentTile = TilePrefab.Instance<TilemancerTile>();
+            GetParent().AddChild(_currentTile);
+            _currentTile.GlobalPosition = RandomTileSpawnPos();
+        }
+
+        public void ThrowTile()
+        {
+            // Don't do anything if the tile has already been destroyed
+            if (!IsInstanceValid(_currentTile))
+            {
+                _currentTile = null;
+                return;
+            }
+
+            // Throw it!
+            _currentTile.Throw(TileThrowSpeed);
+            _currentTile = null;
+        }
 
         private Vector2 RandomTileSpawnPos()
         {

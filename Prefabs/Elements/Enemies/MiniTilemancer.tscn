@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/Nodes/Components/HitBox.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Nodes/Components/HurtBox.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/Nodes/Elements/Enemies/MiniTilemancer.cs" type="Script" id=3]
 [ext_resource path="res://Scripts/Nodes/Components/HurtFlasher.cs" type="Script" id=4]
+[ext_resource path="res://Prefabs/Elements/Projectiles/TilemancerTile.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.0
@@ -17,7 +18,7 @@ radius = 16.0
 [node name="MiniTilemancer" type="KinematicBody2D"]
 collision_layer = 0
 script = ExtResource( 3 )
-Health = 3
+TilePrefab = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )

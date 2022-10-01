@@ -19,6 +19,7 @@ namespace RandomDungeons.Nodes.Bosses
 
         private Node2D _player;
         private Vector2 _jumpStartPos;
+        private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
 
         private Queue<TilemancerTile> _tilesToThrow = new Queue<TilemancerTile>();
 
@@ -41,6 +42,7 @@ namespace RandomDungeons.Nodes.Bosses
         public void OnTookDamage(HitBox hitBox)
         {
             Health--;
+            _hurtFlasher.Flash();
 
             if (Health <= 0)
                 QueueFree();

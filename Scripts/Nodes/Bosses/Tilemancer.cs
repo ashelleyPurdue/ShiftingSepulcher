@@ -13,8 +13,28 @@ namespace RandomDungeons.Nodes.Bosses
         [Export] public float ArenaHeight = 32 * 16;
         [Export] public float ArenaWidth = 32 * 16;
         [Export] public float TileThrowSpeed = 32 * 19;
+        [Export] public float JumpProgress;
+
+        private Node2D _player;
+        private Vector2 _jumpStartPos;
 
         private Queue<TilemancerTile> _tilesToThrow = new Queue<TilemancerTile>();
+
+        public override void _Ready()
+        {
+            _player = GetTree().FindPlayer();
+        }
+
+        public override void _PhysicsProcess(float delta)
+        {
+            if (JumpProgress < 1)
+            {
+                GlobalPosition = _jumpStartPos.LinearInterpolate(
+                    _player.GlobalPosition,
+                    Mathf.SmoothStep(0, 1, JumpProgress)
+                );
+            }
+        }
 
         public void SummonTile()
         {
@@ -43,6 +63,11 @@ namespace RandomDungeons.Nodes.Bosses
                 return;
 
             tile.Throw(TileThrowSpeed);
+        }
+
+        public void TargetPlayerForJump()
+        {
+            _jumpStartPos = GlobalPosition;
         }
     }
 }

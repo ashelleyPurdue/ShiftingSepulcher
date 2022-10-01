@@ -18,6 +18,8 @@ namespace RandomDungeons.Nodes.Elements
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
         private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
 
+        private bool _isDead = false;
+
         private StateMachine _sm;
 
         public override void _Ready()
@@ -33,19 +35,28 @@ namespace RandomDungeons.Nodes.Elements
             _sm.ChangeState(Walking);
         }
 
+        public override void _PhysicsProcess(float delta)
+        {
+            base._PhysicsProcess(delta);
+
+            if (PlayerInventory.Health <= 0 && !_isDead)
+            {
+                _isDead = true;
+                _hurtFlasher.Cancel();
+                _sm.ChangeState(DeathAnimation);
+            }
+        }
+
         public void OnTookDamage(HitBox hitBox)
         {
+            if (_isDead)
+                return;
+
             PlayerInventory.Health -= hitBox.Damage;
             _hurtFlasher.Flash();
 
             KnockedBack.Velocity = hitBox.GetKnockbackVelocity(this);
             _sm.ChangeState(KnockedBack);
-
-            if (PlayerInventory.Health <= 0)
-            {
-                _hurtFlasher.Cancel();
-                _sm.ChangeState(DeathAnimation);
-            }
         }
 
         private readonly IState Walking = new WalkingState();

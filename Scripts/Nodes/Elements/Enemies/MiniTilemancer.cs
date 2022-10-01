@@ -10,6 +10,8 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         [Export] public int Health = 2;
         [Export] public float TileSpawnRadius = 32 * 2;
         [Export] public float WanderSpeed = 32;
+        [Export] public float MinWanderDuration = 0.25f;
+        [Export] public float MaxWanderDuration = 1.25f;
         [Export] public float TileThrowSpeed = 32 * 19;
         [Export] public PackedScene TilePrefab;
 
@@ -35,16 +37,28 @@ namespace RandomDungeons.Nodes.Elements.Enemies
 
         public void StartWandering()
         {
+            // Choose a random direction to walk in
             float angle = Mathf.Deg2Rad(GD.Randf() * 360);
             _walkVelocity = WanderSpeed * new Vector2(
                 Mathf.Cos(angle),
                 Mathf.Sin(angle)
             );
+
+            // Choose a random duration to wander for
+            // The wandering part of the animation is exactly 1 second, so we
+            // just need to set the animation speed to 1 / (duration) while
+            // wandering.
+            float wanderDuration = (float)GD.RandRange(
+                MinWanderDuration,
+                MaxWanderDuration
+            );
+            _animator.PlaybackSpeed = 1f / wanderDuration;
         }
 
         public void StopWandering()
         {
             _walkVelocity = Vector2.Zero;
+            _animator.PlaybackSpeed = 1;
         }
 
         public void SummonTile()

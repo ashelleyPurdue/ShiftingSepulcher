@@ -1,111 +1,130 @@
 using Godot;
 using RandomDungeons.Nodes.Components;
-using RandomDungeons.StateMachines;
+using RandomDungeons.Nodes.Elements.Projectiles;
 using RandomDungeons.Utils;
 
 namespace RandomDungeons.Nodes.Elements.Enemies
 {
-    public class MiniTilemancer : BaseEnemy
+    public class MiniTilemancer : KinematicBody2D
     {
+        [Export] public int Health = 2;
         [Export] public float TileSpawnRadius = 32 * 2;
-        [Export] public float TileSpinUpTime = 1;
-        [Export] public float TileHoldTime = 2;
-        [Export] public float TileSpawnCooldownTime = 1;
-        [Export] public float TileFlySpeed = 600;
-
         [Export] public float WanderSpeed = 32;
-        [Export] public float WanderTime = 1;
-        [Export] public float WanderPauseTime = 1;
-
+        [Export] public float MinWanderDuration = 0.25f;
+        [Export] public float MaxWanderDuration = 1.25f;
+        [Export] public float TileThrowSpeed = 32 * 19;
         [Export] public PackedScene TilePrefab;
 
         private Node2D _target => GetTree().FindPlayer();
+        private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
+        private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
 
-        protected override HurtBox Hurtbox() => GetNode<HurtBox>("%HurtBox");
-        protected override Node2D Visuals() => GetNode<Node2D>("%Visuals");
-        protected override IState InitialState() => SummoningTile;
+        private TilemancerTile _currentTile = null;
 
-        private readonly IState SummoningTile = new SummoningTileState();
-        private class SummoningTileState : State<MiniTilemancer>
+        private Vector2 _walkVelocity;
+        private Vector2 _knockbackVelocity;
+        private const float KnockbackFriction = 500;
+        private const float MinSpeedForCollisionDamage = 90;
+
+        private bool _isDead = false;
+
+        public override void _PhysicsProcess(float delta)
         {
-            private float _timer;
+            // Move
+            Vector2 prevKnockbackVel = _knockbackVelocity;
+            Vector2 totalVelocity = _walkVelocity + _knockbackVelocity;
+            totalVelocity = MoveAndSlide(totalVelocity);
+            _knockbackVelocity = totalVelocity - _walkVelocity;
+            _knockbackVelocity = _knockbackVelocity.MoveToward(
+                Vector2.Zero,
+                KnockbackFriction * delta
+            );
 
-            public override void _StateEntered()
+            // Take damage upon hitting a wall too hard
+            bool hitWall = GetSlideCount() > 0;
+            bool fastEnough = prevKnockbackVel.Length() > MinSpeedForCollisionDamage;
+            if (hitWall && fastEnough)
             {
-                _timer =
-                    Owner.TileSpinUpTime +
-                    Owner.TileHoldTime +
-                    Owner.TileSpawnCooldownTime;
-
-                Owner.SummonTile();
+                Health--;
+                _hurtFlasher.Flash();
             }
 
-            public override void _PhysicsProcess(float delta)
-            {
-                _timer -= delta;
-
-                if (_timer <= 0)
-                    ChangeState(Owner.Wandering);
-            }
+            if (Health <= 0 && !_isDead)
+                Die();
         }
 
-        private readonly IState Wandering = new WanderingState();
-        private class WanderingState : State<MiniTilemancer>
+        public void OnTookDamage(HitBox hitBox)
         {
-            private float _timer;
-            private Vector2 _velocity;
-
-            public override void _StateEntered()
-            {
-                _timer = Owner.WanderTime;
-
-                float angle = Mathf.Deg2Rad(GD.Randf() * 360);
-                _velocity = Owner.WanderSpeed * new Vector2(
-                    Mathf.Cos(angle),
-                    Mathf.Sin(angle)
-                );
-            }
-
-            public override void _PhysicsProcess(float delta)
-            {
-                Owner.MoveAndSlide(_velocity);
-
-                _timer -= delta;
-
-                if (_timer <= 0)
-                    ChangeState(Owner.Pausing);
-            }
+            Health -= hitBox.Damage;
+            _knockbackVelocity = hitBox.GetKnockbackVelocity(this);
+            _hurtFlasher.Flash();
         }
 
-        private readonly IState Pausing = new PausingState();
-        private class PausingState : State<MiniTilemancer>
+        public void StartWandering()
         {
-            private float _timer;
+            // Choose a random direction to walk in
+            float angle = Mathf.Deg2Rad(GD.Randf() * 360);
+            _walkVelocity = WanderSpeed * new Vector2(
+                Mathf.Cos(angle),
+                Mathf.Sin(angle)
+            );
 
-            public override void _StateEntered()
-            {
-                _timer = Owner.WanderPauseTime;
-            }
-
-            public override void _PhysicsProcess(float delta)
-            {
-                _timer -= delta;
-
-                if (_timer <= 0)
-                    ChangeState(Owner.SummoningTile);
-            }
+            // Choose a random duration to wander for
+            // The wandering part of the animation is exactly 1 second, so we
+            // just need to set the animation speed to 1 / (duration) while
+            // wandering.
+            float wanderDuration = (float)GD.RandRange(
+                MinWanderDuration,
+                MaxWanderDuration
+            );
+            _animator.PlaybackSpeed = 1f / wanderDuration;
         }
 
-        private void SummonTile()
+        public void StopWandering()
         {
-            var tile = TilePrefab.Instance<AnimatedTile>();
-            GetParent().AddChild(tile);
+            _walkVelocity = Vector2.Zero;
+            _animator.PlaybackSpeed = 1;
+        }
 
-            tile.GlobalPosition = RandomTileSpawnPos();
-            tile.Target = _target;
-            tile.SpinUpTime = TileSpinUpTime;
-            tile.HoldTime = TileHoldTime;
-            tile.FlySpeed = TileFlySpeed;
+        public void SummonTile()
+        {
+            // Failsafe: immediately throw the existing tile, if it's already there
+            if (IsInstanceValid(_currentTile))
+            {
+                GD.Print("Already have a summoned tile.  Throwing it now.");
+                ThrowTile();
+            }
+
+            _currentTile = TilePrefab.Instance<TilemancerTile>();
+            GetParent().AddChild(_currentTile);
+            _currentTile.GlobalPosition = RandomTileSpawnPos();
+        }
+
+        public void ThrowTile()
+        {
+            // Don't do anything if the tile has already been destroyed
+            if (!IsInstanceValid(_currentTile))
+            {
+                _currentTile = null;
+                return;
+            }
+
+            // Throw it!
+            _currentTile.Throw(TileThrowSpeed);
+            _currentTile = null;
+        }
+
+        private void Die()
+        {
+            StopWandering();
+            _knockbackVelocity = Vector2.Zero;
+
+            if (IsInstanceValid(_currentTile))
+                _currentTile.Shatter();
+
+            _isDead = true;
+            _hurtFlasher.Cancel();
+            _animator.CurrentAnimation = "Death";
         }
 
         private Vector2 RandomTileSpawnPos()

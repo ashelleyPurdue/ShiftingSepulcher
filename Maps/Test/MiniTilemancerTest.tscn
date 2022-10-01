@@ -24,4 +24,4 @@ polygon = PoolVector2Array( -320, -256, 320, -256, 320, 240, -320, 240 )
 polygon = PoolVector2Array( -352, -288, 352, -288, 352, 272, -352, 272, -320, 240, 320, 240, 320, -256, -320, -256, -320, 240, -352, 272 )
 
 [node name="MiniTilemancer" parent="." instance=ExtResource( 3 )]
-position = Vector2( -16, -112 )
+position = Vector2( 0, -192 )

@@ -10,6 +10,7 @@ namespace RandomDungeons.Nodes.Bosses
 {
     public class Tilemancer : Node2D
     {
+        [Export] public PackedScene VictoryChestPrefab;
         [Export] public PackedScene TilePrefab;
         [Export] public int Health = 9;
         [Export] public float ArenaHeight = 32 * 16;
@@ -22,6 +23,7 @@ namespace RandomDungeons.Nodes.Bosses
         private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
 
         private Queue<TilemancerTile> _tilesToThrow = new Queue<TilemancerTile>();
+        private bool _isDead = false;
 
         public override void _Ready()
         {
@@ -31,6 +33,7 @@ namespace RandomDungeons.Nodes.Bosses
 
         public override void _PhysicsProcess(float delta)
         {
+            // Home in on the player during the jump animation
             if (JumpProgress < 1)
             {
                 GlobalPosition = _jumpStartPos.LinearInterpolate(
@@ -38,15 +41,16 @@ namespace RandomDungeons.Nodes.Bosses
                     Mathf.SmoothStep(0, 1, JumpProgress)
                 );
             }
+
+            // Die when out of health
+            if (Health <= 0 && !_isDead)
+                Die();
         }
 
         public void OnTookDamage(HitBox hitBox)
         {
             Health--;
             _hurtFlasher.Flash();
-
-            if (Health <= 0)
-                QueueFree();
         }
 
         public void SummonTile()
@@ -81,6 +85,27 @@ namespace RandomDungeons.Nodes.Bosses
         public void TargetPlayerForJump()
         {
             _jumpStartPos = GlobalPosition;
+        }
+
+        private void Die()
+        {
+            // Destroy all summoned tiles that have yet to be thrown
+            while (_tilesToThrow.Count > 0)
+            {
+                var tile = _tilesToThrow.Dequeue();
+
+                if (IsInstanceValid(tile))
+                    tile.Shatter();
+            }
+
+            // Spawn the victory chest
+            var chest = VictoryChestPrefab.Instance<Node2D>();
+            GetParent().AddChild(chest);
+            chest.Position = Vector2.Zero;
+
+            // Peace out
+            _isDead = true;
+            QueueFree();
         }
     }
 }

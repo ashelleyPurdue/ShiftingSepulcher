@@ -24,7 +24,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=16]
 resource_name = "Death"
-length = 2.6
+length = 3.3
 tracks/0/type = "animation"
 tracks/0/path = NodePath("AnimationPlayer/IndividualAnimations")
 tracks/0/interp = 1
@@ -42,7 +42,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 2.5, 2.6 ),
+"times": PoolRealArray( 0, 3.2, 3.3 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "values": [ {
 "args": [  ],

@@ -26,6 +26,7 @@ namespace RandomDungeons.Nodes.Bosses
         public override void _Ready()
         {
             _player = GetTree().FindPlayer();
+            _jumpStartPos = GlobalPosition;
         }
 
         public override void _PhysicsProcess(float delta)

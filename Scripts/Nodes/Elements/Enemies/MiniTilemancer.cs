@@ -17,6 +17,8 @@ namespace RandomDungeons.Nodes.Elements.Enemies
 
         private Node2D _target => GetTree().FindPlayer();
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
+        private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
+
         private TilemancerTile _currentTile = null;
 
         private Vector2 _walkVelocity;
@@ -44,6 +46,7 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         {
             Health -= hitBox.Damage;
             _knockbackVelocity = hitBox.GetKnockbackVelocity(this);
+            _hurtFlasher.Flash();
         }
 
         public void StartWandering()
@@ -103,11 +106,13 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         private void Die()
         {
             StopWandering();
+            _knockbackVelocity = Vector2.Zero;
 
             if (IsInstanceValid(_currentTile))
                 _currentTile.Shatter();
 
             _isDead = true;
+            _hurtFlasher.Cancel();
             _animator.CurrentAnimation = "Death";
         }
 

@@ -1,0 +1,173 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Scripts/Nodes/Components/RotateParent.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Nodes/Elements/Projectiles/TilemancerTile.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/Nodes/Components/HitBox.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/Nodes/Components/HurtBox.cs" type="Script" id=4]
+
+[sub_resource type="Animation" id=7]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Tile:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "Shatter"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Tile:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 2, 2 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "Summon"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="CircleShape2D" id=5]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id=6]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 16.0
+
+[sub_resource type="Gradient" id=2]
+offsets = PoolRealArray( 0.617089, 0.743671 )
+colors = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 0 )
+
+[sub_resource type="GradientTexture2D" id=3]
+flags = 5
+gradient = SubResource( 2 )
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2( 0.5, 0.5 )
+
+[node name="TilemancerTile" type="KinematicBody2D"]
+collision_layer = 0
+collision_mask = 3
+script = ExtResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+root_node = NodePath("../Visuals")
+autoplay = "Summon"
+anims/RESET = SubResource( 7 )
+anims/Shatter = SubResource( 9 )
+anims/Summon = SubResource( 8 )
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+shape = SubResource( 5 )
+disabled = true
+
+[node name="HurtBox" type="Area2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource( 6 )
+
+[node name="HitBox" type="Area2D" parent="."]
+unique_name_in_owner = true
+monitoring = false
+script = ExtResource( 3 )
+IgnoredHurtBoxes = [ NodePath("../HurtBox") ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource( 4 )
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Shadow" type="Sprite" parent="Visuals"]
+texture = SubResource( 3 )
+
+[node name="Tile" type="Polygon2D" parent="Visuals"]
+position = Vector2( 0, -16 )
+rotation = -2.71225
+polygon = PoolVector2Array( -16, -16, 16, -16, 16, 16, -16, 16 )
+
+[node name="RotateParent" type="Node" parent="Visuals/Tile"]
+script = ExtResource( 1 )
+
+[connection signal="TookDamage" from="HurtBox" to="." method="OnTookDamage"]
+[connection signal="DealtDamage" from="HitBox" to="." method="OnDealtDamage"]

@@ -64,26 +64,5 @@ namespace RandomDungeons.Nodes.Elements.Enemies
 
         protected virtual void OnHitWall() => _sm.ChangeState(InitialState());
         protected virtual void OnKnockbackFinished() => _sm.ChangeState(InitialState());
-
-        protected Player FindPlayer()
-        {
-            return FindPlayerRecursive(GetTree().Root);
-
-            Player FindPlayerRecursive(Node n)
-            {
-                foreach (var c in n.GetChildren())
-                {
-                    if (c is Player player)
-                        return player;
-
-                    var playerInChild = FindPlayerRecursive((Node)c);
-
-                    if (playerInChild != null)
-                        return playerInChild;
-                }
-
-                return null;
-            }
-        }
     }
 }

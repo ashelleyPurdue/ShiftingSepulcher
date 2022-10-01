@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Maps/Test/RoomTemplateTester.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Prefabs/DungeonRoomTemplates/Boss/TilemancerRoom.tscn" type="PackedScene" id=2]
+
+[node name="TilemancerBossTest" instance=ExtResource( 1 )]
+RoomTemplate = ExtResource( 2 )
+
+[node name="Player" parent="." index="1"]
+position = Vector2( 0, 192 )

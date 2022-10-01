@@ -7,14 +7,28 @@ namespace RandomDungeons.Nodes.Elements.Enemies
 {
     public class MiniTilemancer : KinematicBody2D
     {
+        [Export] public int Health = 2;
         [Export] public float TileSpawnRadius = 32 * 2;
         [Export] public float WanderSpeed = 32;
         [Export] public float TileThrowSpeed = 32 * 19;
         [Export] public PackedScene TilePrefab;
 
         private Node2D _target => GetTree().FindPlayer();
+        private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
         private TilemancerTile _currentTile = null;
 
+        private bool _isDead = false;
+
+        public override void _PhysicsProcess(float delta)
+        {
+            if (Health <= 0 && !_isDead)
+                Die();
+        }
+
+        public void OnTookDamage(HitBox hitBox)
+        {
+            Health -= hitBox.Damage;
+        }
 
         public void SummonTile()
         {
@@ -42,6 +56,15 @@ namespace RandomDungeons.Nodes.Elements.Enemies
             // Throw it!
             _currentTile.Throw(TileThrowSpeed);
             _currentTile = null;
+        }
+
+        private void Die()
+        {
+            if (IsInstanceValid(_currentTile))
+                _currentTile.Shatter();
+
+            _isDead = true;
+            _animator.CurrentAnimation = "Death";
         }
 
         private Vector2 RandomTileSpawnPos()

@@ -54,6 +54,11 @@ namespace RandomDungeons.Nodes.Bosses
             _hurtFlasher.Flash();
         }
 
+        public void StartAttackLoop()
+        {
+            _animationPlayer.CurrentAnimation = "AttackLoop";
+        }
+
         public void SummonTile()
         {
             Vector2 tilePos = new Vector2(

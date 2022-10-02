@@ -26,6 +26,10 @@ namespace RandomDungeons.Nodes.Elements
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
         private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
 
+        private Vector2 _walkVelocity;
+        private Vector2 _knockbackVelocity;
+        private const float KnockbackFriction = 500;
+
         private bool _isDead = false;
 
         private StateMachine _sm;
@@ -37,8 +41,6 @@ namespace RandomDungeons.Nodes.Elements
             DeathAnimation.AnimationTarget = _visuals;
             DeathAnimation.AnimationEnded += () => _sm.ChangeState(AfterDeathAnimation);
 
-            KnockedBack.StoppedMoving += () => _sm.ChangeState(Walking);
-
             _sm = new StateMachine(this);
             _sm.ChangeState(Walking);
         }
@@ -47,10 +49,24 @@ namespace RandomDungeons.Nodes.Elements
         {
             base._PhysicsProcess(delta);
 
+            // Move
+            Vector2 totalVelocity = _walkVelocity + _knockbackVelocity;
+            totalVelocity = MoveAndSlide(totalVelocity);
+
+            _knockbackVelocity = totalVelocity - _walkVelocity;
+            _knockbackVelocity = _knockbackVelocity.MoveToward(
+                Vector2.Zero,
+                KnockbackFriction * delta
+            );
+
+            // Die when out of health
             if (PlayerInventory.Health <= 0 && !_isDead)
             {
                 _isDead = true;
                 _hurtFlasher.Cancel();
+                _walkVelocity = Vector2.Zero;
+                _knockbackVelocity = Vector2.Zero;
+
                 _sm.ChangeState(DeathAnimation);
             }
         }
@@ -63,8 +79,7 @@ namespace RandomDungeons.Nodes.Elements
             PlayerInventory.Health -= hitBox.Damage;
             _hurtFlasher.Flash();
 
-            KnockedBack.Velocity = hitBox.GetKnockbackVelocity(this);
-            _sm.ChangeState(KnockedBack);
+            _knockbackVelocity = hitBox.GetKnockbackVelocity(this);
         }
 
         private readonly IState Walking = new WalkingState();
@@ -89,11 +104,14 @@ namespace RandomDungeons.Nodes.Elements
             public override void _PhysicsProcess(float delta)
             {
                 if (!Owner.ControlsEnabled)
+                {
+                    Owner._walkVelocity = Vector2.Zero;
                     return;
+                }
 
                 // Move with the left stick
                 var cappedLeftStick = InputService.LeftStick.LimitLength(1);
-                Owner.MoveAndSlide(cappedLeftStick * WalkSpeed);
+                Owner._walkVelocity = cappedLeftStick * WalkSpeed;
 
                 // Update the rotation of the visuals
                 if (cappedLeftStick.Length() > 0.01)
@@ -147,7 +165,6 @@ namespace RandomDungeons.Nodes.Elements
             }
         }
 
-        private readonly KnockedBackState<Player> KnockedBack = new KnockedBackState<Player>();
         private readonly DeathAnimationState DeathAnimation = new DeathAnimationState();
     }
 }

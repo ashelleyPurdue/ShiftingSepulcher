@@ -18,14 +18,19 @@ namespace RandomDungeons.Utils
         public static float SpeedNeededForDistance(float distance, float friction)
         {
             float tolerance = 0.1f;
-            float speed = 0;
-            float predictedDist = 0;
+            float speed = 1;
+            float predictedDist = CalculateDistance(speed);
 
             while(Mathf.Abs(predictedDist - distance) > tolerance)
             {
-                speed += tolerance;
+                float mult = predictedDist > distance
+                    ? 0.75f
+                    : 2f;
+
+                speed *= mult;
                 predictedDist = CalculateDistance(speed);
             }
+
             return speed;
 
             float CalculateDistance(float s)

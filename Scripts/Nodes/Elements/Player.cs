@@ -12,6 +12,7 @@ namespace RandomDungeons.Nodes.Elements
     public class Player : KinematicBody2D
     {
         public const float WalkSpeed = 283;
+        public const float WalkAccel = WalkSpeed / 0.125f;
 
         /// <summary>
         /// Set this to false during cutscenes, dialog, etc. to prevent the
@@ -26,9 +27,7 @@ namespace RandomDungeons.Nodes.Elements
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
         private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
 
-        private Vector2 _walkVelocity;
-        private Vector2 _knockbackVelocity;
-        private const float KnockbackFriction = 500;
+        private Vector2 _velocity;
 
         private bool _isDead = false;
 
@@ -50,22 +49,14 @@ namespace RandomDungeons.Nodes.Elements
             base._PhysicsProcess(delta);
 
             // Move
-            Vector2 totalVelocity = _walkVelocity + _knockbackVelocity;
-            totalVelocity = MoveAndSlide(totalVelocity);
-
-            _knockbackVelocity = totalVelocity - _walkVelocity;
-            _knockbackVelocity = _knockbackVelocity.MoveToward(
-                Vector2.Zero,
-                KnockbackFriction * delta
-            );
+            _velocity = MoveAndSlide(_velocity);
 
             // Die when out of health
             if (PlayerInventory.Health <= 0 && !_isDead)
             {
                 _isDead = true;
                 _hurtFlasher.Cancel();
-                _walkVelocity = Vector2.Zero;
-                _knockbackVelocity = Vector2.Zero;
+                _velocity = Vector2.Zero;
 
                 _sm.ChangeState(DeathAnimation);
             }
@@ -79,7 +70,7 @@ namespace RandomDungeons.Nodes.Elements
             PlayerInventory.Health -= hitBox.Damage;
             _hurtFlasher.Flash();
 
-            _knockbackVelocity = hitBox.GetKnockbackVelocity(this);
+            _velocity = hitBox.GetKnockbackVelocity(this);
         }
 
         private readonly IState Walking = new WalkingState();
@@ -105,13 +96,17 @@ namespace RandomDungeons.Nodes.Elements
             {
                 if (!Owner.ControlsEnabled)
                 {
-                    Owner._walkVelocity = Vector2.Zero;
+                    Owner._velocity = Vector2.Zero;
                     return;
                 }
 
                 // Move with the left stick
                 var cappedLeftStick = InputService.LeftStick.LimitLength(1);
-                Owner._walkVelocity = cappedLeftStick * WalkSpeed;
+                var desiredVelocity = cappedLeftStick * WalkSpeed;
+                Owner._velocity = Owner._velocity.MoveToward(
+                    desiredVelocity,
+                    WalkAccel * delta
+                );
 
                 // Update the rotation of the visuals
                 if (cappedLeftStick.Length() > 0.01)
@@ -130,6 +125,7 @@ namespace RandomDungeons.Nodes.Elements
             public override void _StateEntered()
             {
                 Owner._sword.StartSwinging(Owner._visuals.RotationDegrees);
+                Owner._velocity = Vector2.Zero;
             }
 
             public override void _PhysicsProcess(float delta)

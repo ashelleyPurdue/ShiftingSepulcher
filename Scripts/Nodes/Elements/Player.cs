@@ -73,6 +73,11 @@ namespace RandomDungeons.Nodes.Elements
             _velocity = hitBox.GetKnockbackVelocity(this, WalkAccel);
         }
 
+        public void OnSwordDealtDamage(HurtBox hurtBox)
+        {
+            _velocity = hurtBox.GetRecoilVelocity(this, WalkAccel);
+        }
+
         private readonly IState Walking = new WalkingState();
         private class WalkingState : State<Player>
         {
@@ -130,6 +135,11 @@ namespace RandomDungeons.Nodes.Elements
 
             public override void _PhysicsProcess(float delta)
             {
+                Owner._velocity = Owner._velocity.MoveToward(
+                    Vector2.Zero,
+                    WalkAccel * delta
+                );
+
                 if (!Owner._sword.IsSwinging)
                     ChangeState(Owner.Walking);
             }

@@ -12,8 +12,6 @@ namespace RandomDungeons.Nodes.Elements
         private const float SwingAngleDeg = 135;
         private float SwingSpeed => SwingAngleDeg / SwingDuration;
 
-        private const float KnockbackSpeed = 300;
-
         private HitBox _hitBox => GetNode<HitBox>("HitBox");
 
         private float _swingTimer = 0;

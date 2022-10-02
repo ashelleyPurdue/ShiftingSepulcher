@@ -70,7 +70,7 @@ namespace RandomDungeons.Nodes.Elements
             PlayerInventory.Health -= hitBox.Damage;
             _hurtFlasher.Flash();
 
-            _velocity = hitBox.GetKnockbackVelocity(this);
+            _velocity = hitBox.GetKnockbackVelocity(this, WalkAccel);
         }
 
         private readonly IState Walking = new WalkingState();

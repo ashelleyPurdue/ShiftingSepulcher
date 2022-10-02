@@ -56,7 +56,7 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         public void OnTookDamage(HitBox hitBox)
         {
             Health -= hitBox.Damage;
-            _knockbackVelocity = hitBox.GetKnockbackVelocity(this);
+            _knockbackVelocity = hitBox.GetKnockbackVelocity(this, KnockbackFriction);
             _hurtFlasher.Flash();
         }
 

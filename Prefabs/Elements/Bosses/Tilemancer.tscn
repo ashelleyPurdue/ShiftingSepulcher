@@ -564,6 +564,7 @@ shape = SubResource( 12 )
 
 [node name="HurtBox" type="Area2D" parent="Body"]
 script = ExtResource( 4 )
+RecoilDistance = 92.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Body/HurtBox"]
 shape = SubResource( 13 )

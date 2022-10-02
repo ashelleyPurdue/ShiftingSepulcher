@@ -58,7 +58,11 @@ namespace RandomDungeons.Nodes.Elements.Enemies
             Health -= hitBox.Damage;
             _hurtFlasher?.Flash();
 
-            KnockedBack.Velocity = hitBox.GetKnockbackVelocity(this);
+            KnockedBack.Velocity = hitBox.GetKnockbackVelocity(
+                this,
+                KnockedBackState<BaseEnemy>.Friction
+            );
+
             _sm.ChangeState(KnockedBack);
         }
 

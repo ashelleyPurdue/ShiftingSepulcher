@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
+using RandomDungeons.Utils;
+
 namespace RandomDungeons.Nodes.Components
 {
     public class HitBox : Area2D
@@ -11,7 +13,7 @@ namespace RandomDungeons.Nodes.Components
 
         [Export] public int Damage = 1;
         [Export] public float InvlunerabilityTime = 0.5f;
-        [Export] public float KnockbackSpeed = 300;
+        [Export] public float KnockbackDistance = 92.5f;
 
         [Export] public NodePath[] IgnoredHurtBoxes = new NodePath[] {};
         private HashSet<HurtBox> _ignoredHurtBoxes = new HashSet<HurtBox>();
@@ -50,10 +52,14 @@ namespace RandomDungeons.Nodes.Components
             }
         }
 
-        public Vector2 GetKnockbackVelocity(Node2D victim)
+        public Vector2 GetKnockbackVelocity(Node2D victim, float friction)
         {
             Vector2 dir = (victim.GlobalPosition - GlobalPosition).Normalized();
-            return dir * KnockbackSpeed;
+
+            return dir * AccelMath.SpeedNeededForDistance(
+                KnockbackDistance,
+                friction
+            );
         }
 
         private bool IsIgnored(HurtBox hurtBox)

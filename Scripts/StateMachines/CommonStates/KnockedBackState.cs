@@ -6,8 +6,8 @@ namespace RandomDungeons.StateMachines.CommonStates
     public class KnockedBackState<TOwner> : State<TOwner>
         where TOwner : KinematicBody2D
     {
-        private const float Friction = 500;
-        private const float MinSpeedForCollisionDamage = 90;
+        public const float Friction = 500;
+        public const float MinSpeedForCollisionDamage = 90;
 
         public event Action HitWall;
         public event Action StoppedMoving;

@@ -12,6 +12,7 @@ namespace RandomDungeons.Nodes.Elements
     public class Player : KinematicBody2D
     {
         public const float WalkSpeed = 283;
+        public const float WalkAccel = WalkSpeed / 0.125f;
 
         /// <summary>
         /// Set this to false during cutscenes, dialog, etc. to prevent the
@@ -26,6 +27,8 @@ namespace RandomDungeons.Nodes.Elements
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
         private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
 
+        private Vector2 _velocity;
+
         private bool _isDead = false;
 
         private StateMachine _sm;
@@ -37,8 +40,6 @@ namespace RandomDungeons.Nodes.Elements
             DeathAnimation.AnimationTarget = _visuals;
             DeathAnimation.AnimationEnded += () => _sm.ChangeState(AfterDeathAnimation);
 
-            KnockedBack.StoppedMoving += () => _sm.ChangeState(Walking);
-
             _sm = new StateMachine(this);
             _sm.ChangeState(Walking);
         }
@@ -47,10 +48,16 @@ namespace RandomDungeons.Nodes.Elements
         {
             base._PhysicsProcess(delta);
 
+            // Move
+            _velocity = MoveAndSlide(_velocity);
+
+            // Die when out of health
             if (PlayerInventory.Health <= 0 && !_isDead)
             {
                 _isDead = true;
                 _hurtFlasher.Cancel();
+                _velocity = Vector2.Zero;
+
                 _sm.ChangeState(DeathAnimation);
             }
         }
@@ -63,8 +70,12 @@ namespace RandomDungeons.Nodes.Elements
             PlayerInventory.Health -= hitBox.Damage;
             _hurtFlasher.Flash();
 
-            KnockedBack.Velocity = hitBox.GetKnockbackVelocity(this);
-            _sm.ChangeState(KnockedBack);
+            _velocity = hitBox.GetKnockbackVelocity(this, WalkAccel);
+        }
+
+        public void OnSwordDealtDamage(HurtBox hurtBox)
+        {
+            _velocity = hurtBox.GetRecoilVelocity(this, WalkAccel);
         }
 
         private readonly IState Walking = new WalkingState();
@@ -89,11 +100,18 @@ namespace RandomDungeons.Nodes.Elements
             public override void _PhysicsProcess(float delta)
             {
                 if (!Owner.ControlsEnabled)
+                {
+                    Owner._velocity = Vector2.Zero;
                     return;
+                }
 
                 // Move with the left stick
                 var cappedLeftStick = InputService.LeftStick.LimitLength(1);
-                Owner.MoveAndSlide(cappedLeftStick * WalkSpeed);
+                var desiredVelocity = cappedLeftStick * WalkSpeed;
+                Owner._velocity = Owner._velocity.MoveToward(
+                    desiredVelocity,
+                    WalkAccel * delta
+                );
 
                 // Update the rotation of the visuals
                 if (cappedLeftStick.Length() > 0.01)
@@ -112,10 +130,16 @@ namespace RandomDungeons.Nodes.Elements
             public override void _StateEntered()
             {
                 Owner._sword.StartSwinging(Owner._visuals.RotationDegrees);
+                Owner._velocity = Vector2.Zero;
             }
 
             public override void _PhysicsProcess(float delta)
             {
+                Owner._velocity = Owner._velocity.MoveToward(
+                    Vector2.Zero,
+                    WalkAccel * delta
+                );
+
                 if (!Owner._sword.IsSwinging)
                     ChangeState(Owner.Walking);
             }
@@ -147,7 +171,6 @@ namespace RandomDungeons.Nodes.Elements
             }
         }
 
-        private readonly KnockedBackState<Player> KnockedBack = new KnockedBackState<Player>();
         private readonly DeathAnimationState DeathAnimation = new DeathAnimationState();
     }
 }

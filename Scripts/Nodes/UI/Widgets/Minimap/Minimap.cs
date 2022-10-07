@@ -22,7 +22,7 @@ namespace RandomDungeons.Nodes.UI.Widgets.Minimap
                 var roomDisplay = RoomDisplayPrefab.Instance<RoomDisplay>();
 
                 AddChild(roomDisplay);
-                roomDisplay.Position = RoomSize * new Vector2(c.x, c.y);
+                roomDisplay.Position = RoomSize * new Vector2(c.x, -c.y);
                 roomDisplay.SetGraphRoom(graphRoom);
             }
         }

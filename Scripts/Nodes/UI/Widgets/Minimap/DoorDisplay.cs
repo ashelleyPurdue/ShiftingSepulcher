@@ -1,5 +1,6 @@
 using Godot;
 using RandomDungeons.Graphs;
+using RandomDungeons.Utils;
 
 namespace RandomDungeons.Nodes.UI.Widgets.Minimap
 {
@@ -9,6 +10,12 @@ namespace RandomDungeons.Nodes.UI.Widgets.Minimap
         {
             bool isWall = (graphDoor.Destination == null);
             Visible = !isWall;
+
+            GetNode<Node2D>("%Lock").Visible = graphDoor is KeyDungeonGraphDoor;
+            if (graphDoor is KeyDungeonGraphDoor k)
+            {
+                GetNode<Node2D>("%Lock").Modulate = KeyColors.ForId(k.KeyId);
+            }
         }
     }
 }

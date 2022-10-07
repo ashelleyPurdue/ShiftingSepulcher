@@ -11,6 +11,11 @@ namespace RandomDungeons.Nodes.UI.Widgets.Minimap
 
         public void SetGraph(DungeonGraph graph)
         {
+            foreach (var child in GetChildren())
+            {
+                ((Node)child).QueueFree();
+            }
+
             foreach (var c in graph.AllRoomCoordinates())
             {
                 var roomDisplay = RoomDisplayPrefab.Instance<Node2D>();

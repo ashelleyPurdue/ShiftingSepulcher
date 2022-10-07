@@ -32,6 +32,7 @@ margin_right = 161.0
 margin_bottom = 90.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
+current = true
 script = ExtResource( 4 )
 
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/RegenerateButton" to="." method="Regenerate"]

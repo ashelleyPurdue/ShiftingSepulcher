@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scenes/Prefabs/UI/Widgets/Minimap/DoorDisplay.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/Nodes/UI/Widgets/Minimap/RoomDisplay.cs" type="Script" id=2]
 
 [node name="RoomDisplay" type="Node2D"]
+script = ExtResource( 2 )
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 polygon = PoolVector2Array( -64, -64, 64, -64, 64, 64, -64, 64 )

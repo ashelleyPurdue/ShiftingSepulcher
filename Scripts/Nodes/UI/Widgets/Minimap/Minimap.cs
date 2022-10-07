@@ -18,9 +18,12 @@ namespace RandomDungeons.Nodes.UI.Widgets.Minimap
 
             foreach (var c in graph.AllRoomCoordinates())
             {
-                var roomDisplay = RoomDisplayPrefab.Instance<Node2D>();
+                var graphRoom = graph.GetRoom(c);
+                var roomDisplay = RoomDisplayPrefab.Instance<RoomDisplay>();
+
                 AddChild(roomDisplay);
                 roomDisplay.Position = RoomSize * new Vector2(c.x, c.y);
+                roomDisplay.SetGraphRoom(graphRoom);
             }
         }
     }

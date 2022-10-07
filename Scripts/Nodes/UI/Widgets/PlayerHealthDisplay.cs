@@ -1,7 +1,7 @@
 using Godot;
 using RandomDungeons.Services;
 
-namespace RandomDungeons.Nodes.UI
+namespace RandomDungeons.Nodes.UI.Widgets
 {
     public class PlayerHealthDisplay : Control
     {

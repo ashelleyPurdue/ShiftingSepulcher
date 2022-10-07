@@ -3,7 +3,7 @@ using Godot;
 using RandomDungeons.Services;
 using RandomDungeons.Utils;
 
-namespace RandomDungeons.Nodes.UI
+namespace RandomDungeons.Nodes.UI.Widgets
 {
     public class PlayerKeysDisplay : Control
     {

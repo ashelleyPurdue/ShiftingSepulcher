@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RandomDungeons.Nodes.Maps
+namespace RandomDungeons.Nodes.UI
 {
     public class VictoryScreen : Node
     {

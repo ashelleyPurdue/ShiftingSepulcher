@@ -1,0 +1,53 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Scripts/Nodes/PhysicalDungeons/DungeonInstantiator.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Nodes/DungeonRooms/DungeonRoomFactory.cs" type="Script" id=2]
+[ext_resource path="res://Scenes/Prefabs/Elements/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Prefabs/UI/HUD.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Prefabs/DungeonRoomTemplates/KeyRoom.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Prefabs/DungeonRoomTemplates/EmptyRoom.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Audio/Music/DungeonMusic.ogg" type="AudioStream" id=7]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="DungeonInstantiator" type="Node2D" parent="."]
+script = ExtResource( 1 )
+
+[node name="RoomFactory" type="Node" parent="DungeonInstantiator"]
+unique_name_in_owner = true
+script = ExtResource( 2 )
+EmptyRoom = ExtResource( 6 )
+KeyRoom = ExtResource( 5 )
+FillerRoomWeights = {
+"EmptyRoom": 3,
+"Filler/CentralPillarRoom": 1,
+"Filler/FourPillarsRoom": 1,
+"Filler/FourPotsRoom": 1,
+"Filler/PlusShapedRoom": 1
+}
+CombatRoomWeights = {
+"Combat/FourTilemancersRoom": 1,
+"Combat/SingleZombieRoom": 1
+}
+PuzzleRoomWeights = {
+"Puzzle/LightsOutRoom": 1,
+"Puzzle/SlidingIcePuzzleRoom": 3
+}
+BossRoomWeights = {
+"Boss/TilemancerRoom": 1,
+"Boss/VictoryChestRoom": 0
+}
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+
+[node name="MainCamera" type="Camera2D" parent="." groups=["Camera"]]
+current = true
+smoothing_enabled = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="CanvasLayer" instance=ExtResource( 4 )]
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+autoplay = true

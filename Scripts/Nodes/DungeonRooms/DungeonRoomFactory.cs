@@ -10,7 +10,7 @@ namespace RandomDungeons.Nodes.DungeonRooms
 {
     public class DungeonRoomFactory : Node
     {
-        private const string RoomTemplatesFolder = "res://Prefabs/DungeonRoomTemplates";
+        private const string RoomTemplatesFolder = "res://Scenes/Prefabs/DungeonRoomTemplates";
         private const string DictHintString = "The key is the name of a .tscn file, minus the file extension, relative to " + RoomTemplatesFolder;
 
         [Export] public PackedScene EmptyRoom;

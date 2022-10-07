@@ -6,7 +6,7 @@ namespace RandomDungeons.Nodes.Maps
     {
         private void BackToTitleButtonPressed()
         {
-            GetTree().ChangeScene("res://Maps/TitleScreen.tscn");
+            GetTree().ChangeScene("res://Scenes/Maps/TitleScreen.tscn");
         }
     }
 }

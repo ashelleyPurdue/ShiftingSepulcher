@@ -1,0 +1,81 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/Maps/Test/LightsOut.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Maps/Test/SlidingIcePuzzleTest.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Maps/DungeonMode.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scripts/Nodes/Maps/TitleScreen.cs" type="Script" id=4]
+
+[node name="TitleScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+DungeonModeScene = ExtResource( 3 )
+LightsOutScene = ExtResource( 1 )
+SlidingIceModeScene = ExtResource( 2 )
+
+[node name="Title" type="Label" parent="."]
+margin_left = 128.0
+margin_top = 64.0
+margin_right = 283.0
+margin_bottom = 78.0
+rect_scale = Vector2( 5, 5 )
+text = "Random Dungeon Game"
+
+[node name="PlayButtons" type="VBoxContainer" parent="."]
+margin_left = 200.0
+margin_top = 304.0
+margin_right = 355.0
+margin_bottom = 368.0
+custom_constants/separation = 5
+
+[node name="Label" type="Label" parent="PlayButtons"]
+margin_right = 155.0
+margin_bottom = 14.0
+text = "Select Game Mode"
+
+[node name="PlayDungeonButton" type="Button" parent="PlayButtons"]
+margin_top = 19.0
+margin_right = 155.0
+margin_bottom = 39.0
+text = "Play Dungeon"
+
+[node name="PlayLightsOutButton" type="Button" parent="PlayButtons"]
+margin_top = 44.0
+margin_right = 155.0
+margin_bottom = 64.0
+text = "Play Lights-Out Puzzle"
+
+[node name="PlaySlidingIceButton" type="Button" parent="PlayButtons"]
+margin_top = 69.0
+margin_right = 155.0
+margin_bottom = 89.0
+text = "Play Sliding Ice Puzzle"
+
+[node name="SeedEntry" type="VBoxContainer" parent="."]
+margin_left = 512.0
+margin_top = 304.0
+margin_right = 673.0
+margin_bottom = 372.0
+custom_constants/separation = 5
+
+[node name="Label" type="Label" parent="SeedEntry"]
+margin_right = 161.0
+margin_bottom = 14.0
+text = "Seed"
+
+[node name="SeedTextBox" type="LineEdit" parent="SeedEntry"]
+unique_name_in_owner = true
+margin_top = 19.0
+margin_right = 161.0
+margin_bottom = 43.0
+
+[node name="RandomSeedButton" type="Button" parent="SeedEntry"]
+margin_top = 48.0
+margin_right = 161.0
+margin_bottom = 68.0
+text = "Choose a Random Seed"
+
+[connection signal="pressed" from="PlayButtons/PlayDungeonButton" to="." method="PlayDungeonMode"]
+[connection signal="pressed" from="PlayButtons/PlayLightsOutButton" to="." method="PlayLightsOutMode"]
+[connection signal="pressed" from="PlayButtons/PlaySlidingIceButton" to="." method="PlaySlidingIceMode"]
+[connection signal="pressed" from="SeedEntry/RandomSeedButton" to="." method="RandomizeSeed"]

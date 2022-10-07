@@ -1,4 +1,5 @@
 using Godot;
+using RandomDungeons.Nodes.UI.Widgets;
 
 namespace RandomDungeons.Nodes.UI
 {
@@ -10,18 +11,8 @@ namespace RandomDungeons.Nodes.UI
         [Export] public PackedScene LightsOutScene;
         [Export] public PackedScene SlidingIceModeScene;
 
-        private LineEdit _seedTextBox => GetNode<LineEdit>("%SeedTextBox");
+        private SeedInput _seedInput => GetNode<SeedInput>("%SeedInput");
 
-        public override void _Ready()
-        {
-            RandomizeSeed();
-        }
-
-        public void RandomizeSeed()
-        {
-            GD.Randomize();
-            _seedTextBox.Text = "" + GD.Randi();
-        }
 
         private void PlayDungeonMode()
         {
@@ -40,19 +31,9 @@ namespace RandomDungeons.Nodes.UI
 
         private void ChooseMode(PackedScene modeScene)
         {
-            ChosenSeed = ParseSeedTextbox();
+            ChosenSeed = _seedInput.ParseSeedTextbox();
             GetTree().ChangeSceneTo(modeScene);
         }
-
-        private int ParseSeedTextbox()
-        {
-            bool isNumber = int.TryParse(_seedTextBox.Text, out int seed);
-            if (!isNumber)
-                seed = (int)_seedTextBox.Text.Hash();
-
-            return seed;
-        }
-
     }
 }
 

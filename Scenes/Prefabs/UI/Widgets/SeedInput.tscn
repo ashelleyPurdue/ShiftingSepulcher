@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/Nodes/UI/Widgets/SeedInput.cs" type="Script" id=1]
+
+[node name="SeedInput" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="Label" type="Label" parent="."]
+margin_right = 1024.0
+margin_bottom = 14.0
+text = "Seed"
+
+[node name="SeedTextBox" type="LineEdit" parent="."]
+unique_name_in_owner = true
+margin_top = 18.0
+margin_right = 1024.0
+margin_bottom = 42.0
+
+[node name="RandomSeedButton" type="Button" parent="."]
+margin_top = 46.0
+margin_right = 1024.0
+margin_bottom = 66.0
+text = "Choose a Random Seed"
+
+[connection signal="pressed" from="RandomSeedButton" to="." method="RandomizeSeed"]

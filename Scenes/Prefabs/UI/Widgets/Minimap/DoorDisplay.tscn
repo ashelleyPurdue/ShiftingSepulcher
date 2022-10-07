@@ -1,0 +1,25 @@
+[gd_scene format=2]
+
+[node name="DoorDisplay" type="Node2D"]
+
+[node name="Door" type="Polygon2D" parent="."]
+color = Color( 0.564706, 0.564706, 0.564706, 1 )
+polygon = PoolVector2Array( -32, 0, -32, -32, 32, -32, 32, 0 )
+
+[node name="Lock" type="Node2D" parent="."]
+unique_name_in_owner = true
+visible = false
+position = Vector2( 0, -16 )
+scale = Vector2( 0.160001, 0.160001 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Backdrop" type="Polygon2D" parent="Lock"]
+polygon = PoolVector2Array( -96, -96, 96, -96, 96, 96, -96, 96 )
+
+[node name="KeyHole" type="Polygon2D" parent="Lock"]
+position = Vector2( 0, 16 )
+scale = Vector2( 0.559999, 0.559999 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( -32, 64, 32, 64, 32, 0, 64, -32, 64, -96, 32, -128, -32, -128, -64, -96, -64, -32, -32, 0 )

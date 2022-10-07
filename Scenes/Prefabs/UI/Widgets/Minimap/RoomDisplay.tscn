@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scenes/Prefabs/UI/Widgets/Minimap/DoorDisplay.tscn" type="PackedScene" id=1]
+
+[node name="RoomDisplay" type="Node2D"]
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+polygon = PoolVector2Array( -64, -64, 64, -64, 64, 64, -64, 64 )
+
+[node name="Doors" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="North" parent="Doors" instance=ExtResource( 1 )]
+position = Vector2( 0, -64 )
+
+[node name="South" parent="Doors" instance=ExtResource( 1 )]
+position = Vector2( -5.59506e-06, 64 )
+rotation = -3.14159
+
+[node name="East" parent="Doors" instance=ExtResource( 1 )]
+position = Vector2( 64, 2.79753e-06 )
+rotation = 1.5708
+
+[node name="West" parent="Doors" instance=ExtResource( 1 )]
+position = Vector2( -64, -7.63192e-07 )
+rotation = -1.5708

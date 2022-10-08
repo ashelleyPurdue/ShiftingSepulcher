@@ -26,3 +26,12 @@ position = Vector2( 0, 16 )
 scale = Vector2( 0.559999, 0.559999 )
 color = Color( 0, 0, 0, 1 )
 polygon = PoolVector2Array( -32, 64, 32, 64, 32, 0, 64, -32, 64, -96, 32, -128, -32, -128, -64, -96, -64, -32, -32, 0 )
+
+[node name="OneWayIcon" type="Polygon2D" parent="."]
+unique_name_in_owner = true
+visible = false
+position = Vector2( 0, -24 )
+rotation = 3.14159
+scale = Vector2( 0.1, 0.1 )
+color = Color( 0.2, 0.2, 0.2, 1 )
+polygon = PoolVector2Array( -32, 32, 32, 32, 32, -64, 96, -64, 0, -192, -96, -64, -32, -64 )

@@ -7,6 +7,9 @@ namespace RandomDungeons.Nodes.UI.Widgets.Minimap
     {
         public void SetGraphRoom(DungeonGraphRoom graphRoom)
         {
+            GetNode<Node2D>("%KeyIcon").Visible = graphRoom.KeyId > 0;
+            GetNode<Node2D>("%KeyIcon").Modulate = KeyColors.ForId(graphRoom.KeyId);
+
             foreach (var dir in CardinalDirectionUtils.All())
             {
                 var graphDoor = graphRoom.GetDoor(dir);

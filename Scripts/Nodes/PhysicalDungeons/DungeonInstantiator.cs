@@ -4,7 +4,7 @@ using Godot;
 
 using RandomDungeons.Graphs;
 using RandomDungeons.Nodes.DungeonRooms;
-using RandomDungeons.Nodes.Maps;
+using RandomDungeons.Nodes.UI;
 using RandomDungeons.Utils;
 
 namespace RandomDungeons.PhysicalDungeons

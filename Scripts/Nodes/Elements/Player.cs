@@ -166,7 +166,7 @@ namespace RandomDungeons.Nodes.Elements
                 {
                     // TODO: Respawn the player in the starting room, instead
                     // of taking them back to the title screen
-                    Owner.GetTree().ChangeScene("res://Maps/TitleScreen.tscn");
+                    Owner.GetTree().ChangeScene("res://Scenes/Maps/TitleScreen.tscn");
                 }
             }
         }

@@ -8,7 +8,7 @@ namespace RandomDungeons.Nodes.Elements
         {
             if (body is Player)
             {
-                GetTree().ChangeScene("res://Maps/VictoryScreen.tscn");
+                GetTree().ChangeScene("res://Scenes/Maps/VictoryScreen.tscn");
             }
         }
     }

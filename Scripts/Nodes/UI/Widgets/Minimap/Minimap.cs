@@ -5,7 +5,7 @@ namespace RandomDungeons.Nodes.UI.Widgets.Minimap
 {
     public class Minimap : Node2D
     {
-        private const float RoomSize = 6 * 32;
+        private const float RoomSize = 5 * 32;
 
         [Export] public PackedScene RoomDisplayPrefab;
 

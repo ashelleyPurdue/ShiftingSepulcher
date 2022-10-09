@@ -1,13 +1,15 @@
 using Godot;
 using RandomDungeons.DungeonTrees;
 using RandomDungeons.Nodes.UI.Widgets;
+using RandomDungeons.Nodes.UI.Widgets.Minimap;
 
 namespace RandomDungeons.Nodes.Maps
 {
-    public class DungeonTreeGeneratorTest : Control
+    public class DungeonTreeGeneratorTest : Node
     {
         private SeedInput _seedInput => GetNode<SeedInput>("%SeedInput");
         private Tree _treeDisplay => GetNode<Tree>("%TreeDisplay");
+        private Minimap _minimap => GetNode<Minimap>("%Minimap");
 
         public override void _Ready()
         {
@@ -25,6 +27,12 @@ namespace RandomDungeons.Nodes.Maps
                 maxRunLength: 5
             );
 
+            UpdateTreeDisplay(tree);
+            UpdateMinimap(tree);
+        }
+
+        private void UpdateTreeDisplay(DungeonTreeRoom tree)
+        {
             Recursive(tree, _treeDisplay.GetRoot());
 
             void Recursive(DungeonTreeRoom room, TreeItem parent)
@@ -37,6 +45,12 @@ namespace RandomDungeons.Nodes.Maps
                     Recursive(childDoor.Destination, treeItem);
                 }
             }
+        }
+
+        private void UpdateMinimap(DungeonTreeRoom tree)
+        {
+            var graph = Graphs.DungeonGraphBuilder.BuildFromTree(tree);
+            _minimap.SetGraph(graph);
         }
     }
 }

@@ -9,39 +9,36 @@ namespace RandomDungeons.Graphs
     {
         public static DungeonGraph BuildFromTree(DungeonTreeRoom root)
         {
-            var cardDirs = new[]
-            {
-                CardinalDirection.South,
-                CardinalDirection.East
-            };
+            var coordsToRoom = LayoutFromTree(root);
+            var roomToCoords = ReverseDict(coordsToRoom);
 
             var graph = new DungeonGraph();
-            var startRoom = graph.CreateRoom(Vector2i.Zero, 0);
-            CreateGraphRoom(root, startRoom, cardDirs[0]);
+            foreach (var pair in coordsToRoom)
+            {
+                Vector2i coords = pair.Key;
+                DungeonTreeRoom treeRoom = pair.Value; 
+
+                var graphRoom = graph.CreateRoom(coords, 0);
+                graphRoom.ChallengeType = treeRoom.ChallengeType;
+                graphRoom.RoomSeed = treeRoom.RoomSeed;
+
+                // TODO: Set the doors
+            }
 
             return graph;
+        }
 
-            void CreateGraphRoom(
-                DungeonTreeRoom treeRoom,
-                DungeonGraphRoom parent,
-                CardinalDirection dir)
+        private static Dictionary<TValue, TKey> ReverseDict<TKey, TValue>(
+            Dictionary<TKey, TValue> dict
+        )
+        {
+            var reversed = new Dictionary<TValue, TKey>();
+            foreach (var pair in dict)
             {
-                var graphRoom = parent.CreateNeighbor(dir, 0);
-                graphRoom.RoomSeed      = treeRoom.RoomSeed;
-                graphRoom.ChallengeType = treeRoom.ChallengeType;
-
-                for (int i = 0; i < treeRoom.ChildDoors.Count; i++)
-                {
-                    var childDir = cardDirs[i];
-                    DungeonTreeRoom childTreeRoom = treeRoom.ChildDoors[i].Destination;
-
-                    CreateGraphRoom(
-                        childTreeRoom,
-                        graphRoom,
-                        childDir
-                    );
-                }
+                reversed[pair.Value] = pair.Key;
             }
+            
+            return reversed;
         }
 
         private static Dictionary<Vector2i, DungeonTreeRoom> LayoutFromTree(DungeonTreeRoom root)
@@ -71,6 +68,8 @@ namespace RandomDungeons.Graphs
                 var newPos = parentPos.Adjacent(dir);
                 if (layout.ContainsKey(newPos))
                     throw new Exception("Layout: there is already a room there");
+
+                layout[newPos] =  treeRoom;
 
                 for (int i = 0; i < treeRoom.ChildDoors.Count; i++)
                 {

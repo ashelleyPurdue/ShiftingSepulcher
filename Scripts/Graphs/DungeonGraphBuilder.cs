@@ -8,9 +8,15 @@ namespace RandomDungeons.Graphs
     {
         public static DungeonGraph BuildFromTree(DungeonTreeRoom root)
         {
+            var cardDirs = new[]
+            {
+                CardinalDirection.South,
+                CardinalDirection.East
+            };
+
             var graph = new DungeonGraph();
             var startRoom = graph.CreateRoom(Vector2i.Zero, 0);
-            CreateGraphRoom(root, startRoom, (CardinalDirection)0);
+            CreateGraphRoom(root, startRoom, cardDirs[0]);
 
             return graph;
 
@@ -25,7 +31,7 @@ namespace RandomDungeons.Graphs
 
                 for (int i = 0; i < treeRoom.ChildDoors.Count; i++)
                 {
-                    var childDir = (CardinalDirection)i;
+                    var childDir = cardDirs[i];
                     DungeonTreeRoom childTreeRoom = treeRoom.ChildDoors[i].Destination;
 
                     CreateGraphRoom(

@@ -14,8 +14,8 @@ namespace RandomDungeons.ProjectPlugins.CustomNodes
         {
             Register(
                 "Node",
-                "Dungeon Tree Room",
-                "res://Scripts/DungeonTrees/DungeonTreeRoom.cs"
+                "DungeonTreeTemplateRoom",
+                "res://Scripts/Nodes/DungeonTreeTemplates/DungeonTreeTemplateRoom.cs"
             );
         }
 

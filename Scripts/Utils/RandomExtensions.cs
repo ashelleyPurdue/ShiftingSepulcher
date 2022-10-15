@@ -6,6 +6,21 @@ namespace RandomDungeons.Utils
 {
     public static class RandomExtensions
     {
+        public static T[] Shuffle<T>(this Random rng, IEnumerable<T> items)
+        {
+            var unshuffled = new List<T>(items);
+            var shuffled = new List<T>();
+
+            while (unshuffled.Count > 0)
+            {
+                int i = rng.Next(unshuffled.Count);
+                shuffled.Add(unshuffled[i]);
+                unshuffled.RemoveAt(i);
+            }
+
+            return shuffled.ToArray();
+        }
+
         public static T PickFrom<T>(this Random rng, IEnumerable<T> options)
         {
             T[] optionsArray = options.ToArray();

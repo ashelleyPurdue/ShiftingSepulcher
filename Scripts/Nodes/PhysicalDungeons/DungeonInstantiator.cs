@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
+using RandomDungeons.DungeonTrees;
+using RandomDungeons.DungeonLayouts;
 using RandomDungeons.Graphs;
 using RandomDungeons.Nodes.DungeonRooms;
 using RandomDungeons.Nodes.UI;
@@ -26,12 +28,14 @@ namespace RandomDungeons.PhysicalDungeons
             // Generate a dungeon graph
             GD.Print(TitleScreen.ChosenSeed);
 
-            var graph = DungeonGenerator.GenerateUsingRuns(
+            var tree = DungeonTreeGenerator.GenerateUsingRuns(
                 seed: TitleScreen.ChosenSeed,
-                minRunSize: 3,
-                maxRunSize: 5,
-                numRooms: 25
+                minRunLength: 3,
+                maxRunLength: 5,
+                numRuns: 6
             );
+            var layout = DungeonLayoutBuilder.LayoutFromTree(tree);
+            var graph = DungeonGraphBuilder.BuildFromLayout(layout);
 
             // Create a "real" version of each room, but don't add it to the
             // scene yet.  We'll add it to the scene later, when the player

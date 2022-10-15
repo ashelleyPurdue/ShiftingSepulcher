@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scenes/Prefabs/UI/Widgets/Minimap/DoorDisplay.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Nodes/UI/Widgets/Minimap/RoomDisplay.cs" type="Script" id=2]
 [ext_resource path="res://Sprites/Key.svg" type="Texture" id=3]
+[ext_resource path="res://Sprites/Chest.png" type="Texture" id=4]
 
 [node name="RoomDisplay" type="Node2D"]
 script = ExtResource( 2 )
@@ -13,6 +14,10 @@ polygon = PoolVector2Array( -64, -64, 64, -64, 64, 64, -64, 64 )
 [node name="KeyIcon" type="Sprite" parent="."]
 unique_name_in_owner = true
 texture = ExtResource( 3 )
+
+[node name="BossIcon" type="Sprite" parent="."]
+unique_name_in_owner = true
+texture = ExtResource( 4 )
 
 [node name="Doors" type="Node2D" parent="."]
 unique_name_in_owner = true

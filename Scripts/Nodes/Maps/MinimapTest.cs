@@ -1,5 +1,7 @@
 using Godot;
 
+using RandomDungeons.DungeonTrees;
+using RandomDungeons.DungeonLayouts;
 using RandomDungeons.Graphs;
 using RandomDungeons.Nodes.UI.Widgets;
 using RandomDungeons.Nodes.UI.Widgets.Minimap;
@@ -13,12 +15,15 @@ namespace RandomDungeons.Nodes.Maps
 
         public void Regenerate()
         {
-            var graph = DungeonGenerator.GenerateUsingRuns(
+            var tree = DungeonTreeGenerator.GenerateUsingRuns(
                 seed: _seedInput.ParseSeedTextbox(),
-                minRunSize: 3,
-                maxRunSize: 5,
-                numRooms: 25
+                minRunLength: 3,
+                maxRunLength: 5,
+                numRuns: 6
             );
+            var layout = DungeonLayoutBuilder.LayoutFromTree(tree);
+            var graph = DungeonGraphBuilder.BuildFromLayout(layout);
+
             _minimap.SetGraph(graph);
         }
     }

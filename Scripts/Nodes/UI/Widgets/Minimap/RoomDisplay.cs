@@ -5,10 +5,16 @@ namespace RandomDungeons.Nodes.UI.Widgets.Minimap
 {
     public class RoomDisplay : Node2D
     {
+        private Node2D _bossIcon => GetNode<Node2D>("%BossIcon");
+        private Node2D _keyIcon => GetNode<Node2D>("%KeyIcon");
+
+
         public void SetGraphRoom(DungeonGraphRoom graphRoom)
         {
-            GetNode<Node2D>("%KeyIcon").Visible = graphRoom.KeyId > 0;
-            GetNode<Node2D>("%KeyIcon").Modulate = KeyColors.ForId(graphRoom.KeyId);
+            _bossIcon.Visible = graphRoom.ChallengeType == ChallengeType.Boss;
+
+            _keyIcon.Visible = graphRoom.KeyId > 0;
+            _keyIcon.Modulate = KeyColors.ForId(graphRoom.KeyId);
 
             foreach (var dir in CardinalDirectionUtils.All())
             {

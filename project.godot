@@ -14,6 +14,10 @@ config/name="RandomDungeons"
 run/main_scene="res://Scenes/Maps/TitleScreen.tscn"
 config/icon="res://icon.png"
 
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/ProjectPlugins/CustomNodes/plugin.cfg" )
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true

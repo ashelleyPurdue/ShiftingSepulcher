@@ -1,0 +1,52 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/Nodes/DungeonTreeTemplates/DungeonTreeTemplateRoom.cs" type="Script" id=1]
+
+[node name="ThreeLockHub" type="Node"]
+script = ExtResource( 1 )
+
+[node name="OpenDoor" type="Node" parent="."]
+script = ExtResource( 1 )
+
+[node name="Node" type="Node" parent="OpenDoor"]
+script = ExtResource( 1 )
+
+[node name="Key1" type="Node" parent="OpenDoor/Node"]
+script = ExtResource( 1 )
+ChallengeType = 3
+KeyId = 1
+
+[node name="Lock1" type="Node" parent="."]
+script = ExtResource( 1 )
+LockId = 1
+
+[node name="Node" type="Node" parent="Lock1"]
+script = ExtResource( 1 )
+
+[node name="Key2" type="Node" parent="Lock1/Node"]
+script = ExtResource( 1 )
+ChallengeType = 3
+KeyId = 2
+
+[node name="Lock2" type="Node" parent="."]
+script = ExtResource( 1 )
+LockId = 2
+
+[node name="Node" type="Node" parent="Lock2"]
+script = ExtResource( 1 )
+
+[node name="Key3" type="Node" parent="Lock2/Node"]
+script = ExtResource( 1 )
+ChallengeType = 3
+KeyId = 3
+
+[node name="Lock3" type="Node" parent="."]
+script = ExtResource( 1 )
+LockId = 3
+
+[node name="Node" type="Node" parent="Lock3"]
+script = ExtResource( 1 )
+
+[node name="Boss" type="Node" parent="Lock3/Node"]
+script = ExtResource( 1 )
+ChallengeType = 4

@@ -51,5 +51,3 @@ polygon = PoolVector2Array( 13, 0, 19, 0, 20, 2, 19, 5, 13, 5, 12, 2 )
 unique_name_in_owner = true
 script = ExtResource( 3 )
 VisualsPath = NodePath("../Visuals")
-
-[connection signal="TookDamage" from="HurtBox" to="." method="OnTookDamage"]

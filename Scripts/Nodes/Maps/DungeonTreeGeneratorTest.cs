@@ -40,14 +40,14 @@ namespace RandomDungeons.Nodes.Maps
             }
             else
             {
-                tree = template.ToDungeonTreeRoom(new Random(seed));
+                tree = template.ToDungeonTree(new Random(seed));
             }
 
             UpdateTreeDisplay(tree);
             UpdateMinimap(tree);
         }
 
-        private DungeonTreeTemplateRoom GetSelectedTemplate()
+        private DungeonTreeTemplate GetSelectedTemplate()
         {
             if (!_templateSelector.IsAnythingSelected())
                 return null;
@@ -57,7 +57,7 @@ namespace RandomDungeons.Nodes.Maps
                 return null;
 
             // Subtracting 1 from the index to account for the "none" option
-            return _templates.GetChild<DungeonTreeTemplateRoom>(selectedIndex - 1);
+            return _templates.GetChild<DungeonTreeTemplate>(selectedIndex - 1);
         }
 
         private void UpdateTemplateList()

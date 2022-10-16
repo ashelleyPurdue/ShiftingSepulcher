@@ -3,6 +3,7 @@ using RandomDungeons.Graphs;
 using RandomDungeons.Utils;
 namespace RandomDungeons.Nodes.UI.Widgets.Minimap
 {
+    [Tool]
     public class RoomDisplay : Node2D
     {
         private Node2D _bossIcon => GetNode<Node2D>("%BossIcon");

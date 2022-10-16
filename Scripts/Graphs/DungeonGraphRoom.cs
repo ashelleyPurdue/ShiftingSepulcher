@@ -94,7 +94,7 @@ namespace RandomDungeons.Graphs
         )
         {
             if (!CanAddRoom(dir))
-                throw new Exception("Another room is already there.");
+                throw new DungeonGraphException("Another room is already there.");
 
             var neighborPos = Position.Adjacent(dir);
             var neighbor = Graph.CreateRoom(neighborPos, sequenceNum);
@@ -149,7 +149,7 @@ namespace RandomDungeons.Graphs
             Vector2i neighborPos = Position.Adjacent(dir);
 
             if (!Graph.CoordinatesInUse(neighborPos))
-                throw new Exception("Tried to drill a hole into nowhere");
+                throw new DungeonGraphException("Tried to drill a hole into nowhere");
 
             var neighbor = Graph.GetRoom(neighborPos);
 

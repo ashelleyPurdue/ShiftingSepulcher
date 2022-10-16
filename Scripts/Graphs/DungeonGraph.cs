@@ -27,7 +27,7 @@ namespace RandomDungeons.Graphs
         public DungeonGraphRoom CreateRoom(Vector2i coords, int sequenceNumber)
         {
             if (_rooms.ContainsKey(coords))
-                throw new Exception($"There's already a room at {coords}");
+                throw new DungeonGraphException($"There's already a room at {coords}");
 
             var room = new DungeonGraphRoom(this, coords, sequenceNumber);
             _rooms[coords] = room;

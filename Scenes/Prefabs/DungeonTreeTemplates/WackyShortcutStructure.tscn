@@ -1,0 +1,71 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/Nodes/DungeonTreeTemplates/DungeonTreeTemplateRoom.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Nodes/DungeonTreeTemplates/DungeonTreeTemplate.cs" type="Script" id=2]
+
+[node name="WackyShortcutStructure" type="Node"]
+script = ExtResource( 2 )
+
+[node name="Root" type="Node" parent="."]
+script = ExtResource( 1 )
+
+[node name="OpenDoor" type="Node" parent="Root"]
+script = ExtResource( 1 )
+
+[node name="Key2ShortcutDest" type="Node" parent="Root/OpenDoor"]
+script = ExtResource( 1 )
+
+[node name="Node" type="Node" parent="Root/OpenDoor/Key2ShortcutDest"]
+script = ExtResource( 1 )
+
+[node name="Key1" type="Node" parent="Root/OpenDoor/Key2ShortcutDest/Node"]
+script = ExtResource( 1 )
+ChallengeType = 3
+KeyId = 1
+Shortcuts = [ NodePath("../../..") ]
+
+[node name="Lock1" type="Node" parent="Root"]
+script = ExtResource( 1 )
+LockId = 1
+
+[node name="Node" type="Node" parent="Root/Lock1"]
+script = ExtResource( 1 )
+
+[node name="Node" type="Node" parent="Root/Lock1/Node"]
+script = ExtResource( 1 )
+
+[node name="Node" type="Node" parent="Root/Lock1/Node/Node"]
+script = ExtResource( 1 )
+
+[node name="Key2" type="Node" parent="Root/Lock1/Node/Node/Node"]
+script = ExtResource( 1 )
+ChallengeType = 3
+KeyId = 2
+Shortcuts = [ NodePath("../../../../../OpenDoor/Key2ShortcutDest") ]
+
+[node name="Lock2" type="Node" parent="Root"]
+script = ExtResource( 1 )
+LockId = 2
+
+[node name="Node" type="Node" parent="Root/Lock2"]
+script = ExtResource( 1 )
+
+[node name="Node" type="Node" parent="Root/Lock2/Node"]
+script = ExtResource( 1 )
+
+[node name="Node" type="Node" parent="Root/Lock2/Node/Node"]
+script = ExtResource( 1 )
+
+[node name="Key3" type="Node" parent="Root/Lock2/Node/Node/Node"]
+script = ExtResource( 1 )
+ChallengeType = 3
+KeyId = 3
+Shortcuts = [ NodePath("../../..") ]
+
+[node name="Lock3" type="Node" parent="Root/Lock2"]
+script = ExtResource( 1 )
+LockId = 3
+
+[node name="Boss" type="Node" parent="Root/Lock2/Lock3"]
+script = ExtResource( 1 )
+ChallengeType = 4

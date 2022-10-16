@@ -27,10 +27,10 @@ namespace RandomDungeons.DungeonLayouts
         public DungeonLayout WithRoomAt(Vector2i coords, DungeonTreeRoom room)
         {
             if (HasRoomAt(coords))
-                throw new Exception($"The coordinates {coords} already have a room");
+                throw new DungeonLayoutException($"The coordinates {coords} already have a room");
 
             if (IsPlaced(room))
-                throw new Exception("That room is already placed");
+                throw new DungeonLayoutException("That room is already placed");
 
             var clone = Clone();
             clone._coordsToRoom[coords] = room;

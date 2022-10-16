@@ -5,6 +5,7 @@ using RandomDungeons.Graphs;
 
 namespace RandomDungeons.Nodes.UI.Widgets.Minimap
 {
+    [Tool]
     public class Minimap : Node2D
     {
         private const float RoomSize = 5 * 32;

@@ -18,7 +18,7 @@ namespace RandomDungeons.DungeonLayouts
 
             bool theUniverseMakesSense = layout != null;
             if (!theUniverseMakesSense)
-                throw new Exception("There is no way to lay out all these rooms without overlap.");
+                throw new DungeonLayoutException("There is no way to lay out all these rooms without overlap.");
 
             return layout;
 

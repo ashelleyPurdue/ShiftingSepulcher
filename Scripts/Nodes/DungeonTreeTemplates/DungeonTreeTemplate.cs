@@ -3,12 +3,45 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using RandomDungeons.DungeonTrees;
+using RandomDungeons.DungeonLayouts;
+using RandomDungeons.Graphs;
+using RandomDungeons.Nodes.UI.Widgets.Minimap;
 
 namespace RandomDungeons.Nodes.TreeTemplates
 {
+    [Tool]
     public class DungeonTreeTemplate : Node
     {
+        [Export] public bool RefreshPreview
+        {
+            get => false;
+            set
+            {
+                RefreshPreviewInEditor();
+            }
+        }
+
         private DungeonTreeTemplateRoom _root => GetNode<DungeonTreeTemplateRoom>("Root");
+        private PackedScene _minimapPrefab => GD.Load<PackedScene>("res://Scenes/Prefabs/UI/Widgets/Minimap/Minimap.tscn");
+        private Minimap _minimapInEditor;
+
+        public void RefreshPreviewInEditor()
+        {
+            if (!Engine.EditorHint)
+                return;
+
+            if (_minimapInEditor == null)
+            {
+                _minimapInEditor = _minimapPrefab.Instance<Minimap>();
+                AddChild(_minimapInEditor);
+            }
+
+            var tree = ToDungeonTree(new Random(1337));
+            var layout = DungeonLayoutBuilder.LayoutFromTree(tree);
+            var graph = DungeonGraphBuilder.BuildFromLayout(layout);
+
+            _minimapInEditor.SetGraph(graph);
+        }
 
         public DungeonTreeRoom ToDungeonTree(Random rng)
         {

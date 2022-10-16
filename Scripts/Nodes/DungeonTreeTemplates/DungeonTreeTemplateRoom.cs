@@ -6,6 +6,7 @@ using RandomDungeons.DungeonTrees;
 
 namespace RandomDungeons.Nodes.TreeTemplates
 {
+    [Tool]
     public class DungeonTreeTemplateRoom : Node
     {
         [Export] public Graphs.ChallengeType ChallengeType;

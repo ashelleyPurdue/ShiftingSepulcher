@@ -4,6 +4,7 @@ using RandomDungeons.Utils;
 
 namespace RandomDungeons.Nodes.UI.Widgets.Minimap
 {
+    [Tool]
     public class DoorDisplay : Node2D
     {
         public void SetGraphDoor(IDungeonGraphDoor graphDoor)

@@ -5,6 +5,7 @@ using Godot;
 using RandomDungeons.DungeonTrees;
 using RandomDungeons.DungeonLayouts;
 using RandomDungeons.Graphs;
+using RandomDungeons.Nodes.TreeTemplates;
 using RandomDungeons.Nodes.DungeonRooms;
 using RandomDungeons.Nodes.UI;
 using RandomDungeons.Utils;
@@ -15,6 +16,7 @@ namespace RandomDungeons.PhysicalDungeons
     {
         private const float FadeTime = 0.25f;
 
+        private Node _treeTemplates => GetNode<Node>("%TreeTemplates");
         private DungeonRoomFactory _roomFactory => GetNode<DungeonRoomFactory>("%RoomFactory");
 
         private Dictionary<DungeonGraphRoom, IDungeonRoom> _graphRoomToRealRoom
@@ -28,12 +30,7 @@ namespace RandomDungeons.PhysicalDungeons
             // Generate a dungeon graph
             GD.Print(TitleScreen.ChosenSeed);
 
-            var tree = DungeonTreeGenerator.GenerateUsingRuns(
-                seed: TitleScreen.ChosenSeed,
-                minRunLength: 3,
-                maxRunLength: 5,
-                numRuns: 6
-            );
+            var tree = GenerateTree(TitleScreen.ChosenSeed);
             var layout = DungeonLayoutBuilder.LayoutFromTree(tree);
             var graph = DungeonGraphBuilder.BuildFromLayout(layout);
 
@@ -51,6 +48,32 @@ namespace RandomDungeons.PhysicalDungeons
 
             // Start in the starting room
             EnterRoom(graph.StartRoom);
+        }
+
+        private DungeonTreeRoom GenerateTree(int seed)
+        {
+            var rng = new System.Random(seed);
+
+            // Bias towards _not_ using a template.  Otherwise, templates will
+            // appear way too commonly
+            if (rng.Next(0, 4) > 0)
+            {
+                GD.Print("Generating a tree without using a template");
+                return DungeonTreeGenerator.GenerateUsingRuns(
+                    seed: seed,
+                    minRunLength: 3,
+                    maxRunLength: 5,
+                    numRuns: 6
+                );
+            }
+
+            var templateOptions = _treeTemplates
+                .GetChildren()
+                .Cast<DungeonTreeTemplate>();
+            var chosenTemplate = rng.PickFrom(templateOptions);
+
+            GD.Print($"Generating a tree using the {chosenTemplate.Name} template");
+            return chosenTemplate.ToDungeonTree(rng);
         }
 
         public override void _Process(float deltaTime)

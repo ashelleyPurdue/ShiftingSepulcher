@@ -151,6 +151,7 @@ namespace RandomDungeons.PhysicalDungeons
         private void StartFadingIn(IDungeonRoom room)
         {
             var node = room.Node;
+            SetNodePaused(node, false);
 
             if (node.GetParent() != this)
             {
@@ -166,6 +167,8 @@ namespace RandomDungeons.PhysicalDungeons
         {
             if (room == null)
                 return;
+
+            SetNodePaused(room.Node, true);
 
             // There can only be one room fading out at a time.
             // If there already is one, skip to the end of it so the next
@@ -194,6 +197,20 @@ namespace RandomDungeons.PhysicalDungeons
                 .First();
 
             camera.GlobalPosition = _activeRoom.Node.GlobalPosition;
+        }
+
+        private void SetNodePaused(Node node, bool paused)
+        {
+            node.SetProcess(!paused);
+            node.SetPhysicsProcess(!paused);
+            node.SetProcessInput(!paused);
+            node.SetProcessUnhandledInput(!paused);
+            node.SetProcessUnhandledKeyInput(!paused);
+
+            foreach (var child in node.GetChildren())
+            {
+                SetNodePaused((Node)child, paused);
+            }
         }
     }
 }

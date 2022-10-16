@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/Nodes/PhysicalDungeons/DungeonInstantiator.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Nodes/DungeonRooms/DungeonRoomFactory.cs" type="Script" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Audio/Music/DungeonMusic.ogg" type="AudioStream" id=7]
 [ext_resource path="res://Scenes/Prefabs/DungeonTreeTemplates/WackyShortcutStructure.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/Prefabs/DungeonTreeTemplates/ThreeLockHub.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scripts/Nodes/PhysicalDungeons/RoomTransitionManager.cs" type="Script" id=10]
 
 [node name="Node2D" type="Node2D"]
 
@@ -47,9 +48,14 @@ unique_name_in_owner = true
 
 [node name="ThreeLockHub" parent="DungeonInstantiator/TreeTemplates" instance=ExtResource( 9 )]
 
+[node name="RoomTransitionManager" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource( 10 )
+
 [node name="Player" parent="." instance=ExtResource( 3 )]
 
-[node name="MainCamera" type="Camera2D" parent="." groups=["Camera"]]
+[node name="Camera" type="Camera2D" parent="." groups=["Camera"]]
+unique_name_in_owner = true
 current = true
 smoothing_enabled = true
 

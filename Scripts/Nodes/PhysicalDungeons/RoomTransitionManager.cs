@@ -67,5 +67,19 @@ namespace RandomDungeons.PhysicalDungeons
 
             _camera.GlobalPosition = _activeRoom.Node.GlobalPosition;
         }
+
+        private void SetNodePaused(Node node, bool paused)
+        {
+            node.SetProcess(!paused);
+            node.SetPhysicsProcess(!paused);
+            node.SetProcessInput(!paused);
+            node.SetProcessUnhandledInput(!paused);
+            node.SetProcessUnhandledKeyInput(!paused);
+
+            foreach (var child in node.GetChildren())
+            {
+                SetNodePaused((Node)child, paused);
+            }
+        }
     }
 }

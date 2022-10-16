@@ -36,11 +36,32 @@ namespace RandomDungeons.Nodes.TreeTemplates
                 AddChild(_minimapInEditor);
             }
 
-            var tree = ToDungeonTree(new Random(1337));
-            var layout = DungeonLayoutBuilder.LayoutFromTree(tree);
-            var graph = DungeonGraphBuilder.BuildFromLayout(layout);
+            try
+            {
+                var tree = ToDungeonTree(new Random(1337));
+                var layout = DungeonLayoutBuilder.LayoutFromTree(tree);
+                var graph = DungeonGraphBuilder.BuildFromLayout(layout);
 
-            _minimapInEditor.SetGraph(graph);
+                _minimapInEditor.SetGraph(graph);
+            }
+            catch (DungeonGenerationException e)
+            {
+                GD.PrintErr(e);
+                CleanUpAfterError();
+            }
+            catch (Exception e)
+            {
+                GD.PrintErr("Unexpected exception trying to preview this tree:");
+                GD.PrintErr(e);
+                CleanUpAfterError();
+            }
+
+            void CleanUpAfterError()
+            {
+                RemoveChild(_minimapInEditor);
+                _minimapInEditor.QueueFree();
+                _minimapInEditor = null;
+            }
         }
 
         public DungeonTreeRoom ToDungeonTree(Random rng)
@@ -87,8 +108,27 @@ namespace RandomDungeons.Nodes.TreeTemplates
 
             foreach (var shortcutPath in roomNode.Shortcuts)
             {
-                var shortcutNode = roomNode.GetNode<DungeonTreeTemplateRoom>(shortcutPath);
-                var shortcutRoom = nodeToRoom[shortcutNode];
+                var shortcutNode = roomNode.GetNode(shortcutPath);
+
+                if (!IsAParentOf(shortcutNode))
+                {
+                    string msg =
+                        $"Shortcut target {shortcutNode.Name} is not a child " +
+                        $"of {Name}";
+
+                    throw new DungeonTreeException(msg);
+                }
+
+                if (!(shortcutNode is DungeonTreeTemplateRoom))
+                {
+                    string msg =
+                        $"Shortcut target {shortcutNode.Name} is a " +
+                        $"{shortcutNode.GetType()}, not a DungeonTreeTemplateRoom";
+
+                    throw new DungeonTreeException(msg);
+                }
+
+                var shortcutRoom = nodeToRoom[(DungeonTreeTemplateRoom)shortcutNode];
                 room.AddOutgoingShortcut(shortcutRoom);
             }
 

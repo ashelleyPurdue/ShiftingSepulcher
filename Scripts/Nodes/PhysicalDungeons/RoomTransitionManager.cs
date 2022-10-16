@@ -38,15 +38,16 @@ namespace RandomDungeons.PhysicalDungeons
             if (_activeRoom == null)
                 throw new Exception("How did you use a door?  There's no active room!");
 
-            DungeonGraphRoom nextGraphRoom = _realRoomToGraphRoom[_activeRoom];
+            DungeonGraphRoom nextGraphRoom = _realRoomToGraphRoom[_activeRoom]
+                .GetDoor(dir)
+                .Destination;
 
-            IDungeonRoom prevRoom = _activeRoom;
             IDungeonRoom nextRoom = _graphRoomToRealRoom[nextGraphRoom];
 
-            var prevDoorSpawn = prevRoom.GetDoorSpawn(dir);
+            var prevDoorSpawn = _activeRoom.GetDoorSpawn(dir);
             var nextDoorSpawn = nextRoom.GetDoorSpawn(dir.Opposite());
 
-            Vector2 nextRoomPos = prevDoorSpawn.GlobalPosition - nextDoorSpawn.GlobalPosition;
+            Vector2 nextRoomPos = prevDoorSpawn.GlobalPosition - nextDoorSpawn.Position;
             nextRoomPos += dir.ToVector2() * 32;
 
             EnterRoom(nextGraphRoom, nextRoomPos);

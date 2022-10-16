@@ -22,7 +22,7 @@ namespace RandomDungeons.DungeonTrees
         public void AddChallengeDoor(DungeonTreeRoom room)
         {
             if (room.Parent != null)
-                throw new Exception("That room already has a parent");
+                throw new DungeonTreeException("That room already has a parent");
 
             room.Parent = this;
 
@@ -34,7 +34,7 @@ namespace RandomDungeons.DungeonTrees
         public void AddLockedDoor(DungeonTreeRoom room, int keyId)
         {
             if (room.Parent != null)
-                throw new Exception("That room already has a parent");
+                throw new DungeonTreeException("That room already has a parent");
 
             room.Parent = this;
 

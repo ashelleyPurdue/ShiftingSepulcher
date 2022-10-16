@@ -111,13 +111,13 @@ namespace RandomDungeons.Graphs
         private void AddRock(Vector2i pos)
         {
             if (!IsInBounds(pos))
-                throw new Exception($"{pos} is illegal because it's out of bounds");
+                throw new SlidingIceGraphException($"{pos} is illegal because it's out of bounds");
             if (pos == StartPos)
-                throw new Exception($"{pos} is illegal because it's the start pos");
+                throw new SlidingIceGraphException($"{pos} is illegal because it's the start pos");
             if (pos == EndPos)
-                throw new Exception($"{pos} is illegal because it is the end pos");
+                throw new SlidingIceGraphException($"{pos} is illegal because it is the end pos");
             if (_criticalPathPositions.Contains(pos))
-                throw new Exception($"{pos} is illegal because it's in the critical path");
+                throw new SlidingIceGraphException($"{pos} is illegal because it's in the critical path");
 
             _rockPositions.Add(pos);
         }
@@ -251,5 +251,10 @@ namespace RandomDungeons.Graphs
         {
             return _rockPositions.Contains(pos);
         }
+    }
+
+    public class SlidingIceGraphException : DungeonGenerationException
+    {
+        public SlidingIceGraphException(string msg) : base(msg) {}
     }
 }

@@ -22,10 +22,6 @@ namespace RandomDungeons.PhysicalDungeons
         private void EnableWarp(bool enable)
         {
             GetNode<Area2D>("%WarpTrigger").Monitoring = enable;
-
-            // There's an invisible wall that exists while the warp trigger is
-            // disabled, to prevent the player from simply walking out of bounds.
-            GetNode<CollisionShape2D>("%WarpDisabledGuard").Disabled = enable;
         }
 
         // This signal is connected with the "deferred" flag, so it won't

@@ -28,7 +28,7 @@ namespace RandomDungeons.PhysicalDungeons
         {
             _graphRoomToRealRoom = graphRoomToRealRoom;
             _realRoomToGraphRoom = graphRoomToRealRoom.Invert();
-            
+
             foreach (var realRoom in _graphRoomToRealRoom.Values)
             {
                 realRoom.DoorUsed += OnDoorUsed;
@@ -41,7 +41,7 @@ namespace RandomDungeons.PhysicalDungeons
         {
             if (_prevRoom == null)
                 return;
-            
+
             _previousRoomHolder.RemoveChild(_prevRoom.Node);
             _prevRoom = null;
         }
@@ -79,7 +79,7 @@ namespace RandomDungeons.PhysicalDungeons
 
                 SetNodePaused(_prevRoom.Node, true);
             }
-            
+
             _activeRoom = _graphRoomToRealRoom[room];
             _activeRoom.Node.GlobalPosition = position;
 

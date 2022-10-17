@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scripts/Nodes/PhysicalDungeons/DoorWarp.cs" type="Script" id=1]
 
@@ -7,9 +7,6 @@ extents = Vector2( 96, 16 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 96, 16 )
-
-[sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 64, 16 )
 
 [node name="DoorWarp" type="Node2D"]
 script = ExtResource( 1 )
@@ -32,13 +29,6 @@ shape = SubResource( 1 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WarpEnableTrigger"]
 position = Vector2( 0, 16 )
 shape = SubResource( 2 )
-
-[node name="WarpDisabledGuard" type="StaticBody2D" parent="."]
-
-[node name="WarpDisabledGuard" type="CollisionShape2D" parent="WarpDisabledGuard"]
-unique_name_in_owner = true
-position = Vector2( 0, -16 )
-shape = SubResource( 3 )
 
 [connection signal="body_entered" from="WarpTrigger" to="." method="WarpTriggerBodyEntered" flags=3]
 [connection signal="body_entered" from="WarpEnableTrigger" to="." method="WarpEnableTriggerBodyEntered" flags=3]

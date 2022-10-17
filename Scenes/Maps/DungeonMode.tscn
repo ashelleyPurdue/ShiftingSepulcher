@@ -52,6 +52,12 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 script = ExtResource( 10 )
 
+[node name="ActiveRoomHolder" type="Node2D" parent="RoomTransitionManager"]
+unique_name_in_owner = true
+
+[node name="PreviousRoomHolder" type="Node2D" parent="RoomTransitionManager"]
+unique_name_in_owner = true
+
 [node name="Player" parent="." instance=ExtResource( 3 )]
 
 [node name="Camera" type="Camera2D" parent="." groups=["Camera"]]

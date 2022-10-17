@@ -10,6 +10,7 @@ namespace RandomDungeons.PhysicalDungeons
 {
     public class RoomTransitionManager : Node
     {
+        private AnimationPlayer _transitionAnimator => GetNode<AnimationPlayer>("%RoomTransitionAnimator");
         private Node2D _activeRoomHolder => GetNode<Node2D>("%ActiveRoomHolder");
         private Node2D _previousRoomHolder => GetNode<Node2D>("%PreviousRoomHolder");
         private Camera2D _camera => GetNode<Camera2D>("%Camera");
@@ -58,7 +59,6 @@ namespace RandomDungeons.PhysicalDungeons
 
         private void EnterRoom(DungeonGraphRoom room, Vector2 position)
         {
-            // TODO: Start the animation fading the previous room out
             // TODO: Deal with edge cases
 
             if (_prevRoom != null)
@@ -83,6 +83,7 @@ namespace RandomDungeons.PhysicalDungeons
             _activeRoomHolder.AddChild(_activeRoom.Node);
 
             _camera.GlobalPosition = _activeRoom.Node.GlobalPosition;
+            _transitionAnimator.Play("Fade");
         }
 
         private void SetNodePaused(Node node, bool paused)

@@ -13,6 +13,7 @@
 
 [sub_resource type="Animation" id=1]
 resource_name = "Fade"
+length = 0.3
 tracks/0/type = "value"
 tracks/0/path = NodePath("ActiveRoomHolder:modulate")
 tracks/0/interp = 1

@@ -39,6 +39,8 @@ namespace RandomDungeons.PhysicalDungeons
 
         public void RemovePreviousRoom()
         {
+            _transitionAnimator.Stop();
+
             if (_prevRoom == null)
                 return;
 

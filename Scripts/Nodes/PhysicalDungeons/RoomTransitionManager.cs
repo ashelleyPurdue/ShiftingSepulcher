@@ -37,6 +37,15 @@ namespace RandomDungeons.PhysicalDungeons
             EnterRoom(graph.StartRoom, Vector2.Zero);
         }
 
+        public void RemovePreviousRoom()
+        {
+            if (_prevRoom == null)
+                return;
+            
+            _previousRoomHolder.RemoveChild(_prevRoom.Node);
+            _prevRoom = null;
+        }
+
         private void OnDoorUsed(CardinalDirection dir)
         {
             if (_activeRoom == null)
@@ -60,12 +69,7 @@ namespace RandomDungeons.PhysicalDungeons
         private void EnterRoom(DungeonGraphRoom room, Vector2 position)
         {
             // TODO: Deal with edge cases
-
-            if (_prevRoom != null)
-            {
-                _previousRoomHolder.RemoveChild(_prevRoom.Node);
-                _prevRoom = null;
-            }
+            RemovePreviousRoom();
 
             if (_activeRoom != null)
             {

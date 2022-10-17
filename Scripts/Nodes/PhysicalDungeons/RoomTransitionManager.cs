@@ -5,6 +5,7 @@ using Godot;
 using RandomDungeons.Graphs;
 using RandomDungeons.Nodes.DungeonRooms;
 using RandomDungeons.Utils;
+using RandomDungeons.Services;
 
 namespace RandomDungeons.PhysicalDungeons
 {
@@ -17,6 +18,7 @@ namespace RandomDungeons.PhysicalDungeons
 
         private Dictionary<DungeonGraphRoom, IDungeonRoom> _graphRoomToRealRoom;
         private Dictionary<IDungeonRoom, DungeonGraphRoom> _realRoomToGraphRoom;
+        private DungeonGraphRoom _startRoom;
 
         private IDungeonRoom _activeRoom;
         private IDungeonRoom _prevRoom;
@@ -26,6 +28,7 @@ namespace RandomDungeons.PhysicalDungeons
             Dictionary<DungeonGraphRoom, IDungeonRoom> graphRoomToRealRoom
         )
         {
+            _startRoom = graph.StartRoom;
             _graphRoomToRealRoom = graphRoomToRealRoom;
             _realRoomToGraphRoom = graphRoomToRealRoom.Invert();
 
@@ -34,7 +37,23 @@ namespace RandomDungeons.PhysicalDungeons
                 realRoom.DoorUsed += OnDoorUsed;
             }
 
-            EnterRoom(graph.StartRoom, Vector2.Zero);
+            RespawnPlayer();
+        }
+
+        public void RespawnPlayer()
+        {
+            var player = GetTree().FindPlayer();
+            player.GlobalPosition = Vector2.Zero;
+            PlayerInventory.Health = 3;
+
+            EnterRoom(_startRoom, Vector2.Zero);
+        }
+
+        public override void _Process(float delta)
+        {
+            // HACK: Respawn when the R button is pressed
+            if (Input.IsKeyPressed((int)KeyList.R))
+                RespawnPlayer();
         }
 
         public void RemovePreviousRoom()

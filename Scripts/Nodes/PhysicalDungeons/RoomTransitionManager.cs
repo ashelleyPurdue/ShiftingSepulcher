@@ -28,6 +28,8 @@ namespace RandomDungeons.PhysicalDungeons
             Dictionary<DungeonGraphRoom, IDungeonRoom> graphRoomToRealRoom
         )
         {
+            PlayerInventory.Reset();
+
             _startRoom = graph.StartRoom;
             _graphRoomToRealRoom = graphRoomToRealRoom;
             _realRoomToGraphRoom = graphRoomToRealRoom.Invert();

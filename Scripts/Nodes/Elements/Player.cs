@@ -37,8 +37,6 @@ namespace RandomDungeons.Nodes.Elements
 
         public override void _Ready()
         {
-            PlayerInventory.Reset();
-
             DeathAnimation.AnimationTarget = _visuals;
             DeathAnimation.AnimationEnded += () => EmitSignal(nameof(DeathAnimationFinished));
 

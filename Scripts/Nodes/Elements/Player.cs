@@ -37,9 +37,6 @@ namespace RandomDungeons.Nodes.Elements
 
         public override void _Ready()
         {
-            DeathAnimation.AnimationTarget = _visuals;
-            DeathAnimation.AnimationEnded += () => EmitSignal(nameof(DeathAnimationFinished));
-
             _sm = new StateMachine(this);
             _sm.ChangeState(Walking);
         }
@@ -54,12 +51,13 @@ namespace RandomDungeons.Nodes.Elements
             // Die when out of health
             if (PlayerInventory.Health <= 0 && !_isDead)
             {
-                _isDead = true;
-                _hurtFlasher.Cancel();
-                _velocity = Vector2.Zero;
-
-                _sm.ChangeState(DeathAnimation);
+                _sm.ChangeState(Dead);
             }
+        }
+
+        public void EmitDeathAnimationFinished()
+        {
+            EmitSignal(nameof(DeathAnimationFinished));
         }
 
         /// <summary>
@@ -98,6 +96,11 @@ namespace RandomDungeons.Nodes.Elements
         private readonly IState Walking = new WalkingState();
         private class WalkingState : State<Player>
         {
+            public override void _StateEntered()
+            {
+                Owner._animator.CurrentAnimation = "WalkAnimation";
+            }
+
             public override void _Process(float delta)
             {
                 if (!Owner.ControlsEnabled)
@@ -162,6 +165,18 @@ namespace RandomDungeons.Nodes.Elements
             }
         }
 
-        private readonly DeathAnimationState DeathAnimation = new DeathAnimationState();
+        private readonly IState Dead = new DeadState();
+        private class DeadState : State<Player>
+        {
+            public override void _StateEntered()
+            {
+                Owner._isDead = true;
+                Owner._hurtFlasher.Cancel();
+                Owner._velocity = Vector2.Zero;
+
+                Owner._animator.PlaybackSpeed = 1;
+                Owner._animator.Play("Die");
+            }
+        }
     }
 }

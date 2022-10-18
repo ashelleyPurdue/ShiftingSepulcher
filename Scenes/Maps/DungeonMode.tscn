@@ -82,6 +82,23 @@ tracks/1/keys = {
 
 [node name="Node2D" type="Node2D"]
 
+[node name="RoomTransitionManager" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource( 10 )
+
+[node name="RoomTransitionAnimator" type="AnimationPlayer" parent="RoomTransitionManager"]
+unique_name_in_owner = true
+anims/Fade = SubResource( 1 )
+anims/RESET = SubResource( 2 )
+
+[node name="ActiveRoomHolder" type="Node2D" parent="RoomTransitionManager"]
+unique_name_in_owner = true
+
+[node name="PreviousRoomHolder" type="Node2D" parent="RoomTransitionManager"]
+unique_name_in_owner = true
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+
 [node name="DungeonInstantiator" type="Node2D" parent="."]
 script = ExtResource( 1 )
 
@@ -116,23 +133,6 @@ unique_name_in_owner = true
 [node name="WackyShortcutStructure" parent="DungeonInstantiator/TreeTemplates" instance=ExtResource( 8 )]
 
 [node name="ThreeLockHub" parent="DungeonInstantiator/TreeTemplates" instance=ExtResource( 9 )]
-
-[node name="RoomTransitionManager" type="Node2D" parent="."]
-unique_name_in_owner = true
-script = ExtResource( 10 )
-
-[node name="RoomTransitionAnimator" type="AnimationPlayer" parent="RoomTransitionManager"]
-unique_name_in_owner = true
-anims/Fade = SubResource( 1 )
-anims/RESET = SubResource( 2 )
-
-[node name="ActiveRoomHolder" type="Node2D" parent="RoomTransitionManager"]
-unique_name_in_owner = true
-
-[node name="PreviousRoomHolder" type="Node2D" parent="RoomTransitionManager"]
-unique_name_in_owner = true
-
-[node name="Player" parent="." instance=ExtResource( 3 )]
 
 [node name="Camera" type="Camera2D" parent="." groups=["Camera"]]
 unique_name_in_owner = true

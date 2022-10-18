@@ -38,7 +38,7 @@ namespace RandomDungeons.Nodes.Elements
         public override void _Ready()
         {
             _sm = new StateMachine(this);
-            _sm.ChangeState(Walking);
+            _sm.ChangeState(Spawning);
         }
 
         public override void _PhysicsProcess(float delta)
@@ -74,7 +74,7 @@ namespace RandomDungeons.Nodes.Elements
             _visuals.Modulate = Colors.White;
 
             _velocity = Vector2.Zero;
-            _sm.ChangeState(Walking);
+            _sm.ChangeState(Spawning);
         }
 
         public void OnTookDamage(HitBox hitBox)
@@ -176,6 +176,22 @@ namespace RandomDungeons.Nodes.Elements
 
                 Owner._animator.PlaybackSpeed = 1;
                 Owner._animator.Play("Die");
+            }
+        }
+
+        private readonly IState Spawning = new SpawningState();
+        private class SpawningState : State<Player>
+        {
+            public override void _StateEntered()
+            {
+                Owner._animator.PlaybackSpeed = 1;
+                Owner._animator.Play("Spawn");
+            }
+
+            public override void _Process(float delta)
+            {
+                if (!Owner._animator.IsPlaying())
+                    ChangeState(Owner.Walking);
             }
         }
     }

@@ -44,7 +44,7 @@ namespace RandomDungeons.PhysicalDungeons
         {
             var player = GetTree().FindPlayer();
             player.GlobalPosition = Vector2.Zero;
-            PlayerInventory.Health = 3;
+            player.Resurrect();
 
             EnterRoom(_startRoom, Vector2.Zero);
         }

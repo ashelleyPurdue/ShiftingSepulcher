@@ -70,7 +70,9 @@ namespace RandomDungeons.PhysicalDungeons
 
         private void EnterRoom(DungeonGraphRoom room, Vector2 position)
         {
-            // TODO: Deal with edge cases
+            if (_activeRoom == _graphRoomToRealRoom[room])
+                return;
+
             RemovePreviousRoom();
 
             if (_activeRoom != null)

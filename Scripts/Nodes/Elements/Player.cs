@@ -62,6 +62,23 @@ namespace RandomDungeons.Nodes.Elements
             }
         }
 
+        /// <summary>
+        /// Resurrects the player on-the-spot, if they're dead.
+        /// This does NOT move the player back to their spawn point; the caller
+        /// is responsible for that.
+        /// </summary>
+        public void Resurrect()
+        {
+            _isDead = false;
+            PlayerInventory.Health = 3;
+
+            _visuals.Scale = Vector2.One;
+            _visuals.Modulate = Colors.White;
+
+            _velocity = Vector2.Zero;
+            _sm.ChangeState(Walking);
+        }
+
         public void OnTookDamage(HitBox hitBox)
         {
             if (_isDead)

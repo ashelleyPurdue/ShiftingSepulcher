@@ -51,10 +51,15 @@ namespace RandomDungeons.PhysicalDungeons
 
         public override void _Process(float delta)
         {
-            // HACK: Respawn when the R button is pressed
-            if (Input.IsKeyPressed((int)KeyList.R))
-                RespawnPlayer();
+            // HACK: Kill the player when a button is pressed
+            bool isPressed = Input.IsKeyPressed((int)KeyList.R);
+
+            if (isPressed && !_wasPressed)
+                PlayerInventory.Health = 0;
+
+            _wasPressed = isPressed;
         }
+        private bool _wasPressed = false;
 
         public void RemovePreviousRoom()
         {

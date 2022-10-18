@@ -68,30 +68,46 @@ namespace RandomDungeons.PhysicalDungeons
             EnterRoom(nextGraphRoom, nextRoomPos);
         }
 
-        private void EnterRoom(DungeonGraphRoom room, Vector2 position)
+        private void EnterRoom(DungeonGraphRoom graphRoom, Vector2 position)
         {
-            if (_activeRoom == _graphRoomToRealRoom[room])
+            IDungeonRoom room = _graphRoomToRealRoom[graphRoom];
+
+            if (_activeRoom == room)
                 return;
 
             RemovePreviousRoom();
+            SetPreviousRoom(_activeRoom);
+            SetActiveRoom(room);
 
-            if (_activeRoom != null)
-            {
-                _activeRoomHolder.RemoveChild(_activeRoom.Node);
-                _previousRoomHolder.AddChild(_activeRoom.Node);
-                _prevRoom = _activeRoom;
-
-                _prevRoom.Node.SetPaused(true);
-            }
-
-            _activeRoom = _graphRoomToRealRoom[room];
-            _activeRoom.Node.GlobalPosition = position;
-
-            _activeRoom.Node.SetPaused(false);
-            _activeRoomHolder.AddChild(_activeRoom.Node);
-
-            _camera.GlobalPosition = _activeRoom.Node.GlobalPosition;
+            room.Node.GlobalPosition = position;
+            _camera.GlobalPosition = position;
             _transitionAnimator.Play("Fade");
+        }
+
+        private void SetPreviousRoom(IDungeonRoom room)
+        {
+            if (_prevRoom == room)
+                return;
+
+            ReparentNode(room.Node, _previousRoomHolder);
+            room.Node.SetPaused(true);
+            _prevRoom = room;
+        }
+
+        private void SetActiveRoom(IDungeonRoom room)
+        {
+            if (_activeRoom == room)
+                return;
+
+            ReparentNode(room.Node, _activeRoomHolder);
+            room.Node.SetPaused(false);
+            _activeRoom = room;
+        }
+
+        private void ReparentNode(Node node, Node newParent)
+        {
+            node.GetParent()?.RemoveChild(node);
+            newParent.AddChild(node);
         }
     }
 }

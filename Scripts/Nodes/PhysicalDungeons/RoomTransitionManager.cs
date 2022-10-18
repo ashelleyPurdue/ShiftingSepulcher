@@ -81,31 +81,17 @@ namespace RandomDungeons.PhysicalDungeons
                 _previousRoomHolder.AddChild(_activeRoom.Node);
                 _prevRoom = _activeRoom;
 
-                SetNodePaused(_prevRoom.Node, true);
+                _prevRoom.Node.SetPaused(true);
             }
 
             _activeRoom = _graphRoomToRealRoom[room];
             _activeRoom.Node.GlobalPosition = position;
 
-            SetNodePaused(_activeRoom.Node, false);
+            _activeRoom.Node.SetPaused(false);
             _activeRoomHolder.AddChild(_activeRoom.Node);
 
             _camera.GlobalPosition = _activeRoom.Node.GlobalPosition;
             _transitionAnimator.Play("Fade");
-        }
-
-        private void SetNodePaused(Node node, bool paused)
-        {
-            node.SetProcess(!paused);
-            node.SetPhysicsProcess(!paused);
-            node.SetProcessInput(!paused);
-            node.SetProcessUnhandledInput(!paused);
-            node.SetProcessUnhandledKeyInput(!paused);
-
-            foreach (var child in node.GetChildren())
-            {
-                SetNodePaused((Node)child, paused);
-            }
         }
     }
 }

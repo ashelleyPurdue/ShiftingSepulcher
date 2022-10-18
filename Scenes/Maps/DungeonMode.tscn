@@ -146,3 +146,5 @@ smoothing_enabled = true
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
 autoplay = true
+
+[connection signal="DeathAnimationFinished" from="Player" to="RoomTransitionManager" method="RespawnPlayer"]

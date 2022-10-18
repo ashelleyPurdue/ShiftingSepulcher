@@ -15,7 +15,7 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         [Export] public float TileThrowSpeed = 32 * 19;
         [Export] public PackedScene TilePrefab;
 
-        private Node2D _target => GetTree().FindPlayer();
+        private Node2D _target;
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
         private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
 
@@ -27,6 +27,11 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         private const float MinSpeedForCollisionDamage = 90;
 
         private bool _isDead = false;
+
+        public override void _Ready()
+        {
+            _target = GetTree().FindPlayer();
+        }
 
         public override void _PhysicsProcess(float delta)
         {

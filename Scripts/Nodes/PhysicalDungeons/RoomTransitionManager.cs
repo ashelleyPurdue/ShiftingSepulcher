@@ -5,6 +5,7 @@ using Godot;
 using RandomDungeons.Graphs;
 using RandomDungeons.Nodes.DungeonRooms;
 using RandomDungeons.Utils;
+using RandomDungeons.Services;
 
 namespace RandomDungeons.PhysicalDungeons
 {
@@ -17,6 +18,7 @@ namespace RandomDungeons.PhysicalDungeons
 
         private Dictionary<DungeonGraphRoom, IDungeonRoom> _graphRoomToRealRoom;
         private Dictionary<IDungeonRoom, DungeonGraphRoom> _realRoomToGraphRoom;
+        private DungeonGraphRoom _startRoom;
 
         private IDungeonRoom _activeRoom;
         private IDungeonRoom _prevRoom;
@@ -26,6 +28,9 @@ namespace RandomDungeons.PhysicalDungeons
             Dictionary<DungeonGraphRoom, IDungeonRoom> graphRoomToRealRoom
         )
         {
+            PlayerInventory.Reset();
+
+            _startRoom = graph.StartRoom;
             _graphRoomToRealRoom = graphRoomToRealRoom;
             _realRoomToGraphRoom = graphRoomToRealRoom.Invert();
 
@@ -34,8 +39,29 @@ namespace RandomDungeons.PhysicalDungeons
                 realRoom.DoorUsed += OnDoorUsed;
             }
 
-            EnterRoom(graph.StartRoom, Vector2.Zero);
+            RespawnPlayer();
         }
+
+        public void RespawnPlayer()
+        {
+            var player = GetTree().FindPlayer();
+            player.GlobalPosition = Vector2.Zero;
+            player.Resurrect();
+
+            EnterRoom(_startRoom, Vector2.Zero);
+        }
+
+        public override void _Process(float delta)
+        {
+            // HACK: Kill the player when a button is pressed
+            bool isPressed = Input.IsKeyPressed((int)KeyList.R);
+
+            if (isPressed && !_wasPressed)
+                PlayerInventory.Health = 0;
+
+            _wasPressed = isPressed;
+        }
+        private bool _wasPressed = false;
 
         public void RemovePreviousRoom()
         {
@@ -68,42 +94,46 @@ namespace RandomDungeons.PhysicalDungeons
             EnterRoom(nextGraphRoom, nextRoomPos);
         }
 
-        private void EnterRoom(DungeonGraphRoom room, Vector2 position)
+        private void EnterRoom(DungeonGraphRoom graphRoom, Vector2 position)
         {
-            // TODO: Deal with edge cases
+            IDungeonRoom room = _graphRoomToRealRoom[graphRoom];
+
+            if (_activeRoom == room)
+                return;
+
             RemovePreviousRoom();
+            SetPreviousRoom(_activeRoom);
+            SetActiveRoom(room);
 
-            if (_activeRoom != null)
-            {
-                _activeRoomHolder.RemoveChild(_activeRoom.Node);
-                _previousRoomHolder.AddChild(_activeRoom.Node);
-                _prevRoom = _activeRoom;
-
-                SetNodePaused(_prevRoom.Node, true);
-            }
-
-            _activeRoom = _graphRoomToRealRoom[room];
-            _activeRoom.Node.GlobalPosition = position;
-
-            SetNodePaused(_activeRoom.Node, false);
-            _activeRoomHolder.AddChild(_activeRoom.Node);
-
-            _camera.GlobalPosition = _activeRoom.Node.GlobalPosition;
+            room.Node.GlobalPosition = position;
+            _camera.GlobalPosition = position;
             _transitionAnimator.Play("Fade");
         }
 
-        private void SetNodePaused(Node node, bool paused)
+        private void SetPreviousRoom(IDungeonRoom room)
         {
-            node.SetProcess(!paused);
-            node.SetPhysicsProcess(!paused);
-            node.SetProcessInput(!paused);
-            node.SetProcessUnhandledInput(!paused);
-            node.SetProcessUnhandledKeyInput(!paused);
+            if (_prevRoom == room)
+                return;
 
-            foreach (var child in node.GetChildren())
-            {
-                SetNodePaused((Node)child, paused);
-            }
+            ReparentNode(room.Node, _previousRoomHolder);
+            room.Node.SetPaused(true);
+            _prevRoom = room;
+        }
+
+        private void SetActiveRoom(IDungeonRoom room)
+        {
+            if (_activeRoom == room)
+                return;
+
+            ReparentNode(room.Node, _activeRoomHolder);
+            room.Node.SetPaused(false);
+            _activeRoom = room;
+        }
+
+        private void ReparentNode(Node node, Node newParent)
+        {
+            node.GetParent()?.RemoveChild(node);
+            newParent.AddChild(node);
         }
     }
 }

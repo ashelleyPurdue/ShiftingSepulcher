@@ -7,12 +7,17 @@ namespace RandomDungeons.Nodes.Elements.Projectiles
 {
     public class TilemancerTile : KinematicBody2D
     {
-        private Node2D _target => GetTree().FindPlayer();
+        private Node2D _target;
         private CollisionShape2D _collider => GetNode<CollisionShape2D>("%Collider");
         private HitBox _hitBox => GetNode<HitBox>("%HitBox");
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
 
         private Vector2 _velocity;
+
+        public override void _Ready()
+        {
+            _target = GetTree().FindPlayer();
+        }
 
         public override void _PhysicsProcess(float delta)
         {

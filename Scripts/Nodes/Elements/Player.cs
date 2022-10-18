@@ -14,6 +14,8 @@ namespace RandomDungeons.Nodes.Elements
         public const float WalkSpeed = 283;
         public const float WalkAccel = WalkSpeed / 0.125f;
 
+        [Signal] public delegate void DeathAnimationFinished();
+
         /// <summary>
         /// Set this to false during cutscenes, dialog, etc. to prevent the
         /// player from doing stuff.
@@ -35,13 +37,8 @@ namespace RandomDungeons.Nodes.Elements
 
         public override void _Ready()
         {
-            PlayerInventory.Reset();
-
-            DeathAnimation.AnimationTarget = _visuals;
-            DeathAnimation.AnimationEnded += () => _sm.ChangeState(AfterDeathAnimation);
-
             _sm = new StateMachine(this);
-            _sm.ChangeState(Walking);
+            _sm.ChangeState(Spawning);
         }
 
         public override void _PhysicsProcess(float delta)
@@ -54,12 +51,30 @@ namespace RandomDungeons.Nodes.Elements
             // Die when out of health
             if (PlayerInventory.Health <= 0 && !_isDead)
             {
-                _isDead = true;
-                _hurtFlasher.Cancel();
-                _velocity = Vector2.Zero;
-
-                _sm.ChangeState(DeathAnimation);
+                _sm.ChangeState(Dead);
             }
+        }
+
+        public void EmitDeathAnimationFinished()
+        {
+            EmitSignal(nameof(DeathAnimationFinished));
+        }
+
+        /// <summary>
+        /// Resurrects the player on-the-spot, if they're dead.
+        /// This does NOT move the player back to their spawn point; the caller
+        /// is responsible for that.
+        /// </summary>
+        public void Resurrect()
+        {
+            _isDead = false;
+            PlayerInventory.Health = 3;
+
+            _visuals.Scale = Vector2.One;
+            _visuals.Modulate = Colors.White;
+
+            _velocity = Vector2.Zero;
+            _sm.ChangeState(Spawning);
         }
 
         public void OnTookDamage(HitBox hitBox)
@@ -81,6 +96,11 @@ namespace RandomDungeons.Nodes.Elements
         private readonly IState Walking = new WalkingState();
         private class WalkingState : State<Player>
         {
+            public override void _StateEntered()
+            {
+                Owner._animator.CurrentAnimation = "WalkAnimation";
+            }
+
             public override void _Process(float delta)
             {
                 if (!Owner.ControlsEnabled)
@@ -145,32 +165,34 @@ namespace RandomDungeons.Nodes.Elements
             }
         }
 
-        private readonly IState AfterDeathAnimation = new AfterDeathAnimationState();
-        private class AfterDeathAnimationState : State<Player>
+        private readonly IState Dead = new DeadState();
+        private class DeadState : State<Player>
         {
-            private const float Duration = 2;
-            private float _timer;
-
             public override void _StateEntered()
             {
-                _timer = Duration;
+                Owner._isDead = true;
+                Owner._hurtFlasher.Cancel();
+                Owner._velocity = Vector2.Zero;
+
+                Owner._animator.PlaybackSpeed = 1;
+                Owner._animator.Play("Die");
+            }
+        }
+
+        private readonly IState Spawning = new SpawningState();
+        private class SpawningState : State<Player>
+        {
+            public override void _StateEntered()
+            {
+                Owner._animator.PlaybackSpeed = 1;
+                Owner._animator.Play("Spawn");
             }
 
             public override void _Process(float delta)
             {
-                // Hang out for a little bit before going back to the title
-                // screen
-                _timer -= delta;
-
-                if (_timer < 0)
-                {
-                    // TODO: Respawn the player in the starting room, instead
-                    // of taking them back to the title screen
-                    Owner.GetTree().ChangeScene("res://Scenes/Maps/TitleScreen.tscn");
-                }
+                if (!Owner._animator.IsPlaying())
+                    ChangeState(Owner.Walking);
             }
         }
-
-        private readonly DeathAnimationState DeathAnimation = new DeathAnimationState();
     }
 }

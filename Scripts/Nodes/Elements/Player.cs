@@ -14,6 +14,8 @@ namespace RandomDungeons.Nodes.Elements
         public const float WalkSpeed = 283;
         public const float WalkAccel = WalkSpeed / 0.125f;
 
+        [Signal] public delegate void DeathAnimationFinished();
+
         /// <summary>
         /// Set this to false during cutscenes, dialog, etc. to prevent the
         /// player from doing stuff.
@@ -38,7 +40,7 @@ namespace RandomDungeons.Nodes.Elements
             PlayerInventory.Reset();
 
             DeathAnimation.AnimationTarget = _visuals;
-            DeathAnimation.AnimationEnded += () => _sm.ChangeState(AfterDeathAnimation);
+            DeathAnimation.AnimationEnded += () => EmitSignal(nameof(DeathAnimationFinished));
 
             _sm = new StateMachine(this);
             _sm.ChangeState(Walking);
@@ -159,32 +161,6 @@ namespace RandomDungeons.Nodes.Elements
 
                 if (!Owner._sword.IsSwinging)
                     ChangeState(Owner.Walking);
-            }
-        }
-
-        private readonly IState AfterDeathAnimation = new AfterDeathAnimationState();
-        private class AfterDeathAnimationState : State<Player>
-        {
-            private const float Duration = 2;
-            private float _timer;
-
-            public override void _StateEntered()
-            {
-                _timer = Duration;
-            }
-
-            public override void _Process(float delta)
-            {
-                // Hang out for a little bit before going back to the title
-                // screen
-                _timer -= delta;
-
-                if (_timer < 0)
-                {
-                    // TODO: Respawn the player in the starting room, instead
-                    // of taking them back to the title screen
-                    Owner.GetTree().ChangeScene("res://Scenes/Maps/TitleScreen.tscn");
-                }
             }
         }
 

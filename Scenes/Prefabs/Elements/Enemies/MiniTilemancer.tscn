@@ -1,17 +1,18 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scripts/Nodes/Components/HitBox.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Nodes/Components/HurtBox.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/Nodes/Elements/Enemies/MiniTilemancer.cs" type="Script" id=3]
 [ext_resource path="res://Scripts/Nodes/Components/HurtFlasher.cs" type="Script" id=4]
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/TilemancerTile.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scripts/Nodes/Elements/Enemies/EnemyBody.cs" type="Script" id=6]
 
 [sub_resource type="Animation" id=4]
 resource_name = "Cycle"
 length = 3.0
 loop = true
 tracks/0/type = "method"
-tracks/0/path = NodePath(".")
+tracks/0/path = NodePath("./AI")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -28,7 +29,7 @@ tracks/0/keys = {
 } ]
 }
 tracks/1/type = "method"
-tracks/1/path = NodePath(".")
+tracks/1/path = NodePath("./AI")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -125,6 +126,10 @@ radius = 16.0
 
 [node name="MiniTilemancer" type="KinematicBody2D"]
 collision_layer = 0
+script = ExtResource( 6 )
+Health = 2
+
+[node name="AI" type="Node" parent="."]
 script = ExtResource( 3 )
 TilePrefab = ExtResource( 5 )
 
@@ -139,7 +144,6 @@ anims/RESET = SubResource( 6 )
 shape = SubResource( 1 )
 
 [node name="HitBox" type="Area2D" parent="."]
-unique_name_in_owner = true
 script = ExtResource( 1 )
 IgnoredHurtBoxes = [ NodePath("../HurtBox") ]
 
@@ -147,14 +151,12 @@ IgnoredHurtBoxes = [ NodePath("../HurtBox") ]
 shape = SubResource( 2 )
 
 [node name="HurtBox" type="Area2D" parent="."]
-unique_name_in_owner = true
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 shape = SubResource( 3 )
 
 [node name="Visuals" type="Node2D" parent="."]
-unique_name_in_owner = true
 
 [node name="Offset" type="Node2D" parent="Visuals"]
 position = Vector2( -3, -16 )
@@ -199,4 +201,5 @@ unique_name_in_owner = true
 script = ExtResource( 4 )
 VisualsPath = NodePath("../Visuals")
 
+[connection signal="Dead" from="." to="AI" method="OnDead"]
 [connection signal="TookDamage" from="HurtBox" to="." method="OnTookDamage"]

@@ -1,13 +1,11 @@
 using Godot;
-using RandomDungeons.Nodes.Components;
 using RandomDungeons.Nodes.Elements.Projectiles;
 using RandomDungeons.Utils;
 
 namespace RandomDungeons.Nodes.Elements.Enemies
 {
-    public class MiniTilemancer : KinematicBody2D
+    public class MiniTilemancer : Node
     {
-        [Export] public int Health = 2;
         [Export] public float TileSpawnRadius = 32 * 2;
         [Export] public float WanderSpeed = 32;
         [Export] public float MinWanderDuration = 0.25f;
@@ -16,60 +14,22 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         [Export] public PackedScene TilePrefab;
 
         private Node2D _target;
+
+        private EnemyBody _body => this.FindAncestor<EnemyBody>();
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
-        private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
 
         private TilemancerTile _currentTile = null;
-
-        private Vector2 _walkVelocity;
-        private Vector2 _knockbackVelocity;
-        private const float KnockbackFriction = 500;
-        private const float MinSpeedForCollisionDamage = 90;
-
-        private bool _isDead = false;
 
         public override void _Ready()
         {
             _target = GetTree().FindPlayer();
         }
 
-        public override void _PhysicsProcess(float delta)
-        {
-            // Move
-            Vector2 prevKnockbackVel = _knockbackVelocity;
-            Vector2 totalVelocity = _walkVelocity + _knockbackVelocity;
-            totalVelocity = MoveAndSlide(totalVelocity);
-            _knockbackVelocity = totalVelocity - _walkVelocity;
-            _knockbackVelocity = _knockbackVelocity.MoveToward(
-                Vector2.Zero,
-                KnockbackFriction * delta
-            );
-
-            // Take damage upon hitting a wall too hard
-            bool hitWall = GetSlideCount() > 0;
-            bool fastEnough = prevKnockbackVel.Length() > MinSpeedForCollisionDamage;
-            if (hitWall && fastEnough)
-            {
-                Health--;
-                _hurtFlasher.Flash();
-            }
-
-            if (Health <= 0 && !_isDead)
-                Die();
-        }
-
-        public void OnTookDamage(HitBox hitBox)
-        {
-            Health -= hitBox.Damage;
-            _knockbackVelocity = hitBox.GetKnockbackVelocity(this, KnockbackFriction);
-            _hurtFlasher.Flash();
-        }
-
         public void StartWandering()
         {
             // Choose a random direction to walk in
             float angle = Mathf.Deg2Rad(GD.Randf() * 360);
-            _walkVelocity = WanderSpeed * new Vector2(
+            _body.WalkVelocity = WanderSpeed * new Vector2(
                 Mathf.Cos(angle),
                 Mathf.Sin(angle)
             );
@@ -87,7 +47,7 @@ namespace RandomDungeons.Nodes.Elements.Enemies
 
         public void StopWandering()
         {
-            _walkVelocity = Vector2.Zero;
+            _body.WalkVelocity = Vector2.Zero;
             _animator.PlaybackSpeed = 1;
         }
 
@@ -101,7 +61,7 @@ namespace RandomDungeons.Nodes.Elements.Enemies
             }
 
             _currentTile = TilePrefab.Instance<TilemancerTile>();
-            GetParent().AddChild(_currentTile);
+            _body.GetParent().AddChild(_currentTile);
             _currentTile.GlobalPosition = RandomTileSpawnPos();
         }
 
@@ -119,22 +79,20 @@ namespace RandomDungeons.Nodes.Elements.Enemies
             _currentTile = null;
         }
 
-        private void Die()
+        public void OnDead()
         {
             StopWandering();
-            _knockbackVelocity = Vector2.Zero;
+            _body.KnockbackVelocity = Vector2.Zero;
 
             if (IsInstanceValid(_currentTile))
                 _currentTile.Shatter();
 
-            _isDead = true;
-            _hurtFlasher.Cancel();
             _animator.CurrentAnimation = "Death";
         }
 
         private Vector2 RandomTileSpawnPos()
         {
-            float angleDeg = Mathf.Rad2Deg(GetAngleTo(_target.GlobalPosition));
+            float angleDeg = Mathf.Rad2Deg(_body.GetAngleTo(_target.GlobalPosition));
             angleDeg += (GD.Randf() * 180) - 90;
 
             float angle = Mathf.Deg2Rad(angleDeg);
@@ -143,7 +101,7 @@ namespace RandomDungeons.Nodes.Elements.Enemies
                 Mathf.Sin(angle)
             );
 
-            return GlobalPosition + (dir * TileSpawnRadius);
+            return _body.GlobalPosition + (dir * TileSpawnRadius);
         }
     }
 }

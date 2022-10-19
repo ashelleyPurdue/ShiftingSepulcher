@@ -12,7 +12,8 @@ namespace RandomDungeons.Nodes.Elements
     public class Player : KinematicBody2D
     {
         public const float WalkSpeed = 283;
-        public const float WalkAccel = WalkSpeed / 0.125f;
+        public const float WalkAccel = WalkSpeed / 0.0625f;
+        public const float KnockbackFriction = WalkSpeed / 0.125f;
 
         [Signal] public delegate void DeathAnimationFinished();
 
@@ -32,6 +33,11 @@ namespace RandomDungeons.Nodes.Elements
         private Vector2 _velocity;
 
         private bool _isDead = false;
+        private float _knockbackTimer = 0;
+
+        private float _accel => _knockbackTimer > 0
+            ? KnockbackFriction
+            : WalkAccel;
 
         private StateMachine _sm;
 
@@ -44,6 +50,7 @@ namespace RandomDungeons.Nodes.Elements
         public override void _PhysicsProcess(float delta)
         {
             base._PhysicsProcess(delta);
+            _knockbackTimer -= delta;
 
             // Move
             _velocity = MoveAndSlide(_velocity);
@@ -85,12 +92,19 @@ namespace RandomDungeons.Nodes.Elements
             PlayerInventory.Health -= hitBox.Damage;
             _hurtFlasher.Flash();
 
-            _velocity = hitBox.GetKnockbackVelocity(this, WalkAccel);
+            _velocity = hitBox.GetKnockbackVelocity(this, KnockbackFriction);
+            _knockbackTimer = KnockbackDuration(_velocity);
         }
 
         public void OnSwordDealtDamage(HurtBox hurtBox)
         {
-            _velocity = hurtBox.GetRecoilVelocity(this, WalkAccel);
+            _velocity = hurtBox.GetRecoilVelocity(this, KnockbackFriction);
+            _knockbackTimer = KnockbackDuration(_velocity);
+        }
+
+        private float KnockbackDuration(Vector2 velocity)
+        {
+            return velocity.Length() / KnockbackFriction;
         }
 
         private readonly IState Walking = new WalkingState();
@@ -130,7 +144,7 @@ namespace RandomDungeons.Nodes.Elements
                 var desiredVelocity = cappedLeftStick * WalkSpeed;
                 Owner._velocity = Owner._velocity.MoveToward(
                     desiredVelocity,
-                    WalkAccel * delta
+                    Owner._accel * delta
                 );
 
                 // Update the rotation of the visuals

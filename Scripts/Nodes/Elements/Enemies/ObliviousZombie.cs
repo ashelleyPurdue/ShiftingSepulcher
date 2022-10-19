@@ -1,75 +1,46 @@
 using Godot;
-
-using RandomDungeons.Nodes.Components;
-using RandomDungeons.StateMachines;
+using RandomDungeons.Utils;
 
 namespace RandomDungeons.Nodes.Elements.Enemies
 {
-    public class ObliviousZombie : BaseEnemy
+    public class ObliviousZombie : Node
     {
         [Export] public float MinIdleTime = 1f;
         [Export] public float MaxIdleTime = 2f;
-        [Export] public float WanderTime = 1;
         [Export] public float WanderSpeed = 32 * 3;
 
-        protected override Node2D Visuals() => GetNode<Node2D>("%Visuals");
-        protected override HurtBox Hurtbox() => GetNode<HurtBox>("%HurtBox");
-        protected override IState InitialState() => Idle;
+        private EnemyBody _body => this.FindAncestor<EnemyBody>();
+        private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
 
-        protected override void OnHitWall() => _sm.ChangeState(Wander);
-        protected override void OnKnockbackFinished() => _sm.ChangeState(Wander);
-
-        private readonly IdleState Idle = new IdleState();
-        private class IdleState : State<ObliviousZombie>
+        public void OnDead()
         {
-            private float _timer;
+            _body.WalkVelocity = Vector2.Zero;
 
-            public override void _StateEntered()
-            {
-                _timer = (float)GD.RandRange(
-                    Owner.MinIdleTime,
-                    Owner.MaxIdleTime
-                );
-            }
-
-            public override void _PhysicsProcess(float delta)
-            {
-                _timer -= delta;
-
-                if (_timer <= 0)
-                    ChangeState(Owner.Wander);
-            }
+            _animator.PlaybackSpeed = 1;
+            _animator.Play("Death");
         }
 
-        private readonly WanderState Wander = new WanderState();
-        private class WanderState : State<ObliviousZombie>
+        public void StartWandering()
         {
-            private float _timer;
-            private Vector2 _velocity;
+            // Choose a random direction to walk in
+            float angle = Mathf.Deg2Rad(GD.Randf() * 360);
+            _body.WalkVelocity = WanderSpeed * new Vector2(
+                Mathf.Cos(angle),
+                Mathf.Sin(angle)
+            );
 
-            public override void _StateEntered()
-            {
-                _timer = Owner.WanderTime;
+            _animator.PlaybackSpeed = 1;
+        }
 
-                // Choose a random direction
-                float angle = (float)GD.RandRange(0, 360);
-                var dir = new Vector2(
-                    Mathf.Cos(Mathf.Deg2Rad(angle)),
-                    Mathf.Sin(Mathf.Deg2Rad(angle))
-                );
+        public void StartIdling()
+        {
+            _body.WalkVelocity = Vector2.Zero;
 
-                // Start walking in that direction, at the appropriate speed
-                _velocity = Owner.WanderSpeed * dir;
-            }
-
-            public override void _PhysicsProcess(float delta)
-            {
-                Owner.MoveAndSlide(_velocity);
-
-                _timer -= delta;
-                if (_timer <= 0)
-                    ChangeState(Owner.Idle);
-            }
+            float idleDuration = (float)GD.RandRange(
+                MinIdleTime,
+                MaxIdleTime
+            );
+            _animator.PlaybackSpeed = 1f / idleDuration;
         }
     }
 }

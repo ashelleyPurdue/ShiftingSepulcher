@@ -1,15 +1,21 @@
 using Godot;
 
 using RandomDungeons.Nodes.Components;
-using RandomDungeons.Nodes.Elements.Enemies;
-using RandomDungeons.StateMachines;
 
 namespace RandomDungeons.Nodes.Elements
 {
-    public class BreakablePot : BaseEnemy
+    public class BreakablePot : Node2D
     {
-        protected override Node2D Visuals() => GetNode<Node2D>("%Visuals");
-        protected override HurtBox Hurtbox() => GetNode<HurtBox>("%HurtBox");
-        protected override IState InitialState() => null;
+        private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
+        private bool _isDead = false;
+
+        public void OnTookDamage(HitBox hitBox)
+        {
+            if (!_isDead)
+            {
+                _isDead = true;
+                _animator.Play("Shatter");
+            }
+        }
     }
 }

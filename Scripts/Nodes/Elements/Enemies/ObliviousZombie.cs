@@ -1,23 +1,43 @@
 using Godot;
 
-using RandomDungeons.Nodes.Components;
 using RandomDungeons.StateMachines;
+using RandomDungeons.StateMachines.CommonStates;
+using RandomDungeons.Utils;
 
 namespace RandomDungeons.Nodes.Elements.Enemies
 {
-    public class ObliviousZombie : BaseEnemy
+    public class ObliviousZombie : Node
     {
         [Export] public float MinIdleTime = 1f;
         [Export] public float MaxIdleTime = 2f;
         [Export] public float WanderTime = 1;
         [Export] public float WanderSpeed = 32 * 3;
 
-        protected override Node2D Visuals() => GetNode<Node2D>("%Visuals");
-        protected override HurtBox Hurtbox() => GetNode<HurtBox>("%HurtBox");
-        protected override IState InitialState() => Idle;
+        private EnemyBody _body => this.FindAncestor<EnemyBody>();
+        private StateMachine _sm;
 
-        protected override void OnHitWall() => _sm.ChangeState(Wander);
-        protected override void OnKnockbackFinished() => _sm.ChangeState(Wander);
+        public override void _Ready()
+        {
+            _sm = new StateMachine(this);
+            _sm.ChangeState(Idle);
+        }
+
+        public void OnDead()
+        {
+            _body.WalkVelocity = Vector2.Zero;
+
+            var deathAnim = new DeathAnimationState();
+            deathAnim.AnimationTarget = GetNode<Node2D>("%Visuals");
+            deathAnim.AnimationEnded += _body.QueueFree;
+
+            _sm.ChangeState(deathAnim);
+        }
+
+        public void OnHitWall()
+        {
+            if (_body.Health > 0)
+                _sm.ChangeState(Wander);
+        }
 
         private readonly IdleState Idle = new IdleState();
         private class IdleState : State<ObliviousZombie>
@@ -45,7 +65,6 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         private class WanderState : State<ObliviousZombie>
         {
             private float _timer;
-            private Vector2 _velocity;
 
             public override void _StateEntered()
             {
@@ -59,14 +78,13 @@ namespace RandomDungeons.Nodes.Elements.Enemies
                 );
 
                 // Start walking in that direction, at the appropriate speed
-                _velocity = Owner.WanderSpeed * dir;
+                Owner._body.WalkVelocity = Owner.WanderSpeed * dir;
             }
 
             public override void _PhysicsProcess(float delta)
             {
-                Owner.MoveAndSlide(_velocity);
-
                 _timer -= delta;
+
                 if (_timer <= 0)
                     ChangeState(Owner.Idle);
             }

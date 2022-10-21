@@ -3,7 +3,7 @@ using RandomDungeons.Nodes.Components;
 
 namespace RandomDungeons.Nodes.Elements.Enemies
 {
-    public abstract class EnemyBody : KinematicBody2D
+    public class EnemyBody : KinematicBody2D
     {
         [Signal] public delegate void HitWall();
         [Signal] public delegate void Dead();

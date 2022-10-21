@@ -7,6 +7,7 @@ namespace RandomDungeons.Nodes.Elements.Enemies
     {
         [Signal] public delegate void HitWall();
         [Signal] public delegate void Dead();
+        [Signal] public delegate void Respawning();
 
         [Export] public int MaxHealth = 1;
         [Export] public float KnockbackFriction = 500;
@@ -22,7 +23,15 @@ namespace RandomDungeons.Nodes.Elements.Enemies
 
         public override void _Ready()
         {
+            Respawn();
+        }
+
+        public void Respawn()
+        {
             Health = MaxHealth;
+            _isDead = false;
+
+            EmitSignal(nameof(Respawning));
         }
 
         public override void _PhysicsProcess(float delta)

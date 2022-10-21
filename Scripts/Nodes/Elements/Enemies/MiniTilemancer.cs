@@ -29,7 +29,6 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         {
             _animator.Play("RESET");
             _animator.Advance(0);
-
             _animator.Play("Cycle");
         }
 

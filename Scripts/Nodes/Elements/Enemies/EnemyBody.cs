@@ -20,9 +20,14 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
 
         private bool _isDead = false;
+        private bool _spawnPosKnown = false;
+        private Vector2 _spawnPos;
 
         public override void _Ready()
         {
+            _spawnPos = Position;
+            _spawnPosKnown = true;
+
             Respawn();
         }
 
@@ -30,6 +35,9 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         {
             Health = MaxHealth;
             _isDead = false;
+
+            if (_spawnPosKnown)
+                Position = _spawnPos;
 
             EmitSignal(nameof(Respawning));
         }

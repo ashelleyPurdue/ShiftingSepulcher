@@ -6,7 +6,7 @@ using RandomDungeons.Graphs;
 using RandomDungeons.Nodes.DungeonRooms;
 using RandomDungeons.Utils;
 using RandomDungeons.Services;
-using RandomDungeons.Nodes.Elements.Enemies;
+using RandomDungeons.Nodes;
 
 namespace RandomDungeons.PhysicalDungeons
 {
@@ -58,7 +58,7 @@ namespace RandomDungeons.PhysicalDungeons
         {
             foreach (var room in _realRoomToGraphRoom.Keys)
             {
-                foreach (var enemy in room.Node.AllDescendantsOfType<EnemyBody>())
+                foreach (var enemy in room.Node.AllDescendantsOfType<IRespawnable>())
                 {
                     enemy.Respawn();
                 }

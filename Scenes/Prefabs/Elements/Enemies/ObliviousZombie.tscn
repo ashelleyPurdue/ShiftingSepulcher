@@ -110,7 +110,7 @@ extents = Vector2( 16, 16 )
 collision_layer = 0
 collision_mask = 3
 script = ExtResource( 2 )
-Health = 5
+MaxHealth = 5
 
 [node name="AI" type="Node" parent="."]
 script = ExtResource( 5 )

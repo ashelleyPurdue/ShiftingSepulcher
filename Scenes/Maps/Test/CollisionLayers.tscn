@@ -84,13 +84,13 @@ position = Vector2( 0, 192 )
 
 [node name="BreakablePot" parent="." instance=ExtResource( 3 )]
 position = Vector2( 112, -48 )
-Health = 100
+MaxHealth = 100
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 
 [node name="ObliviousZombie" parent="." instance=ExtResource( 5 )]
 position = Vector2( -112, -48 )
-Health = 100
+MaxHealth = 100
 MinIdleTime = 100.0
 MaxIdleTime = 100.0
 WanderTime = 0.0

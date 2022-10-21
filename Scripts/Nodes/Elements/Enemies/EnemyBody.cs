@@ -8,16 +8,22 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         [Signal] public delegate void HitWall();
         [Signal] public delegate void Dead();
 
-        [Export] public int Health = 1;
+        [Export] public int MaxHealth = 1;
         [Export] public float KnockbackFriction = 500;
         [Export] public float MinSpeedForHitWallTrigger = 90;
 
+        public int Health;
         public Vector2 WalkVelocity;
         public Vector2 KnockbackVelocity;
 
         private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
 
         private bool _isDead = false;
+
+        public override void _Ready()
+        {
+            Health = MaxHealth;
+        }
 
         public override void _PhysicsProcess(float delta)
         {

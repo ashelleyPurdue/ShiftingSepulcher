@@ -68,6 +68,20 @@ namespace RandomDungeons.Nodes.Elements.Enemies
             }
 
             _currentTile = TilePrefab.Instance<TilemancerTile>();
+            _body.Connect(
+                signal: nameof(EnemyBody.Dead),
+                target: _currentTile,
+                method: nameof(_currentTile.Shatter),
+                flags: (int)(ConnectFlags.ReferenceCounted | ConnectFlags.Oneshot)
+            );
+            _body.Connect(
+                signal: nameof(EnemyBody.Respawning),
+                target: _currentTile,
+                method: "queue_free",
+                flags: (int)(ConnectFlags.ReferenceCounted | ConnectFlags.Oneshot)
+            );
+
+
             _body.GetParent().AddChild(_currentTile);
             _currentTile.GlobalPosition = RandomTileSpawnPos();
         }
@@ -89,12 +103,11 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         public void OnDead()
         {
             StopWandering();
+            _currentTile = null;
+
             _body.KnockbackVelocity = Vector2.Zero;
-
-            if (IsInstanceValid(_currentTile))
-                _currentTile.Shatter();
-
-            _animator.CurrentAnimation = "Death";
+            _animator.Play("Death");
+            _animator.PlaybackSpeed = 1;
         }
 
         private Vector2 RandomTileSpawnPos()

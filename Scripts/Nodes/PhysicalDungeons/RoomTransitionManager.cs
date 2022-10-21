@@ -6,6 +6,7 @@ using RandomDungeons.Graphs;
 using RandomDungeons.Nodes.DungeonRooms;
 using RandomDungeons.Utils;
 using RandomDungeons.Services;
+using RandomDungeons.Nodes.Elements.Enemies;
 
 namespace RandomDungeons.PhysicalDungeons
 {
@@ -48,7 +49,20 @@ namespace RandomDungeons.PhysicalDungeons
             player.GlobalPosition = Vector2.Zero;
             player.Resurrect();
 
+            RespawnEnemies();
+
             EnterRoom(_startRoom, Vector2.Zero);
+        }
+
+        private void RespawnEnemies()
+        {
+            foreach (var room in _realRoomToGraphRoom.Keys)
+            {
+                foreach (var enemy in room.Node.AllDescendantsOfType<EnemyBody>())
+                {
+                    enemy.Respawn();
+                }
+            }
         }
 
         public override void _Process(float delta)

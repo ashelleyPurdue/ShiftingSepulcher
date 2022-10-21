@@ -20,6 +20,13 @@ namespace RandomDungeons.Nodes.Elements.Enemies
             _animator.Play("Death");
         }
 
+        public void OnRespawning()
+        {
+            _animator.Play("RESET");
+            _animator.Advance(0);
+            _animator.Play("Cycle");
+        }
+
         public void StartWandering()
         {
             // Choose a random direction to walk in

@@ -9,32 +9,63 @@ using RandomDungeons.Nodes.Elements;
 
 namespace RandomDungeons.Nodes.Bosses
 {
-    public class Tilemancer : Node2D
+    public class Tilemancer : Node2D, IRespawnable
     {
         [Export] public PackedScene VictoryChestPrefab;
         [Export] public PackedScene TilePrefab;
-        [Export] public int Health = 9;
+        [Export] public int MaxHealth = 9;
         [Export] public float ArenaHeight = 32 * 16;
         [Export] public float ArenaWidth = 32 * 16;
         [Export] public float TileThrowSpeed = 32 * 19;
         [Export] public float JumpProgress;
 
+        public int Health;
+
         private Player _player;
         private Vector2 _jumpStartPos;
         private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
-        private AnimationPlayer _animationPlayer => GetNode<AnimationPlayer>("%AnimationPlayer");
+        private AnimationPlayer _mainAnimationPlayer => GetNode<AnimationPlayer>("%MainAnimationPlayer");
+        private AnimationPlayer _individualAnimations => GetNode<AnimationPlayer>("%IndividualAnimations");
 
+        private bool _spawnPosKnown = false;
+        private Vector2 _spawnPos;
         private Queue<TilemancerTile> _tilesToThrow = new Queue<TilemancerTile>();
         private bool _isDead = false;
 
         public override void _Ready()
         {
+            _spawnPos = Position;
+            _spawnPosKnown = true;
+
             _player = GetTree().FindPlayer();
             _jumpStartPos = GlobalPosition;
 
             // Freeze the player during the intro animation, so they can't just
             // kill the boss while he's roaring
             _player.ControlsEnabled = false;
+
+            Respawn();
+        }
+
+        public void Respawn()
+        {
+            if (_isDead)
+                return;
+
+            Health = MaxHealth;
+
+            if (_spawnPosKnown)
+                Position = _spawnPos;
+
+            _mainAnimationPlayer.Play("RESET");
+            _mainAnimationPlayer.Advance(0);
+
+            _individualAnimations.Play("RESET");
+            _individualAnimations.Advance(0);
+
+            _mainAnimationPlayer.Play("Intro");
+
+            DestoryAllTiles();
         }
 
         public override void _PhysicsProcess(float delta)
@@ -62,7 +93,7 @@ namespace RandomDungeons.Nodes.Bosses
         public void StartAttackLoop()
         {
             _player.ControlsEnabled = true;
-            _animationPlayer.CurrentAnimation = "AttackLoop";
+            _mainAnimationPlayer.CurrentAnimation = "AttackLoop";
         }
 
         public void SummonTile()
@@ -120,7 +151,7 @@ namespace RandomDungeons.Nodes.Bosses
         private void Die()
         {
             _isDead = true;
-            _animationPlayer.CurrentAnimation = "Death";
+            _mainAnimationPlayer.CurrentAnimation = "Death";
         }
     }
 }

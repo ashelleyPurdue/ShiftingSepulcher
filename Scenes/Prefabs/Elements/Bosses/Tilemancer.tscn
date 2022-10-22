@@ -414,7 +414,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 0.0 ]
+"values": [ 2.0 ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath("Body/Visuals:modulate")

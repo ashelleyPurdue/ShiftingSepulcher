@@ -41,7 +41,6 @@ namespace RandomDungeons.Nodes.Bosses
             _spawnPosKnown = true;
 
             _player = GetTree().FindPlayer();
-            _jumpStartPos = GlobalPosition;
 
             // Freeze the player during the intro animation, so they can't just
             // kill the boss while he's roaring
@@ -59,6 +58,8 @@ namespace RandomDungeons.Nodes.Bosses
 
             if (_spawnPosKnown)
                 Position = _spawnPos;
+
+            _jumpStartPos = GlobalPosition;
 
             _mainAnimationPlayer.Play("RESET");
             _mainAnimationPlayer.Advance(0);

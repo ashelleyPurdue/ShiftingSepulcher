@@ -14,6 +14,8 @@ namespace RandomDungeons.PhysicalDungeons
 {
     public class DungeonInstantiator : Node
     {
+        [Export] public bool AlwaysUseTreeTemplate = false;
+
         private Node _treeTemplates => GetNode<Node>("%TreeTemplates");
         private DungeonRoomFactory _roomFactory => GetNode<DungeonRoomFactory>("%RoomFactory");
         private RoomTransitionManager _transitionManager => GetNode<RoomTransitionManager>("%RoomTransitionManager");
@@ -47,7 +49,8 @@ namespace RandomDungeons.PhysicalDungeons
 
             // Bias towards _not_ using a template.  Otherwise, templates will
             // appear way too commonly
-            if (rng.Next(0, 4) > 0)
+            bool useTreeTemplate = AlwaysUseTreeTemplate || rng.Next(0, 4) == 0;
+            if (!useTreeTemplate)
             {
                 GD.Print("Generating a tree without using a template");
                 return DungeonTreeGenerator.GenerateUsingRuns(

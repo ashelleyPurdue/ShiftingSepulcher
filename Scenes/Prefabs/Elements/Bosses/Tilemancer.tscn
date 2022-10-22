@@ -13,7 +13,7 @@ resource_name = "AttackLoop"
 length = 11.0
 loop = true
 tracks/0/type = "animation"
-tracks/0/path = NodePath("AnimationPlayer/IndividualAnimations")
+tracks/0/path = NodePath("MainAnimationPlayer/IndividualAnimations")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -27,7 +27,7 @@ tracks/0/keys = {
 resource_name = "Death"
 length = 3.3
 tracks/0/type = "animation"
-tracks/0/path = NodePath("AnimationPlayer/IndividualAnimations")
+tracks/0/path = NodePath("MainAnimationPlayer/IndividualAnimations")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -43,12 +43,9 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 3.2, 3.3 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 3.2, 3.3 ),
+"transitions": PoolRealArray( 1, 1 ),
 "values": [ {
-"args": [  ],
-"method": "DestoryAllTiles"
-}, {
 "args": [  ],
 "method": "SpawnVictoryChest"
 }, {
@@ -134,11 +131,28 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Vector2( 0.92, 0 ), Vector2( 0.919999, 1 ) ]
 }
+tracks/4/type = "method"
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 3.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ true ],
+"method": "SetPlayerFrozen"
+}, {
+"args": [ false ],
+"method": "SetPlayerFrozen"
+} ]
+}
 
 [sub_resource type="Animation" id=17]
 length = 0.001
 tracks/0/type = "animation"
-tracks/0/path = NodePath("AnimationPlayer/IndividualAnimations")
+tracks/0/path = NodePath("MainAnimationPlayer/IndividualAnimations")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -417,7 +431,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 0.0 ]
+"values": [ 2.0 ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath("Body/Visuals:modulate")
@@ -509,8 +523,9 @@ font_data = ExtResource( 7 )
 script = ExtResource( 2 )
 VictoryChestPrefab = ExtResource( 6 )
 TilePrefab = ExtResource( 1 )
+JumpProgress = 2.0
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="MainAnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
 autoplay = "Intro"
 anims/AttackLoop = SubResource( 11 )
@@ -518,7 +533,8 @@ anims/Death = SubResource( 16 )
 anims/Intro = SubResource( 18 )
 anims/RESET = SubResource( 17 )
 
-[node name="IndividualAnimations" type="AnimationPlayer" parent="AnimationPlayer"]
+[node name="IndividualAnimations" type="AnimationPlayer" parent="MainAnimationPlayer"]
+unique_name_in_owner = true
 root_node = NodePath("../..")
 anims/DeathExplosion = SubResource( 15 )
 anims/DeathShudder = SubResource( 14 )

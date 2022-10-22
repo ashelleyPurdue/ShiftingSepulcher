@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/Nodes/PhysicalDungeons/DungeonInstantiator.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Nodes/DungeonRooms/DungeonRoomFactory.cs" type="Script" id=2]
@@ -9,93 +9,11 @@
 [ext_resource path="res://Audio/Music/DungeonMusic.ogg" type="AudioStream" id=7]
 [ext_resource path="res://Scenes/Prefabs/DungeonTreeTemplates/WackyShortcutStructure.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/Prefabs/DungeonTreeTemplates/ThreeLockHub.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Scripts/Nodes/PhysicalDungeons/RoomTransitionManager.cs" type="Script" id=10]
-
-[sub_resource type="Animation" id=1]
-resource_name = "Fade"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/path = NodePath("ActiveRoomHolder:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( -0.1, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("PreviousRoomHolder:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( -0.1, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
-}
-tracks/2/type = "method"
-tracks/2/path = NodePath(".")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0.3 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "RemovePreviousRoom"
-} ]
-}
-
-[sub_resource type="Animation" id=2]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("ActiveRoomHolder:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("PreviousRoomHolder:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ) ]
-}
+[ext_resource path="res://Scenes/Prefabs/RoomTransitionManager.tscn" type="PackedScene" id=10]
 
 [node name="Node2D" type="Node2D"]
 
-[node name="RoomTransitionManager" type="Node2D" parent="."]
-unique_name_in_owner = true
-script = ExtResource( 10 )
-
-[node name="RoomTransitionAnimator" type="AnimationPlayer" parent="RoomTransitionManager"]
-unique_name_in_owner = true
-anims/Fade = SubResource( 1 )
-anims/RESET = SubResource( 2 )
-
-[node name="ActiveRoomHolder" type="Node2D" parent="RoomTransitionManager"]
-unique_name_in_owner = true
-
-[node name="PreviousRoomHolder" type="Node2D" parent="RoomTransitionManager"]
-unique_name_in_owner = true
+[node name="RoomTransitionManager" parent="." instance=ExtResource( 10 )]
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 
@@ -133,11 +51,6 @@ unique_name_in_owner = true
 [node name="WackyShortcutStructure" parent="DungeonInstantiator/TreeTemplates" instance=ExtResource( 8 )]
 
 [node name="ThreeLockHub" parent="DungeonInstantiator/TreeTemplates" instance=ExtResource( 9 )]
-
-[node name="Camera" type="Camera2D" parent="." groups=["Camera"]]
-unique_name_in_owner = true
-current = true
-smoothing_enabled = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

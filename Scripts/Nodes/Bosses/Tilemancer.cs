@@ -9,32 +9,63 @@ using RandomDungeons.Nodes.Elements;
 
 namespace RandomDungeons.Nodes.Bosses
 {
-    public class Tilemancer : Node2D
+    public class Tilemancer : Node2D, IRespawnable
     {
         [Export] public PackedScene VictoryChestPrefab;
         [Export] public PackedScene TilePrefab;
-        [Export] public int Health = 9;
+        [Export] public int MaxHealth = 9;
         [Export] public float ArenaHeight = 32 * 16;
         [Export] public float ArenaWidth = 32 * 16;
         [Export] public float TileThrowSpeed = 32 * 19;
         [Export] public float JumpProgress;
 
+        public int Health;
+
         private Player _player;
         private Vector2 _jumpStartPos;
         private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
-        private AnimationPlayer _animationPlayer => GetNode<AnimationPlayer>("%AnimationPlayer");
+        private AnimationPlayer _mainAnimationPlayer => GetNode<AnimationPlayer>("%MainAnimationPlayer");
+        private AnimationPlayer _individualAnimations => GetNode<AnimationPlayer>("%IndividualAnimations");
 
+        private bool _spawnPosKnown = false;
+        private Vector2 _spawnPos;
         private Queue<TilemancerTile> _tilesToThrow = new Queue<TilemancerTile>();
         private bool _isDead = false;
 
+        [Signal] private delegate void ShatterAllTilesSignal();
+        [Signal] private delegate void DestroyAllTilesSignal();
+
         public override void _Ready()
         {
+            _spawnPos = Position;
+            _spawnPosKnown = true;
+
             _player = GetTree().FindPlayer();
+
+            Respawn();
+        }
+
+        public void Respawn()
+        {
+            if (_isDead)
+                return;
+
+            Health = MaxHealth;
+
+            if (_spawnPosKnown)
+                Position = _spawnPos;
+
             _jumpStartPos = GlobalPosition;
 
-            // Freeze the player during the intro animation, so they can't just
-            // kill the boss while he's roaring
-            _player.ControlsEnabled = false;
+            _mainAnimationPlayer.Play("RESET");
+            _mainAnimationPlayer.Advance(0);
+
+            _individualAnimations.Play("RESET");
+            _individualAnimations.Advance(0);
+
+            _mainAnimationPlayer.Play("Intro");
+
+            DestoryAllTiles();
         }
 
         public override void _PhysicsProcess(float delta)
@@ -59,10 +90,20 @@ namespace RandomDungeons.Nodes.Bosses
             _hurtFlasher.Flash();
         }
 
+        /// <summary>
+        /// Used to freeze the player during the intro animation, so they can't
+        /// just wail on the boss while he's doing his evil monologue.
+        /// </summary>
+        /// <param name="frozen"></param>
+        public void SetPlayerFrozen(bool frozen)
+        {
+            _player.ControlsEnabled = !frozen;
+        }
+
         public void StartAttackLoop()
         {
             _player.ControlsEnabled = true;
-            _animationPlayer.CurrentAnimation = "AttackLoop";
+            _mainAnimationPlayer.CurrentAnimation = "AttackLoop";
         }
 
         public void SummonTile()
@@ -77,6 +118,21 @@ namespace RandomDungeons.Nodes.Bosses
 
             GetParent().AddChild(tile);
             tile.Position = tilePos;
+
+            // Set it up so we can remotely detonate this tile without holding
+            // a reference to it.
+            Connect(
+                signal: nameof(ShatterAllTilesSignal),
+                target: tile,
+                method: nameof(tile.Shatter),
+                flags: (int)(ConnectFlags.ReferenceCounted | ConnectFlags.Oneshot)
+            );
+            Connect(
+                signal: nameof(DestroyAllTilesSignal),
+                target: tile,
+                method: "queue_free",
+                flags: (int)(ConnectFlags.ReferenceCounted | ConnectFlags.Oneshot)
+            );
         }
 
         public void ThrowTile()
@@ -99,15 +155,16 @@ namespace RandomDungeons.Nodes.Bosses
             _jumpStartPos = GlobalPosition;
         }
 
-        public void DestoryAllTiles()
+        private void DestoryAllTiles()
         {
-            while (_tilesToThrow.Count > 0)
-            {
-                var tile = _tilesToThrow.Dequeue();
+            EmitSignal(nameof(DestroyAllTilesSignal));
+            _tilesToThrow.Clear();
+        }
 
-                if (IsInstanceValid(tile))
-                    tile.Shatter();
-            }
+        private void ShatterAllTiles()
+        {
+            EmitSignal(nameof(ShatterAllTilesSignal));
+            _tilesToThrow.Clear();
         }
 
         public void SpawnVictoryChest()
@@ -120,7 +177,7 @@ namespace RandomDungeons.Nodes.Bosses
         private void Die()
         {
             _isDead = true;
-            _animationPlayer.CurrentAnimation = "Death";
+            _mainAnimationPlayer.CurrentAnimation = "Death";
         }
     }
 }

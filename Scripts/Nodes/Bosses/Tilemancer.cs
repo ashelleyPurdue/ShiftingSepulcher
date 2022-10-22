@@ -42,10 +42,6 @@ namespace RandomDungeons.Nodes.Bosses
 
             _player = GetTree().FindPlayer();
 
-            // Freeze the player during the intro animation, so they can't just
-            // kill the boss while he's roaring
-            _player.ControlsEnabled = false;
-
             Respawn();
         }
 
@@ -92,6 +88,16 @@ namespace RandomDungeons.Nodes.Bosses
         {
             Health--;
             _hurtFlasher.Flash();
+        }
+
+        /// <summary>
+        /// Used to freeze the player during the intro animation, so they can't
+        /// just wail on the boss while he's doing his evil monologue.
+        /// </summary>
+        /// <param name="frozen"></param>
+        public void SetPlayerFrozen(bool frozen)
+        {
+            _player.ControlsEnabled = !frozen;
         }
 
         public void StartAttackLoop()

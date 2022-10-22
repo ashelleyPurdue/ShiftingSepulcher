@@ -131,6 +131,23 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Vector2( 0.92, 0 ), Vector2( 0.919999, 1 ) ]
 }
+tracks/4/type = "method"
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 3.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ true ],
+"method": "SetPlayerFrozen"
+}, {
+"args": [ false ],
+"method": "SetPlayerFrozen"
+} ]
+}
 
 [sub_resource type="Animation" id=17]
 length = 0.001
@@ -506,6 +523,7 @@ font_data = ExtResource( 7 )
 script = ExtResource( 2 )
 VictoryChestPrefab = ExtResource( 6 )
 TilePrefab = ExtResource( 1 )
+JumpProgress = 2.0
 
 [node name="MainAnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true

@@ -45,17 +45,32 @@ namespace RandomDungeons.PhysicalDungeons
 
         public void RespawnPlayer()
         {
+            var realStartRoom = _graphRoomToRealRoom[_startRoom];
+
+            if (_activeRoom == realStartRoom)
+            {
+                RespawnTransitionFinished();
+                return;
+            }
+
+            RemovePreviousRoom();
+            SetPreviousRoom(_activeRoom);
+            RemovePreviousRoom();
+            SetActiveRoom(realStartRoom);
+
+            realStartRoom.Node.GlobalPosition = Vector2.Zero;
+            _camera.GlobalPosition = Vector2.Zero;
+            _transitionAnimator.Play("Respawn");
+        }
+
+        public void RespawnTransitionFinished()
+        {
+            // Respawn the player
             var player = GetTree().FindPlayer();
             player.GlobalPosition = Vector2.Zero;
             player.Resurrect();
 
-            RespawnEnemies();
-
-            EnterRoom(_startRoom, Vector2.Zero);
-        }
-
-        private void RespawnEnemies()
-        {
+            // Respawn all the enemies
             foreach (var room in _realRoomToGraphRoom.Keys)
             {
                 foreach (var enemy in room.Node.AllDescendantsOfType<IRespawnable>())

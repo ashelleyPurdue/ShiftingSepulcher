@@ -32,6 +32,9 @@ namespace RandomDungeons.Nodes.Bosses
         private Queue<TilemancerTile> _tilesToThrow = new Queue<TilemancerTile>();
         private bool _isDead = false;
 
+        [Signal] private delegate void ShatterAllTilesSignal();
+        [Signal] private delegate void DestroyAllTilesSignal();
+
         public override void _Ready()
         {
             _spawnPos = Position;
@@ -108,6 +111,21 @@ namespace RandomDungeons.Nodes.Bosses
 
             GetParent().AddChild(tile);
             tile.Position = tilePos;
+
+            // Set it up so we can remotely detonate this tile without holding
+            // a reference to it.
+            Connect(
+                signal: nameof(ShatterAllTilesSignal),
+                target: tile,
+                method: nameof(tile.Shatter),
+                flags: (int)(ConnectFlags.ReferenceCounted | ConnectFlags.Oneshot)
+            );
+            Connect(
+                signal: nameof(DestroyAllTilesSignal),
+                target: tile,
+                method: "queue_free",
+                flags: (int)(ConnectFlags.ReferenceCounted | ConnectFlags.Oneshot)
+            );
         }
 
         public void ThrowTile()
@@ -130,15 +148,16 @@ namespace RandomDungeons.Nodes.Bosses
             _jumpStartPos = GlobalPosition;
         }
 
-        public void DestoryAllTiles()
+        private void DestoryAllTiles()
         {
-            while (_tilesToThrow.Count > 0)
-            {
-                var tile = _tilesToThrow.Dequeue();
+            EmitSignal(nameof(DestroyAllTilesSignal));
+            _tilesToThrow.Clear();
+        }
 
-                if (IsInstanceValid(tile))
-                    tile.Shatter();
-            }
+        private void ShatterAllTiles()
+        {
+            EmitSignal(nameof(ShatterAllTilesSignal));
+            _tilesToThrow.Clear();
         }
 
         public void SpawnVictoryChest()

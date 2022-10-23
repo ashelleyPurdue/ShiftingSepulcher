@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Scripts/Nodes/DungeonRooms/SimpleDungeonRoom.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Nodes/DungeonRooms/CorridorRoom.cs" type="Script" id=1]
 [ext_resource path="res://DoorPrefabs.tres" type="Resource" id=2]
 [ext_resource path="res://Scenes/Prefabs/Elements/CorridorRoomCorridor.tscn" type="PackedScene" id=3]
 
@@ -9,6 +9,7 @@ script = ExtResource( 1 )
 DoorPrefabs = ExtResource( 2 )
 
 [node name="Corridors" type="Node2D" parent="."]
+unique_name_in_owner = true
 
 [node name="North" parent="Corridors" instance=ExtResource( 3 )]
 
@@ -21,25 +22,8 @@ rotation = 3.14159
 [node name="East" parent="Corridors" instance=ExtResource( 3 )]
 rotation = 4.71239
 
-[node name="DoorSpawns" type="Node2D" parent="."]
-unique_name_in_owner = true
-
-[node name="North" type="Position2D" parent="DoorSpawns"]
-position = Vector2( 0, -256 )
-
-[node name="South" type="Position2D" parent="DoorSpawns"]
-position = Vector2( 0, 256 )
-rotation = 3.14159
-
-[node name="East" type="Position2D" parent="DoorSpawns"]
-position = Vector2( 256, 0 )
-rotation = 1.5708
-
-[node name="West" type="Position2D" parent="DoorSpawns"]
-position = Vector2( -256, 0 )
-rotation = -1.5708
-
 [node name="EnemyContainmentBarrier" type="StaticBody2D" parent="."]
+visible = false
 collision_layer = 2
 collision_mask = 0
 

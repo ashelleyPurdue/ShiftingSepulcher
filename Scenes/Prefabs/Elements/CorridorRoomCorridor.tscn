@@ -3,7 +3,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 96 )
 
-[node name="North" type="Node2D"]
+[node name="CorridorRoomCorridor" type="Node2D"]
 
 [node name="Visuals" type="Node2D" parent="."]
 
@@ -27,3 +27,9 @@ shape = SubResource( 1 )
 [node name="Right" type="CollisionShape2D" parent="Collision"]
 position = Vector2( 80, -192 )
 shape = SubResource( 1 )
+
+[node name="DoorSpawn" type="Position2D" parent="."]
+position = Vector2( 0, -256 )
+
+[node name="ShortenedDoorSpawn" type="Position2D" parent="."]
+position = Vector2( 0, -80 )

@@ -25,7 +25,7 @@ namespace RandomDungeons.Nodes.DungeonRooms
 
         public float FadePercent {get; set;}
 
-        public Node2D GetDoorSpawn(CardinalDirection dir)
+        public virtual Node2D GetDoorSpawn(CardinalDirection dir)
         {
             return GetNode<Node2D>($"%DoorSpawns/{dir}");
         }

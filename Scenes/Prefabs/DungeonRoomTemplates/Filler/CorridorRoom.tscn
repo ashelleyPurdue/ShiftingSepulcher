@@ -1,0 +1,84 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scripts/Nodes/DungeonRooms/CorridorRoom.cs" type="Script" id=1]
+[ext_resource path="res://DoorPrefabs.tres" type="Resource" id=2]
+[ext_resource path="res://Scenes/Prefabs/Elements/CorridorRoomCorridor.tscn" type="PackedScene" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 16, 16 )
+
+[node name="CorridorRoom" type="Node2D"]
+script = ExtResource( 1 )
+DoorPrefabs = ExtResource( 2 )
+
+[node name="CenterFloor" type="Polygon2D" parent="."]
+color = Color( 0.511719, 0.511719, 0.511719, 1 )
+polygon = PoolVector2Array( -64, 64, -64, -64, 64, -64, 64, 64 )
+
+[node name="Corridors" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="North" parent="Corridors" instance=ExtResource( 3 )]
+
+[node name="East" parent="Corridors" instance=ExtResource( 3 )]
+rotation = 1.5708
+
+[node name="South" parent="Corridors" instance=ExtResource( 3 )]
+rotation = 3.14159
+
+[node name="West" parent="Corridors" instance=ExtResource( 3 )]
+rotation = 4.71239
+
+[node name="Corners" type="Node2D" parent="."]
+
+[node name="NorthWest" type="Polygon2D" parent="Corners"]
+polygon = PoolVector2Array( -96, -96, -64, -96, -64, -64, -96, -64 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Corners/NorthWest"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Corners/NorthWest/StaticBody2D"]
+position = Vector2( -80, -80 )
+shape = SubResource( 1 )
+
+[node name="NorthEast" type="Polygon2D" parent="Corners"]
+rotation = 1.5708
+polygon = PoolVector2Array( -96, -96, -64, -96, -64, -64, -96, -64 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Corners/NorthEast"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Corners/NorthEast/StaticBody2D"]
+position = Vector2( -80, -80 )
+shape = SubResource( 1 )
+
+[node name="SouthEast" type="Polygon2D" parent="Corners"]
+rotation = 3.14159
+polygon = PoolVector2Array( -96, -96, -64, -96, -64, -64, -96, -64 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Corners/SouthEast"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Corners/SouthEast/StaticBody2D"]
+position = Vector2( -80, -80 )
+shape = SubResource( 1 )
+
+[node name="SouthWest" type="Polygon2D" parent="Corners"]
+rotation = 4.71239
+polygon = PoolVector2Array( -96, -96, -64, -96, -64, -64, -96, -64 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Corners/SouthWest"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Corners/SouthWest/StaticBody2D"]
+position = Vector2( -80, -80 )
+shape = SubResource( 1 )
+
+[node name="EnemyContainmentBarrier" type="StaticBody2D" parent="."]
+visible = false
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="EnemyContainmentBarrier"]
+polygon = PoolVector2Array( -288, -288, 288, -288, 288, 288, -288, 288, -256, 256, 256, 256, 256, -256, -256, -256, -256, 256, -288, 288 )
+
+[node name="FadeCurtain" type="Polygon2D" parent="."]
+unique_name_in_owner = true
+visible = false
+polygon = PoolVector2Array( -288, -288, 288, -288, 288, 288, -288, 288 )

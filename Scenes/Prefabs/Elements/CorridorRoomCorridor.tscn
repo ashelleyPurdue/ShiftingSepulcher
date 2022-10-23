@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 16, 96 )
+
+[node name="CorridorRoomCorridor" type="Node2D"]
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Floor" type="Polygon2D" parent="Visuals"]
+color = Color( 0.511719, 0.511719, 0.511719, 1 )
+polygon = PoolVector2Array( -96, -64, -96, -288, 96, -288, 96, -64 )
+
+[node name="LeftWall" type="Polygon2D" parent="Visuals"]
+polygon = PoolVector2Array( -96, -288, -64, -288, -64, -96, -96, -96 )
+
+[node name="RightWall" type="Polygon2D" parent="Visuals"]
+scale = Vector2( -1, 1 )
+polygon = PoolVector2Array( -96, -288, -64, -288, -64, -96, -96, -96 )
+
+[node name="Collision" type="StaticBody2D" parent="."]
+
+[node name="Left" type="CollisionShape2D" parent="Collision"]
+position = Vector2( -80, -192 )
+shape = SubResource( 1 )
+
+[node name="Right" type="CollisionShape2D" parent="Collision"]
+position = Vector2( 80, -192 )
+shape = SubResource( 1 )
+
+[node name="DoorSpawn" type="Position2D" parent="."]
+position = Vector2( 0, -256 )
+
+[node name="ShortenedDoorSpawn" type="Position2D" parent="."]
+position = Vector2( 0, -64 )

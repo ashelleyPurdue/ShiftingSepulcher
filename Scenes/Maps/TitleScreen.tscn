@@ -20,8 +20,7 @@ margin_top = 64.0
 margin_right = 283.0
 margin_bottom = 78.0
 rect_scale = Vector2( 5, 5 )
-text = "Random Dungeon Game
-(with a slight change)"
+text = "Random Dungeon Game"
 
 [node name="PlayButtons" type="VBoxContainer" parent="."]
 margin_left = 200.0

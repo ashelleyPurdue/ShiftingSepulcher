@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using Godot;
 
-using RandomDungeons.Nodes.Elements.Enemies;
+using RandomDungeons.Graphs;
 using RandomDungeons.Utils;
 
 namespace RandomDungeons.Nodes.DungeonRooms
@@ -11,7 +11,11 @@ namespace RandomDungeons.Nodes.DungeonRooms
     {
         public override Node2D GetDoorSpawn(CardinalDirection dir)
         {
-            return GetNode<Node2D>($"%Corridors/{dir}/DoorSpawn");
+            string path = GraphRoom.GetDoor(dir).Destination == null
+                ? $"%Corridors/{dir}/ShortenedDoorSpawn"
+                : $"%Corridors/{dir}/DoorSpawn";
+
+            return GetNode<Node2D>(path);
         }
     }
 }

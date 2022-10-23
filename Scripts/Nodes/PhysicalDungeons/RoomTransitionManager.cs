@@ -116,11 +116,27 @@ namespace RandomDungeons.PhysicalDungeons
 
             var prevDoorSpawn = _activeRoom.GetDoorSpawn(dir);
             var nextDoorSpawn = nextRoom.GetDoorSpawn(dir.Opposite());
-
-            Vector2 nextRoomPos = prevDoorSpawn.GlobalPosition - nextDoorSpawn.Position;
-            nextRoomPos += dir.ToVector2() * 32;
+            
+            Vector2 offset = GetRelativePosition(nextRoom.Node, nextDoorSpawn);
+            Vector2 nextRoomPos = prevDoorSpawn.GlobalPosition - offset;
+            nextRoomPos -= offset.Normalized() * 32;
 
             EnterRoom(nextGraphRoom, nextRoomPos);
+        }
+
+        private Vector2 GetRelativePosition(Node2D parent, Node2D descendant)
+        {
+            bool isParentInTree = parent.IsInsideTree();
+
+            if (!isParentInTree)
+                AddChild(parent);
+            
+            Vector2 result = descendant.GlobalPosition - parent.Position;
+
+            if (!isParentInTree)
+                RemoveChild(parent);
+            
+            return result;
         }
 
         private void EnterRoom(DungeonGraphRoom graphRoom, Vector2 position)

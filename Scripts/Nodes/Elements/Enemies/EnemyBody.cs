@@ -3,7 +3,7 @@ using RandomDungeons.Nodes.Components;
 
 namespace RandomDungeons.Nodes.Elements.Enemies
 {
-    public class EnemyBody : KinematicBody2D, IRespawnable
+    public class EnemyBody : KinematicBody2D, IRespawnable, IEnemy
     {
         [Signal] public delegate void HitWall();
         [Signal] public delegate void Dead();
@@ -13,13 +13,14 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         [Export] public float KnockbackFriction = 500;
         [Export] public float MinSpeedForHitWallTrigger = 90;
 
+        public bool IsDead {get; private set;}
+
         public int Health;
         public Vector2 WalkVelocity;
         public Vector2 KnockbackVelocity;
 
         private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
 
-        private bool _isDead = false;
         private bool _spawnPosKnown = false;
         private Vector2 _spawnPos;
 
@@ -34,7 +35,7 @@ namespace RandomDungeons.Nodes.Elements.Enemies
         public void Respawn()
         {
             Health = MaxHealth;
-            _isDead = false;
+            IsDead = false;
 
             if (_spawnPosKnown)
                 Position = _spawnPos;
@@ -65,10 +66,10 @@ namespace RandomDungeons.Nodes.Elements.Enemies
             }
 
             // Die when out of health
-            if (Health <= 0 && !_isDead)
+            if (Health <= 0 && !IsDead)
             {
                 _hurtFlasher?.Cancel();
-                _isDead = true;
+                IsDead = true;
                 EmitSignal(nameof(Dead));
             }
         }

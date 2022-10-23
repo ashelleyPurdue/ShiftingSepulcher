@@ -1,45 +1,25 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scripts/Nodes/DungeonRooms/SimpleDungeonRoom.cs" type="Script" id=1]
 [ext_resource path="res://DoorPrefabs.tres" type="Resource" id=2]
+[ext_resource path="res://Scenes/Prefabs/Elements/CorridorRoomCorridor.tscn" type="PackedScene" id=3]
 
 [node name="CorridorRoom" type="Node2D"]
 script = ExtResource( 1 )
 DoorPrefabs = ExtResource( 2 )
 
-[node name="Floor" type="Polygon2D" parent="."]
-color = Color( 0.511719, 0.511719, 0.511719, 1 )
-polygon = PoolVector2Array( -96, -96, -96, -288, 96, -288, 96, -96, 288, -96, 288, 96, 96, 96, 96.3062, 288, -96, 288, -96, 96, -288, 96, -288, -96 )
+[node name="Corridors" type="Node2D" parent="."]
 
-[node name="Walls" type="Node2D" parent="."]
+[node name="North" parent="Corridors" instance=ExtResource( 3 )]
 
-[node name="Visuals" type="Node2D" parent="Walls"]
+[node name="West" parent="Corridors" instance=ExtResource( 3 )]
+rotation = 1.5708
 
-[node name="NorthWest" type="Polygon2D" parent="Walls/Visuals"]
-polygon = PoolVector2Array( -64, -64, -64, -288, -96, -288, -96, -96, -288, -96, -288, -64 )
+[node name="South" parent="Corridors" instance=ExtResource( 3 )]
+rotation = 3.14159
 
-[node name="NorthEast" type="Polygon2D" parent="Walls/Visuals"]
-polygon = PoolVector2Array( 64, -288, 64, -64, 288, -64, 288, -96, 96, -96, 96, -288 )
-
-[node name="SouthWest" type="Polygon2D" parent="Walls/Visuals"]
-polygon = PoolVector2Array( -288, 64, -64, 64, -64, 288, -96, 288, -96, 96, -288, 96 )
-
-[node name="SouthEast" type="Polygon2D" parent="Walls/Visuals"]
-polygon = PoolVector2Array( 64, 288, 64, 64, 288, 64, 288, 96, 96, 96, 96, 288 )
-
-[node name="StaticBody2D" type="StaticBody2D" parent="Walls"]
-
-[node name="NorthWest" type="CollisionPolygon2D" parent="Walls/StaticBody2D"]
-polygon = PoolVector2Array( -288, -64, -288, -96, -96, -96, -96, -288, -64, -288, -64, -64 )
-
-[node name="NorthEast" type="CollisionPolygon2D" parent="Walls/StaticBody2D"]
-polygon = PoolVector2Array( 288, -64, 64, -64, 64, -288, 96, -288, 96, -96, 288, -96 )
-
-[node name="SouthWest" type="CollisionPolygon2D" parent="Walls/StaticBody2D"]
-polygon = PoolVector2Array( -288, 64, -64, 64, -64, 288, -96, 288, -96, 96, -288, 96 )
-
-[node name="SouthEast" type="CollisionPolygon2D" parent="Walls/StaticBody2D"]
-polygon = PoolVector2Array( 64, 288, 64, 64, 288, 64, 288, 96, 96, 96, 96, 288 )
+[node name="East" parent="Corridors" instance=ExtResource( 3 )]
+rotation = 4.71239
 
 [node name="DoorSpawns" type="Node2D" parent="."]
 unique_name_in_owner = true

@@ -30,7 +30,7 @@ FillerRoomWeights = {
 "Filler/CentralPillarRoom": 1,
 "Filler/FourPillarsRoom": 1,
 "Filler/FourPotsRoom": 1,
-"Filler/PlusShapedRoom": 1
+"Filler/CorridorRoom": 1
 }
 CombatRoomWeights = {
 "Combat/FourTilemancersRoom": 1,

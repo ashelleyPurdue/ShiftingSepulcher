@@ -17,5 +17,17 @@ namespace RandomDungeons.Nodes.DungeonRooms
 
             return GetNode<Node2D>(path);
         }
+
+        public override void Populate(DungeonGraphRoom graphRoom)
+        {
+            base.Populate(graphRoom);
+
+            foreach (var dir in CardinalDirectionUtils.All())
+            {
+                var graphDoor = graphRoom.GetDoor(dir);
+                var corridor = GetNode<Node2D>($"%Corridors/{dir}/Visuals");
+                corridor.Visible = graphDoor.Destination != null;
+            }
+        }
     }
 }

@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 
-namespace RandomDungeons.DungeonTrees
+namespace RandomDungeons
 {
     public class DungeonTreeRoom
     {
         public int RoomSeed;
-        public Graphs.ChallengeType ChallengeType;
+        public ChallengeType ChallengeType;
         public int KeyId;
 
         public DungeonTreeRoom Parent {get; private set;}

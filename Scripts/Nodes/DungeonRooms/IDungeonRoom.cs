@@ -1,10 +1,7 @@
 using System;
 using Godot;
 
-using RandomDungeons.Utils;
-using RandomDungeons.Graphs;
-
-namespace RandomDungeons.Nodes.DungeonRooms
+namespace RandomDungeons
 {
     public interface IDungeonRoom
     {

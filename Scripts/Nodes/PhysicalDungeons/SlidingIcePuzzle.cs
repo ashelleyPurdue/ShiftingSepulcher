@@ -1,11 +1,7 @@
 using System;
 using Godot;
 
-using RandomDungeons.Graphs;
-using RandomDungeons.Utils;
-using RandomDungeons.Nodes.Elements;
-
-namespace RandomDungeons.PhysicalDungeons
+namespace RandomDungeons
 {
     public class SlidingIcePuzzle : Node2D
     {

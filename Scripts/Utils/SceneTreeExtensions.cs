@@ -1,7 +1,6 @@
 using Godot;
-using RandomDungeons.Nodes.Elements;
 
-namespace RandomDungeons.Utils
+namespace RandomDungeons
 {
     public static class SceneTreeExtensions
     {

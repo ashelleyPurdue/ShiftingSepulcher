@@ -1,8 +1,6 @@
 using Godot;
-using RandomDungeons.Graphs;
-using RandomDungeons.Nodes.Elements;
 
-namespace RandomDungeons.Nodes.DungeonRooms
+namespace RandomDungeons
 {
     public class KeyRoom : SimpleDungeonRoom
     {

@@ -1,8 +1,6 @@
 using Godot;
 
-using RandomDungeons.Nodes.Components;
-
-namespace RandomDungeons.Nodes.Elements
+namespace RandomDungeons
 {
     public class BreakablePot : Node2D
     {

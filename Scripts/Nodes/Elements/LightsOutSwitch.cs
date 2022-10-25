@@ -1,9 +1,7 @@
 using System;
 using Godot;
 
-using RandomDungeons.Services;
-
-namespace RandomDungeons.Nodes.Elements
+namespace RandomDungeons
 {
     public class LightsOutSwitch : Node2D
     {

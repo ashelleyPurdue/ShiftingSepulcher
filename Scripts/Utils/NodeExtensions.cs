@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
-namespace RandomDungeons.Utils
+namespace RandomDungeons
 {
     public static class NodeExtensions
     {

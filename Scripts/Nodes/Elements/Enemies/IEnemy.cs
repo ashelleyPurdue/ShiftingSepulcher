@@ -1,4 +1,4 @@
-namespace RandomDungeons.Nodes.Elements.Enemies
+namespace RandomDungeons
 {
     public interface IEnemy
     {

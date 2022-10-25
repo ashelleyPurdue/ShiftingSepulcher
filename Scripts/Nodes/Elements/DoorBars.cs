@@ -1,7 +1,6 @@
 using Godot;
-using RandomDungeons.Graphs;
 
-namespace RandomDungeons.Nodes.Elements
+namespace RandomDungeons
 {
     public class DoorBars : Node2D
     {

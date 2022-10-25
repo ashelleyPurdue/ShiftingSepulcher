@@ -1,7 +1,5 @@
 using Godot;
-using RandomDungeons.Graphs;
-using RandomDungeons.Utils;
-namespace RandomDungeons.Nodes.UI.Widgets.Minimap
+namespace RandomDungeons
 {
     [Tool]
     public class RoomDisplay : Node2D

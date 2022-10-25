@@ -2,8 +2,7 @@ using System;
 using System.Linq;
 using Godot;
 
-using RandomDungeons.Nodes.Elements.Enemies;
-namespace RandomDungeons.Nodes.DungeonRooms
+namespace RandomDungeons
 {
     public class CombatRoom : SimpleDungeonRoom
     {
@@ -15,7 +14,7 @@ namespace RandomDungeons.Nodes.DungeonRooms
         {
             if (_isSolved)
                 return;
-            
+
             _isSolved = RequiredEnemies
                 .Select(p => GetNode<IEnemy>(p))
                 .All(e => e.IsDead);

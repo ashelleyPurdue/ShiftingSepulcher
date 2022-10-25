@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RandomDungeons.Resources
+namespace RandomDungeons
 {
     public class DoorPrefabCollection : Resource
     {

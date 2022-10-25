@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using Godot;
-using RandomDungeons.Utils;
 
-namespace RandomDungeons.Nodes.Components
+namespace RandomDungeons
 {
     public class HurtBox : Area2D
     {

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Godot;
 
-namespace RandomDungeons.Utils
+namespace RandomDungeons
 {
     public static class KeyColors
     {

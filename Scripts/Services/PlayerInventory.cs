@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace RandomDungeons.Services
+namespace RandomDungeons
 {
     // Yes, I know global state is bad.
     // No, I don't care.  It's a prototype.

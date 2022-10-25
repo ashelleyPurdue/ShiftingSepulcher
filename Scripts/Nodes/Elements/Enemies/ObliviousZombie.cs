@@ -1,7 +1,6 @@
 using Godot;
-using RandomDungeons.Utils;
 
-namespace RandomDungeons.Nodes.Elements.Enemies
+namespace RandomDungeons
 {
     public class ObliviousZombie : Node
     {

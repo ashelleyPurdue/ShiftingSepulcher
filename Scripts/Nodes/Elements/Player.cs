@@ -1,10 +1,6 @@
 using Godot;
 
-using RandomDungeons.Services;
-using RandomDungeons.Nodes.Components;
-using RandomDungeons.StateMachines;
-
-namespace RandomDungeons.Nodes.Elements
+namespace RandomDungeons
 {
     public class Player : KinematicBody2D
     {

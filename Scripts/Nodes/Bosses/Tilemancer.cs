@@ -2,12 +2,7 @@ using System;
 using System.Collections.Generic;
 using Godot;
 
-using RandomDungeons.Utils;
-using RandomDungeons.Nodes.Elements.Projectiles;
-using RandomDungeons.Nodes.Components;
-using RandomDungeons.Nodes.Elements;
-
-namespace RandomDungeons.Nodes.Bosses
+namespace RandomDungeons
 {
     public class Tilemancer : Node2D, IRespawnable
     {

@@ -1,4 +1,4 @@
-namespace RandomDungeons.DungeonTrees
+namespace RandomDungeons
 {
     public interface IDungeonTreeDoor
     {

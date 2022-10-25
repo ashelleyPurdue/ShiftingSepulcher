@@ -2,10 +2,7 @@ using System;
 using System.Linq;
 using Godot;
 
-using RandomDungeons.Graphs;
-using RandomDungeons.Utils;
-
-namespace RandomDungeons.Nodes.DungeonRooms
+namespace RandomDungeons
 {
     public class CorridorRoom : SimpleDungeonRoom
     {

@@ -1,9 +1,6 @@
 using Godot;
 
-using RandomDungeons.Nodes.Components;
-using RandomDungeons.Utils;
-
-namespace RandomDungeons.Nodes.Elements.Projectiles
+namespace RandomDungeons
 {
     public class TilemancerTile : KinematicBody2D
     {

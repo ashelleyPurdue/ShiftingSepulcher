@@ -2,11 +2,7 @@ using System;
 using System.Collections.Generic;
 using Godot;
 
-using RandomDungeons.Utils;
-using RandomDungeons.Graphs;
-using RandomDungeons.Nodes.Elements;
-
-namespace RandomDungeons.PhysicalDungeons
+namespace RandomDungeons
 {
     public class LightsOutPuzzle : Node2D
     {

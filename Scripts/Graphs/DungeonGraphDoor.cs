@@ -1,4 +1,4 @@
-namespace RandomDungeons.Graphs
+namespace RandomDungeons
 {
     public interface IDungeonGraphDoor
     {

@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RandomDungeons.StateMachines
+namespace RandomDungeons
 {
     public class StateMachine : Node
     {

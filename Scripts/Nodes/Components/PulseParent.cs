@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RandomDungeons.Nodes.Components
+namespace RandomDungeons
 {
     public class PulseParent : Node
     {

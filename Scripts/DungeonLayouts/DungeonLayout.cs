@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using RandomDungeons.DungeonTrees;
-using RandomDungeons.Utils;
 
-namespace RandomDungeons.DungeonLayouts
+namespace RandomDungeons
 {
     public class DungeonLayout
     {

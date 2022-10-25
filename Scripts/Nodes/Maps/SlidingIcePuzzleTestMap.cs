@@ -1,11 +1,6 @@
 using Godot;
 
-using RandomDungeons.Graphs;
-using RandomDungeons.PhysicalDungeons;
-using RandomDungeons.Nodes.Elements;
-using RandomDungeons.Nodes.UI;
-
-namespace RandomDungeons.Nodes.Maps
+namespace RandomDungeons
 {
     public class SlidingIcePuzzleTestMap : Node2D
     {

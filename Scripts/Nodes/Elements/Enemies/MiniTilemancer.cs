@@ -1,8 +1,6 @@
 using Godot;
-using RandomDungeons.Nodes.Elements.Projectiles;
-using RandomDungeons.Utils;
 
-namespace RandomDungeons.Nodes.Elements.Enemies
+namespace RandomDungeons
 {
     public class MiniTilemancer : Node
     {

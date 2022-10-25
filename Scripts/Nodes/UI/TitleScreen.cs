@@ -1,7 +1,6 @@
 using Godot;
-using RandomDungeons.Nodes.UI.Widgets;
 
-namespace RandomDungeons.Nodes.UI
+namespace RandomDungeons
 {
     public class TitleScreen : Control
     {

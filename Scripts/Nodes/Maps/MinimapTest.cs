@@ -1,12 +1,6 @@
 using Godot;
 
-using RandomDungeons.DungeonTrees;
-using RandomDungeons.DungeonLayouts;
-using RandomDungeons.Graphs;
-using RandomDungeons.Nodes.UI.Widgets;
-using RandomDungeons.Nodes.UI.Widgets.Minimap;
-
-namespace RandomDungeons.Nodes.Maps
+namespace RandomDungeons
 {
     public class MinimapTest : Node2D
     {

@@ -2,13 +2,7 @@ using System;
 using System.Collections.Generic;
 using Godot;
 
-using RandomDungeons.Graphs;
-using RandomDungeons.Nodes.DungeonRooms;
-using RandomDungeons.Utils;
-using RandomDungeons.Services;
-using RandomDungeons.Nodes;
-
-namespace RandomDungeons.PhysicalDungeons
+namespace RandomDungeons
 {
     public class RoomTransitionManager : Node
     {
@@ -116,7 +110,7 @@ namespace RandomDungeons.PhysicalDungeons
 
             var prevDoorSpawn = _activeRoom.GetDoorSpawn(dir);
             var nextDoorSpawn = nextRoom.GetDoorSpawn(dir.Opposite());
-            
+
             Vector2 offset = GetRelativePosition(nextRoom.Node, nextDoorSpawn);
             Vector2 nextRoomPos = prevDoorSpawn.GlobalPosition - offset;
             nextRoomPos -= offset.Normalized() * 32;
@@ -130,12 +124,12 @@ namespace RandomDungeons.PhysicalDungeons
 
             if (!isParentInTree)
                 AddChild(parent);
-            
+
             Vector2 result = descendant.GlobalPosition - parent.Position;
 
             if (!isParentInTree)
                 RemoveChild(parent);
-            
+
             return result;
         }
 

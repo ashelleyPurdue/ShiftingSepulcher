@@ -1,12 +1,7 @@
 using System;
 using Godot;
-using RandomDungeons.DungeonTrees;
-using RandomDungeons.DungeonLayouts;
-using RandomDungeons.Nodes.TreeTemplates;
-using RandomDungeons.Nodes.UI.Widgets;
-using RandomDungeons.Nodes.UI.Widgets.Minimap;
 
-namespace RandomDungeons.Nodes.Maps
+namespace RandomDungeons
 {
     public class DungeonTreeGeneratorTest : Node
     {
@@ -92,7 +87,7 @@ namespace RandomDungeons.Nodes.Maps
         private void UpdateMinimap(DungeonTreeRoom tree)
         {
             var layout = DungeonLayoutBuilder.LayoutFromTree(tree);
-            var graph = Graphs.DungeonGraphBuilder.BuildFromLayout(layout);
+            var graph = DungeonGraphBuilder.BuildFromLayout(layout);
             _minimap.SetGraph(graph);
         }
     }

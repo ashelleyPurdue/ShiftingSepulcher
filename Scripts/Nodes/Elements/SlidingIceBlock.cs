@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RandomDungeons.Nodes.Elements
+namespace RandomDungeons
 {
     public class SlidingIceBlock : Node2D
     {

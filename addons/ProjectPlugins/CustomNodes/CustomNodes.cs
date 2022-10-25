@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using Godot;
 
-namespace RandomDungeons.ProjectPlugins.CustomNodes
+namespace RandomDungeons
 {
     [Tool]
     public class CustomNodes : EditorPlugin

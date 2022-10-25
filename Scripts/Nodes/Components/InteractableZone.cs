@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
-using RandomDungeons.Services;
-using RandomDungeons.Nodes.Elements;
-
-namespace RandomDungeons.Nodes.Components
+namespace RandomDungeons
 {
     public class InteractableZone : Area2D
     {

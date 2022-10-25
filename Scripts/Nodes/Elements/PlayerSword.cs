@@ -1,8 +1,6 @@
 using Godot;
-using RandomDungeons.Utils;
-using RandomDungeons.Nodes.Components;
 
-namespace RandomDungeons.Nodes.Elements
+namespace RandomDungeons
 {
     public class PlayerSword : Node2D
     {

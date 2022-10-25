@@ -1,6 +1,6 @@
 using System;
 
-namespace RandomDungeons.DungeonLayouts
+namespace RandomDungeons
 {
     public class DungeonLayoutException : DungeonGenerationException
     {

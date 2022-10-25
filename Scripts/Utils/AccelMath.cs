@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RandomDungeons.Utils
+namespace RandomDungeons
 {
     public static class AccelMath
     {

@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RandomDungeons.Nodes.UI.Widgets
+namespace RandomDungeons
 {
     public class SeedInput : Control
     {

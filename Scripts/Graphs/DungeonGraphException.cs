@@ -1,6 +1,6 @@
 using System;
 
-namespace RandomDungeons.Graphs
+namespace RandomDungeons
 {
     public class DungeonGraphException : DungeonGenerationException
     {

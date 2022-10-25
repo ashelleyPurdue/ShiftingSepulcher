@@ -2,15 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
-using RandomDungeons.DungeonTrees;
-using RandomDungeons.DungeonLayouts;
-using RandomDungeons.Graphs;
-using RandomDungeons.Nodes.TreeTemplates;
-using RandomDungeons.Nodes.DungeonRooms;
-using RandomDungeons.Nodes.UI;
-using RandomDungeons.Utils;
-
-namespace RandomDungeons.PhysicalDungeons
+namespace RandomDungeons
 {
     public class DungeonInstantiator : Node
     {

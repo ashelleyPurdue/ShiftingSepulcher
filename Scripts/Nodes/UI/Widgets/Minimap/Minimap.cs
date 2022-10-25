@@ -1,9 +1,8 @@
 using System;
 using System.Linq;
 using Godot;
-using RandomDungeons.Graphs;
 
-namespace RandomDungeons.Nodes.UI.Widgets.Minimap
+namespace RandomDungeons
 {
     [Tool]
     public class Minimap : Node2D

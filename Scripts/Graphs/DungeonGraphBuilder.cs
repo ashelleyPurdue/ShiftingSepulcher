@@ -1,8 +1,5 @@
-using RandomDungeons.DungeonTrees;
-using RandomDungeons.DungeonLayouts;
-using RandomDungeons.Utils;
 
-namespace RandomDungeons.Graphs
+namespace RandomDungeons
 {
     public static class DungeonGraphBuilder
     {

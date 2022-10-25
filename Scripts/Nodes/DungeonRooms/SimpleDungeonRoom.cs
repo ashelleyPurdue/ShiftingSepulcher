@@ -4,14 +4,8 @@ using System.Collections.Generic;
 
 using Godot;
 
-using RandomDungeons.Graphs;
-using RandomDungeons.Nodes.Elements;
-using RandomDungeons.Utils;
-using RandomDungeons.PhysicalDungeons;
-using RandomDungeons.Resources;
 
-
-namespace RandomDungeons.Nodes.DungeonRooms
+namespace RandomDungeons
 {
     public class SimpleDungeonRoom : Node2D, IDungeonRoom
     {

@@ -1,8 +1,6 @@
 using Godot;
-using RandomDungeons.Graphs;
-using RandomDungeons.PhysicalDungeons;
 
-namespace RandomDungeons.Nodes.DungeonRooms
+namespace RandomDungeons
 {
     public class SlidingIcePuzzleRoom : SimpleDungeonRoom
     {

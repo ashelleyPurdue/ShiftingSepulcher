@@ -2,12 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using RandomDungeons.DungeonTrees;
-using RandomDungeons.DungeonLayouts;
-using RandomDungeons.Graphs;
-using RandomDungeons.Nodes.UI.Widgets.Minimap;
 
-namespace RandomDungeons.Nodes.TreeTemplates
+namespace RandomDungeons
 {
     [Tool]
     public class DungeonTreeTemplate : Node

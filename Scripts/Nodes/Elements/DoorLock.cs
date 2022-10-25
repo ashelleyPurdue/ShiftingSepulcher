@@ -1,8 +1,6 @@
 using Godot;
-using RandomDungeons.Services;
-using RandomDungeons.Utils;
 
-namespace RandomDungeons.Nodes.Elements
+namespace RandomDungeons
 {
     public class DoorLock : Node2D
     {

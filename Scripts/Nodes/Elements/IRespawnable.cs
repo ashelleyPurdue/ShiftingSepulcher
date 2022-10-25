@@ -1,4 +1,4 @@
-namespace RandomDungeons.Nodes
+namespace RandomDungeons
 {
     public interface IRespawnable
     {

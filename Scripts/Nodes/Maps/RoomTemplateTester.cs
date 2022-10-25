@@ -1,10 +1,6 @@
 using Godot;
-using RandomDungeons.Graphs;
-using RandomDungeons.Nodes.DungeonRooms;
-using RandomDungeons.Utils;
-using RandomDungeons.Nodes.UI.Widgets;
 
-namespace RandomDungeons.Nodes.Maps
+namespace RandomDungeons
 {
     public class RoomTemplateTester : Node2D
     {

@@ -1,9 +1,7 @@
 using System.Linq;
 using Godot;
-using RandomDungeons.Services;
-using RandomDungeons.Utils;
 
-namespace RandomDungeons.Nodes.UI.Widgets
+namespace RandomDungeons
 {
     public class PlayerKeysDisplay : Control
     {

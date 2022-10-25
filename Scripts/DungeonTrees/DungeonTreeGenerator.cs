@@ -1,8 +1,7 @@
 using System;
 using System.Linq;
-using RandomDungeons.Utils;
 
-namespace RandomDungeons.DungeonTrees
+namespace RandomDungeons
 {
     public static class DungeonTreeGenerator
     {
@@ -15,7 +14,7 @@ namespace RandomDungeons.DungeonTrees
         {
             var rng = new Random(seed);
             DungeonTreeRoom root = new DungeonTreeRoom();
-            root.ChallengeType = Graphs.ChallengeType.None;
+            root.ChallengeType = ChallengeType.None;
 
             DungeonTreeRoom prevRunRoot = root;
             for (int i = 0; i < numRuns; i++)
@@ -46,7 +45,7 @@ namespace RandomDungeons.DungeonTrees
                 .AllDescendants()
                 .Last();
 
-            bossRoom.ChallengeType = Graphs.ChallengeType.Boss;
+            bossRoom.ChallengeType = ChallengeType.Boss;
             bossRoom.KeyId = 0;
 
             return root;
@@ -61,9 +60,9 @@ namespace RandomDungeons.DungeonTrees
                     var room = new DungeonTreeRoom();
                     room.RoomSeed = rng.Next();
                     room.ChallengeType = rng.PickFromWeighted(
-                        (Graphs.ChallengeType.None, 1),
-                        (Graphs.ChallengeType.Combat, 1),
-                        (Graphs.ChallengeType.Puzzle, 1)
+                        (ChallengeType.None, 1),
+                        (ChallengeType.Combat, 1),
+                        (ChallengeType.Puzzle, 1)
                     );
 
                     if (prevRoom == null)
@@ -80,7 +79,7 @@ namespace RandomDungeons.DungeonTrees
 
                 // Place a key in the last room of the run
                 prevRoom.KeyId = runNumber + 1;
-                prevRoom.ChallengeType = Graphs.ChallengeType.Loot;
+                prevRoom.ChallengeType = ChallengeType.Loot;
 
                 return runRoot;
             }

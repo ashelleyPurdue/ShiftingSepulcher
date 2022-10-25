@@ -1,7 +1,6 @@
 using Godot;
-using RandomDungeons.Nodes.Components;
 
-namespace RandomDungeons.Nodes.Elements.Enemies
+namespace RandomDungeons
 {
     public class EnemyBody : KinematicBody2D, IRespawnable, IEnemy
     {

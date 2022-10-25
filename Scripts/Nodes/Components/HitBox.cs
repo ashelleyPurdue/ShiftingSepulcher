@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
-using RandomDungeons.Utils;
-
-namespace RandomDungeons.Nodes.Components
+namespace RandomDungeons
 {
     public class HitBox : Area2D
     {

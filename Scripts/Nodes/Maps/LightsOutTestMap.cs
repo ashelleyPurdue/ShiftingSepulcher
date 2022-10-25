@@ -1,11 +1,6 @@
 using Godot;
 
-using RandomDungeons.PhysicalDungeons;
-using RandomDungeons.Nodes.Elements;
-using RandomDungeons.Graphs;
-using RandomDungeons.Nodes.UI;
-
-namespace RandomDungeons.Nodes.Maps
+namespace RandomDungeons
 {
     public class LightsOutTestMap : Node
     {

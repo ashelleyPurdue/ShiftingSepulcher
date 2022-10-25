@@ -2,10 +2,7 @@ using System;
 using System.Linq;
 using Godot;
 
-using RandomDungeons.Graphs;
-using RandomDungeons.Nodes.Elements;
-
-namespace RandomDungeons.PhysicalDungeons
+namespace RandomDungeons
 {
     public class DoorWarp : Node2D
     {

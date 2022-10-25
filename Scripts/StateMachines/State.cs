@@ -1,4 +1,4 @@
-namespace RandomDungeons.StateMachines
+namespace RandomDungeons
 {
     public abstract class State<TOwner> : IState
     {

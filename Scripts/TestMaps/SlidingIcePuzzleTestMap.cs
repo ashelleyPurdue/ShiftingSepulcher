@@ -17,6 +17,7 @@ namespace RandomDungeons
                 Vector2i.Zero,
                 0
             );
+            graphRoom.RoomSeed = TitleScreen.ChosenSeed;
 
             var rng = new Random(TitleScreen.ChosenSeed);
             _puzzle.Populate(graphRoom, rng);

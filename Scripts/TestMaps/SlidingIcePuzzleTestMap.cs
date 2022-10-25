@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 namespace RandomDungeons
@@ -11,15 +12,15 @@ namespace RandomDungeons
 
         public override void _Ready()
         {
-            var graph = SlidingIceGraph.Generate(
-                seed: TitleScreen.ChosenSeed,
-                width: 10,
-                height: 10,
-                numPushes: 5,
-                numRedHerringRocks: 3
+            var graphRoom = new DungeonGraphRoom(
+                new DungeonGraph(),
+                Vector2i.Zero,
+                0
             );
+            graphRoom.RoomSeed = TitleScreen.ChosenSeed;
 
-            _puzzle.SetGraph(graph);
+            var rng = new Random(TitleScreen.ChosenSeed);
+            _puzzle.Populate(graphRoom, rng);
             _bars.SetGraphDoor(_graphDoor);
         }
 

@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 namespace RandomDungeons
@@ -10,14 +11,15 @@ namespace RandomDungeons
 
         public override void _Ready()
         {
-            var graph = LightsOutGraph.Generate(
-                seed: TitleScreen.ChosenSeed,
-                width: 3,
-                height: 3,
-                numFlips: 10
+            var graphRoom = new DungeonGraphRoom(
+                new DungeonGraph(),
+                Vector2i.Zero,
+                0
             );
+            graphRoom.RoomSeed = TitleScreen.ChosenSeed;
 
-            _puzzle.SetGraph(graph);
+            var rng = new Random(TitleScreen.ChosenSeed);
+            _puzzle.Populate(graphRoom, rng);
             _bars.SetGraphDoor(_graphDoor);
         }
 

@@ -3,7 +3,7 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class SlidingIcePuzzle : Node2D
+    public class SlidingIcePuzzle : Node2D, IRoomPopulator
     {
         [Export] public PackedScene IceBlockPrefab;
         [Export] public PackedScene RockPrefab;
@@ -22,9 +22,16 @@ namespace RandomDungeons
 
         private SlidingIceGraph _graph;
 
-        public void SetGraph(SlidingIceGraph graph)
+        public void Populate(DungeonGraphRoom graphRoom, Random rng)
         {
-            _graph = graph;
+            _graph = SlidingIceGraph.Generate(
+                seed: graphRoom.RoomSeed,
+                width: 10,
+                height: 10,
+                numPushes: 5,
+                numRedHerringRocks: 3
+            );
+
             ResetPuzzle();
         }
 

@@ -6,7 +6,6 @@
 
 [node name="SlidingIcePuzzleRoom" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-SlidingIcePuzzlePrefab = ExtResource( 3 )
 
-[node name="ContentSpawn" type="Position2D" parent="." index="2"]
+[node name="SlidingIcePuzzle" parent="." index="3" instance=ExtResource( 3 )]
 unique_name_in_owner = true

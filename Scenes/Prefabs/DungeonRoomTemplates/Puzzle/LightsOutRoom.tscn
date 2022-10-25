@@ -6,7 +6,6 @@
 
 [node name="LightsOutRoom" instance=ExtResource( 1 )]
 script = ExtResource( 4 )
-LightsOutPuzzlePrefab = ExtResource( 2 )
 
-[node name="ContentSpawn" type="Position2D" parent="." index="2"]
+[node name="LightsOutPuzzle" parent="." index="3" instance=ExtResource( 2 )]
 unique_name_in_owner = true

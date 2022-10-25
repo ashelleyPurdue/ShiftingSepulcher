@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scripts/PhysicalDungeons/DungeonInstantiator.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/DungeonRooms/DungeonRoomFactory.cs" type="Script" id=2]
@@ -10,6 +10,10 @@
 [ext_resource path="res://Scenes/Prefabs/DungeonTreeTemplates/WackyShortcutStructure.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/Prefabs/DungeonTreeTemplates/ThreeLockHub.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/Prefabs/RoomTransitionManager.tscn" type="PackedScene" id=10]
+[ext_resource path="res://SceneSpawnTables/BossRoomWeights.tres" type="Resource" id=11]
+[ext_resource path="res://SceneSpawnTables/PuzzleRooms.tres" type="Resource" id=12]
+[ext_resource path="res://SceneSpawnTables/CombatRooms.tres" type="Resource" id=13]
+[ext_resource path="res://SceneSpawnTables/FillerRooms.tres" type="Resource" id=14]
 
 [node name="Node2D" type="Node2D"]
 
@@ -25,25 +29,10 @@ unique_name_in_owner = true
 script = ExtResource( 2 )
 EmptyRoom = ExtResource( 6 )
 KeyRoom = ExtResource( 5 )
-FillerRoomWeights = {
-"EmptyRoom": 3,
-"Filler/CentralPillarRoom": 1,
-"Filler/CorridorRoom": 3,
-"Filler/FourPillarsRoom": 1,
-"Filler/FourPotsRoom": 1
-}
-CombatRoomWeights = {
-"Combat/FourTilemancersRoom": 1,
-"Combat/SingleZombieRoom": 1
-}
-PuzzleRoomWeights = {
-"Puzzle/LightsOutRoom": 1,
-"Puzzle/SlidingIcePuzzleRoom": 3
-}
-BossRoomWeights = {
-"Boss/TilemancerRoom": 1,
-"Boss/VictoryChestRoom": 0
-}
+FillerRoomTable = ExtResource( 14 )
+CombatRoomTable = ExtResource( 13 )
+PuzzleRoomTable = ExtResource( 12 )
+BossRoomTable = ExtResource( 11 )
 
 [node name="TreeTemplates" type="Node" parent="DungeonInstantiator"]
 unique_name_in_owner = true

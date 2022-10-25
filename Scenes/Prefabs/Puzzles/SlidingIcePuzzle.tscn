@@ -5,7 +5,7 @@
 [ext_resource path="res://Scenes/Prefabs/Elements/RockBlock.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Prefabs/Elements/BlockGoalSlot.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Prefabs/Elements/DirtPatch.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Scripts/PhysicalDungeons/SlidingIcePuzzle.cs" type="Script" id=6]
+[ext_resource path="res://Scripts/RoomPopulators/SlidingIcePuzzle.cs" type="Script" id=6]
 [ext_resource path="res://Scripts/Components/InteractableZone.cs" type="Script" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]

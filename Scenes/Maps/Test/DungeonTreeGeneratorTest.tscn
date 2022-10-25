@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scenes/Prefabs/UI/Widgets/SeedInput.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Scripts/Nodes/Maps/DungeonTreeGeneratorTest.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/TestMaps/DungeonTreeGeneratorTest.cs" type="Script" id=2]
 [ext_resource path="res://Scenes/Prefabs/UI/Widgets/Minimap/Minimap.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/Elements/PanZoomCamera.cs" type="Script" id=4]
 [ext_resource path="res://Scenes/Prefabs/DungeonTreeTemplates/WackyShortcutStructure.tscn" type="PackedScene" id=5]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Scripts/Nodes/DungeonRooms/CorridorRoom.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/DungeonRooms/CorridorRoom.cs" type="Script" id=1]
 [ext_resource path="res://DoorPrefabs.tres" type="Resource" id=2]
 [ext_resource path="res://Scenes/Prefabs/Elements/CorridorRoomCorridor.tscn" type="PackedScene" id=3]
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Scripts/Nodes/Elements/SlidingIceBlock.cs" type="Script" id=1]
-[ext_resource path="res://Scripts/Nodes/Components/InteractableZone.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/Elements/SlidingIceBlock.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Components/InteractableZone.cs" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 16, 16 )

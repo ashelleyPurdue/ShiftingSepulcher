@@ -1,10 +1,10 @@
 [gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://Scripts/Nodes/Components/HurtBox.cs" type="Script" id=1]
-[ext_resource path="res://Scripts/Nodes/Elements/Enemies/EnemyBody.cs" type="Script" id=2]
-[ext_resource path="res://Scripts/Nodes/Components/HitBox.cs" type="Script" id=3]
-[ext_resource path="res://Scripts/Nodes/Components/HurtFlasher.cs" type="Script" id=4]
-[ext_resource path="res://Scripts/Nodes/Elements/Enemies/ObliviousZombie.cs" type="Script" id=5]
+[ext_resource path="res://Scripts/Components/HurtBox.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Enemies/EnemyBody.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/Components/HitBox.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/Components/HurtFlasher.cs" type="Script" id=4]
+[ext_resource path="res://Scripts/Enemies/ObliviousZombie.cs" type="Script" id=5]
 
 [sub_resource type="Animation" id=4]
 resource_name = "Cycle"

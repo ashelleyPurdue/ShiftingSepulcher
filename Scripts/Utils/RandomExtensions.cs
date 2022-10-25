@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RandomDungeons.Utils
+namespace RandomDungeons
 {
     public static class RandomExtensions
     {

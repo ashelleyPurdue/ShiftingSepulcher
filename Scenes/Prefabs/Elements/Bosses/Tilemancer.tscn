@@ -1,10 +1,10 @@
 [gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/TilemancerTile.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Scripts/Nodes/Bosses/Tilemancer.cs" type="Script" id=2]
-[ext_resource path="res://Scripts/Nodes/Components/HitBox.cs" type="Script" id=3]
-[ext_resource path="res://Scripts/Nodes/Components/HurtBox.cs" type="Script" id=4]
-[ext_resource path="res://Scripts/Nodes/Components/HurtFlasher.cs" type="Script" id=5]
+[ext_resource path="res://Scripts/Bosses/Tilemancer.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/Components/HitBox.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/Components/HurtBox.cs" type="Script" id=4]
+[ext_resource path="res://Scripts/Components/HurtFlasher.cs" type="Script" id=5]
 [ext_resource path="res://Scenes/Prefabs/Elements/VictoryChest.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Fonts/The Wild Breath of Zelda.otf" type="DynamicFontData" id=7]
 

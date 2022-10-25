@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RandomDungeons.Services
+namespace RandomDungeons
 {
     public static class InputService
     {

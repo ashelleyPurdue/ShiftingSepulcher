@@ -48,6 +48,12 @@ namespace RandomDungeons
             SetDoor(CardinalDirection.South);
             SetDoor(CardinalDirection.East);
             SetDoor(CardinalDirection.West);
+
+            var rng = new Random(graphRoom.RoomSeed);
+            foreach (var populator in this.AllDescendantsOfType<IRoomPopulator>())
+            {
+                populator.Populate(graphRoom, rng);
+            }
         }
 
         private void SetDoor(CardinalDirection dir)

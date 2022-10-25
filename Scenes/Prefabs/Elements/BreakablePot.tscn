@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Scripts/Nodes/Components/HurtBox.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Components/HurtBox.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Elements/BreakablePot.cs" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]

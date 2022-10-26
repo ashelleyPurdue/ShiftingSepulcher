@@ -6,7 +6,6 @@
 
 [node name="EmptyRoom" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
-RequiredEnemies = [ NodePath(""), NodePath(""), NodePath(""), NodePath("") ]
 
 [node name="TrashMobSpawn" parent="." index="5" instance=ExtResource( 2 )]
 position = Vector2( -192, -192 )

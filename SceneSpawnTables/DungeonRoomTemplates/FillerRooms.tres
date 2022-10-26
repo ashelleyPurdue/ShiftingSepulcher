@@ -10,6 +10,5 @@ Weights = {
 "CentralPillarRoom": 1,
 "CorridorRoom": 3,
 "FourPillarsRoom": 1,
-"FourPotsRoom": 1,
-"TrashMobsInEmptyRoom": 100
+"FourPotsRoom": 1
 }

@@ -346,7 +346,7 @@ script = ExtResource( 4 )
 IgnoredHurtBoxes = [ NodePath("../../ShadowAndCollisionShape/HurtBox") ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/HitBox"]
-position = Vector2( 21, 0 )
+position = Vector2( 29, 0 )
 rotation = 1.5708
 shape = SubResource( 75 )
 

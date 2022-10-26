@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource( 1 )
-BasePath = "res://Scenes/Prefabs/DungeonRoomTemplates/Combat"
+BasePath = "res://Scenes/Prefabs/Elements/Enemies"
 Weights = {
-"FourTilemancersRoom": 1,
-"SingleZombieRoom": 1
+"MiniTilemancer": 1,
+"ObliviousZombie": 4
 }

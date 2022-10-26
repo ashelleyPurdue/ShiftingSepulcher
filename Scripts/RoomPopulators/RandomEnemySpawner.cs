@@ -6,18 +6,20 @@ namespace RandomDungeons
     public class RandomEnemySpawner : Node2D, IRoomPopulator
     {
         [Export] public SceneSpawnTable SpawnTable;
-        [Export] public int Count = 1;
+        [Export] public int MinCount = 1;
+        [Export] public int MaxCount = 1;
         [Export] public float SpawnRadius = 0;
 
         public void Populate(DungeonGraphRoom graphRoom, Random rng)
         {
-            for (int i = 0; i < Count; i++)
+            int count = rng.Next(MinCount, MaxCount);
+
+            for (int i = 0; i < count; i++)
             {
                 var enemy = SpawnTable.Spawn<Node2D>(rng);
                 enemy.Position = RandomPos(rng);
                 AddChild(enemy);
             }
-
         }
 
         private Vector2 RandomPos(Random rng)

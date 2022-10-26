@@ -49,5 +49,14 @@ namespace RandomDungeons
 
             throw new Exception("Uhh...I didn't think this through, apparently");
         }
+
+        public static T PickFromWeighted<T>(this Random rng, IDictionary<T, int> weights)
+        {
+            var convertedWeights = weights
+                .Select(kvp => (kvp.Key, kvp.Value))
+                .ToArray();
+
+            return rng.PickFromWeighted<T>(convertedWeights);
+        }
     }
 }

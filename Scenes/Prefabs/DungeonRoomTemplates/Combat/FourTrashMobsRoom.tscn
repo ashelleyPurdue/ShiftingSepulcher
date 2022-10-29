@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scenes/Prefabs/DungeonRoomTemplates/EmptyRoom.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Scenes/Prefabs/Elements/TrashMobSpawn.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Prefabs/RoomPopulators/TrashMobSpawn.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/DungeonRooms/CombatRoom.cs" type="Script" id=3]
 
 [node name="EmptyRoom" instance=ExtResource( 1 )]

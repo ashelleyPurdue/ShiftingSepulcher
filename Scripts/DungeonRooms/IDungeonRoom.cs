@@ -10,7 +10,6 @@ namespace RandomDungeons
         event Action<CardinalDirection> DoorUsed;
 
         DungeonGraphRoom GraphRoom {get;}
-        float FadePercent {get; set;}
 
         Node2D GetDoorSpawn(CardinalDirection dir);
 

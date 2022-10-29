@@ -17,8 +17,6 @@ namespace RandomDungeons
 
         public DungeonGraphRoom GraphRoom {get; protected set;}
 
-        public float FadePercent {get; set;}
-
         public virtual Node2D GetDoorSpawn(CardinalDirection dir)
         {
             return GetNode<Node2D>($"%DoorSpawns/{dir}");
@@ -26,12 +24,6 @@ namespace RandomDungeons
 
         public override void _Process(float deltaTime)
         {
-            // Adjust the fade curtain's transparency
-            var curtain = GetNode<Polygon2D>("%FadeCurtain");
-
-            curtain.Visible = FadePercent > 0;
-            curtain.Modulate = GetBackgroundColor(1 - FadePercent);
-
             // Open challenge doors if they've been solved
             foreach (var door in ChallengeDoors())
             {
@@ -112,14 +104,6 @@ namespace RandomDungeons
                 .Select(dir => GraphRoom.GetDoor(dir))
                 .Where(door => door is ChallengeDungeonGraphDoor)
                 .Cast<ChallengeDungeonGraphDoor>();
-        }
-
-        private Color GetBackgroundColor(float alpha)
-        {
-            var c = (Color)ProjectSettings.GetSetting("rendering/environment/default_clear_color");
-            c.a = alpha;
-
-            return c;
         }
     }
 }

@@ -11,19 +11,32 @@ namespace RandomDungeons
         private EnemyBody _body => this.FindAncestor<EnemyBody>();
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
 
+        private Player _targetPlayer;
+
+        private StateMachine _sm;
+
+        public Zombie()
+        {
+            _sm = new StateMachine(this);
+        }
+
         public void OnDead()
         {
-            _body.WalkVelocity = Vector2.Zero;
-
-            _animator.PlaybackSpeed = 1;
-            _animator.Play("Death");
+            _sm.ChangeState(Dead);
         }
 
         public void OnRespawning()
         {
-            _animator.Play("RESET");
-            _animator.Advance(0);
-            _animator.Play("Cycle");
+            _sm.ChangeState(Searching);
+        }
+
+        public void OnVisionCircleBodyEntered(object body)
+        {
+            if (body is Player p && _sm.CurrentState == Searching)
+            {
+                _targetPlayer = p;
+                _sm.ChangeState(Chasing);
+            }
         }
 
         public void StartWandering()
@@ -47,6 +60,59 @@ namespace RandomDungeons
                 MaxIdleTime
             );
             _animator.PlaybackSpeed = 1f / idleDuration;
+        }
+
+        private State<Zombie> Searching = new SearchingState();
+        private class SearchingState : State<Zombie>
+        {
+            public override void _StateEntered()
+            {
+                Owner._animator.Play("RESET");
+                Owner._animator.Advance(0);
+                Owner._animator.Play("Search");
+            }
+
+            public override void _StateExited()
+            {
+                Owner._animator.PlaybackSpeed = 1;
+            }
+        }
+
+        private State<Zombie> Chasing = new ChasingState();
+        private class ChasingState : State<Zombie>
+        {
+            public override void _StateEntered()
+            {
+                Owner._animator.Play("RESET");
+                Owner._animator.Advance(0);
+
+                // TODO: Play a special chasing animation, once this guy has
+                // actual graphics.
+                Owner._animator.Stop();
+            }
+
+            public override void _PhysicsProcess(float delta)
+            {
+                var dir = Owner
+                    ._body
+                    .GlobalPosition
+                    .DirectionTo(Owner._targetPlayer.GlobalPosition);
+
+                Owner._body.WalkVelocity = dir * Owner.WanderSpeed;
+            }
+        }
+
+        private State<Zombie> Dead = new DeadState();
+        private class DeadState : State<Zombie>
+        {
+            public override void _StateEntered()
+            {
+                Owner._animator.Play("RESET");
+                Owner._animator.Advance(0);
+                Owner._animator.Play("Death");
+
+                Owner._body.WalkVelocity = Vector2.Zero;
+            }
         }
     }
 }

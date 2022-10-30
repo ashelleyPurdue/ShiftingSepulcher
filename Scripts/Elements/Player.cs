@@ -37,7 +37,7 @@ namespace RandomDungeons
         public override void _Ready()
         {
             _sm = new StateMachine(this);
-            _sm.ChangeState(Spawning);
+            Resurrect();
         }
 
         public override void _PhysicsProcess(float delta)

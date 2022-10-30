@@ -1,32 +1,10 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scripts/Components/HurtBox.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Enemies/EnemyBody.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/Components/HitBox.cs" type="Script" id=3]
 [ext_resource path="res://Scripts/Components/HurtFlasher.cs" type="Script" id=4]
 [ext_resource path="res://Scripts/Enemies/Zombie.cs" type="Script" id=5]
-
-[sub_resource type="Animation" id=4]
-resource_name = "Cycle"
-length = 2.0
-loop = true
-tracks/0/type = "method"
-tracks/0/path = NodePath("AI")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"values": [ {
-"args": [  ],
-"method": "StartIdling"
-}, {
-"args": [  ],
-"method": "StartWandering"
-} ]
-}
 
 [sub_resource type="Animation" id=5]
 resource_name = "Death"
@@ -155,8 +133,33 @@ tracks/4/keys = {
 "values": [ false ]
 }
 
+[sub_resource type="Animation" id=4]
+resource_name = "Search"
+length = 2.0
+loop = true
+tracks/0/type = "method"
+tracks/0/path = NodePath("AI")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "StartIdling"
+}, {
+"args": [  ],
+"method": "StartWandering"
+} ]
+}
+
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 16 )
+
+[sub_resource type="CircleShape2D" id=7]
+radius = 256.0
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 16, 16 )
@@ -175,10 +178,10 @@ script = ExtResource( 5 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
-autoplay = "Cycle"
-anims/Cycle = SubResource( 4 )
+autoplay = "Search"
 anims/Death = SubResource( 5 )
 anims/RESET = SubResource( 6 )
+anims/Search = SubResource( 4 )
 
 [node name="Visuals" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -189,6 +192,11 @@ polygon = PoolVector2Array( -16, -16, 16, -16, 16, 16, -16, 16 )
 
 [node name="KinematicBodyCollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+
+[node name="VisionCircle" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VisionCircle"]
+shape = SubResource( 7 )
 
 [node name="HurtBox" type="Area2D" parent="."]
 script = ExtResource( 1 )
@@ -209,6 +217,6 @@ script = ExtResource( 4 )
 VisualsPath = NodePath("../Visuals")
 
 [connection signal="Dead" from="." to="AI" method="OnDead"]
-[connection signal="HitWall" from="." to="AI" method="OnHitWall"]
 [connection signal="Respawning" from="." to="AI" method="OnRespawning"]
+[connection signal="body_entered" from="VisionCircle" to="AI" method="OnVisionCircleBodyEntered" flags=3]
 [connection signal="TookDamage" from="HurtBox" to="." method="OnTookDamage"]

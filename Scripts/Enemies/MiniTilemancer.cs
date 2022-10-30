@@ -103,7 +103,6 @@ namespace RandomDungeons
             StopWandering();
             _currentTile = null;
 
-            _body.KnockbackVelocity = Vector2.Zero;
             _animator.Play("Death");
             _animator.PlaybackSpeed = 1;
         }

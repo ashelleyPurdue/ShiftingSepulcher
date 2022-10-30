@@ -14,7 +14,7 @@ namespace RandomDungeons
         private class Content
         {
             public HashSet<int> HeldKeys = new HashSet<int>();
-            public int MaxHealth = 3;
+            public int MaxHealth = 6;
             public int Health;
         }
 

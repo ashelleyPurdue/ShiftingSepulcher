@@ -2,7 +2,7 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class ObliviousZombie : Node
+    public class Zombie : Node
     {
         [Export] public float MinIdleTime = 1f;
         [Export] public float MaxIdleTime = 2f;

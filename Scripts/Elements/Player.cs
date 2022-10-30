@@ -68,7 +68,7 @@ namespace RandomDungeons
         public void Resurrect()
         {
             _isDead = false;
-            PlayerInventory.Health = 3;
+            PlayerInventory.FullHeal();
 
             _visuals.Scale = Vector2.One;
             _visuals.Modulate = Colors.White;

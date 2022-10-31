@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Sprites/LightsOutSwitch.svg" type="Texture" id=1]
 [ext_resource path="res://Scripts/Components/HurtFlasher.cs" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Scripts/Components/HitBox.cs" type="Script" id=4]
 [ext_resource path="res://Scripts/Elements/Player.cs" type="Script" id=5]
 [ext_resource path="res://Scripts/Elements/PlayerSword.cs" type="Script" id=6]
+[ext_resource path="res://Scripts/Components/InvulnerableFlasher.cs" type="Script" id=7]
 
 [sub_resource type="CircleShape2D" id=77]
 radius = 14.0
@@ -355,6 +356,11 @@ shape = SubResource( 75 )
 unique_name_in_owner = true
 script = ExtResource( 2 )
 VisualsPath = NodePath("../Visuals")
+
+[node name="InvulnerableFlasher" type="Node" parent="."]
+script = ExtResource( 7 )
+VisualsPath = NodePath("../Visuals")
+HurtBoxPath = NodePath("../ShadowAndCollisionShape/HurtBox")
 
 [connection signal="TookDamage" from="ShadowAndCollisionShape/HurtBox" to="." method="OnTookDamage"]
 [connection signal="DealtDamage" from="Sword/HitBox" to="." method="OnSwordDealtDamage"]

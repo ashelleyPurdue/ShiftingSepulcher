@@ -37,7 +37,7 @@ namespace RandomDungeons
         public override void _Ready()
         {
             _sm = new StateMachine(this);
-            _sm.ChangeState(Spawning);
+            Resurrect();
         }
 
         public override void _PhysicsProcess(float delta)
@@ -68,7 +68,7 @@ namespace RandomDungeons
         public void Resurrect()
         {
             _isDead = false;
-            PlayerInventory.Health = 3;
+            PlayerInventory.FullHeal();
 
             _visuals.Scale = Vector2.One;
             _visuals.Modulate = Colors.White;

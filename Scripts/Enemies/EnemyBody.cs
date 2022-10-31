@@ -16,12 +16,14 @@ namespace RandomDungeons
 
         public int Health;
         public Vector2 WalkVelocity;
-        public Vector2 KnockbackVelocity;
 
         private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
 
         private bool _spawnPosKnown = false;
         private Vector2 _spawnPos;
+
+        private float _knockbackTimer = 0;
+        private Vector2 _velocity;
 
         public override void _Ready()
         {
@@ -44,24 +46,30 @@ namespace RandomDungeons
 
         public override void _PhysicsProcess(float delta)
         {
-            // Move
-            Vector2 prevKnockbackVel = KnockbackVelocity;
-            Vector2 totalVelocity = WalkVelocity + KnockbackVelocity;
-            totalVelocity = MoveAndSlide(totalVelocity);
-            KnockbackVelocity = totalVelocity - WalkVelocity;
-            KnockbackVelocity = KnockbackVelocity.MoveToward(
-                Vector2.Zero,
-                KnockbackFriction * delta
-            );
+            bool isKnockedBack = _knockbackTimer > 0;
 
-            // Take damage upon hitting a wall too hard
-            bool hitWall = GetSlideCount() > 0;
-            bool fastEnough = prevKnockbackVel.Length() > MinSpeedForHitWallTrigger;
-            if (hitWall && fastEnough)
+            if (!isKnockedBack)
             {
-                Health--;
-                _hurtFlasher.Flash();
-                EmitSignal(nameof(HitWall));
+                _velocity = WalkVelocity;
+                _velocity = MoveAndSlide(_velocity);
+            }
+            else
+            {
+                _knockbackTimer -= delta;
+
+                var prevVel = _velocity;
+                _velocity = _velocity.MoveToward(WalkVelocity, KnockbackFriction * delta);
+                _velocity = MoveAndSlide(_velocity);
+
+                // Take damage upon hitting a wall too hard
+                bool hitWall = GetSlideCount() > 0;
+                bool fastEnough = prevVel.Length() > MinSpeedForHitWallTrigger;
+                if (hitWall && fastEnough)
+                {
+                    Health--;
+                    _hurtFlasher.Flash();
+                    EmitSignal(nameof(HitWall));
+                }
             }
 
             // Die when out of health
@@ -76,8 +84,15 @@ namespace RandomDungeons
         public virtual void OnTookDamage(HitBox hitBox)
         {
             Health -= hitBox.Damage;
-            KnockbackVelocity = hitBox.GetKnockbackVelocity(this, KnockbackFriction);
             _hurtFlasher?.Flash();
+
+            _velocity = hitBox.GetKnockbackVelocity(this, KnockbackFriction);
+            _knockbackTimer = KnockbackDuration(_velocity);
+        }
+
+        private float KnockbackDuration(Vector2 velocity)
+        {
+            return velocity.Length() / KnockbackFriction;
         }
     }
 }

@@ -14,7 +14,14 @@ namespace RandomDungeons
         private class Content
         {
             public HashSet<int> HeldKeys = new HashSet<int>();
-            public int Health = 3;
+            public int MaxHealth = 6;
+            public int Health;
+        }
+
+        public static int MaxHealth
+        {
+            get => _content.MaxHealth;
+            set => _content.MaxHealth = value;
         }
 
         public static int Health
@@ -23,7 +30,16 @@ namespace RandomDungeons
             set => _content.Health = value;
         }
 
-        public static void Reset() => _content = new Content();
+        public static void Reset()
+        {
+            _content = new Content();
+            FullHeal();
+        }
+
+        public static void FullHeal()
+        {
+            Health = MaxHealth;
+        }
 
         public static bool HasKey(int keyId) => _content.HeldKeys.Contains(keyId);
         public static void CollectKey(int keyId) => _content.HeldKeys.Add(keyId);

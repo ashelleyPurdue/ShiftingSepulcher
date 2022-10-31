@@ -7,5 +7,5 @@ script = ExtResource( 1 )
 BasePath = "res://Scenes/Prefabs/Elements/Enemies"
 Weights = {
 "MiniTilemancer": 1,
-"ObliviousZombie": 4
+"Zombie": 4
 }

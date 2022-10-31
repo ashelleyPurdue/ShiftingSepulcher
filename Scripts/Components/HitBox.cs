@@ -10,7 +10,7 @@ namespace RandomDungeons
         [Signal] public delegate void DealtDamage(HurtBox hurtBox);
 
         [Export] public int Damage = 1;
-        [Export] public float InvlunerabilityTime = 0.5f;
+        [Export] public float InvlunerabilityTime = 1.5f;
         [Export] public float KnockbackDistance = 92.5f;
 
         [Export] public NodePath[] IgnoredHurtBoxes = new NodePath[] {};

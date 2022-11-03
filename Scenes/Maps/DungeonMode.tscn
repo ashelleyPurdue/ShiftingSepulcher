@@ -50,3 +50,4 @@ stream = ExtResource( 7 )
 autoplay = true
 
 [connection signal="DeathAnimationFinished" from="Player" to="RoomTransitionManager" method="RespawnPlayer"]
+[connection signal="ready" from="DungeonInstantiator" to="DungeonInstantiator" method="Generate"]

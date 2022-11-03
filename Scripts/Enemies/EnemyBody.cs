@@ -2,7 +2,7 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class EnemyBody : KinematicBody2D, IRespawnable, IEnemy
+    public class EnemyBody : KinematicBody2D, IRespawnable, IEnemy, IOnRoomEnter
     {
         [Signal] public delegate void HitWall();
         [Signal] public delegate void Dead();
@@ -31,6 +31,12 @@ namespace RandomDungeons
             _spawnPosKnown = true;
 
             Respawn();
+        }
+
+        public void OnRoomEnter()
+        {
+            if (!IsDead)
+                Respawn();
         }
 
         public void Respawn()

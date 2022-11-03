@@ -33,3 +33,5 @@ BossRoomTable = ExtResource( 3 )
 
 [node name="TreeTemplates" type="Node" parent="DungeonInstantiator"]
 unique_name_in_owner = true
+
+[connection signal="ready" from="DungeonInstantiator" to="DungeonInstantiator" method="Generate"]

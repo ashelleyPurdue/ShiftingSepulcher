@@ -3,7 +3,7 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class SlidingIcePuzzle : Node2D, IRoomPopulator
+    public class SlidingIcePuzzle : Node2D, IRoomPopulator, IOnRoomEnter
     {
         [Export] public PackedScene IceBlockPrefab;
         [Export] public PackedScene RockPrefab;
@@ -33,6 +33,12 @@ namespace RandomDungeons
             );
 
             ResetPuzzle();
+        }
+
+        public void OnRoomEnter()
+        {
+            if (!IsSolved())
+                ResetPuzzle();
         }
 
         public void ResetPuzzle()

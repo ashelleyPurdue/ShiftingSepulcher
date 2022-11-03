@@ -88,6 +88,21 @@ namespace RandomDungeons
             return true;
         }
 
+        public LightsOutGraph Clone()
+        {
+            var clone = new LightsOutGraph(Width, Height);
+
+            for (int x = 0; x < Width; x++)
+            {
+                for (int y = 0; y < Height; y++)
+                {
+                    clone._lightStates[x,y] = _lightStates[x, y];
+                }
+            }
+
+            return clone;
+        }
+
         private IEnumerable<Vector2i> NeighboringCoordinates(Vector2i coords)
         {
             for (int i = 0; i < 3; i++)

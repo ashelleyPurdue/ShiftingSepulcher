@@ -4,7 +4,7 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class LightsOutPuzzle : Node2D, IRoomPopulator
+    public class LightsOutPuzzle : Node2D, IRoomPopulator, IOnRoomEnter
     {
         [Export] public PackedScene SwitchPrefab;
         [Export] public Color OnColor;
@@ -13,6 +13,7 @@ namespace RandomDungeons
         public event Action Solved;
         private bool _isFrozen = false;
 
+        private LightsOutGraph _initialState;
         private LightsOutGraph _graph;
 
         private Dictionary<Vector2i, LightsOutSwitch> _switches
@@ -22,14 +23,25 @@ namespace RandomDungeons
 
         public void Populate(DungeonGraphRoom graphRoom, Random rng)
         {
-            var graph = LightsOutGraph.Generate(
+            _initialState = LightsOutGraph.Generate(
                 seed: graphRoom.RoomSeed,
                 width: 4,
                 height: 4,
                 numFlips: 3
             );
 
-            SetGraph(graph);
+            Reset();
+        }
+
+        public void OnRoomEnter()
+        {
+            if (!IsSolved())
+                Reset();
+        }
+
+        public void Reset()
+        {
+            SetGraph(_initialState.Clone());
         }
 
         private void SetGraph(LightsOutGraph graph)

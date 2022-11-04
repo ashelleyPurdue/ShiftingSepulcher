@@ -17,7 +17,7 @@ namespace RandomDungeons
 
         public override void _Process(float delta)
         {
-            _audioPlayer.VolumeDb = UserSettings.Get.MusicVolume * VolumeMult;
+            _audioPlayer.VolumeDb = GD.Linear2Db(UserSettings.Get.MusicVolume * VolumeMult);
         }
 
         public void PlaySong(AudioStream song)

@@ -7,6 +7,7 @@ pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
+DefaultFocusedOption = NodePath("CenterContainer/VBoxContainer/Unpause")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 anchor_left = 0.5
@@ -31,7 +32,7 @@ align = 1
 margin_top = 18.0
 margin_right = 101.0
 margin_bottom = 38.0
-text = "Resumes"
+text = "Resume"
 
 [node name="ReturnToTitle" type="Button" parent="CenterContainer/VBoxContainer"]
 margin_top = 42.0

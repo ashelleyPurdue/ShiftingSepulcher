@@ -4,6 +4,10 @@ namespace RandomDungeons
 {
     public class PauseMenu : Control
     {
+        [Export] public NodePath DefaultFocusedOption;
+
+        private Control _defaultFocusedOption => GetNode<Control>(DefaultFocusedOption);
+
         private bool _isOpen = false;
 
         public override void _Process(float delta)
@@ -22,6 +26,7 @@ namespace RandomDungeons
         public void Pause()
         {
             _isOpen = true;
+            _defaultFocusedOption.GrabFocus();
             GetTree().Paused = true;
         }
 

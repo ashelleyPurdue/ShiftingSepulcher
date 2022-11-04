@@ -9,6 +9,8 @@ namespace RandomDungeons
             Input.GetAxis("MoveUp", "MoveDown")
         );
 
+        public static bool PausePressed => Input.IsActionJustPressed("Pause");
+
         public static bool ActivatePressed => Input.IsActionJustPressed("ui_accept");
         public static bool AttackPressed => Input.IsActionJustPressed("Attack");
     }

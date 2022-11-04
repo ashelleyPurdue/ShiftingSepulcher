@@ -183,6 +183,8 @@ namespace RandomDungeons
 
                 Owner._animator.PlaybackSpeed = 1;
                 Owner._animator.Play("Die");
+
+                MusicService.Instance.StopSong();
             }
         }
 

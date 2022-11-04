@@ -18,6 +18,7 @@ namespace RandomDungeons
         public override void _Ready()
         {
             _defaultFocusedOption.GrabFocus();
+            MusicService.Instance.StopSong();
         }
 
         private void PlayDungeonMode()

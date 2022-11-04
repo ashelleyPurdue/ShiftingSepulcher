@@ -6,6 +6,8 @@ namespace RandomDungeons
 {
     public class RoomTransitionManager : Node
     {
+        [Export] public AudioStream BackgroundMusic;
+
         private AnimationPlayer _transitionAnimator => GetNode<AnimationPlayer>("%RoomTransitionAnimator");
         private Node2D _activeRoomHolder => GetNode<Node2D>("%ActiveRoomHolder");
         private Node2D _previousRoomHolder => GetNode<Node2D>("%PreviousRoomHolder");
@@ -72,6 +74,8 @@ namespace RandomDungeons
                     enemy.Respawn();
                 }
             }
+
+            MusicService.Instance.PlaySong(BackgroundMusic);
         }
 
         public override void _Process(float delta)

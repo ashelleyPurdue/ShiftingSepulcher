@@ -9,10 +9,32 @@ namespace RandomDungeons
         public override void _Process(float delta)
         {
             Visible = _isOpen;
-            GetTree().Paused = _isOpen;
 
             if (InputService.PausePressed)
-                _isOpen = !_isOpen;
+            {
+                if (!_isOpen)
+                    Pause();
+                else
+                    Unpause();
+            }
+        }
+
+        public void Pause()
+        {
+            _isOpen = true;
+            GetTree().Paused = true;
+        }
+
+        public void Unpause()
+        {
+            _isOpen = false;
+            GetTree().Paused = false;
+        }
+
+        public void ReturnToTitleScreen()
+        {
+            Unpause();
+            GetTree().ChangeScene("res://Scenes/Maps/TitleScreen.tscn");
         }
     }
 }

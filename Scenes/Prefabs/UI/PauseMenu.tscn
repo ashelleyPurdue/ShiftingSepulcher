@@ -13,12 +13,29 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -23.0
-margin_top = -20.0
-margin_right = 23.0
-margin_bottom = 20.0
+margin_left = -50.5
+margin_top = -31.0
+margin_right = 50.5
+margin_bottom = 31.0
+grow_horizontal = 2
 
 [node name="PausedLabel" type="Label" parent="VBoxContainer"]
-margin_right = 46.0
+margin_right = 101.0
 margin_bottom = 14.0
 text = "Paused"
+align = 1
+
+[node name="Unpause" type="Button" parent="VBoxContainer"]
+margin_top = 18.0
+margin_right = 101.0
+margin_bottom = 38.0
+text = "Resumes"
+
+[node name="ReturnToTitle" type="Button" parent="VBoxContainer"]
+margin_top = 42.0
+margin_right = 101.0
+margin_bottom = 62.0
+text = "Return to title"
+
+[connection signal="pressed" from="VBoxContainer/Unpause" to="." method="Unpause"]
+[connection signal="pressed" from="VBoxContainer/ReturnToTitle" to="." method="ReturnToTitleScreen"]

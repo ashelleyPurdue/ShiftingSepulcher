@@ -14,6 +14,10 @@ config/name="RandomDungeons"
 run/main_scene="res://Scenes/Maps/TitleScreen.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+MusicService="*res://Scenes/AutoLoadSingletons/MusicService.tscn"
+
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/ProjectPlugins/CustomNodes/plugin.cfg" )

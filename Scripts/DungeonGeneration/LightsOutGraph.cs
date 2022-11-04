@@ -70,17 +70,18 @@ namespace RandomDungeons
         }
 
         /// <summary>
-        /// The puzzle is considered solved if all lights are "on".
-        /// Hmmm...the name "lights out" sounds backwards...
+        /// The puzzle is considered solved if all lights are the same
         /// </summary>
         /// <returns></returns>
         public bool IsSolved()
         {
+            bool desiredState = _lightStates[0, 0];
+
             for (int x = 0; x < Width; x++)
             {
                 for (int y = 0; y < Height; y++)
                 {
-                    if (!IsLightOn(new Vector2i(x, y)))
+                    if (IsLightOn(new Vector2i(x, y)) != desiredState)
                         return false;
                 }
             }

@@ -22,6 +22,7 @@ margin_bottom = 42.0
 margin_top = 46.0
 margin_right = 1024.0
 margin_bottom = 66.0
+focus_mode = 0
 text = "Choose a Random Seed"
 
 [connection signal="pressed" from="RandomSeedButton" to="." method="RandomizeSeed"]

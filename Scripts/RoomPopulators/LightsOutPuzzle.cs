@@ -27,7 +27,7 @@ namespace RandomDungeons
                 seed: graphRoom.RoomSeed,
                 width: 4,
                 height: 4,
-                numFlips: 3
+                numFlips: 2
             );
 
             Reset();

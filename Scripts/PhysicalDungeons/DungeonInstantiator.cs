@@ -12,7 +12,7 @@ namespace RandomDungeons
         private DungeonRoomFactory _roomFactory => GetNode<DungeonRoomFactory>("%RoomFactory");
         private RoomTransitionManager _transitionManager => GetNode<RoomTransitionManager>("%RoomTransitionManager");
 
-        public override void _Ready()
+        public void Generate()
         {
             // Generate a dungeon graph
             GD.Print(TitleScreen.ChosenSeed);

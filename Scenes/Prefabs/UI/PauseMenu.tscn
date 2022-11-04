@@ -47,8 +47,6 @@ margin_right = 101.0
 margin_bottom = 80.0
 
 [node name="SettingsMenu" parent="CenterContainer/VBoxContainer" instance=ExtResource( 2 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_top = 84.0
 margin_right = 101.0
 margin_bottom = 84.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scripts/PhysicalDungeons/DungeonInstantiator.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/DungeonRooms/DungeonRoomFactory.cs" type="Script" id=2]
@@ -6,7 +6,6 @@
 [ext_resource path="res://Scenes/Prefabs/UI/HUD.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Prefabs/DungeonRoomTemplates/KeyRoom.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Prefabs/DungeonRoomTemplates/EmptyRoom.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Audio/Music/DungeonMusic.ogg" type="AudioStream" id=7]
 [ext_resource path="res://Scenes/Prefabs/DungeonTreeTemplates/WackyShortcutStructure.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/Prefabs/DungeonTreeTemplates/ThreeLockHub.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/Prefabs/RoomTransitionManager.tscn" type="PackedScene" id=10]
@@ -44,10 +43,6 @@ unique_name_in_owner = true
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="HUD" parent="CanvasLayer" instance=ExtResource( 4 )]
-
-[node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 7 )
-autoplay = true
 
 [connection signal="DeathAnimationFinished" from="Player" to="RoomTransitionManager" method="RespawnPlayer"]
 [connection signal="ready" from="DungeonInstantiator" to="DungeonInstantiator" method="Generate"]

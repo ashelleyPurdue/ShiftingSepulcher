@@ -6,12 +6,19 @@ namespace RandomDungeons
     {
         public static int ChosenSeed;
 
+        [Export] public NodePath DefaultFocusedOption;
+
         [Export] public PackedScene DungeonModeScene;
         [Export] public PackedScene LightsOutScene;
         [Export] public PackedScene SlidingIceModeScene;
 
+        private Control _defaultFocusedOption => GetNode<Control>(DefaultFocusedOption);
         private SeedInput _seedInput => GetNode<SeedInput>("%SeedInput");
 
+        public override void _Ready()
+        {
+            _defaultFocusedOption.GrabFocus();
+        }
 
         private void PlayDungeonMode()
         {

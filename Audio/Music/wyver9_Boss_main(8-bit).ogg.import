@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/wyver9_Boss_main(8-bit).ogg-de38e3d675706b19ac5ece465f87d9a5.oggstr"
+
+[deps]
+
+source_file="res://Audio/Music/wyver9_Boss_main(8-bit).ogg"
+dest_files=[ "res://.import/wyver9_Boss_main(8-bit).ogg-de38e3d675706b19ac5ece465f87d9a5.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

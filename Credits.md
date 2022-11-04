@@ -9,3 +9,7 @@ The Wild Breath of Zelda font:
 JRPG Collection music:
     https://opengameart.org/content/jrpg-collection
     Author: Yubatake
+
+Tilemancer boss music:
+    https://opengameart.org/content/arcade-boss-tracks-8-bitchiptune
+    Author: wyver9

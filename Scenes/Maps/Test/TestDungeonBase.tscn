@@ -33,6 +33,7 @@ margin_bottom = 66.0
 margin_top = 70.0
 margin_right = 161.0
 margin_bottom = 90.0
+focus_mode = 0
 text = "Generate"
 
 [node name="RoomTransitionManager" parent="." instance=ExtResource( 5 )]

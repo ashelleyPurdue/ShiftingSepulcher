@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/JRPG_labyrinth_loop.ogg-9df6e04cc942e98a5d376f25ca8b535c.oggstr"
+
+[deps]
+
+source_file="res://Audio/Music/JRPG_labyrinth_loop.ogg"
+dest_files=[ "res://.import/JRPG_labyrinth_loop.ogg-9df6e04cc942e98a5d376f25ca8b535c.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/BossDeathExplosion.ogg-cb022119fea46938afcb9468977018d0.oggstr"
+
+[deps]
+
+source_file="res://Audio/SFX/BossDeathExplosion.ogg"
+dest_files=[ "res://.import/BossDeathExplosion.ogg-cb022119fea46938afcb9468977018d0.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

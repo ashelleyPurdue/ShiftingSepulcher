@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scripts/DungeonRooms/DungeonRoomFactory.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/PhysicalDungeons/DungeonInstantiator.cs" type="Script" id=2]
@@ -12,15 +12,25 @@
 [ext_resource path="res://SceneSpawnTables/DungeonRoomTemplates/PuzzleRooms.tres" type="Resource" id=10]
 [ext_resource path="res://Scripts/TestMaps/TestDungeonBase.cs" type="Script" id=11]
 [ext_resource path="res://Scenes/Prefabs/UI/Widgets/SeedInput.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Audio/Music/JRPG_labyrinth_loop.ogg" type="AudioStream" id=13]
+[ext_resource path="res://Scenes/Prefabs/UI/HUD.tscn" type="PackedScene" id=14]
 
 [node name="TestDungeonBase" type="Node2D"]
 script = ExtResource( 11 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="HUD" parent="CanvasLayer" instance=ExtResource( 14 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 1024.0
+margin_bottom = 600.0
+
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
-margin_right = 84.0
-margin_bottom = 66.0
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -161.0
+margin_bottom = 90.0
 
 [node name="SeedInput" parent="CanvasLayer/VBoxContainer" instance=ExtResource( 12 )]
 unique_name_in_owner = true
@@ -37,6 +47,7 @@ focus_mode = 0
 text = "Generate"
 
 [node name="RoomTransitionManager" parent="." instance=ExtResource( 5 )]
+BackgroundMusic = ExtResource( 13 )
 
 [node name="Player" parent="." instance=ExtResource( 4 )]
 unique_name_in_owner = true

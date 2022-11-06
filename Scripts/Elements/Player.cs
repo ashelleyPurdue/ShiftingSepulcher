@@ -1,3 +1,4 @@
+using System.Linq;
 using Godot;
 
 namespace RandomDungeons
@@ -24,6 +25,7 @@ namespace RandomDungeons
         private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
 
         private Vector2 _velocity;
+        private ICarryable _carriedObject;
 
         private bool _isDead = false;
         private float _knockbackTimer = 0;
@@ -119,6 +121,19 @@ namespace RandomDungeons
                 Owner._animator.PlaybackSpeed = InputService.LeftStick
                     .LimitLength(1)
                     .Length();
+
+                if (InputService.ActivatePressed)
+                {
+                    // HACK: Pick up any nearby carriables
+                    // TODO: do this less messily
+                    Owner
+                        .GetNode<Area2D>("%CarryableDetector")
+                        .GetOverlappingAreas()
+                        .Cast<Area2D>()
+                        .OfType<ICarryable>()
+                        .FirstOrDefault()
+                        ?.PickUp(Owner);
+                }
 
                 if (InputService.AttackPressed && !Owner._sword.IsSwinging)
                     ChangeState(Owner.SwingingSword);

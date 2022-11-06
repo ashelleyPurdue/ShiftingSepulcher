@@ -8,9 +8,9 @@ namespace RandomDungeons
         /// The node that is being carried
         /// </summary>
         /// <value></value>
-        Node Node {get;}
+        Node2D Node {get;}
 
-        void PickUp();
-        void Release();
+        void PickUp(Node2D carrier);
+        void Release(Vector2 releasePosGlobal);
     }
 }

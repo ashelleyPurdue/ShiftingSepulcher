@@ -102,6 +102,31 @@ namespace RandomDungeons
             return velocity.Length() / KnockbackFriction;
         }
 
+        private void TryPickUpCarryable()
+        {
+            var carriable = GetNode<Area2D>("%CarryableDetector")
+                .GetOverlappingAreas()
+                .Cast<Area2D>()
+                .OfType<ICarryable>()
+                .FirstOrDefault();
+
+            if (carriable == null)
+                return;
+
+            _carriedObject = carriable;
+            carriable.PickUp(GetNode<Node2D>("%CarriedObjectHoldPos"));
+        }
+
+        public void ReleaseCarriedObject()
+        {
+            if (_carriedObject == null)
+                return;
+
+            var pos = GetNode<Node2D>("%CarriedObjectReleasePos").GlobalPosition;
+            _carriedObject.Release(pos);
+            _carriedObject = null;
+        }
+
         private readonly IState Walking = new WalkingState();
         private class WalkingState : State<Player>
         {
@@ -124,15 +149,14 @@ namespace RandomDungeons
 
                 if (InputService.ActivatePressed)
                 {
-                    // HACK: Pick up any nearby carriables
-                    // TODO: do this less messily
-                    Owner
-                        .GetNode<Area2D>("%CarryableDetector")
-                        .GetOverlappingAreas()
-                        .Cast<Area2D>()
-                        .OfType<ICarryable>()
-                        .FirstOrDefault()
-                        ?.PickUp(Owner);
+                    if (Owner._carriedObject == null)
+                    {
+                        Owner.TryPickUpCarryable();
+                    }
+                    else
+                    {
+                        Owner.ReleaseCarriedObject();
+                    }
                 }
 
                 if (InputService.AttackPressed && !Owner._sword.IsSwinging)

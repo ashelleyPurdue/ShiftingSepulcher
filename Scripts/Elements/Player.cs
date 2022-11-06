@@ -1,3 +1,4 @@
+using System.Linq;
 using Godot;
 
 namespace RandomDungeons
@@ -18,12 +19,17 @@ namespace RandomDungeons
         /// </summary>
         public bool ControlsEnabled = true;
 
+        public bool IsCarryingSomething => _carriedObject is Godot.Object gdObj
+            ? IsInstanceValid(gdObj)
+            : _carriedObject != null;
+
         private Node2D _visuals => GetNode<Node2D>("%Visuals");
         private PlayerSword _sword => GetNode<PlayerSword>("%Sword");
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
         private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
 
         private Vector2 _velocity;
+        private ICarryable _carriedObject;
 
         private bool _isDead = false;
         private float _knockbackTimer = 0;
@@ -100,6 +106,31 @@ namespace RandomDungeons
             return velocity.Length() / KnockbackFriction;
         }
 
+        private void TryPickUpCarryable()
+        {
+            var carriable = GetNode<Area2D>("%CarryableDetector")
+                .GetOverlappingAreas()
+                .Cast<Area2D>()
+                .OfType<ICarryable>()
+                .FirstOrDefault();
+
+            if (carriable == null)
+                return;
+
+            _carriedObject = carriable;
+            carriable.PickUp(GetNode<Node2D>("%CarriedObjectHoldPos"));
+        }
+
+        public void ReleaseCarriedObject()
+        {
+            if (!IsCarryingSomething)
+                return;
+
+            var pos = GetNode<Node2D>("%CarriedObjectReleasePos").GlobalPosition;
+            _carriedObject.Release(pos);
+            _carriedObject = null;
+        }
+
         private readonly IState Walking = new WalkingState();
         private class WalkingState : State<Player>
         {
@@ -120,7 +151,18 @@ namespace RandomDungeons
                     .LimitLength(1)
                     .Length();
 
-                if (InputService.AttackPressed && !Owner._sword.IsSwinging)
+                if (Owner.IsCarryingSomething)
+                {
+                    if (InputService.ActivatePressed || InputService.AttackPressed)
+                        Owner.ReleaseCarriedObject();
+
+                    return;
+                }
+
+                if (InputService.ActivatePressed)
+                    Owner.TryPickUpCarryable();
+
+                if (InputService.AttackPressed)
                     ChangeState(Owner.SwingingSword);
             }
 

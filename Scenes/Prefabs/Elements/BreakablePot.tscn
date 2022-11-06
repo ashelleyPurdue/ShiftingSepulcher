@@ -1,13 +1,17 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/Components/HurtBox.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Elements/BreakablePot.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/Components/CarryableParent.cs" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 16 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 16, 16 )
+
+[sub_resource type="CircleShape2D" id=5]
+radius = 32.0
 
 [sub_resource type="Animation" id=3]
 length = 0.001
@@ -141,6 +145,12 @@ script = ExtResource( 1 )
 position = Vector2( 16, 16 )
 shape = SubResource( 2 )
 
+[node name="CarryableParent" type="Area2D" parent="."]
+script = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CarryableParent"]
+shape = SubResource( 5 )
+
 [node name="Visuals" type="Node2D" parent="."]
 unique_name_in_owner = true
 
@@ -166,3 +176,5 @@ anims/RESET = SubResource( 3 )
 anims/Shatter = SubResource( 4 )
 
 [connection signal="TookDamage" from="HurtBox" to="." method="OnTookDamage"]
+[connection signal="PickedUp" from="CarryableParent" to="CollisionShape2D" method="set_disabled" binds= [ true ]]
+[connection signal="Released" from="CarryableParent" to="CollisionShape2D" method="set_disabled" binds= [ false ]]

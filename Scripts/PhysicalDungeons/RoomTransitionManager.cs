@@ -144,6 +144,8 @@ namespace RandomDungeons
             if (_activeRoom == room)
                 return;
 
+            GetTree().FindPlayer().ReleaseCarriedObject();
+
             RemovePreviousRoom();
             SetPreviousRoom(_activeRoom);
             SetActiveRoom(room);

@@ -323,7 +323,8 @@ vertex_colors = PoolColorArray( 0.266667, 1, 0, 1, 0.266667, 1, 0, 1, 0.266667, 
 
 [node name="CarriedObjectHoldPos" type="Position2D" parent="Visuals"]
 unique_name_in_owner = true
-position = Vector2( -18, 0 )
+position = Vector2( 4, 0 )
+rotation = -1.5708
 
 [node name="CarriedObjectReleasePos" type="Position2D" parent="Visuals"]
 unique_name_in_owner = true

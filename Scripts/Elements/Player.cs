@@ -19,6 +19,10 @@ namespace RandomDungeons
         /// </summary>
         public bool ControlsEnabled = true;
 
+        public bool IsCarryingSomething => _carriedObject is Godot.Object gdObj
+            ? IsInstanceValid(gdObj)
+            : _carriedObject != null;
+
         private Node2D _visuals => GetNode<Node2D>("%Visuals");
         private PlayerSword _sword => GetNode<PlayerSword>("%Sword");
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
@@ -119,7 +123,7 @@ namespace RandomDungeons
 
         public void ReleaseCarriedObject()
         {
-            if (_carriedObject == null)
+            if (!IsCarryingSomething)
                 return;
 
             var pos = GetNode<Node2D>("%CarriedObjectReleasePos").GlobalPosition;
@@ -149,7 +153,7 @@ namespace RandomDungeons
 
                 if (InputService.ActivatePressed)
                 {
-                    if (Owner._carriedObject == null)
+                    if (!Owner.IsCarryingSomething)
                     {
                         Owner.TryPickUpCarryable();
                     }

@@ -151,19 +151,18 @@ namespace RandomDungeons
                     .LimitLength(1)
                     .Length();
 
-                if (InputService.ActivatePressed)
+                if (Owner.IsCarryingSomething)
                 {
-                    if (!Owner.IsCarryingSomething)
-                    {
-                        Owner.TryPickUpCarryable();
-                    }
-                    else
-                    {
+                    if (InputService.ActivatePressed || InputService.AttackPressed)
                         Owner.ReleaseCarriedObject();
-                    }
+
+                    return;
                 }
 
-                if (InputService.AttackPressed && !Owner._sword.IsSwinging)
+                if (InputService.ActivatePressed)
+                    Owner.TryPickUpCarryable();
+
+                if (InputService.AttackPressed)
                     ChangeState(Owner.SwingingSword);
             }
 

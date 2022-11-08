@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scenes/Maps/Test/EmptyTestRoom.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Prefabs/Elements/BreakablePot.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Prefabs/Elements/CarryableWeights.tscn" type="PackedScene" id=3]
 
 [node name="CarryablesTest" instance=ExtResource( 1 )]
 
@@ -13,3 +14,6 @@ position = Vector2( -96, -160 )
 
 [node name="BreakablePot3" parent="." index="5" instance=ExtResource( 2 )]
 position = Vector2( 96, -160 )
+
+[node name="CarryableWeight" parent="." index="6" instance=ExtResource( 3 )]
+position = Vector2( 96, -32 )

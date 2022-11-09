@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 64, 64 )
+
+[node name="ScalePuzzle" type="Node2D"]
+
+[node name="LeftScaleZone" type="Area2D" parent="."]
+unique_name_in_owner = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftScaleZone"]
+position = Vector2( -96, 0 )
+shape = SubResource( 1 )
+
+[node name="RightScaleZone" type="Area2D" parent="."]
+unique_name_in_owner = true
+scale = Vector2( -1, 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightScaleZone"]
+position = Vector2( -96, 0 )
+shape = SubResource( 1 )
+
+[node name="ScaleVisuals" type="Node2D" parent="."]
+
+[node name="Polygon2D" type="Polygon2D" parent="ScaleVisuals"]
+polygon = PoolVector2Array( -8, 8, 0, 16, 8, 8, 8, -112, 0, -128, -8, -112 )
+
+[node name="Beam" type="Polygon2D" parent="ScaleVisuals"]
+position = Vector2( 0, -128 )
+polygon = PoolVector2Array( -96, -8, 96, -8, 96, 0, -96, 0 )

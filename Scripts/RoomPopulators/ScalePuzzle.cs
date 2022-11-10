@@ -16,6 +16,9 @@ namespace RandomDungeons
         private Area2D _leftZone => GetNode<Area2D>("%LeftScaleZone");
         private Area2D _rightZone => GetNode<Area2D>("%RightScaleZone");
 
+        private Label _leftSideLabel => GetNode<Label>("%LeftSideLabel");
+        private Label _rightSideLabel => GetNode<Label>("%RightSideLabel");
+
         private List<CarryableWeights> _weights = new List<CarryableWeights>();
 
         public void Populate(DungeonGraphRoom graphRoom, Random rng)
@@ -61,6 +64,12 @@ namespace RandomDungeons
                 else
                     return rightSide;
             }
+        }
+
+        public override void _Process(float delta)
+        {
+            _leftSideLabel.Text = "" + TotalWeightIn(_leftZone);
+            _rightSideLabel.Text = "" + TotalWeightIn(_rightZone);
         }
 
         public bool IsSolved()

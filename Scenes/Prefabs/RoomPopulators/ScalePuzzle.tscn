@@ -31,3 +31,19 @@ polygon = PoolVector2Array( -8, 8, 0, 16, 8, 8, 8, -112, 0, -128, -8, -112 )
 [node name="Beam" type="Polygon2D" parent="ScaleVisuals"]
 position = Vector2( 0, -128 )
 polygon = PoolVector2Array( -96, -8, 96, -8, 96, 0, -96, 0 )
+
+[node name="LeftSideLabel" type="Label" parent="."]
+unique_name_in_owner = true
+margin_left = -128.0
+margin_top = -64.0
+margin_right = -88.0
+margin_bottom = -50.0
+text = "left"
+
+[node name="RightSideLabel" type="Label" parent="."]
+unique_name_in_owner = true
+margin_left = 64.0
+margin_top = -64.0
+margin_right = 104.0
+margin_bottom = -50.0
+text = "right"

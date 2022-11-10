@@ -17,6 +17,8 @@ namespace RandomDungeons
 
         public DungeonGraphRoom GraphRoom {get; protected set;}
 
+        private IChallenge[] _challenges;
+
         public virtual Node2D GetDoorSpawn(CardinalDirection dir)
         {
             return GetNode<Node2D>($"%DoorSpawns/{dir}");
@@ -46,6 +48,10 @@ namespace RandomDungeons
             {
                 populator.Populate(graphRoom, rng);
             }
+
+            // Gather up all IChallenge nodes, so we don't need to do a full
+            // traversal every frame
+            _challenges = this.AllDescendantsOfType<IChallenge>().ToArray();
         }
 
         private void SetDoor(CardinalDirection dir)
@@ -95,7 +101,10 @@ namespace RandomDungeons
 
         public virtual bool IsChallengeSolved()
         {
-            return true;
+            if (_challenges.Length == 0)
+                return true;
+
+            return _challenges.All(c => c.IsSolved());
         }
 
         private IEnumerable<ChallengeDungeonGraphDoor> ChallengeDoors()

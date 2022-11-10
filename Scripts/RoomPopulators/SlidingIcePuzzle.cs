@@ -3,7 +3,7 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class SlidingIcePuzzle : Node2D, IRoomPopulator, IOnRoomEnter
+    public class SlidingIcePuzzle : Node2D, IChallenge, IRoomPopulator, IOnRoomEnter
     {
         [Export] public PackedScene IceBlockPrefab;
         [Export] public PackedScene RockPrefab;

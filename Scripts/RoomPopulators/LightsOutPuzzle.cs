@@ -4,7 +4,7 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class LightsOutPuzzle : Node2D, IRoomPopulator, IOnRoomEnter
+    public class LightsOutPuzzle : Node2D, IChallenge, IRoomPopulator, IOnRoomEnter
     {
         [Export] public PackedScene SwitchPrefab;
         [Export] public Color OnColor;

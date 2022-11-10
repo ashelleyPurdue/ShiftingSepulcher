@@ -79,7 +79,9 @@ namespace RandomDungeons
         {
             return zone
                 .GetOverlappingAreas()
-                .OfType<CarryableWeights>()
+                .Cast<Area2D>()
+                .Select(a => a.FindAncestor<CarryableWeights>())
+                .Where(w => w != null)
                 .Sum(w => w.NumWeights);
         }
     }

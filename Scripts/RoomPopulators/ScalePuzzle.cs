@@ -31,9 +31,19 @@ namespace RandomDungeons
             int weightCount = rng.Next(MinWeightCount, MaxWeightCount + 1);
 
             // Keep adding randomly-sized weights to the lightest side
+            int lastChosenWeight = -1;
             for (int i = 0; i < weightCount - 1; i++)
             {
-                int weight = rng.Next(MinWeightSize, MaxWeightSize + 1);
+                // Don't choose the same weight twice in a row, to prevent the
+                // solutions from becoming _too_ trivial
+                int weight;
+                do
+                {
+                    weight = rng.Next(MinWeightSize, MaxWeightSize + 1);
+                }
+                while (weight == lastChosenWeight);
+                lastChosenWeight = weight;
+
                 var side = LightestSideOrCoinFlip();
                 side.Add(weight);
             }

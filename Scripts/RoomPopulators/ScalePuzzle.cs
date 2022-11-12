@@ -13,7 +13,9 @@ namespace RandomDungeons
         [Export] public int MaxWeightCount = 5;
         [Export] public PackedScene CarryableWeightPrefab;
 
-        private Node2D _weightSpawnPoints => GetNode<Node2D>("%WeightSpawnPoints");
+        private Node2D _leftWeightSpawnPoints => GetNode<Node2D>("%WeightSpawnPoints/Left");
+        private Node2D _rightWeightSpawnPoints => GetNode<Node2D>("%WeightSpawnPoints/Right");
+        private Node2D _middleWeightSpawnPoints => GetNode<Node2D>("%WeightSpawnPoints/Middle");
 
         private ScaleBowl _leftBowl => GetNode<ScaleBowl>("%LeftBowl");
         private ScaleBowl _rightBowl => GetNode<ScaleBowl>("%RightBowl");
@@ -24,44 +26,59 @@ namespace RandomDungeons
         {
             var leftSide = new List<int>();
             var rightSide = new List<int>();
+            var middleSide = new List<int>();
 
             int weightCount = rng.Next(MinWeightCount, MaxWeightCount + 1);
 
             // Keep adding randomly-sized weights to the lightest side
-            int lastChosenWeight = -1;
             for (int i = 0; i < weightCount - 1; i++)
             {
-                // Don't choose the same weight twice in a row, to prevent the
-                // solutions from becoming _too_ trivial
+                // Never choose a size that would make both sides equal, because
+                // that would risk the "equalizer" needing to be 0.
+                int forbiddenWeight = Math.Abs(leftSide.Sum() - rightSide.Sum());
                 int weight;
                 do
                 {
                     weight = rng.Next(MinWeightSize, MaxWeightSize + 1);
                 }
-                while (weight == lastChosenWeight);
-                lastChosenWeight = weight;
+                while (weight == forbiddenWeight);
 
-                var side = LightestSideOrCoinFlip();
-                side.Add(weight);
+                LightestSideOrCoinFlip().Add(weight);
             }
 
             // Equalize them
-            int diff = Math.Abs(leftSide.Sum() - rightSide.Sum());
-            if (diff != 0)
-                LightestSideOrCoinFlip().Add(diff);
+            int equalizer = Math.Abs(leftSide.Sum() - rightSide.Sum());
+            LightestSideOrCoinFlip().Add(equalizer);
 
-            // Create the real weights, and give them random spawn points
-            var allWeights = leftSide.Concat(rightSide).ToArray();
-            Node2D[] spawnPoints = ShuffledSpawnPoints(rng);
-
-            for (int i = 0; i < allWeights.Length; i++)
+            // Randomly scramble the weights, to hide the solution
+            var sides = new List<int>[]
             {
-                var weightObj = CarryableWeightPrefab.Instance<CarryableWeights>();
-                weightObj.NumWeights = allWeights[i];
-                _weights.Add(weightObj);
+                leftSide,
+                rightSide,
+                middleSide
+            };
+            while (leftSide.Sum() == rightSide.Sum())
+            {
+                int[] allWeights = leftSide
+                    .Concat(rightSide)
+                    .Concat(middleSide)
+                    .ToArray();
 
-                spawnPoints[i].AddChild(weightObj);
+                leftSide.Clear();
+                rightSide.Clear();
+                middleSide.Clear();
+
+                foreach (int weight in allWeights)
+                {
+                    var side = rng.PickFrom(sides);
+                    side.Add(weight);
+                }
             }
+
+            // Create the real weights
+            SpawnRealWeights(leftSide, _leftWeightSpawnPoints);
+            SpawnRealWeights(rightSide, _rightWeightSpawnPoints);
+            SpawnRealWeights(middleSide, _middleWeightSpawnPoints);
 
             List<int> LightestSideOrCoinFlip()
             {
@@ -76,6 +93,24 @@ namespace RandomDungeons
                 else
                     return rightSide;
             }
+
+            void SpawnRealWeights(List<int> weights, Node2D spawnPointsParent)
+            {
+                var spawnPoints = spawnPointsParent
+                    .GetChildren()
+                    .Cast<Node2D>();
+
+                Node2D[] shuffledSpawnPoints = rng.Shuffle(spawnPoints);
+
+                for (int i = 0; i < weights.Count; i++)
+                {
+                    var weightObj = CarryableWeightPrefab.Instance<CarryableWeights>();
+                    weightObj.NumWeights = weights[i];
+                    _weights.Add(weightObj);
+
+                    shuffledSpawnPoints[i].AddChild(weightObj);
+                }
+            }
         }
 
         public bool IsSolved()
@@ -88,15 +123,6 @@ namespace RandomDungeons
             bool allWeightsAreUsed = leftWeights + rightWeights == totalWeight;
 
             return sidesAreEqual && allWeightsAreUsed;
-        }
-
-        private Node2D[] ShuffledSpawnPoints(Random rng)
-        {
-            var spawnPoints = _weightSpawnPoints
-                .GetChildren()
-                .Cast<Node2D>();
-
-            return rng.Shuffle(spawnPoints);
         }
     }
 }

@@ -28,38 +28,59 @@ polygon = PoolVector2Array( -96, -8, 96, -8, 96, 0, -96, 0 )
 [node name="WeightSpawnPoints" type="Node2D" parent="."]
 unique_name_in_owner = true
 
-[node name="Position2D" type="Position2D" parent="WeightSpawnPoints"]
-position = Vector2( -136, -32 )
+[node name="Left" type="Node2D" parent="WeightSpawnPoints"]
+position = Vector2( -104, 0 )
 
-[node name="Position2D2" type="Position2D" parent="WeightSpawnPoints"]
-position = Vector2( -72, -32 )
+[node name="0" type="Position2D" parent="WeightSpawnPoints/Left"]
+position = Vector2( -32, -32 )
 
-[node name="Position2D3" type="Position2D" parent="WeightSpawnPoints"]
-position = Vector2( -136, 32 )
+[node name="1" type="Position2D" parent="WeightSpawnPoints/Left"]
+position = Vector2( 32, -32 )
 
-[node name="Position2D4" type="Position2D" parent="WeightSpawnPoints"]
-position = Vector2( -72, 32 )
+[node name="2" type="Position2D" parent="WeightSpawnPoints/Left"]
+position = Vector2( -32, 32 )
 
-[node name="Position2D5" type="Position2D" parent="WeightSpawnPoints"]
-position = Vector2( 72, -32 )
+[node name="3" type="Position2D" parent="WeightSpawnPoints/Left"]
+position = Vector2( 32, 32 )
 
-[node name="Position2D6" type="Position2D" parent="WeightSpawnPoints"]
-position = Vector2( 136, -32 )
+[node name="Right" type="Node2D" parent="WeightSpawnPoints"]
+position = Vector2( 104, 0 )
 
-[node name="Position2D7" type="Position2D" parent="WeightSpawnPoints"]
-position = Vector2( 72, 32 )
+[node name="0" type="Position2D" parent="WeightSpawnPoints/Right"]
+position = Vector2( -32, -32 )
 
-[node name="Position2D8" type="Position2D" parent="WeightSpawnPoints"]
-position = Vector2( 136, 32 )
+[node name="1" type="Position2D" parent="WeightSpawnPoints/Right"]
+position = Vector2( 32, -32 )
 
-[node name="Position2D9" type="Position2D" parent="WeightSpawnPoints"]
-position = Vector2( -102, 130 )
+[node name="2" type="Position2D" parent="WeightSpawnPoints/Right"]
+position = Vector2( -32, 32 )
 
-[node name="Position2D10" type="Position2D" parent="WeightSpawnPoints"]
-position = Vector2( 90, 130 )
+[node name="3" type="Position2D" parent="WeightSpawnPoints/Right"]
+position = Vector2( 32, 32 )
 
-[node name="Position2D11" type="Position2D" parent="WeightSpawnPoints"]
-position = Vector2( -38, 130 )
+[node name="Middle" type="Node2D" parent="WeightSpawnPoints"]
+position = Vector2( 0, 162 )
 
-[node name="Position2D12" type="Position2D" parent="WeightSpawnPoints"]
-position = Vector2( 26, 130 )
+[node name="0" type="Position2D" parent="WeightSpawnPoints/Middle"]
+position = Vector2( -102, -32 )
+
+[node name="1" type="Position2D" parent="WeightSpawnPoints/Middle"]
+position = Vector2( -38, -32 )
+
+[node name="2" type="Position2D" parent="WeightSpawnPoints/Middle"]
+position = Vector2( 26, -32 )
+
+[node name="3" type="Position2D" parent="WeightSpawnPoints/Middle"]
+position = Vector2( 90, -32 )
+
+[node name="4" type="Position2D" parent="WeightSpawnPoints/Middle"]
+position = Vector2( -102, 32 )
+
+[node name="5" type="Position2D" parent="WeightSpawnPoints/Middle"]
+position = Vector2( -38, 32 )
+
+[node name="6" type="Position2D" parent="WeightSpawnPoints/Middle"]
+position = Vector2( 26, 32 )
+
+[node name="7" type="Position2D" parent="WeightSpawnPoints/Middle"]
+position = Vector2( 90, 32 )

@@ -61,6 +61,8 @@ namespace RandomDungeons
             // partner
             int weightDiff = TotalWeight - _partner.TotalWeight;
             float displacement = MaxDisplacement * ((float)weightDiff) / WeightForMaxDisplacement;
+            displacement = Mathf.Clamp(displacement, -MaxDisplacement, MaxDisplacement);
+
             var targetPos = new Vector2(0, displacement);
 
             float distToTarget = targetPos.DistanceTo(_moveablePart.Position);

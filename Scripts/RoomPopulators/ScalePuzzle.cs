@@ -15,8 +15,8 @@ namespace RandomDungeons
 
         private Node2D _weightSpawnPoints => GetNode<Node2D>("%WeightSpawnPoints");
 
-        private Area2D _leftZone => GetNode<Area2D>("%LeftScaleZone");
-        private Area2D _rightZone => GetNode<Area2D>("%RightScaleZone");
+        private ScaleBowl _leftBowl => GetNode<ScaleBowl>("%LeftBowl");
+        private ScaleBowl _rightBowl => GetNode<ScaleBowl>("%RightBowl");
 
         private Label _leftSideLabel => GetNode<Label>("%LeftSideLabel");
         private Label _rightSideLabel => GetNode<Label>("%RightSideLabel");
@@ -73,15 +73,15 @@ namespace RandomDungeons
 
         public override void _Process(float delta)
         {
-            _leftSideLabel.Text = "" + TotalWeightIn(_leftZone);
-            _rightSideLabel.Text = "" + TotalWeightIn(_rightZone);
+            _leftSideLabel.Text = "" + _leftBowl.TotalWeight;
+            _rightSideLabel.Text = "" + _rightBowl.TotalWeight;
         }
 
         public bool IsSolved()
         {
             int totalWeight = _weights.Sum(w => w.NumWeights);
-            int leftWeights = TotalWeightIn(_leftZone);
-            int rightWeights = TotalWeightIn(_rightZone);
+            int leftWeights = _leftBowl.TotalWeight;
+            int rightWeights = _rightBowl.TotalWeight;
 
             bool sidesAreEqual = leftWeights == rightWeights;
             bool allWeightsAreUsed = leftWeights + rightWeights == totalWeight;
@@ -96,16 +96,6 @@ namespace RandomDungeons
                 .Cast<Node2D>();
 
             return rng.Shuffle(spawnPoints);
-        }
-
-        private int TotalWeightIn(Area2D zone)
-        {
-            return zone
-                .GetOverlappingAreas()
-                .Cast<Area2D>()
-                .Select(a => a.FindAncestor<CarryableWeights>())
-                .Where(w => w != null)
-                .Sum(w => w.NumWeights);
         }
     }
 }

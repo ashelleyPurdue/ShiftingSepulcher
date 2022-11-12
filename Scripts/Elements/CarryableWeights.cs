@@ -7,6 +7,10 @@ namespace RandomDungeons
         [Export] public int NumWeights = 1;
         [Export] public float WeightVerticalSeparation = 12;
 
+        public bool IsBeingCarried => this
+            .SingleChildOfType<ICarryable>()
+            .IsBeingCarried;
+
         private Node2D _weightVisualTemplate => GetNode<Node2D>("%WeightVisualTemplate");
         private Node2D _weightStack => GetNode<Node2D>("%WeightStack");
 

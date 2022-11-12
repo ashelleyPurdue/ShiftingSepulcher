@@ -12,22 +12,23 @@ namespace RandomDungeons
 
         [Export] public bool RotatesWhileCarried = true;
 
+        public bool IsBeingCarried {get; private set;} = false;
+
         private Node _originalParent;
         private float _originalGlobalRotation;
-        private bool _isBeingCarried = false;
 
         public override void _Process(float delta)
         {
-            if (_isBeingCarried && !RotatesWhileCarried)
+            if (IsBeingCarried && !RotatesWhileCarried)
                 Node.GlobalRotation = _originalGlobalRotation;
         }
 
         public void PickUp(Node2D carrier)
         {
-            if (_isBeingCarried)
+            if (IsBeingCarried)
                 throw new InvalidOperationException($"{Node.Name} is already being carried");
 
-            _isBeingCarried = true;
+            IsBeingCarried = true;
 
             _originalGlobalRotation = Node.GlobalRotation;
             _originalParent = Node.GetParent();
@@ -42,10 +43,10 @@ namespace RandomDungeons
 
         public void Release(Vector2 releasePosGlobal)
         {
-            if (!_isBeingCarried)
+            if (!IsBeingCarried)
                 throw new InvalidOperationException($"{Node.Name} is not being carried");
 
-            _isBeingCarried = false;
+            IsBeingCarried = false;
 
             Node.GetParent().RemoveChild(Node);
             _originalParent.AddChild(Node);

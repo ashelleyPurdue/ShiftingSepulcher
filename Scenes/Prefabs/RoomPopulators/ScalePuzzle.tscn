@@ -53,15 +53,54 @@ shape = SubResource( 1 )
 [node name="LeftSideLabel" type="Label" parent="."]
 unique_name_in_owner = true
 margin_left = -128.0
-margin_top = -64.0
+margin_top = -80.0
 margin_right = -88.0
-margin_bottom = -50.0
+margin_bottom = -66.0
 text = "left"
 
 [node name="RightSideLabel" type="Label" parent="."]
 unique_name_in_owner = true
-margin_left = 64.0
-margin_top = -64.0
-margin_right = 104.0
-margin_bottom = -50.0
+margin_left = 88.0
+margin_top = -80.0
+margin_right = 128.0
+margin_bottom = -66.0
 text = "right"
+
+[node name="WeightSpawnPoints" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Position2D" type="Position2D" parent="WeightSpawnPoints"]
+position = Vector2( -136, -32 )
+
+[node name="Position2D2" type="Position2D" parent="WeightSpawnPoints"]
+position = Vector2( -72, -32 )
+
+[node name="Position2D3" type="Position2D" parent="WeightSpawnPoints"]
+position = Vector2( -136, 32 )
+
+[node name="Position2D4" type="Position2D" parent="WeightSpawnPoints"]
+position = Vector2( -72, 32 )
+
+[node name="Position2D5" type="Position2D" parent="WeightSpawnPoints"]
+position = Vector2( 72, -32 )
+
+[node name="Position2D6" type="Position2D" parent="WeightSpawnPoints"]
+position = Vector2( 136, -32 )
+
+[node name="Position2D7" type="Position2D" parent="WeightSpawnPoints"]
+position = Vector2( 72, 32 )
+
+[node name="Position2D8" type="Position2D" parent="WeightSpawnPoints"]
+position = Vector2( 136, 32 )
+
+[node name="Position2D9" type="Position2D" parent="WeightSpawnPoints"]
+position = Vector2( -102, 130 )
+
+[node name="Position2D10" type="Position2D" parent="WeightSpawnPoints"]
+position = Vector2( 90, 130 )
+
+[node name="Position2D11" type="Position2D" parent="WeightSpawnPoints"]
+position = Vector2( -38, 130 )
+
+[node name="Position2D12" type="Position2D" parent="WeightSpawnPoints"]
+position = Vector2( 26, 130 )

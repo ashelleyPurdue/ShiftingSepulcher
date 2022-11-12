@@ -18,9 +18,6 @@ namespace RandomDungeons
         private ScaleBowl _leftBowl => GetNode<ScaleBowl>("%LeftBowl");
         private ScaleBowl _rightBowl => GetNode<ScaleBowl>("%RightBowl");
 
-        private Label _leftSideLabel => GetNode<Label>("%LeftSideLabel");
-        private Label _rightSideLabel => GetNode<Label>("%RightSideLabel");
-
         private List<CarryableWeights> _weights = new List<CarryableWeights>();
 
         public void Populate(DungeonGraphRoom graphRoom, Random rng)
@@ -79,12 +76,6 @@ namespace RandomDungeons
                 else
                     return rightSide;
             }
-        }
-
-        public override void _Process(float delta)
-        {
-            _leftSideLabel.Text = "" + _leftBowl.TotalWeight;
-            _rightSideLabel.Text = "" + _rightBowl.TotalWeight;
         }
 
         public bool IsSolved()

@@ -59,7 +59,8 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="RigidBody2D" parent="."]
+mode = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2( 0, 3 )

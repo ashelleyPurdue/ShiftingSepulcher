@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scripts/RoomPopulators/ScalePuzzle.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/Prefabs/Elements/ScaleBowl.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scripts/Components/RotateParentTowardPoint.cs" type="Script" id=3]
 
 [node name="ScalePuzzle" type="Node2D"]
 script = ExtResource( 1 )
@@ -22,8 +23,12 @@ PartnerBowl = NodePath("../RightBowl")
 polygon = PoolVector2Array( -8, 8, 0, 16, 8, 8, 8, -112, 0, -128, -8, -112 )
 
 [node name="Beam" type="Polygon2D" parent="ScaleVisuals"]
-position = Vector2( 0, -128 )
-polygon = PoolVector2Array( -96, -8, 96, -8, 96, 0, -96, 0 )
+position = Vector2( 0, -132 )
+polygon = PoolVector2Array( -96, 4, -96, -4, 96, -4, 96, 4 )
+
+[node name="RotateParentTowardPoint" type="Node" parent="ScaleVisuals/Beam"]
+script = ExtResource( 3 )
+TargetPoint = NodePath("../../../LeftBowl/MoveablePart/Visuals/Rope")
 
 [node name="WeightSpawnPoints" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -84,3 +89,5 @@ position = Vector2( 26, 32 )
 
 [node name="7" type="Position2D" parent="WeightSpawnPoints/Middle"]
 position = Vector2( 90, 32 )
+
+[editable path="LeftBowl"]

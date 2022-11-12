@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scripts/Elements/ScaleBowl.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Components/Circle2D.cs" type="Script" id=2]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 64, 64 )
+[sub_resource type="CircleShape2D" id=1]
+radius = 80.0
 
 [node name="ScaleBowl" type="Node2D"]
 script = ExtResource( 1 )
@@ -13,13 +14,15 @@ unique_name_in_owner = true
 
 [node name="Visuals" type="Node2D" parent="MoveablePart"]
 
-[node name="Polygon2D" type="Polygon2D" parent="MoveablePart/Visuals"]
-color = Color( 0.666667, 0.611765, 0, 1 )
-polygon = PoolVector2Array( -64, -64, 64, -64, 64, 64, -64, 64 )
+[node name="Circle2D" type="Node2D" parent="MoveablePart/Visuals"]
+script = ExtResource( 2 )
+Radius = 80.0
+Color = Color( 0.666667, 0.611765, 0, 1 )
 
-[node name="Polygon2D" type="Polygon2D" parent="MoveablePart/Visuals/Polygon2D"]
-color = Color( 0.537255, 0.403922, 0, 1 )
-polygon = PoolVector2Array( -56, -56, 56, -56, 56, 56, -56, 56 )
+[node name="Circle2D" type="Node2D" parent="MoveablePart/Visuals/Circle2D"]
+script = ExtResource( 2 )
+Radius = 72.0
+Color = Color( 0.537255, 0.403922, 0, 1 )
 
 [node name="Rope" type="Line2D" parent="MoveablePart/Visuals"]
 position = Vector2( 0, -132 )

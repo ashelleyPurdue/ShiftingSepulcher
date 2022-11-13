@@ -5,7 +5,7 @@ namespace RandomDungeons
     public class BreakablePot : KinematicBody2D
     {
         [Export] public float ThrowDistance = 32 * 5;
-        [Export] public float ThrowFlyTime = 1;
+        [Export] public float ThrowSpeed = 32 * 20;
 
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
         private bool _isDead = false;
@@ -31,10 +31,10 @@ namespace RandomDungeons
         public void OnThrown(Vector2 direction)
         {
             _isFlying = true;
-            _velocity = direction * (ThrowDistance / ThrowFlyTime);
+            _velocity = direction * ThrowSpeed;
 
             GetTree()
-                .CreateTimer(ThrowFlyTime)
+                .CreateTimer(ThrowDistance / ThrowSpeed)
                 .Connect("timeout", this, nameof(Shatter));
         }
 

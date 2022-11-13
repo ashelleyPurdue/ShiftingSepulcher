@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scripts/RoomPopulators/ScalePuzzle.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/Prefabs/Elements/ScaleBowl.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/Components/RotateParentTowardPoint.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/Components/Circle2D.cs" type="Script" id=4]
 
 [node name="ScalePuzzle" type="Node2D"]
 script = ExtResource( 1 )
@@ -20,15 +21,53 @@ PartnerBowl = NodePath("../RightBowl")
 [node name="ScaleVisuals" type="Node2D" parent="."]
 
 [node name="Stalk" type="Polygon2D" parent="ScaleVisuals"]
-polygon = PoolVector2Array( -8, 8, 0, 16, 8, 8, 8, -112, 0, -128, -8, -112 )
+color = Color( 0.666667, 0.611765, 0, 1 )
+polygon = PoolVector2Array( -12, 8, -14, 16, 0, 24, 0, -128, -4, -128, -4, -40, -6.32567, -21.3948, -8, -8 )
+
+[node name="Polygon2D" type="Polygon2D" parent="ScaleVisuals/Stalk"]
+color = Color( 0.839216, 0.796078, 0.329412, 1 )
+polygon = PoolVector2Array( 12, 8, 14, 16, 0, 24, 0, -128, 4, -128, 4, -40, 8, -8 )
 
 [node name="Beam" type="Polygon2D" parent="ScaleVisuals"]
 position = Vector2( 0, -132 )
-polygon = PoolVector2Array( -96, 4, -96, -4, 96, -4, 96, 4 )
+color = Color( 0.666667, 0.611765, 0, 1 )
+polygon = PoolVector2Array( -128, 4, -128, -4, 128, -4, 128, 4 )
 
 [node name="RotateParentTowardPoint" type="Node" parent="ScaleVisuals/Beam"]
 script = ExtResource( 3 )
 TargetPoint = NodePath("../../../LeftBowl/MoveablePart/Visuals/Rope")
+
+[node name="Shine" type="Polygon2D" parent="ScaleVisuals/Beam"]
+color = Color( 0.839216, 0.796078, 0.329412, 1 )
+polygon = PoolVector2Array( -128, 0, -128, -4, 128, -4, 128, 0 )
+
+[node name="RotateParentTowardPoint" type="Node" parent="ScaleVisuals/Beam/Shine"]
+script = ExtResource( 3 )
+TargetPoint = NodePath("../../../../LeftBowl/MoveablePart/Visuals/Rope")
+
+[node name="LeftBall" type="Node2D" parent="ScaleVisuals/Beam"]
+position = Vector2( -128, 0 )
+script = ExtResource( 4 )
+Radius = 10.0
+Color = Color( 0.666667, 0.611765, 0, 1 )
+
+[node name="Shine" type="Node2D" parent="ScaleVisuals/Beam/LeftBall"]
+position = Vector2( 4, -5 )
+script = ExtResource( 4 )
+Radius = 3.0
+Color = Color( 0.839216, 0.796078, 0.329412, 1 )
+
+[node name="RightBall" type="Node2D" parent="ScaleVisuals/Beam"]
+position = Vector2( 128, 0 )
+script = ExtResource( 4 )
+Radius = 10.0
+Color = Color( 0.666667, 0.611765, 0, 1 )
+
+[node name="Shine" type="Node2D" parent="ScaleVisuals/Beam/RightBall"]
+position = Vector2( 4, -5 )
+script = ExtResource( 4 )
+Radius = 3.0
+Color = Color( 0.839216, 0.796078, 0.329412, 1 )
 
 [node name="WeightSpawnPoints" type="Node2D" parent="."]
 unique_name_in_owner = true

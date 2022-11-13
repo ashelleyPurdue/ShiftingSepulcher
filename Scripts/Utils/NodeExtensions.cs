@@ -49,6 +49,21 @@ namespace RandomDungeons
         }
 
         /// <summary>
+        /// Returns the only immediate child of the given type.
+        /// If there is no immediate child with that type, or if there is more
+        /// than one, throws an error.
+        /// </summary>
+        /// <param name="n"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static T SingleChildOfType<T>(this Node n)
+        {
+            return n.GetChildren()
+                .OfType<T>()
+                .Single();
+        }
+
+        /// <summary>
         /// Enables (or disables) all processing for the given node and its
         /// descendants.  Use this when you want to pause specific nodes instead
         /// of pausing the entire scene tree.

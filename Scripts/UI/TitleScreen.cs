@@ -11,6 +11,7 @@ namespace RandomDungeons
         [Export] public PackedScene DungeonModeScene;
         [Export] public PackedScene LightsOutScene;
         [Export] public PackedScene SlidingIceModeScene;
+        [Export] public PackedScene ScalePuzzleScene;
 
         private Control _defaultFocusedOption => GetNode<Control>(DefaultFocusedOption);
         private SeedInput _seedInput => GetNode<SeedInput>("%SeedInput");
@@ -34,6 +35,11 @@ namespace RandomDungeons
         private void PlaySlidingIceMode()
         {
             ChooseMode(SlidingIceModeScene);
+        }
+
+        private void PlayScalePuzzleMode()
+        {
+            ChooseMode(ScalePuzzleScene);
         }
 
         private void ChooseMode(PackedScene modeScene)

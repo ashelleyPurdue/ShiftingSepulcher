@@ -1,0 +1,106 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Scripts/Components/CarryableParent.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Elements/CarryableWeights.cs" type="Script" id=2]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 32.0
+
+[sub_resource type="CircleShape2D" id=9]
+radius = 16.0
+
+[sub_resource type="Gradient" id=7]
+interpolation_mode = 1
+colors = PoolColorArray( 0, 0, 0, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture2D" id=8]
+flags = 3
+gradient = SubResource( 7 )
+fill = 1
+fill_from = Vector2( 0.5, 0.5 )
+fill_to = Vector2( 0.1, 0.2 )
+
+[sub_resource type="Gradient" id=4]
+interpolation_mode = 1
+offsets = PoolRealArray( 0, 0.99, 1 )
+colors = PoolColorArray( 0.75, 0.75, 0.75, 1, 0.364706, 0.364706, 0.364706, 1, 0, 0, 0, 0 )
+
+[sub_resource type="GradientTexture2D" id=3]
+gradient = SubResource( 4 )
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2( 0.5, 0.5 )
+fill_to = Vector2( 0.1, 0.2 )
+
+[sub_resource type="Gradient" id=5]
+interpolation_mode = 1
+offsets = PoolRealArray( 0, 0.99, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 0.364706, 0.364706, 0.364706, 1, 0, 0, 0, 0 )
+
+[sub_resource type="GradientTexture2D" id=6]
+gradient = SubResource( 5 )
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2( 0.5, 0.5 )
+fill_to = Vector2( 0.1, 0.2 )
+
+[node name="CarryableWeights" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="CarryableParent" type="Area2D" parent="."]
+script = ExtResource( 1 )
+RotatesWhileCarried = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CarryableParent"]
+shape = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="StaticBody2D" type="RigidBody2D" parent="."]
+mode = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( 0, 3 )
+shape = SubResource( 9 )
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Shadow" type="Sprite" parent="Visuals"]
+modulate = Color( 0, 0, 0, 0.662745 )
+scale = Vector2( 0.5, 0.6 )
+texture = SubResource( 8 )
+
+[node name="WeightStack" type="Node2D" parent="Visuals"]
+unique_name_in_owner = true
+position = Vector2( 0, -6 )
+
+[node name="WeightVisualTemplate" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2( 0, -6 )
+
+[node name="Node2D" type="Node2D" parent="WeightVisualTemplate"]
+modulate = Color( 0.670588, 0.670588, 0.670588, 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Sprite" type="Sprite" parent="WeightVisualTemplate/Node2D"]
+texture = SubResource( 3 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Sprite2" type="Sprite" parent="WeightVisualTemplate/Node2D"]
+position = Vector2( 0, -10 )
+texture = SubResource( 6 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[connection signal="PickedUp" from="CarryableParent" to="StaticBody2D/CollisionShape2D" method="set_disabled" binds= [ true ]]
+[connection signal="PickedUp" from="CarryableParent" to="Visuals/Shadow" method="set_visible" binds= [ false ]]
+[connection signal="Released" from="CarryableParent" to="StaticBody2D/CollisionShape2D" method="set_disabled" binds= [ false ]]
+[connection signal="Released" from="CarryableParent" to="Visuals/Shadow" method="set_visible" binds= [ true ]]

@@ -131,6 +131,16 @@ namespace RandomDungeons
             _carriedObject = null;
         }
 
+        public void ThrowCarriedObject()
+        {
+            if (!IsCarryingSomething)
+                return;
+
+            var pos = GetNode<Node2D>("%CarriedObjectReleasePos").GlobalPosition;
+            _carriedObject.Throw(pos, Vector2.Up);  // TODO: Use facing direction
+            _carriedObject = null;
+        }
+
         private readonly IState Walking = new WalkingState();
         private class WalkingState : State<Player>
         {
@@ -153,8 +163,10 @@ namespace RandomDungeons
 
                 if (Owner.IsCarryingSomething)
                 {
-                    if (InputService.ActivatePressed || InputService.AttackPressed)
+                    if (InputService.ActivatePressed)
                         Owner.ReleaseCarriedObject();
+                    else if (InputService.AttackPressed)
+                        Owner.ThrowCarriedObject();
 
                     return;
                 }

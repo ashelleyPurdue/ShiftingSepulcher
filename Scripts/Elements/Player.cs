@@ -23,6 +23,17 @@ namespace RandomDungeons
             ? IsInstanceValid(gdObj)
             : _carriedObject != null;
 
+        public float FacingAngleRadians
+        {
+            get => _visuals.Rotation;
+            set => _visuals.Rotation = value;
+        }
+
+        public Vector2 FacingDirection => new Vector2(
+            Mathf.Cos(FacingAngleRadians),
+            Mathf.Sin(FacingAngleRadians)
+        );
+
         private Node2D _visuals => GetNode<Node2D>("%Visuals");
         private PlayerSword _sword => GetNode<PlayerSword>("%Sword");
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
@@ -137,7 +148,7 @@ namespace RandomDungeons
                 return;
 
             var pos = GetNode<Node2D>("%CarriedObjectReleasePos").GlobalPosition;
-            _carriedObject.Throw(pos, Vector2.Up);  // TODO: Use facing direction
+            _carriedObject.Throw(pos, FacingDirection);
             _carriedObject = null;
         }
 
@@ -196,7 +207,7 @@ namespace RandomDungeons
 
                 // Update the rotation of the visuals
                 if (cappedLeftStick.Length() > 0.01)
-                    Owner._visuals.Rotation = cappedLeftStick.Angle();
+                    Owner.FacingAngleRadians = cappedLeftStick.Angle();
             }
 
             public override void _StateExited()

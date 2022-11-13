@@ -8,6 +8,8 @@ namespace RandomDungeons
         [Export] public float ThrowSpeed = 32 * 20;
 
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
+        private HitBox _hitBox => GetNode<HitBox>("%HitBox");
+
         private bool _isDead = false;
         private bool _isFlying = false;
         private Vector2 _velocity;
@@ -17,6 +19,8 @@ namespace RandomDungeons
             CollisionLayer = _isFlying
                 ? (uint)CollisionLayerBits.StopsEnemiesOnly
                 : (uint)CollisionLayerBits.Walls;
+
+            _hitBox.Monitoring = _isFlying;
 
             if (!_isFlying)
                 return;
@@ -40,12 +44,19 @@ namespace RandomDungeons
 
         public void OnTookDamage(HitBox hitBox)
         {
-            if (!_isDead)
-                Shatter();
+            Shatter();
+        }
+
+        public void OnDealtDamage(HurtBox hurtBox)
+        {
+            Shatter();
         }
 
         private void Shatter()
         {
+            if (_isDead)
+                return;
+
             _isDead = true;
             _isFlying = false;
             _animator.Play("Shatter");

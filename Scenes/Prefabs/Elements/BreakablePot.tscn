@@ -176,3 +176,6 @@ anims/RESET = SubResource( 3 )
 anims/Shatter = SubResource( 4 )
 
 [connection signal="TookDamage" from="HurtBox" to="." method="OnTookDamage"]
+[connection signal="PickedUp" from="CarryableParent" to="CollisionShape2D" method="set_disabled" binds= [ true ]]
+[connection signal="Released" from="CarryableParent" to="CollisionShape2D" method="set_disabled" binds= [ false ]]
+[connection signal="Thrown" from="CarryableParent" to="." method="OnThrown"]

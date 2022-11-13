@@ -14,6 +14,10 @@ namespace RandomDungeons
 
         public override void _PhysicsProcess(float delta)
         {
+            CollisionLayer = _isFlying
+                ? (uint)CollisionLayerBits.StopsEnemiesOnly
+                : (uint)CollisionLayerBits.Walls;
+
             if (!_isFlying)
                 return;
 

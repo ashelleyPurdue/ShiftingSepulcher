@@ -14,5 +14,6 @@ namespace RandomDungeons
 
         void PickUp(Node2D carrier);
         void Release(Vector2 releasePosGlobal);
+        void Throw(Vector2 releasePosGlobal, Vector2 direction);
     }
 }

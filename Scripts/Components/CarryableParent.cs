@@ -7,6 +7,7 @@ namespace RandomDungeons
     {
         [Signal] public delegate void PickedUp();
         [Signal] public delegate void Released();
+        [Signal] public delegate void Thrown(Vector2 direction);
 
         public Node2D Node => GetParent<Node2D>();
 
@@ -55,6 +56,12 @@ namespace RandomDungeons
             Node.GlobalPosition = releasePosGlobal;
 
             EmitSignal(nameof(Released));
+        }
+
+        public void Throw(Vector2 releasePosGlobal, Vector2 direction)
+        {
+            Release(releasePosGlobal);
+            EmitSignal(nameof(Thrown), direction);
         }
     }
 }

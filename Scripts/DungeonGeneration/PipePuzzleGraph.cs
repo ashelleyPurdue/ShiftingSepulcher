@@ -45,7 +45,7 @@ namespace RandomDungeons
                 var childCell = puzzle.GetCell(childPos);
 
                 parentCell.SetDirectionOpen(growth.dir, true);
-                parentCell.SetDirectionOpen(growth.dir.Opposite(), true);
+                childCell.SetDirectionOpen(growth.dir.Opposite(), true);
             }
 
             // Mark all "leaf" cells as sinks

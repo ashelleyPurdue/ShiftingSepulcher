@@ -52,6 +52,7 @@ namespace RandomDungeons
             // Mark all "leaf" cells as sinks
             var leafCells = puzzle._cells
                 .Select(kvp => kvp.Value)
+                .Where(c => c.Type != CellType.Source)
                 .Where(c => c.NumOpenDirections() == 1);
 
             foreach (var cell in leafCells)

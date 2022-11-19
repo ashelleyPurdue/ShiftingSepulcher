@@ -32,18 +32,20 @@ namespace RandomDungeons
 
             foreach (var srcPos in puzzleGraph.AllSources())
             {
-                Spawn<Node2D>(SourceCellPrefab, srcPos);
+                var src = Spawn<PipePuzzleCell>(SourceCellPrefab, srcPos);
+                src.Cell = puzzleGraph.GetCell(srcPos);
             }
 
             foreach (var pipePos in puzzleGraph.AllPipes())
             {
-                var pipe = Spawn<PipePuzzlePipe>(PipeCellPrefab, pipePos);
+                var pipe = Spawn<PipePuzzleCell>(PipeCellPrefab, pipePos);
                 pipe.Cell = puzzleGraph.GetCell(pipePos);
             }
 
             foreach (var sinkPos in puzzleGraph.AllSinks())
             {
-                Spawn<Node2D>(SinkCellPrefab, sinkPos);
+                var sink = Spawn<PipePuzzleCell>(SinkCellPrefab, sinkPos);
+                sink.Cell = puzzleGraph.GetCell(sinkPos);
             }
         }
 

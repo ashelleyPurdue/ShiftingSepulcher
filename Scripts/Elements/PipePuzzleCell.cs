@@ -2,7 +2,7 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class PipePuzzlePipe : Node2D
+    public class PipePuzzleCell : Node2D
     {
         public PipePuzzleGraph.Cell Cell;
 

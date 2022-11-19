@@ -74,15 +74,6 @@ namespace RandomDungeons
                     puzzle.RemoveCell(cellPos);
             }
 
-            // Make sources and sinks accessible from all directions
-            foreach (var cellPos in puzzle.AllSources().Concat(puzzle.AllSinks()))
-            {
-                var cell = puzzle.GetCell(cellPos);
-
-                foreach (var dir in CardinalDirectionUtils.All())
-                    cell.SetDirectionOpen(dir, true);
-            }
-
             // Scramble the puzzle to hide the solution
             foreach (var cellPos in puzzle.AllCellsReachableFrom(source))
             {

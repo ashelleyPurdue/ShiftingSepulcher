@@ -139,14 +139,121 @@ namespace RandomDungeons
             Height = height;
         }
 
+        public Cell GetCell(Vector2i pos)
+        {
+            AssertInBounds(pos);
+
+            if (!_cells.ContainsKey(pos))
+                _cells[pos] = new Cell();
+
+            return _cells[pos];
+        }
+
+        public bool IsSolved()
+        {
+            IEnumerable<Vector2i> sources = _cells
+                .Where(kvp => kvp.Value.Type == CellType.Source)
+                .Select(kvp => kvp.Key);
+
+            IEnumerable<Vector2i> sinks = _cells
+                .Where(kvp => kvp.Value.Type == CellType.Sink)
+                .Select(kvp => kvp.Key);
+
+            HashSet<Vector2i> reachableCells = sources
+                .SelectMany(src => AllCellsReachableFrom(src))
+                .ToHashSet();
+
+            return sinks.All(sink => reachableCells.Contains(sink));
+        }
+
+        public bool IsInBounds(Vector2i cellPos)
+        {
+            return
+                cellPos.x >= 0 &&
+                cellPos.y >= 0 &&
+                cellPos.x < Width &&
+                cellPos.y < Height;
+        }
+
+        public IEnumerable<Vector2i> AllCellsReachableFrom(Vector2i startPos)
+        {
+            var alreadyQueued = new HashSet<Vector2i>();
+            var visitQueue = new Queue<Vector2i>();
+
+            while (visitQueue.Any())
+            {
+                var currentPos = visitQueue.Dequeue();
+                yield return currentPos;
+
+                foreach (Vector2i neighborPos in AllConnectedNeighbors(currentPos))
+                {
+                    EnqueueIfNotAlready(neighborPos);
+                }
+            }
+
+            void EnqueueIfNotAlready(Vector2i pos)
+            {
+                if (alreadyQueued.Contains(pos))
+                    return;
+
+                alreadyQueued.Add(pos);
+                visitQueue.Enqueue(pos);
+            }
+        }
+
+        public IEnumerable<Vector2i> AllConnectedNeighbors(Vector2i cellPos)
+        {
+            var cell = GetCell(cellPos);
+
+            foreach (var dir in CardinalDirectionUtils.All())
+            {
+                var neighborPos = cellPos + dir.ToVector2i();
+
+                if (!IsInBounds(neighborPos))
+                    continue;
+
+                var neighborCell = GetCell(neighborPos);
+
+                bool cellOpen = cell.IsDirectionOpen(dir);
+                bool neighborOpen = neighborCell.IsDirectionOpen(dir.Opposite());
+
+                if (cellOpen && neighborOpen)
+                    yield return neighborPos;
+            }
+        }
+
+        public IEnumerable<Vector2i> AllSinks()
+        {
+            return _cells
+                .Where(kvp => kvp.Value.Type == CellType.Sink)
+                .Select(kvp => kvp.Key);
+        }
+
+        public void RemoveCell(Vector2i cellPos)
+        {
+            // Close the ports on all neighbors
+            var cell = GetCell(cellPos);
+            foreach (var dir in CardinalDirectionUtils.All())
+            {
+                if (!cell.IsDirectionOpen(dir))
+                    continue;
+
+                var neighborPos = cellPos + dir.ToVector2i();
+                var neighborCell = GetCell(neighborPos);
+            }
+        }
+
+        private void AssertInBounds(Vector2i cellPos)
+        {
+            if (!IsInBounds(cellPos))
+                throw new Exception($"Cell {cellPos} is out of bounds");
+        }
+
+
+
+
 
         // placeholders for intellisense
-        public Cell GetCell(Vector2i cellPos) => throw new NotImplementedException();
-        public void RemoveCell(Vector2i cellPos) => throw new NotImplementedException();
-        public bool IsInBounds(Vector2i cellPos) => throw new NotImplementedException();
-        public IEnumerable<Vector2i> AllSinks() => throw new NotImplementedException();
-        public IEnumerable<Vector2i> AllCellsReachableFrom(Vector2i startPos) => throw new NotImplementedException();
-
         public enum CellType
         {
             Pipe,

@@ -255,7 +255,11 @@ namespace RandomDungeons
 
                 var neighborPos = cellPos + dir.ToVector2i();
                 var neighborCell = GetCell(neighborPos);
+                neighborCell.SetDirectionOpen(dir.Opposite(), false);
             }
+
+            // Remove the cell
+            _cells.Remove(cellPos);
         }
 
         private void AssertInBounds(Vector2i cellPos)

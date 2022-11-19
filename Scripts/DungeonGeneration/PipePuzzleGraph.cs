@@ -180,6 +180,8 @@ namespace RandomDungeons
             var alreadyQueued = new HashSet<Vector2i>();
             var visitQueue = new Queue<Vector2i>();
 
+            EnqueueIfNotAlready(startPos);
+
             while (visitQueue.Any())
             {
                 var currentPos = visitQueue.Dequeue();

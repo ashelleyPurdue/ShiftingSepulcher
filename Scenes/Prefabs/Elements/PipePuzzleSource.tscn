@@ -1,0 +1,14 @@
+[gd_scene format=2]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Tile" type="Polygon2D" parent="."]
+color = Color( 0.482353, 0.482353, 0.482353, 1 )
+polygon = PoolVector2Array( -16, -16, 16, -16, 16, 16, -16, 16 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = -8.0
+margin_top = -8.0
+margin_right = 12.0
+margin_bottom = 6.0
+text = "Src"

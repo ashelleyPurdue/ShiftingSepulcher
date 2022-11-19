@@ -249,11 +249,6 @@ namespace RandomDungeons
                 throw new Exception($"Cell {cellPos} is out of bounds");
         }
 
-
-
-
-
-        // placeholders for intellisense
         public enum CellType
         {
             Pipe,
@@ -265,10 +260,34 @@ namespace RandomDungeons
         {
             public CellType Type;
 
-            public void SetDirectionOpen(CardinalDirection dir, bool isOpen) => throw new NotImplementedException();
-            public int NumOpenDirections() => throw new NotImplementedException();
-            public void RotateClockwise() => throw new NotImplementedException();
-            public bool IsDirectionOpen(CardinalDirection dir) => throw new NotImplementedException();
+            private Dictionary<CardinalDirection, bool> _isDirectionOpen = new Dictionary<CardinalDirection, bool>();
+
+            public void RotateClockwise()
+            {
+                bool tmp = IsDirectionOpen(CardinalDirection.West);
+                SetDirectionOpen(CardinalDirection.West, IsDirectionOpen(CardinalDirection.South));
+                SetDirectionOpen(CardinalDirection.South, IsDirectionOpen(CardinalDirection.East));
+                SetDirectionOpen(CardinalDirection.East, IsDirectionOpen(CardinalDirection.North));
+                SetDirectionOpen(CardinalDirection.North, tmp);
+            }
+
+            public bool IsDirectionOpen(CardinalDirection dir)
+            {
+                bool hasValue = _isDirectionOpen.TryGetValue(dir, out bool isOpen);
+                return hasValue && isOpen;
+            }
+
+            public int NumOpenDirections()
+            {
+                return CardinalDirectionUtils.All()
+                    .Where(IsDirectionOpen)
+                    .Count();
+            }
+
+            public void SetDirectionOpen(CardinalDirection dir, bool isOpen)
+            {
+                _isDirectionOpen[dir] = isOpen;
+            }
         }
     }
 }

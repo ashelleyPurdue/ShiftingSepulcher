@@ -52,7 +52,12 @@ namespace RandomDungeons
 
         private Vector2 GraphPosToRealPos(Vector2i graphPos)
         {
-            return new Vector2(graphPos.x, graphPos.y) * 32;
+            var realPos = new Vector2(graphPos.x, graphPos.y);
+            realPos.x -= ((float)Width) / 2;
+            realPos.y -= ((float)Height) / 2;
+            realPos *= 32;
+
+            return realPos;
         }
     }
 }

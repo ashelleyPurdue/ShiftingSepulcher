@@ -154,7 +154,18 @@ namespace RandomDungeons
         {
             IEnumerable<Vector2i> sources = _cells
                 .Where(kvp => kvp.Value.Type == CellType.Source)
-                .Select(kvp => kvp.Key);
+                .Select(kvp => kvp.Key)
+                .ToArray();
+            // HACK: We're calling .ToArray() on `sources` to avoid an exception
+            // caused by altering `_cells` while the enumerable is still being
+            // looped through.
+            //
+            // This is because GetCell() modifies the _cells dictionary if you
+            // try to access a cell that doesn't exist.  AllCellsReachableFrom()
+            // calls GetCell(), which means it modifies the dictionary.
+            //
+            // TODO: A proper solution should make it so GetCell() doesn't
+            // automatically create new cells
 
             IEnumerable<Vector2i> sinks = _cells
                 .Where(kvp => kvp.Value.Type == CellType.Sink)

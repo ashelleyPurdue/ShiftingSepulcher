@@ -4,7 +4,7 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class PipePuzzle : Node2D, IRoomPopulator
+    public class PipePuzzle : Node2D, IRoomPopulator, IChallenge
     {
         [Export] public int Width = 5;
         [Export] public int Height = 5;
@@ -15,6 +15,10 @@ namespace RandomDungeons
         [Export] public PackedScene PipeCellPrefab;
         [Export] public PackedScene SinkCellPrefab;
 
+        private PipePuzzleGraph _puzzleGraph;
+
+        public bool IsSolved() => _puzzleGraph.IsSolved();
+
         public void Populate(DungeonGraphRoom graphRoom, Random rng)
         {
             var puzzleGraph = PipePuzzleGraph.Generate(
@@ -24,6 +28,7 @@ namespace RandomDungeons
                 numSinks: NumSinks,
                 minGrowths: MinGrowths
             );
+            _puzzleGraph = puzzleGraph;
 
             foreach (var srcPos in puzzleGraph.AllSources())
             {

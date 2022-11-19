@@ -29,7 +29,7 @@ namespace RandomDungeons
             puzzle.GetCell(source).Type = CellType.Source;
 
             // Choose a bunch of cells to "grow" another cell off of
-            for (int i = 0; i < minGrowths || AllNonSinkLeaves().Count() < numSinks; i++)
+            for (int i = 0; i < minGrowths || AllLeafPipes().Count() < numSinks; i++)
             {
                 var growthCandidates = GrowthCandidates().ToArray();
 
@@ -67,9 +67,9 @@ namespace RandomDungeons
             }
 
             // Trim all branches that belonged to the trimmed sinks
-            while (AllNonSinkLeaves().Count() > 0)
+            while (AllLeafPipes().Count() > 0)
             {
-                var cellsToRemove = AllNonSinkLeaves().ToArray();
+                var cellsToRemove = AllLeafPipes().ToArray();
                 foreach (var cellPos in cellsToRemove)
                     puzzle.RemoveCell(cellPos);
             }
@@ -134,10 +134,11 @@ namespace RandomDungeons
                 }
             }
 
-            IEnumerable<Vector2i> AllNonSinkLeaves()
+            IEnumerable<Vector2i> AllLeafPipes()
             {
                 return puzzle._cells
-                    .Where(kvp => kvp.Value.NumOpenDirections() == 1 && kvp.Value.Type != CellType.Sink)
+                    .Where(kvp => kvp.Value.Type == CellType.Pipe)
+                    .Where(kvp => kvp.Value.NumOpenDirections() == 1)
                     .Select(kvp => kvp.Key);
             }
         }

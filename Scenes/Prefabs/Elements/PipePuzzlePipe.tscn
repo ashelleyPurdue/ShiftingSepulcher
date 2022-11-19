@@ -7,7 +7,7 @@ script = ExtResource( 1 )
 
 [node name="Background" type="Polygon2D" parent="."]
 color = Color( 0.482353, 0.482353, 0.482353, 1 )
-polygon = PoolVector2Array( -16, -16, 16, -16, 16, 16, -16, 16 )
+polygon = PoolVector2Array( -32, -32, 32, -32, 32, 32, -32, 32 )
 
 [node name="CenterPipe" type="Polygon2D" parent="."]
 polygon = PoolVector2Array( -4, -4, 4, -4, 4, 4, -4, 4 )
@@ -16,16 +16,16 @@ polygon = PoolVector2Array( -4, -4, 4, -4, 4, 4, -4, 4 )
 unique_name_in_owner = true
 
 [node name="North" type="Polygon2D" parent="PipeDisplays"]
-polygon = PoolVector2Array( -4, -4, -4, -16, 4, -16, 4, -4 )
+polygon = PoolVector2Array( -4, -4, -4, -32, 4, -32, 4, -4 )
 
 [node name="East" type="Polygon2D" parent="PipeDisplays"]
 rotation = 1.5708
-polygon = PoolVector2Array( -4, -4, -4, -16, 4, -16, 4, -4 )
+polygon = PoolVector2Array( -4, -4, -4, -32, 4, -32, 4, -4 )
 
 [node name="South" type="Polygon2D" parent="PipeDisplays"]
 rotation = 3.14159
-polygon = PoolVector2Array( -4, -4, -4, -16, 4, -16, 4, -4 )
+polygon = PoolVector2Array( -4, -4, -4, -32, 4, -32, 4, -4 )
 
 [node name="West" type="Polygon2D" parent="PipeDisplays"]
 rotation = 4.71239
-polygon = PoolVector2Array( -4, -4, -4, -16, 4, -16, 4, -4 )
+polygon = PoolVector2Array( -4, -4, -4, -32, 4, -32, 4, -4 )

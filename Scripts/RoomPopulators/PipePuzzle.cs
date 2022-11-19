@@ -6,8 +6,8 @@ namespace RandomDungeons
 {
     public class PipePuzzle : Node2D, IRoomPopulator
     {
-        [Export] public int Width = 10;
-        [Export] public int Height = 10;
+        [Export] public int Width = 5;
+        [Export] public int Height = 5;
         [Export] public int NumSinks = 3;
         [Export] public int MinGrowths = 15;
 
@@ -17,7 +17,6 @@ namespace RandomDungeons
 
         public void Populate(DungeonGraphRoom graphRoom, Random rng)
         {
-            rng = new Random(1337);
             var puzzleGraph = PipePuzzleGraph.Generate(
                 rng: rng,
                 width: Width,
@@ -59,7 +58,7 @@ namespace RandomDungeons
             realPos.y -= ((float)Height) / 2;
             realPos.y *= -1;
 
-            realPos *= 32;
+            realPos *= 32 * 2;
 
             return realPos;
         }

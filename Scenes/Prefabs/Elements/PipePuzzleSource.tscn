@@ -4,7 +4,7 @@
 
 [node name="Tile" type="Polygon2D" parent="."]
 color = Color( 0.482353, 0.482353, 0.482353, 1 )
-polygon = PoolVector2Array( -16, -16, 16, -16, 16, 16, -16, 16 )
+polygon = PoolVector2Array( -32, -32, 32, -32, 32, 32, -32, 32 )
 
 [node name="Label" type="Label" parent="."]
 margin_left = -8.0

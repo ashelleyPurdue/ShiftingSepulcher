@@ -43,6 +43,7 @@ namespace RandomDungeons
 
                 var childPos = parentPos + growth.dir.ToVector2i();
                 var childCell = puzzle.GetCell(childPos);
+                childCell.Type = CellType.Pipe;
 
                 parentCell.SetDirectionOpen(growth.dir, true);
                 childCell.SetDirectionOpen(growth.dir.Opposite(), true);
@@ -116,9 +117,7 @@ namespace RandomDungeons
                         continue;
 
                     var neighborCell = puzzle.GetCell(neighborPos);
-                    bool isFree = neighborCell.NumOpenDirections() == 0;
-
-                    if (!isFree)
+                    if (neighborCell.Type != CellType.Empty)
                         continue;
 
                     yield return dir;
@@ -267,6 +266,7 @@ namespace RandomDungeons
 
         public enum CellType
         {
+            Empty,
             Pipe,
             Source,
             Sink

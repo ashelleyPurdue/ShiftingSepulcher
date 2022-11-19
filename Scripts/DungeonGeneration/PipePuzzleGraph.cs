@@ -222,6 +222,20 @@ namespace RandomDungeons
             }
         }
 
+        public IEnumerable<Vector2i> AllPipes()
+        {
+            return _cells
+                .Where(kvp => kvp.Value.Type == CellType.Pipe)
+                .Select(kvp => kvp.Key);
+        }
+
+        public IEnumerable<Vector2i> AllSources()
+        {
+            return _cells
+                .Where(kvp => kvp.Value.Type == CellType.Source)
+                .Select(kvp => kvp.Key);
+        }
+
         public IEnumerable<Vector2i> AllSinks()
         {
             return _cells

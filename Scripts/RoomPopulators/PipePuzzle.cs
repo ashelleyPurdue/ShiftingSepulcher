@@ -17,6 +17,7 @@ namespace RandomDungeons
 
         public void Populate(DungeonGraphRoom graphRoom, Random rng)
         {
+            rng = new Random(1337);
             var puzzleGraph = PipePuzzleGraph.Generate(
                 rng: rng,
                 width: Width,
@@ -56,6 +57,8 @@ namespace RandomDungeons
             var realPos = new Vector2(graphPos.x, graphPos.y);
             realPos.x -= ((float)Width) / 2;
             realPos.y -= ((float)Height) / 2;
+            realPos.y *= -1;
+
             realPos *= 32;
 
             return realPos;

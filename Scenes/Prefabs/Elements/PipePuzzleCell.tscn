@@ -42,6 +42,8 @@ radius = 8.0
 
 [node name="PipePuzzleCell" type="Node2D"]
 script = ExtResource( 1 )
+UnpoweredColor = Color( 0, 0.271333, 0.37, 1 )
+PoweredColor = Color( 0, 0.741176, 1, 1 )
 
 [node name="Animator" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true

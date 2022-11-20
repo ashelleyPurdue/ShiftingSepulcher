@@ -4,7 +4,11 @@ namespace RandomDungeons
 {
     public class PipePuzzleCell : Node2D
     {
+        [Export] public Color UnpoweredColor;
+        [Export] public Color PoweredColor;
+
         public PipePuzzleGraph.Cell Cell;
+        public bool IsPowered;
 
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%Animator");
 
@@ -12,7 +16,12 @@ namespace RandomDungeons
         {
             foreach (var dir in CardinalDirectionUtils.All())
             {
-                GetPipeDisplay(dir).Visible = Cell.IsDirectionOpen(dir);
+                var pipe = GetPipeDisplay(dir);
+                pipe.Visible = Cell.IsDirectionOpen(dir);
+
+                pipe.SelfModulate = IsPowered
+                    ? PoweredColor
+                    : UnpoweredColor;
             }
         }
 

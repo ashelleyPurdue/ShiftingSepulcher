@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 namespace RandomDungeons
@@ -46,6 +47,20 @@ namespace RandomDungeons
             {
                 var sink = Spawn<PipePuzzleCell>(SinkCellPrefab, sinkPos);
                 sink.Cell = puzzleGraph.GetCell(sinkPos);
+            }
+        }
+
+        public override void _Process(float delta)
+        {
+            var allPoweredGraphCells = _puzzleGraph
+                .AllSources()
+                .SelectMany(srcPos => _puzzleGraph.AllCellsReachableFrom(srcPos))
+                .Select(cellPos => _puzzleGraph.GetCell(cellPos))
+                .ToHashSet();
+
+            foreach (var realCell in this.AllDescendantsOfType<PipePuzzleCell>())
+            {
+                realCell.IsPowered = allPoweredGraphCells.Contains(realCell.Cell);
             }
         }
 

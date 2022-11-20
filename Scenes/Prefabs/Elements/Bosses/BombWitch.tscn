@@ -1,0 +1,116 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=2]
+[ext_resource path="res://Scenes/Components/Circle2D.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Sprites/OutlinedCircle.svg" type="Texture" id=4]
+
+[sub_resource type="GradientTexture2D" id=2]
+gradient = ExtResource( 2 )
+fill = 1
+fill_from = Vector2( 0.5, 0.5 )
+
+[node name="BombWitch" type="Node2D"]
+
+[node name="Shadow" type="Sprite" parent="."]
+texture = SubResource( 2 )
+
+[node name="Model" type="Node2D" parent="."]
+
+[node name="Broom" type="Node2D" parent="Model"]
+
+[node name="Stick" type="Polygon2D" parent="Model/Broom"]
+color = Color( 0.52, 0.369027, 0.1716, 1 )
+polygon = PoolVector2Array( -1, 32, 1, 32, 1.92271, 27.2078, 1, -30, -1, -30, -2, 27 )
+
+[node name="Brush" type="Node2D" parent="Model/Broom"]
+
+[node name="Brus2" type="Polygon2D" parent="Model/Broom/Brush"]
+modulate = Color( 1, 0.772549, 0, 1 )
+polygon = PoolVector2Array( -1, -27, 1, -27, 4, -32, 5, -33, 8, -40, -8, -40, -5, -33, -4, -32 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Model/Broom/Brush/Brus2"]
+polygon = PoolVector2Array( -8, -40, 8, -40, 8, -56, -8, -56 )
+vertex_colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Model/Broom/Brush"]
+color = Color( 0.388235, 0, 0, 1 )
+polygon = PoolVector2Array( -5, -33, 5, -33, 4, -32, -4, -32 )
+
+[node name="Body" type="Node2D" parent="Model"]
+
+[node name="Torso" type="Polygon2D" parent="Model/Body"]
+color = Color( 0.152941, 0.152941, 0.152941, 1 )
+polygon = PoolVector2Array( -2, 12, 2, 12, 5, 6, 5, 1, -5, 1, -5, 6 )
+
+[node name="Node2D" type="Node2D" parent="Model/Body/Torso"]
+position = Vector2( 0, 1 )
+
+[node name="Polygon2D2" type="Polygon2D" parent="Model/Body/Torso/Node2D"]
+color = Color( 0.0784314, 0.0784314, 0.0784314, 1 )
+polygon = PoolVector2Array( -2, 10, -4, 8, 0, 8, 4, 8, 2, 10 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Model/Body/Torso/Node2D"]
+color = Color( 0.15, 0.15, 0.15, 1 )
+polygon = PoolVector2Array( -4, 6, -4, 8, -3, 9, -2, 9, 0, 8, 2, 9, 3, 9, 4, 8, 4, 6, 0, 7 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Model/Body/Torso"]
+color = Color( 0.752941, 0.705882, 0, 1 )
+polygon = PoolVector2Array( -2, 5, -1, 6, 1, 6, 2, 5, 3, 4, 3, 5, 1, 7, 0, 8, -1, 7, -3, 5, -3, 4 )
+
+[node name="Head" parent="Model/Body" instance=ExtResource( 3 )]
+position = Vector2( 0, -11 )
+Radius = 16.0
+Color = Color( 0.894118, 0.796078, 0.701961, 1 )
+
+[node name="Eyes" type="Node2D" parent="Model/Body/Head"]
+position = Vector2( 0, 12 )
+
+[node name="LeftEye" parent="Model/Body/Head/Eyes" instance=ExtResource( 3 )]
+position = Vector2( -4, 0 )
+scale = Vector2( 1, 2.52 )
+Radius = 1.0
+Color = Color( 0, 0, 0, 1 )
+
+[node name="Brow" type="Polygon2D" parent="Model/Body/Head/Eyes/LeftEye"]
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( -2, -1.5873, 2, -0.396825, 1, -0.396825, -2, -1.19048 )
+
+[node name="RightEye" parent="Model/Body/Head/Eyes" instance=ExtResource( 3 )]
+position = Vector2( 4, 0 )
+scale = Vector2( 1, 2.52 )
+Radius = 1.0
+Color = Color( 0, 0, 0, 1 )
+
+[node name="Brow" type="Polygon2D" parent="Model/Body/Head/Eyes/RightEye"]
+scale = Vector2( -1, 1 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( -2, -1.5873, 2, -0.396825, 1, -0.396825, -2, -1.19048 )
+
+[node name="Hair" type="Polygon2D" parent="Model/Body/Head"]
+color = Color( 0.14902, 0.372549, 0, 1 )
+polygon = PoolVector2Array( -16, -4, -19, 3, -17, 9, -18, 12, -15, 8, -16, 4, -14, 3, -11, 5, -9, 11, -2, 3, -2, 7, -7, 11, -2, 9, 2, 8, 2, 4, 7, 4, 9, 8, 10, 11, 12, 6, 13, 3, 15, 1, 16, -1, 18, 1, 15, 8, 18, 10, 17, 7, 18, 4, 21, 0, 18, -4, 13, -7 )
+
+[node name="Hat" type="Polygon2D" parent="Model/Body/Head"]
+position = Vector2( -6, 2 )
+scale = Vector2( 0.68, 0.759998 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( -16, -16, 0, -48, 32, -64, 16, -32, 32, -16, 64, -16, 0, 0, -48, -16 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Model/Body/Head/Hat"]
+color = Color( 0.427451, 0.407843, 0, 1 )
+polygon = PoolVector2Array( -16.1765, -15.7895, -1.47059, -9.21055, 11.7647, -9.21055, 32.3529, -15.7895, 29.4118, -18.4211, 11.7647, -11.8421, -1.47059, -11.8421, -14.7059, -18.4211 )
+
+[node name="Hands" type="Node2D" parent="Model/Body"]
+position = Vector2( 0, 10 )
+
+[node name="LeftHand" type="Sprite" parent="Model/Body/Hands"]
+modulate = Color( 0.894118, 0.796078, 0.701961, 1 )
+position = Vector2( -40, 0 )
+scale = Vector2( 0.203125, 0.203125 )
+texture = ExtResource( 4 )
+
+[node name="RightHand" type="Sprite" parent="Model/Body/Hands"]
+modulate = Color( 0.894118, 0.796078, 0.701961, 1 )
+position = Vector2( 40, 0 )
+scale = Vector2( 0.203125, 0.203125 )
+texture = ExtResource( 4 )

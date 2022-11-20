@@ -80,7 +80,7 @@ namespace RandomDungeons
             realPos.y -= ((float)Height) / 2;
             realPos.y *= -1;
 
-            realPos *= 32 * 2;
+            realPos *= 32 * 3;
 
             return realPos;
         }

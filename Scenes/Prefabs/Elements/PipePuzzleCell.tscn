@@ -50,28 +50,24 @@ unique_name_in_owner = true
 anims/RESET = SubResource( 3 )
 anims/RotateClockwise = SubResource( 4 )
 
-[node name="Background" type="Polygon2D" parent="."]
-color = Color( 0.482353, 0.482353, 0.482353, 1 )
-polygon = PoolVector2Array( -32, -32, 32, -32, 32, 32, -32, 32 )
-
 [node name="PipeDisplays" type="Polygon2D" parent="."]
 unique_name_in_owner = true
 polygon = PoolVector2Array( -4, -4, 4, -4, 4, 4, -4, 4 )
 
 [node name="North" type="Polygon2D" parent="PipeDisplays"]
-polygon = PoolVector2Array( -4, -4, -4, -32, 4, -32, 4, -4 )
+polygon = PoolVector2Array( -4, -4, -4, -48, 4, -48, 4, -4 )
 
 [node name="East" type="Polygon2D" parent="PipeDisplays"]
 rotation = 1.5708
-polygon = PoolVector2Array( -4, -4, -4, -32, 4, -32, 4, -4 )
+polygon = PoolVector2Array( -4, -4, -4.00017, -48, 3.99983, -48, 4, -4 )
 
 [node name="South" type="Polygon2D" parent="PipeDisplays"]
 rotation = 3.14159
-polygon = PoolVector2Array( -4, -4, -4, -32, 4, -32, 4, -4 )
+polygon = PoolVector2Array( -4, -4, -3.99988, -48, 4.00012, -48, 4, -4 )
 
 [node name="West" type="Polygon2D" parent="PipeDisplays"]
 rotation = 4.71239
-polygon = PoolVector2Array( -4, -4, -4, -32, 4, -32, 4, -4 )
+polygon = PoolVector2Array( -4, -4, -4.00005, -48, 3.99995, -48, 4, -4 )
 
 [node name="Knob" type="Node2D" parent="."]
 script = ExtResource( 2 )

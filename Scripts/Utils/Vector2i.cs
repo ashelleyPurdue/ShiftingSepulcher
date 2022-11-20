@@ -10,6 +10,8 @@ namespace RandomDungeons
         public static Vector2i Zero => new Vector2i(0, 0);
         public static Vector2i One => new Vector2i(1, 1);
 
+        // TODO: "Up" and "Down" are currently backwards.
+        // Need to figure out if it's safe to fix this.
         public static Vector2i Up => new Vector2i(0, 1);
         public static Vector2i Down => new Vector2i(0, -1);
         public static Vector2i Left => new Vector2i(-1, 0);

@@ -39,6 +39,19 @@ namespace RandomDungeons
 
             throw new Exception("There are only four cardinal directions, dude.");
         }
+
+        public static Vector2i ToVector2i(this CardinalDirection dir)
+        {
+            switch (dir)
+            {
+                case CardinalDirection.North: return Vector2i.Up;
+                case CardinalDirection.South: return Vector2i.Down;
+                case CardinalDirection.East: return Vector2i.Right;
+                case CardinalDirection.West: return Vector2i.Left;
+            }
+
+            throw new Exception("There are only four cardinal directions, dude.");
+        }
     }
 
     public static class CardinalDirectionUtils

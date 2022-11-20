@@ -1,0 +1,88 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Scripts/Elements/PipePuzzleCell.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Components/Circle2D.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/Components/HurtBox.cs" type="Script" id=3]
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("PipeDisplays:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "RotateClockwise"
+tracks/0/type = "value"
+tracks/0/path = NodePath("PipeDisplays:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.15 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -90.0, 0.0 ]
+}
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 8.0
+
+[node name="PipePuzzleCell" type="Node2D"]
+script = ExtResource( 1 )
+UnpoweredColor = Color( 0, 0.271333, 0.37, 1 )
+PoweredColor = Color( 0, 0.741176, 1, 1 )
+
+[node name="Animator" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+anims/RESET = SubResource( 3 )
+anims/RotateClockwise = SubResource( 4 )
+
+[node name="PipeDisplays" type="Polygon2D" parent="."]
+unique_name_in_owner = true
+polygon = PoolVector2Array( -4, -4, 4, -4, 4, 4, -4, 4 )
+
+[node name="North" type="Polygon2D" parent="PipeDisplays"]
+polygon = PoolVector2Array( -4, -4, -4, -48, 4, -48, 4, -4 )
+
+[node name="East" type="Polygon2D" parent="PipeDisplays"]
+rotation = 1.5708
+polygon = PoolVector2Array( -4, -4, -4.00017, -48, 3.99983, -48, 4, -4 )
+
+[node name="South" type="Polygon2D" parent="PipeDisplays"]
+rotation = 3.14159
+polygon = PoolVector2Array( -4, -4, -3.99988, -48, 4.00012, -48, 4, -4 )
+
+[node name="West" type="Polygon2D" parent="PipeDisplays"]
+rotation = 4.71239
+polygon = PoolVector2Array( -4, -4, -4.00005, -48, 3.99995, -48, 4, -4 )
+
+[node name="Knob" type="Node2D" parent="."]
+script = ExtResource( 2 )
+Radius = 8.0
+Color = Color( 0.054902, 0, 1, 1 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Knob"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Knob/StaticBody2D"]
+shape = SubResource( 2 )
+
+[node name="HurtBox" type="Area2D" parent="Knob"]
+script = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Knob/HurtBox"]
+shape = SubResource( 1 )
+
+[connection signal="TookDamage" from="Knob/HurtBox" to="." method="OnKnobHit"]

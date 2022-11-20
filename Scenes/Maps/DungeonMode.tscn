@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scripts/PhysicalDungeons/DungeonInstantiator.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/DungeonRooms/DungeonRoomFactory.cs" type="Script" id=2]
@@ -7,8 +7,6 @@
 [ext_resource path="res://Scenes/Prefabs/DungeonRoomTemplates/KeyRoom.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Prefabs/DungeonRoomTemplates/EmptyRoom.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Audio/Music/JRPG_labyrinth_loop.ogg" type="AudioStream" id=7]
-[ext_resource path="res://Scenes/Prefabs/DungeonTreeTemplates/WackyShortcutStructure.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Scenes/Prefabs/DungeonTreeTemplates/ThreeLockHub.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/Prefabs/RoomTransitionManager.tscn" type="PackedScene" id=10]
 [ext_resource path="res://SceneSpawnTables/DungeonRoomTemplates/BossRoomWeights.tres" type="Resource" id=11]
 [ext_resource path="res://SceneSpawnTables/DungeonRoomTemplates/PuzzleRooms.tres" type="Resource" id=12]
@@ -37,10 +35,6 @@ BossRoomTable = ExtResource( 11 )
 
 [node name="TreeTemplates" type="Node" parent="DungeonInstantiator"]
 unique_name_in_owner = true
-
-[node name="WackyShortcutStructure" parent="DungeonInstantiator/TreeTemplates" instance=ExtResource( 8 )]
-
-[node name="ThreeLockHub" parent="DungeonInstantiator/TreeTemplates" instance=ExtResource( 9 )]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

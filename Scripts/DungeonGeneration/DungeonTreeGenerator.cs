@@ -60,9 +60,9 @@ namespace RandomDungeons
                     var room = new DungeonTreeRoom();
                     room.RoomSeed = rng.Next();
                     room.ChallengeType = rng.PickFromWeighted(
-                        (ChallengeType.None, 2),
+                        (ChallengeType.None, 1),
                         (ChallengeType.Combat, 1),
-                        (ChallengeType.Puzzle, 2)
+                        (ChallengeType.Puzzle, 3)
                     );
 
                     if (prevRoom == null)

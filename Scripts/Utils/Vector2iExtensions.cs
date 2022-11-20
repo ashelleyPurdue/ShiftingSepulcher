@@ -1,4 +1,5 @@
 using System;
+using Godot;
 
 namespace RandomDungeons
 {
@@ -44,6 +45,11 @@ namespace RandomDungeons
                 return CardinalDirection.North;
             else
                 return CardinalDirection.South;
+        }
+
+        public static Vector2 ToVector2(this Vector2i v)
+        {
+            return new Vector2((float)v.x, (float)v.y);
         }
     }
 }

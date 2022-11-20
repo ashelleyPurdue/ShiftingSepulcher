@@ -9,7 +9,6 @@ namespace RandomDungeons
         [Export] public NodePath DefaultFocusedOption;
 
         [Export] public PackedScene DungeonModeScene;
-        [Export] public PackedScene LightsOutScene;
         [Export] public PackedScene SlidingIceModeScene;
         [Export] public PackedScene ScalePuzzleScene;
 
@@ -25,11 +24,6 @@ namespace RandomDungeons
         private void PlayDungeonMode()
         {
             ChooseMode(DungeonModeScene);
-        }
-
-        private void PlayLightsOutMode()
-        {
-            ChooseMode(LightsOutScene);
         }
 
         private void PlaySlidingIceMode()

@@ -6,7 +6,6 @@
 script = ExtResource( 1 )
 BasePath = "res://Scenes/Prefabs/DungeonRoomTemplates/Puzzle"
 Weights = {
-"LightsOutRoom": 1,
 "PipePuzzleRoom": 3,
 "ScalePuzzleRoom": 3,
 "SlidingIcePuzzleRoom": 3

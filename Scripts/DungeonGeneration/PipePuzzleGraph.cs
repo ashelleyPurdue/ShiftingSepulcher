@@ -9,6 +9,16 @@ namespace RandomDungeons
         public readonly int Width;
         public readonly int Height;
 
+        public Vector2i MinCoords => new Vector2i(
+            x: AllNonEmptyCells().Select(c => c.x).Min(),
+            y: AllNonEmptyCells().Select(c => c.y).Min()
+        );
+
+        public Vector2i MaxCoords => new Vector2i(
+            x: AllNonEmptyCells().Select(c => c.x).Max(),
+            y: AllNonEmptyCells().Select(c => c.y).Max()
+        );
+
         private readonly Dictionary<Vector2i, Cell> _cells = new Dictionary<Vector2i, Cell>();
 
         public static PipePuzzleGraph Generate(
@@ -234,6 +244,13 @@ namespace RandomDungeons
                 if (cellOpen && neighborOpen)
                     yield return neighborPos;
             }
+        }
+
+        public IEnumerable<Vector2i> AllNonEmptyCells()
+        {
+            return _cells
+                .Where(kvp => kvp.Value.Type != CellType.Empty)
+                .Select(kvp => kvp.Key);
         }
 
         public IEnumerable<Vector2i> AllPipes()

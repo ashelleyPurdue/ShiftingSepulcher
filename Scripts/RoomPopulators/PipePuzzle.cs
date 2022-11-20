@@ -75,11 +75,15 @@ namespace RandomDungeons
 
         private Vector2 GraphPosToRealPos(Vector2i graphPos)
         {
-            var realPos = new Vector2(graphPos.x, graphPos.y);
-            realPos.x -= ((float)Width) / 2;
-            realPos.y -= ((float)Height) / 2;
+            // Make it so the center of the _used_ tiles is at (0,0)
+            Vector2 usedCenter = _puzzleGraph.MinCoords.ToVector2() + _puzzleGraph.MaxCoords.ToVector2();
+            usedCenter /= 2;
+
+            var realPos = graphPos.ToVector2();
+            realPos -= usedCenter;
             realPos.y *= -1;
 
+            // Scale it up by the size of a cell
             realPos *= 32 * 3;
 
             return realPos;

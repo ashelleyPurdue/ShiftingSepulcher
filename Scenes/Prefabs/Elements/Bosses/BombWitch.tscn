@@ -549,12 +549,12 @@ anims/TeleportAway = SubResource( 6 )
 anims/Throw = SubResource( 5 )
 anims/Twirl = SubResource( 4 )
 
-[node name="Shadow" type="Sprite" parent="."]
-texture = SubResource( 2 )
-
 [node name="Visuals" type="Node2D" parent="."]
 
 [node name="Model" type="Node2D" parent="Visuals"]
+
+[node name="Shadow" type="Sprite" parent="Visuals/Model"]
+texture = SubResource( 2 )
 
 [node name="Broom" type="Node2D" parent="Visuals/Model"]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=2]
 [ext_resource path="res://Scenes/Components/Circle2D.tscn" type="PackedScene" id=3]
@@ -137,6 +137,106 @@ tracks/10/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ true ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Visuals/Model/Body/Hands:rotation_degrees")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Visuals/Model/Body/Hands:position")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 10 ) ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Visuals/Model/Body/Neck/Head/Hat:position")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -4.55362, 6.42659 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "Throw"
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("Visuals/Model/Body/Hands/LeftHand:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.14, 0.26 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -26, -39 ), Vector2( -13.2054, 13.6351 ), Vector2( -9, 3 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Visuals/Model/Body/Hands/RightHand:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = false
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.14, 0.26, 0.4, 0.7, 0.85 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 7, 1 ), Vector2( 25.619, -42.7669 ), Vector2( 25.429, -23.3964 ), Vector2( 24.2732, -21.8664 ), Vector2( 24.2732, -21.8664 ), Vector2( 24.193, -40.6545 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Visuals/Model/Body:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 22.1013, -24.9565 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Visuals/Model/Body/Neck/Head/Hat:position")
+tracks/3/interp = 2
+tracks/3/loop_wrap = false
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.08, 0.11, 0.14, 0.2, 0.28 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -4.55362, 6.42659 ), Vector2( -1.60261, -4.97754 ), Vector2( 2.17704, -9.92295 ), Vector2( 6.9609, -13.3394 ), Vector2( 6.07579, -15.7129 ), Vector2( -2.35993, 1.05015 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Visuals/Model/Body/Neck/Head/Hat:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = false
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.2, 0.28, 0.4, 0.7, 0.85 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ -19.6459, 20.5059, 20.5059, 36.5294, 36.5294, -3.44791 ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -286,6 +386,7 @@ fill_from = Vector2( 0.5, 0.5 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
 anims/RESET = SubResource( 3 )
+anims/Throw = SubResource( 5 )
 anims/Twirl = SubResource( 4 )
 
 [node name="Shadow" type="Sprite" parent="."]

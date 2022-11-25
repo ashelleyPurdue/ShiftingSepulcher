@@ -91,7 +91,7 @@ tracks/6/keys = {
 "values": [ Vector2( 0, -7 ) ]
 }
 tracks/7/type = "value"
-tracks/7/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/LeftEye:scale")
+tracks/7/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Left/Eye:scale")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/imported = false
@@ -103,7 +103,7 @@ tracks/7/keys = {
 "values": [ Vector2( 1, 2.52 ) ]
 }
 tracks/8/type = "value"
-tracks/8/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/RightEye:scale")
+tracks/8/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Right/Eye:scale")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
@@ -115,7 +115,7 @@ tracks/8/keys = {
 "values": [ Vector2( 1, 2.52 ) ]
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/LeftBrow:visible")
+tracks/9/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Left/Brow:visible")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/imported = false
@@ -127,7 +127,7 @@ tracks/9/keys = {
 "values": [ true ]
 }
 tracks/10/type = "value"
-tracks/10/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/RightBrow:visible")
+tracks/10/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Right/Brow:visible")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/imported = false
@@ -274,7 +274,7 @@ tracks/6/keys = {
 "values": [ Vector2( -3.21436, -9.36311 ) ]
 }
 tracks/7/type = "value"
-tracks/7/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/LeftEye:scale")
+tracks/7/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Left/Eye:scale")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/imported = false
@@ -286,7 +286,7 @@ tracks/7/keys = {
 "values": [ Vector2( 3, 0.2 ) ]
 }
 tracks/8/type = "value"
-tracks/8/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/RightEye:scale")
+tracks/8/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Right/Eye:scale")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
@@ -298,7 +298,7 @@ tracks/8/keys = {
 "values": [ Vector2( 3, 0.2 ) ]
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/LeftBrow:visible")
+tracks/9/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Left/Brow:visible")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/imported = false
@@ -310,7 +310,7 @@ tracks/9/keys = {
 "values": [ false ]
 }
 tracks/10/type = "value"
-tracks/10/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/RightBrow:visible")
+tracks/10/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Right/Brow:visible")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/imported = false
@@ -421,7 +421,7 @@ tracks/6/keys = {
 "values": [ Vector2( -3.21436, -9.36311 ) ]
 }
 tracks/7/type = "value"
-tracks/7/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/LeftEye:scale")
+tracks/7/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Left/Eye:scale")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/imported = false
@@ -433,7 +433,7 @@ tracks/7/keys = {
 "values": [ Vector2( 3, 0.2 ) ]
 }
 tracks/8/type = "value"
-tracks/8/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/RightEye:scale")
+tracks/8/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Right/Eye:scale")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
@@ -445,7 +445,7 @@ tracks/8/keys = {
 "values": [ Vector2( 3, 0.2 ) ]
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/LeftBrow:visible")
+tracks/9/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Left/Brow:visible")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/imported = false
@@ -457,7 +457,7 @@ tracks/9/keys = {
 "values": [ false ]
 }
 tracks/10/type = "value"
-tracks/10/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/RightBrow:visible")
+tracks/10/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Right/Brow:visible")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/imported = false
@@ -634,7 +634,7 @@ tracks/6/keys = {
 "values": [ Vector2( -3.21436, -9.36311 ) ]
 }
 tracks/7/type = "value"
-tracks/7/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/LeftEye:scale")
+tracks/7/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Left/Eye:scale")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/imported = false
@@ -646,7 +646,7 @@ tracks/7/keys = {
 "values": [ Vector2( 3, 0.2 ) ]
 }
 tracks/8/type = "value"
-tracks/8/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/RightEye:scale")
+tracks/8/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Right/Eye:scale")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
@@ -658,7 +658,7 @@ tracks/8/keys = {
 "values": [ Vector2( 3, 0.2 ) ]
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/LeftBrow:visible")
+tracks/9/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Left/Brow:visible")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/imported = false
@@ -670,7 +670,7 @@ tracks/9/keys = {
 "values": [ false ]
 }
 tracks/10/type = "value"
-tracks/10/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/RightBrow:visible")
+tracks/10/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Right/Brow:visible")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/imported = false
@@ -758,26 +758,30 @@ Color = Color( 0.894118, 0.796078, 0.701961, 1 )
 [node name="Eyes" type="Node2D" parent="Visuals/Model/Body/Neck/Head"]
 position = Vector2( 0, 12 )
 
-[node name="LeftBrow" type="Polygon2D" parent="Visuals/Model/Body/Neck/Head/Eyes"]
+[node name="Left" type="Node2D" parent="Visuals/Model/Body/Neck/Head/Eyes"]
+
+[node name="Brow" type="Polygon2D" parent="Visuals/Model/Body/Neck/Head/Eyes/Left"]
 position = Vector2( -4, -2.38419e-07 )
 scale = Vector2( 1, 2.52 )
 color = Color( 0, 0, 0, 1 )
 polygon = PoolVector2Array( -2, -1.5873, 2, -0.396825, 1, -0.396825, -2, -1.19048 )
 
-[node name="LeftEye" parent="Visuals/Model/Body/Neck/Head/Eyes" instance=ExtResource( 3 )]
+[node name="Eye" parent="Visuals/Model/Body/Neck/Head/Eyes/Left" instance=ExtResource( 3 )]
 position = Vector2( -4, 0 )
 scale = Vector2( 1, 2.52 )
 Radius = 1.0
 Color = Color( 0, 0, 0, 1 )
 
-[node name="RightBrow" type="Polygon2D" parent="Visuals/Model/Body/Neck/Head/Eyes"]
+[node name="Right" type="Node2D" parent="Visuals/Model/Body/Neck/Head/Eyes"]
+
+[node name="Brow" type="Polygon2D" parent="Visuals/Model/Body/Neck/Head/Eyes/Right"]
 position = Vector2( 4, -2.38419e-07 )
 rotation = 3.14159
 scale = Vector2( 1, -2.52 )
 color = Color( 0, 0, 0, 1 )
 polygon = PoolVector2Array( -2, -1.5873, 2, -0.396825, 1, -0.396825, -2, -1.19048 )
 
-[node name="RightEye" parent="Visuals/Model/Body/Neck/Head/Eyes" instance=ExtResource( 3 )]
+[node name="Eye" parent="Visuals/Model/Body/Neck/Head/Eyes/Right" instance=ExtResource( 3 )]
 position = Vector2( 4, 0 )
 scale = Vector2( 1, 2.52 )
 Radius = 1.0

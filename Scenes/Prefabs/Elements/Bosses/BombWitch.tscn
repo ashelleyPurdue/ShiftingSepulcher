@@ -1,8 +1,167 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=2]
 [ext_resource path="res://Scenes/Components/Circle2D.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Sprites/OutlinedCircle.svg" type="Texture" id=4]
+
+[sub_resource type="Animation" id=8]
+resource_name = "Dazed"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Left/Brow:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Right/Brow:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Visuals/Model/Body/Hands/LeftHand:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.3, 1.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -10, 0 ), Vector2( -13, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Visuals/Model/Body/Hands/RightHand:position")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.1, 1.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 13, 0 ), Vector2( 10, 0 ) ]
+}
+tracks/4/type = "bezier"
+tracks/4/path = NodePath("Visuals/Model/Body/Neck:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"points": PoolRealArray( -22.6, -0.25, 0, 0.25, 0, 22.6, -0.25, 0, 0.25, 0, -22.6, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 1, 2 )
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Left/GooglySwivel:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.001, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 720.0 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Left/GooglySwivel/RemoteTransform2D:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -1, 0 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Right/GooglySwivel:rotation_degrees")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -90.0, 630.0 ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Right/GooglySwivel/RemoteTransform2D:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 0 ) ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Visuals/Model/Body/Hands:rotation_degrees")
+tracks/9/interp = 2
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0.1, 1.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -27.0209, 27.0 ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Visuals/Model/Body/Hands:position")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Visuals/Model/DazedStars:visible")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Visuals/Model/DazedStars/Swivel:rotation_degrees")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 360.0 ]
+}
 
 [sub_resource type="Animation" id=3]
 length = 0.001
@@ -185,6 +344,150 @@ tracks/14/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ Vector2( 1, 1 ) ]
+}
+tracks/15/type = "value"
+tracks/15/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Left/GooglySwivel/RemoteTransform2D:position")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/16/type = "value"
+tracks/16/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Left/GooglySwivel:rotation_degrees")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/17/type = "value"
+tracks/17/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Right/GooglySwivel:rotation_degrees")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/18/type = "value"
+tracks/18/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Right/GooglySwivel/RemoteTransform2D:position")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/19/type = "value"
+tracks/19/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Left/Eye:position")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -4, 0 ) ]
+}
+tracks/20/type = "value"
+tracks/20/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Right/Eye:position")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 4, 0 ) ]
+}
+tracks/21/type = "value"
+tracks/21/path = NodePath("Visuals/Model/DazedStars/Stars/Star:position")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 20, 0 ) ]
+}
+tracks/22/type = "value"
+tracks/22/path = NodePath("Visuals/Model/DazedStars/Stars/Star2:position")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -20, 0 ) ]
+}
+tracks/23/type = "value"
+tracks/23/path = NodePath("Visuals/Model/DazedStars/Stars/Star3:position")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 20 ) ]
+}
+tracks/24/type = "value"
+tracks/24/path = NodePath("Visuals/Model/DazedStars/Stars/Star4:position")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -20 ) ]
+}
+tracks/25/type = "value"
+tracks/25/path = NodePath("Visuals/Model/DazedStars:visible")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/26/type = "value"
+tracks/26/path = NodePath("Visuals/Model/DazedStars/Swivel:rotation_degrees")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -478,7 +781,7 @@ tracks/11/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 0, 0 ) ]
+"values": [ Vector2( 0, 0 ), Vector2( 1, 1 ) ]
 }
 
 [sub_resource type="Animation" id=5]
@@ -691,6 +994,7 @@ fill_from = Vector2( 0.5, 0.5 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
+anims/Dazed = SubResource( 8 )
 anims/RESET = SubResource( 3 )
 anims/TeleportAway = SubResource( 6 )
 anims/TeleportIn = SubResource( 7 )
@@ -772,6 +1076,14 @@ scale = Vector2( 1, 2.52 )
 Radius = 1.0
 Color = Color( 0, 0, 0, 1 )
 
+[node name="GooglySwivel" type="Node2D" parent="Visuals/Model/Body/Neck/Head/Eyes/Left"]
+position = Vector2( -4, 0 )
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Visuals/Model/Body/Neck/Head/Eyes/Left/GooglySwivel"]
+remote_path = NodePath("../../Eye")
+update_rotation = false
+update_scale = false
+
 [node name="Right" type="Node2D" parent="Visuals/Model/Body/Neck/Head/Eyes"]
 
 [node name="Brow" type="Polygon2D" parent="Visuals/Model/Body/Neck/Head/Eyes/Right"]
@@ -786,6 +1098,14 @@ position = Vector2( 4, 0 )
 scale = Vector2( 1, 2.52 )
 Radius = 1.0
 Color = Color( 0, 0, 0, 1 )
+
+[node name="GooglySwivel" type="Node2D" parent="Visuals/Model/Body/Neck/Head/Eyes/Right"]
+position = Vector2( 4, 0 )
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Visuals/Model/Body/Neck/Head/Eyes/Right/GooglySwivel"]
+remote_path = NodePath("../../Eye")
+update_rotation = false
+update_scale = false
 
 [node name="Hair" type="Polygon2D" parent="Visuals/Model/Body/Neck/Head"]
 color = Color( 0.14902, 0.372549, 0, 1 )
@@ -816,3 +1136,76 @@ modulate = Color( 0.894118, 0.796078, 0.701961, 1 )
 position = Vector2( 40, 0 )
 scale = Vector2( 0.203125, 0.203125 )
 texture = ExtResource( 4 )
+
+[node name="DazedStars" type="Node2D" parent="Visuals/Model"]
+visible = false
+position = Vector2( 0, -12 )
+
+[node name="Stars" type="Node2D" parent="Visuals/Model/DazedStars"]
+
+[node name="Star" type="Polygon2D" parent="Visuals/Model/DazedStars/Stars"]
+position = Vector2( 20, 0 )
+color = Color( 1, 0.607843, 0, 1 )
+polygon = PoolVector2Array( -2, -3, 0, -9, 3, -3, 8, -3, 3, 1, 4, 6, 0, 3, -4, 5, -3, 1, -6, -3 )
+
+[node name="Inner" type="Polygon2D" parent="Visuals/Model/DazedStars/Stars/Star"]
+scale = Vector2( 0.7, 0.7 )
+color = Color( 1, 0.866667, 0, 1 )
+polygon = PoolVector2Array( -2, -3, 0, -9, 3, -3, 8, -3, 3, 1, 4, 6, 0, 3, -4, 5, -3, 1, -6, -3 )
+
+[node name="Star2" type="Polygon2D" parent="Visuals/Model/DazedStars/Stars"]
+position = Vector2( -20, 0 )
+color = Color( 1, 0.607843, 0, 1 )
+polygon = PoolVector2Array( -2, -3, 0, -9, 3, -3, 8, -3, 3, 1, 4, 6, 0, 3, -4, 5, -3, 1, -6, -3 )
+
+[node name="Inner" type="Polygon2D" parent="Visuals/Model/DazedStars/Stars/Star2"]
+scale = Vector2( 0.7, 0.7 )
+color = Color( 1, 0.866667, 0, 1 )
+polygon = PoolVector2Array( -2, -3, 0, -9, 3, -3, 8, -3, 3, 1, 4, 6, 0, 3, -4, 5, -3, 1, -6, -3 )
+
+[node name="Star3" type="Polygon2D" parent="Visuals/Model/DazedStars/Stars"]
+position = Vector2( 0, 20 )
+color = Color( 1, 0.607843, 0, 1 )
+polygon = PoolVector2Array( -2, -3, 0, -9, 3, -3, 8, -3, 3, 1, 4, 6, 0, 3, -4, 5, -3, 1, -6, -3 )
+
+[node name="Inner" type="Polygon2D" parent="Visuals/Model/DazedStars/Stars/Star3"]
+scale = Vector2( 0.7, 0.7 )
+color = Color( 1, 0.866667, 0, 1 )
+polygon = PoolVector2Array( -2, -3, 0, -9, 3, -3, 8, -3, 3, 1, 4, 6, 0, 3, -4, 5, -3, 1, -6, -3 )
+
+[node name="Star4" type="Polygon2D" parent="Visuals/Model/DazedStars/Stars"]
+position = Vector2( 0, -20 )
+color = Color( 1, 0.607843, 0, 1 )
+polygon = PoolVector2Array( -2, -3, 0, -9, 3, -3, 8, -3, 3, 1, 4, 6, 0, 3, -4, 5, -3, 1, -6, -3 )
+
+[node name="Inner" type="Polygon2D" parent="Visuals/Model/DazedStars/Stars/Star4"]
+scale = Vector2( 0.7, 0.7 )
+color = Color( 1, 0.866667, 0, 1 )
+polygon = PoolVector2Array( -2, -3, 0, -9, 3, -3, 8, -3, 3, 1, 4, 6, 0, 3, -4, 5, -3, 1, -6, -3 )
+
+[node name="Swivel" type="Node2D" parent="Visuals/Model/DazedStars"]
+scale = Vector2( 20, 20 )
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Visuals/Model/DazedStars/Swivel"]
+position = Vector2( 1, 0 )
+remote_path = NodePath("../../Stars/Star")
+update_rotation = false
+update_scale = false
+
+[node name="RemoteTransform2D2" type="RemoteTransform2D" parent="Visuals/Model/DazedStars/Swivel"]
+position = Vector2( -1, 0 )
+remote_path = NodePath("../../Stars/Star2")
+update_rotation = false
+update_scale = false
+
+[node name="RemoteTransform2D3" type="RemoteTransform2D" parent="Visuals/Model/DazedStars/Swivel"]
+position = Vector2( 0, 1 )
+remote_path = NodePath("../../Stars/Star3")
+update_rotation = false
+update_scale = false
+
+[node name="RemoteTransform2D4" type="RemoteTransform2D" parent="Visuals/Model/DazedStars/Swivel"]
+position = Vector2( 0, -1 )
+remote_path = NodePath("../../Stars/Star4")
+update_rotation = false
+update_scale = false

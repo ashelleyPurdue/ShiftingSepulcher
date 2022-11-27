@@ -1,10 +1,35 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scripts/Components/LineTrail2D.cs" type="Script" id=1]
 [ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=2]
 [ext_resource path="res://Scenes/Components/Circle2D.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Sprites/OutlinedCircle.svg" type="Texture" id=4]
 [ext_resource path="res://Scripts/Bosses/BombWitch.cs" type="Script" id=5]
+
+[sub_resource type="Animation" id=9]
+resource_name = "MainCycle"
+length = 6.0
+loop = true
+tracks/0/type = "method"
+tracks/0/path = NodePath("AI")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2.1, 4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "TeleportAway"
+}, {
+"args": [  ],
+"method": "TeleportIn"
+}, {
+"args": [  ],
+"method": "Throw"
+} ]
+}
 
 [sub_resource type="Animation" id=8]
 resource_name = "Dazed"
@@ -1080,6 +1105,11 @@ fill_from = Vector2( 0.5, 0.5 )
 
 [node name="AI" type="Node" parent="."]
 script = ExtResource( 5 )
+
+[node name="AttackPatterns" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+autoplay = "MainCycle"
+anims/MainCycle = SubResource( 9 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true

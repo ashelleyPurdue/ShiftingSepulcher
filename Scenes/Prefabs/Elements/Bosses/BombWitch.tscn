@@ -1,5 +1,6 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
+[ext_resource path="res://Scripts/Components/LineTrail2D.cs" type="Script" id=1]
 [ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=2]
 [ext_resource path="res://Scenes/Components/Circle2D.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Sprites/OutlinedCircle.svg" type="Texture" id=4]
@@ -1130,6 +1131,12 @@ modulate = Color( 0.894118, 0.796078, 0.701961, 1 )
 position = Vector2( -40, 0 )
 scale = Vector2( 0.203125, 0.203125 )
 texture = ExtResource( 4 )
+
+[node name="Trail" type="Node2D" parent="Visuals/Model/Body/Hands/LeftHand"]
+show_behind_parent = true
+script = ExtResource( 1 )
+EndColor = Color( 0.92549, 0.556863, 1, 1 )
+StartWidth = 32.0
 
 [node name="RightHand" type="Sprite" parent="Visuals/Model/Body/Hands"]
 modulate = Color( 0.894118, 0.796078, 0.701961, 1 )

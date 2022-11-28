@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Scripts/Components/LineTrail2D.cs" type="Script" id=1]
 [ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Scripts/Bosses/BombWitch.cs" type="Script" id=5]
 [ext_resource path="res://Scripts/Enemies/EnemyBody.cs" type="Script" id=6]
 [ext_resource path="res://Scripts/Components/HurtBox.cs" type="Script" id=7]
+[ext_resource path="res://Scripts/Components/HurtFlasher.cs" type="Script" id=8]
 
 [sub_resource type="Animation" id=12]
 resource_name = "DazedLoop"
@@ -1182,6 +1183,11 @@ MaxHealth = 10
 [node name="AI" type="Node" parent="."]
 script = ExtResource( 5 )
 
+[node name="HurtFlasher" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource( 8 )
+VisualsPath = NodePath("../Visuals")
+
 [node name="AttackPatterns" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
 autoplay = "MainCycle"
@@ -1424,5 +1430,5 @@ remote_path = NodePath("../../Stars/Star4")
 update_rotation = false
 update_scale = false
 
-[connection signal="TookDamage" from="HurtBox" to="AI" method="OnShieldShattered"]
 [connection signal="TookDamage" from="HurtBox" to="." method="OnTookDamage"]
+[connection signal="TookDamage" from="HurtBox" to="AI" method="OnShieldShattered"]

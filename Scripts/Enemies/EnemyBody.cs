@@ -14,7 +14,7 @@ namespace RandomDungeons
 
         public bool IsDead {get; private set;}
 
-        public int Health;
+        [Export] public int Health;
         public Vector2 WalkVelocity;
 
         private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");

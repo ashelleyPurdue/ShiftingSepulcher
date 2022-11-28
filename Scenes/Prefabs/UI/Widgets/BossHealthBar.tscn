@@ -32,10 +32,10 @@ func _process(_delta):
 "
 
 [node name="BossHealthBar" type="ProgressBar"]
-margin_left = 256.0
-margin_top = 544.0
-margin_right = 768.0
-margin_bottom = 558.0
+margin_left = 288.0
+margin_top = 512.0
+margin_right = 736.0
+margin_bottom = 528.0
 custom_styles/fg = SubResource( 1 )
 custom_styles/bg = SubResource( 2 )
 value = 100.0

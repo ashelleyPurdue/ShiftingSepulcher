@@ -14,7 +14,7 @@ namespace RandomDungeons
         [Export] public float TileThrowSpeed = 32 * 19;
         [Export] public float JumpProgress;
 
-        public int Health;
+        [Export] public int Health;
 
         private Player _player;
         private Vector2 _jumpStartPos;

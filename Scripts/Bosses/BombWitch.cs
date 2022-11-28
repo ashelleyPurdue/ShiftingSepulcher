@@ -51,13 +51,12 @@ namespace RandomDungeons
 
         public void OnShieldShattered(HitBox hitBox)
         {
-            _attackPatterns.Play("DazedLoop");
+            _attackPatterns.PlayAndAdvance("DazedLoop");
         }
 
         public void RecoverFromDazed()
         {
-            _animator.Reset();
-            _attackPatterns.Play("MainCycle");
+            _attackPatterns.PlayAndAdvance("MainCycle");
         }
     }
 }

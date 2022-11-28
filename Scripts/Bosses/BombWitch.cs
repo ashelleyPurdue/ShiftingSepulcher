@@ -8,6 +8,7 @@ namespace RandomDungeons
         [Export] public float TeleportRadius = 6 * 32;
         [Export] public bool RotateTowardPlayer = false;
 
+        private AnimationPlayer _attackPatterns => GetNode<AnimationPlayer>("%AttackPatterns");
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
         private Node2D _body => GetParent<Node2D>();
 
@@ -46,6 +47,17 @@ namespace RandomDungeons
                 radius * Mathf.Cos(angle),
                 radius * Mathf.Sin(angle)
             );
+        }
+
+        public void OnShieldShattered(HitBox hitBox)
+        {
+            _attackPatterns.Play("DazedLoop");
+        }
+
+        public void RecoverFromDazed()
+        {
+            _animator.Reset();
+            _attackPatterns.Play("MainCycle");
         }
     }
 }

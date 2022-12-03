@@ -7,19 +7,9 @@ namespace RandomDungeons
     {
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
 
-        public void TeleportAway()
+        public void ResetAnimator()
         {
-            _animator.ResetAndPlay("TeleportAway");
-        }
-
-        public void TeleportIn()
-        {
-            _animator.ResetAndPlay("TeleportIn");
-        }
-
-        public void Throw()
-        {
-            _animator.ResetAndPlay("Throw");
+            _animator.Reset();
         }
     }
 }

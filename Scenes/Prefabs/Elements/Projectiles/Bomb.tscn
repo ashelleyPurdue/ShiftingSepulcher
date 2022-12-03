@@ -7,12 +7,10 @@
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/Explosion.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scripts/Projectiles/Bomb.cs" type="Script" id=6]
 [ext_resource path="res://Audio/SFX/BossDeathShudder.wav" type="AudioStream" id=7]
-[ext_resource path="res://Audio/SFX/BossDeathExplosion.ogg" type="AudioStream" id=8]
 
 [sub_resource type="Animation" id=4]
 resource_name = "FuseRunning"
-length = 6.0
-step = 0.01
+length = 5.0
 tracks/0/type = "animation"
 tracks/0/path = NodePath("PulseAnimator")
 tracks/0/interp = 1
@@ -20,7 +18,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"clips": PoolStringArray( "Pulse", "Pulse", "Pulse", "Pulse", "Pulse", "Pulse", "Pulse", "Pulse", "Pulse" ),
+"clips": PoolStringArray( "SustainedPulse", "SustainedPulse", "ShortPulse", "ShortPulse", "ShortPulse", "ShortPulse", "ShortPulse", "ShortPulse", "ShortPulse" ),
 "times": PoolRealArray( 1, 2, 3, 3.5, 4, 4.25, 4.5, 4.63, 4.77 )
 }
 tracks/1/type = "method"
@@ -44,16 +42,80 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
+"clips": [  ],
+"times": PoolRealArray(  )
+}
+
+[sub_resource type="Animation" id=6]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Visuals:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Visuals/Circle2D:Color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0.180392, 0.658824, 1 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "ShortPulse"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Visuals:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.5, 1.5 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "audio"
+tracks/1/path = NodePath("TickSound")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
 "clips": [ {
 "end_offset": 0.0,
 "start_offset": 0.0,
-"stream": ExtResource( 8 )
+"stream": ExtResource( 7 )
 } ],
-"times": PoolRealArray( 5 )
+"times": PoolRealArray( 0 )
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Visuals/Circle2D:Color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0.180392, 0.658824, 1 ), Color( 1, 0, 0, 1 ), Color( 0, 0.180392, 0.658824, 1 ) ]
 }
 
 [sub_resource type="Animation" id=5]
-resource_name = "Pulse"
+resource_name = "SustainedPulse"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Visuals:scale")
 tracks/0/interp = 1
@@ -93,33 +155,6 @@ tracks/2/keys = {
 "values": [ Color( 0, 0.180392, 0.658824, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 0, 0, 1 ), Color( 0, 0.180392, 0.658824, 1 ) ]
 }
 
-[sub_resource type="Animation" id=6]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("Visuals:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 1, 1 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Visuals/Circle2D:Color")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Color( 0, 0.180392, 0.658824, 1 ) ]
-}
-
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.0
 
@@ -143,11 +178,12 @@ playback_process_mode = 0
 anims/FuseRunning = SubResource( 4 )
 
 [node name="PulseAnimator" type="AnimationPlayer" parent="."]
-anims/Pulse = SubResource( 5 )
 anims/RESET = SubResource( 6 )
+anims/ShortPulse = SubResource( 7 )
+anims/SustainedPulse = SubResource( 5 )
 
 [node name="TickSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 8 )
+stream = ExtResource( 7 )
 pitch_scale = 2.79
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

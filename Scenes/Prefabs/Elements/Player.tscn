@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Sprites/OutlinedCircle.svg" type="Texture" id=1]
 [ext_resource path="res://Scripts/Components/HurtFlasher.cs" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Scripts/Player/Player.cs" type="Script" id=5]
 [ext_resource path="res://Scripts/Player/PlayerSword.cs" type="Script" id=6]
 [ext_resource path="res://Scripts/Components/InvulnerableFlasher.cs" type="Script" id=7]
+[ext_resource path="res://Scripts/Player/ObjectHolder.cs" type="Script" id=8]
 
 [sub_resource type="CircleShape2D" id=77]
 radius = 14.0
@@ -223,6 +224,12 @@ height = 30.0
 collision_layer = 0
 script = ExtResource( 5 )
 
+[node name="ObjectHolder" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource( 8 )
+HoldPos = NodePath("../Visuals/HeldObjectHoldPos")
+ReleasePos = NodePath("../Visuals/HeldObjectReleasePos")
+
 [node name="ShadowAndCollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource( 77 )
 
@@ -322,12 +329,10 @@ polygon = PoolVector2Array( -15.6596, 0.680855, -10.2128, -1.3617, -2.7234, -2.7
 vertex_colors = PoolColorArray( 0.266667, 1, 0, 1, 0.266667, 1, 0, 1, 0.266667, 1, 0, 1, 0.266667, 1, 0, 1, 0.266667, 1, 0, 1, 0.266667, 1, 0, 1, 0.226667, 0.85, 0, 1, 0.186667, 0.7, 0, 1, 0.106667, 0.4, 0, 1, 0.0705882, 0.270588, 0, 1, 0.106667, 0.4, 0, 1, 0.186667, 0.7, 0, 1, 0.226667, 0.85, 0, 1 )
 
 [node name="HeldObjectHoldPos" type="Position2D" parent="Visuals"]
-unique_name_in_owner = true
 position = Vector2( 4, 0 )
 rotation = -1.5708
 
 [node name="HeldObjectReleasePos" type="Position2D" parent="Visuals"]
-unique_name_in_owner = true
 position = Vector2( 14, 0 )
 
 [node name="Sword" type="Node2D" parent="."]

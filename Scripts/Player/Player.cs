@@ -19,10 +19,6 @@ namespace RandomDungeons
         /// </summary>
         public bool ControlsEnabled = true;
 
-        public bool IsHoldingSomething => _heldObject is Godot.Object gdObj
-            ? IsInstanceValid(gdObj)
-            : _heldObject != null;
-
         public float FacingAngleRadians
         {
             get => _visuals.Rotation;
@@ -36,11 +32,11 @@ namespace RandomDungeons
 
         private Node2D _visuals => GetNode<Node2D>("%Visuals");
         private PlayerSword _sword => GetNode<PlayerSword>("%Sword");
+        private ObjectHolder _objectHolder => GetNode<ObjectHolder>("%ObjectHolder");
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
         private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
 
         private Vector2 _velocity;
-        private IHoldable _heldObject;
 
         private bool _isDead = false;
         private float _knockbackTimer = 0;
@@ -128,28 +124,17 @@ namespace RandomDungeons
             if (holdable == null)
                 return;
 
-            _heldObject = holdable;
-            holdable.PickUp(GetNode<Node2D>("%HeldObjectHoldPos"));
+            _objectHolder.PickUp(holdable);
         }
 
         public void ReleaseHeldObject()
         {
-            if (!IsHoldingSomething)
-                return;
-
-            var pos = GetNode<Node2D>("%HeldObjectReleasePos").GlobalPosition;
-            _heldObject.Release(pos);
-            _heldObject = null;
+            _objectHolder.ReleaseHeldObject();
         }
 
         public void ThrowHeldObject()
         {
-            if (!IsHoldingSomething)
-                return;
-
-            var pos = GetNode<Node2D>("%HeldObjectReleasePos").GlobalPosition;
-            _heldObject.Throw(pos, FacingDirection);
-            _heldObject = null;
+            _objectHolder.ThrowHeldObject(FacingDirection);
         }
 
         private readonly IState Walking = new WalkingState();
@@ -172,7 +157,7 @@ namespace RandomDungeons
                     .LimitLength(1)
                     .Length();
 
-                if (Owner.IsHoldingSomething)
+                if (Owner._objectHolder.IsHoldingSomething)
                 {
                     if (InputService.ActivatePressed)
                         Owner.ReleaseHeldObject();

@@ -5,26 +5,14 @@ namespace RandomDungeons
     public class Bomb : KinematicBody2D
     {
         [Export] public PackedScene ExplosionPrefab;
-        [Export] public float FuseDuration = 3;
+        [Export] public float FuseDuration = 5;
 
-        private bool _isFuseLit = false;
-        private float _fuseTimer;
-
-        public override void _PhysicsProcess(float delta)
-        {
-            if (!_isFuseLit)
-                return;
-
-            _fuseTimer -= delta;
-
-            if (_fuseTimer <= 0)
-                Detonate();
-        }
+        private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
 
         public void LightFuse()
         {
-            _fuseTimer = FuseDuration;
-            _isFuseLit = true;
+            _animator.Play("FuseRunning");
+            _animator.PlaybackSpeed = _animator.CurrentAnimationLength / FuseDuration;
         }
 
         public void Detonate()

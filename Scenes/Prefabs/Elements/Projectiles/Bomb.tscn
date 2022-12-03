@@ -116,6 +116,7 @@ ExplosionPrefab = ExtResource( 5 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
+playback_process_mode = 0
 anims/FuseRunning = SubResource( 4 )
 
 [node name="PulseAnimator" type="AnimationPlayer" parent="."]

@@ -13,3 +13,8 @@ JRPG Collection music:
 Tilemancer boss music:
     https://opengameart.org/content/arcade-boss-tracks-8-bitchiptune
     Author: wyver9
+
+Ticking clock sound effect:
+    https://opengameart.org/content/ticking-clock
+    Author: bart
+    Patreon: https://www.patreon.com/opengameart

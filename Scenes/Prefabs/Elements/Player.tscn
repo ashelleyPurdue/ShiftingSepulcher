@@ -237,10 +237,10 @@ modulate = Color( 0, 0, 0, 0.662745 )
 scale = Vector2( 0.875, 0.875 )
 texture = ExtResource( 1 )
 
-[node name="CarryableDetector" type="Area2D" parent="."]
+[node name="HoldableDetector" type="Area2D" parent="."]
 unique_name_in_owner = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CarryableDetector"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HoldableDetector"]
 shape = SubResource( 83 )
 
 [node name="Visuals" type="Node2D" parent="."]
@@ -321,12 +321,12 @@ polygon = PoolVector2Array( -14.2979, -3.40425, -14.2979, 0, -8.17021, -3.40425,
 polygon = PoolVector2Array( -15.6596, 0.680855, -10.2128, -1.3617, -2.7234, -2.7234, 2.72341, -2.7234, 9.53192, -1.3617, 15.6596, 1.36171, 14.2979, -8.17021, 10.8936, -15.6596, 6.80851, -20.4255, 2.59724e-06, -23.1489, -6.12766, -20.4255, -10.8936, -15.6596, -14.2979, -8.85106 )
 vertex_colors = PoolColorArray( 0.266667, 1, 0, 1, 0.266667, 1, 0, 1, 0.266667, 1, 0, 1, 0.266667, 1, 0, 1, 0.266667, 1, 0, 1, 0.266667, 1, 0, 1, 0.226667, 0.85, 0, 1, 0.186667, 0.7, 0, 1, 0.106667, 0.4, 0, 1, 0.0705882, 0.270588, 0, 1, 0.106667, 0.4, 0, 1, 0.186667, 0.7, 0, 1, 0.226667, 0.85, 0, 1 )
 
-[node name="CarriedObjectHoldPos" type="Position2D" parent="Visuals"]
+[node name="HeldObjectHoldPos" type="Position2D" parent="Visuals"]
 unique_name_in_owner = true
 position = Vector2( 4, 0 )
 rotation = -1.5708
 
-[node name="CarriedObjectReleasePos" type="Position2D" parent="Visuals"]
+[node name="HeldObjectReleasePos" type="Position2D" parent="Visuals"]
 unique_name_in_owner = true
 position = Vector2( 14, 0 )
 

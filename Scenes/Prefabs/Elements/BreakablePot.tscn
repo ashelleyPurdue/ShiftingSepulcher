@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Scripts/Components/HurtBox.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Elements/BreakablePot.cs" type="Script" id=2]
-[ext_resource path="res://Scripts/Components/CarryableParent.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/Components/HoldableParent.cs" type="Script" id=3]
 [ext_resource path="res://Scripts/Components/HitBox.cs" type="Script" id=4]
 [ext_resource path="res://Scripts/Components/Circle2D.cs" type="Script" id=5]
 
@@ -277,10 +277,10 @@ IgnoredHurtBoxes = [ NodePath("../HurtBox") ]
 position = Vector2( 16, 16 )
 shape = SubResource( 10 )
 
-[node name="CarryableParent" type="Area2D" parent="."]
+[node name="HoldableParent" type="Area2D" parent="."]
 script = ExtResource( 3 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CarryableParent"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HoldableParent"]
 shape = SubResource( 5 )
 
 [node name="Shadow" type="Node2D" parent="."]
@@ -316,8 +316,8 @@ anims/Throw = SubResource( 9 )
 
 [connection signal="TookDamage" from="HurtBox" to="." method="OnTookDamage"]
 [connection signal="DealtDamage" from="HitBox" to="." method="OnDealtDamage"]
-[connection signal="PickedUp" from="CarryableParent" to="CollisionShape2D" method="set_disabled" binds= [ true ]]
-[connection signal="PickedUp" from="CarryableParent" to="Shadow" method="set_visible" binds= [ false ]]
-[connection signal="Released" from="CarryableParent" to="CollisionShape2D" method="set_disabled" binds= [ false ]]
-[connection signal="Released" from="CarryableParent" to="Shadow" method="set_visible" binds= [ true ]]
-[connection signal="Thrown" from="CarryableParent" to="." method="OnThrown"]
+[connection signal="PickedUp" from="HoldableParent" to="CollisionShape2D" method="set_disabled" binds= [ true ]]
+[connection signal="PickedUp" from="HoldableParent" to="Shadow" method="set_visible" binds= [ false ]]
+[connection signal="Released" from="HoldableParent" to="CollisionShape2D" method="set_disabled" binds= [ false ]]
+[connection signal="Released" from="HoldableParent" to="Shadow" method="set_visible" binds= [ true ]]
+[connection signal="Thrown" from="HoldableParent" to="." method="OnThrown"]

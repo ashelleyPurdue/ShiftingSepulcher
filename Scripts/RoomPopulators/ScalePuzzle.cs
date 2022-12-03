@@ -11,7 +11,7 @@ namespace RandomDungeons
         [Export] public int MaxWeightSize = 3;
         [Export] public int MinWeightCount = 3;
         [Export] public int MaxWeightCount = 5;
-        [Export] public PackedScene CarryableWeightPrefab;
+        [Export] public PackedScene HoldableWeightPrefab;
 
         private Node2D _leftWeightSpawnPoints => GetNode<Node2D>("%WeightSpawnPoints/Left");
         private Node2D _rightWeightSpawnPoints => GetNode<Node2D>("%WeightSpawnPoints/Right");
@@ -20,7 +20,7 @@ namespace RandomDungeons
         private ScaleBowl _leftBowl => GetNode<ScaleBowl>("%LeftBowl");
         private ScaleBowl _rightBowl => GetNode<ScaleBowl>("%RightBowl");
 
-        private List<CarryableWeights> _weights = new List<CarryableWeights>();
+        private List<HoldableWeights> _weights = new List<HoldableWeights>();
 
         public void Populate(DungeonGraphRoom graphRoom, Random rng)
         {
@@ -104,7 +104,7 @@ namespace RandomDungeons
 
                 for (int i = 0; i < weights.Count; i++)
                 {
-                    var weightObj = CarryableWeightPrefab.Instance<CarryableWeights>();
+                    var weightObj = HoldableWeightPrefab.Instance<HoldableWeights>();
                     weightObj.NumWeights = weights[i];
                     _weights.Add(weightObj);
 

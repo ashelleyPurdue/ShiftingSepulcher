@@ -3,7 +3,7 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class CarryableParent : Area2D, ICarryable
+    public class HoldableParent : Area2D, IHoldable
     {
         [Signal] public delegate void PickedUp();
         [Signal] public delegate void Released();
@@ -11,25 +11,25 @@ namespace RandomDungeons
 
         public Node2D Node => GetParent<Node2D>();
 
-        [Export] public bool RotatesWhileCarried = true;
+        [Export] public bool RotatesWhileHeld = true;
 
-        public bool IsBeingCarried {get; private set;} = false;
+        public bool IsBeingHeld {get; private set;} = false;
 
         private Node _originalParent;
         private float _originalGlobalRotation;
 
         public override void _Process(float delta)
         {
-            if (IsBeingCarried && !RotatesWhileCarried)
+            if (IsBeingHeld && !RotatesWhileHeld)
                 Node.GlobalRotation = _originalGlobalRotation;
         }
 
         public void PickUp(Node2D carrier)
         {
-            if (IsBeingCarried)
-                throw new InvalidOperationException($"{Node.Name} is already being carried");
+            if (IsBeingHeld)
+                throw new InvalidOperationException($"{Node.Name} is already being held");
 
-            IsBeingCarried = true;
+            IsBeingHeld = true;
 
             _originalGlobalRotation = Node.GlobalRotation;
             _originalParent = Node.GetParent();
@@ -44,10 +44,10 @@ namespace RandomDungeons
 
         public void Release(Vector2 releasePosGlobal)
         {
-            if (!IsBeingCarried)
-                throw new InvalidOperationException($"{Node.Name} is not being carried");
+            if (!IsBeingHeld)
+                throw new InvalidOperationException($"{Node.Name} is not being held");
 
-            IsBeingCarried = false;
+            IsBeingHeld = false;
 
             Node.GetParent().RemoveChild(Node);
             _originalParent.AddChild(Node);

@@ -24,9 +24,9 @@ namespace RandomDungeons
             var overlappingWeights = _zone
                 .GetOverlappingAreas()
                 .Cast<Area2D>()
-                .Select(a => a.FindAncestor<CarryableWeights>())
+                .Select(a => a.FindAncestor<HoldableWeights>())
                 .Where(w => w != null)
-                .Where(w => !w.IsBeingCarried)
+                .Where(w => !w.IsBeingHeld)
                 .ToArray();
 
             // Update the total weight

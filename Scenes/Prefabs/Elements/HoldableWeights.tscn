@@ -51,7 +51,6 @@ script = ExtResource( 2 )
 
 [node name="HoldableParent" type="Area2D" parent="."]
 script = ExtResource( 1 )
-RotatesWhileHeld = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HoldableParent"]
 shape = SubResource( 1 )

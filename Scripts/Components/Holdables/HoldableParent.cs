@@ -11,7 +11,7 @@ namespace RandomDungeons
 
         public Node2D Node => GetParent<Node2D>();
 
-        [Export] public bool RotatesWhileHeld {get; set;} = true;
+        [Export] public bool RotatesWhileHeld {get; set;} = false;
 
         public bool IsBeingHeld {get; private set;} = false;
 

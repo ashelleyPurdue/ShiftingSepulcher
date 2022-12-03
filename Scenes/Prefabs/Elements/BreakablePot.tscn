@@ -227,6 +227,7 @@ shape = SubResource( 10 )
 
 [node name="HoldableParent" type="Area2D" parent="."]
 script = ExtResource( 3 )
+RotatesWhileHeld = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HoldableParent"]
 shape = SubResource( 5 )

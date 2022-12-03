@@ -2,7 +2,7 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class Bomb : Node2D
+    public class Bomb : KinematicBody2D
     {
         [Export] public PackedScene ExplosionPrefab;
         [Export] public float FuseDuration = 3;

@@ -48,5 +48,16 @@ namespace RandomDungeons
                 return d;
             }
         }
+
+        public static (float speed, float friction) SpeedAndFrictionNeededForDistanceAndTime(
+            float distance,
+            float time
+        )
+        {
+            float friction = (2 * distance) / (time * time);
+            float speed = SpeedNeededForDistance(distance, friction);
+
+            return (speed, friction);
+        }
     }
 }

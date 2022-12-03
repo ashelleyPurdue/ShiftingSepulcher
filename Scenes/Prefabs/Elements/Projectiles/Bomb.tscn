@@ -1,10 +1,15 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=1]
 [ext_resource path="res://Scenes/Components/Circle2D.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scripts/Components/Holdables/HoldableParent.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/Components/Holdables/ThrowableParentKinematic.cs" type="Script" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.0
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 32.0
 
 [sub_resource type="GradientTexture2D" id=2]
 gradient = ExtResource( 1 )
@@ -17,6 +22,16 @@ fill_from = Vector2( 0.5, 0.5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+
+[node name="HoldableParent" type="Area2D" parent="."]
+script = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HoldableParent"]
+shape = SubResource( 3 )
+
+[node name="ThrowableParentKinematic" type="Node" parent="."]
+script = ExtResource( 4 )
+Visuals = NodePath("../Visuals")
 
 [node name="Shadow" type="Sprite" parent="."]
 texture = SubResource( 2 )
@@ -33,3 +48,7 @@ position = Vector2( 0, -25 )
 scale = Vector2( 0.159999, 0.0799972 )
 color = Color( 0.521569, 0.521569, 0.521569, 1 )
 polygon = PoolVector2Array( -32, -32, 32, -32, 32, 32, -32, 32 )
+
+[connection signal="PickedUp" from="HoldableParent" to="CollisionShape2D" method="set_disabled" binds= [ true ]]
+[connection signal="Released" from="HoldableParent" to="CollisionShape2D" method="set_disabled" binds= [ false ]]
+[connection signal="Thrown" from="HoldableParent" to="ThrowableParentKinematic" method="OnThrown"]

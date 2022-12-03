@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=1]
 [ext_resource path="res://Scenes/Components/Circle2D.tscn" type="PackedScene" id=2]
@@ -18,7 +18,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"clips": PoolStringArray( "SustainedPulse", "SustainedPulse", "ShortPulse", "ShortPulse", "ShortPulse", "ShortPulse", "ShortPulse", "ShortPulse", "ShortPulse" ),
+"clips": PoolStringArray( "SmallLongPulse", "SmallLongPulse", "BigShortPulse", "BigShortPulse", "SmallShortPulse", "SmallShortPulse", "SmallShortPulse", "SmallShortPulse", "SmallShortPulse" ),
 "times": PoolRealArray( 1, 2, 3, 3.5, 4, 4.25, 4.5, 4.63, 4.77 )
 }
 tracks/1/type = "method"
@@ -46,35 +46,8 @@ tracks/2/keys = {
 "times": PoolRealArray(  )
 }
 
-[sub_resource type="Animation" id=6]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("Visuals:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 1, 1 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Visuals/Circle2D:Color")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Color( 0, 0.180392, 0.658824, 1 ) ]
-}
-
 [sub_resource type="Animation" id=7]
-resource_name = "ShortPulse"
+resource_name = "BigShortPulse"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Visuals:scale")
 tracks/0/interp = 1
@@ -114,8 +87,35 @@ tracks/2/keys = {
 "values": [ Color( 0, 0.180392, 0.658824, 1 ), Color( 1, 0, 0, 1 ), Color( 0, 0.180392, 0.658824, 1 ) ]
 }
 
+[sub_resource type="Animation" id=6]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Visuals:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Visuals/Circle2D:Color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0.180392, 0.658824, 1 ) ]
+}
+
 [sub_resource type="Animation" id=5]
-resource_name = "SustainedPulse"
+resource_name = "SmallLongPulse"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Visuals:scale")
 tracks/0/interp = 1
@@ -126,7 +126,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.1, 0.3, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1.5, 1.5 ), Vector2( 1.5, 1.5 ), Vector2( 1, 1 ) ]
+"values": [ Vector2( 1, 1 ), Vector2( 1.25, 1.25 ), Vector2( 1.25, 1.25 ), Vector2( 1, 1 ) ]
 }
 tracks/1/type = "audio"
 tracks/1/path = NodePath("TickSound")
@@ -155,6 +155,47 @@ tracks/2/keys = {
 "values": [ Color( 0, 0.180392, 0.658824, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 0, 0, 1 ), Color( 0, 0.180392, 0.658824, 1 ) ]
 }
 
+[sub_resource type="Animation" id=8]
+resource_name = "SmallShortPulse"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Visuals:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.25, 1.25 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "audio"
+tracks/1/path = NodePath("TickSound")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 7 )
+} ],
+"times": PoolRealArray( 0 )
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Visuals/Circle2D:Color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0.180392, 0.658824, 1 ), Color( 1, 0, 0, 1 ), Color( 0, 0.180392, 0.658824, 1 ) ]
+}
+
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.0
 
@@ -178,9 +219,10 @@ playback_process_mode = 0
 anims/FuseRunning = SubResource( 4 )
 
 [node name="PulseAnimator" type="AnimationPlayer" parent="."]
+anims/BigShortPulse = SubResource( 7 )
 anims/RESET = SubResource( 6 )
-anims/ShortPulse = SubResource( 7 )
-anims/SustainedPulse = SubResource( 5 )
+anims/SmallLongPulse = SubResource( 5 )
+anims/SmallShortPulse = SubResource( 8 )
 
 [node name="TickSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )

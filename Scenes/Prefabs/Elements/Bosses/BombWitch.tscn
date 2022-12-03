@@ -17,18 +17,25 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 2.1, 4 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0, 4 ),
+"transitions": PoolRealArray( 1, 1 ),
 "values": [ {
 "args": [  ],
-"method": "TeleportAway"
+"method": "ResetAnimator"
 }, {
 "args": [  ],
-"method": "TeleportIn"
-}, {
-"args": [  ],
-"method": "Throw"
+"method": "ResetAnimator"
 } ]
+}
+tracks/1/type = "animation"
+tracks/1/path = NodePath("AnimationPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"clips": PoolStringArray( "TeleportAway", "TeleportIn", "Throw" ),
+"times": PoolRealArray( 0, 2.1, 4 )
 }
 
 [sub_resource type="Animation" id=8]
@@ -1109,6 +1116,7 @@ script = ExtResource( 5 )
 [node name="AttackPatterns" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
 autoplay = "MainCycle"
+method_call_mode = 1
 anims/MainCycle = SubResource( 9 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

@@ -2,14 +2,14 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class CarryableWeights : Node2D
+    public class HoldableWeights : Node2D
     {
         [Export] public int NumWeights = 1;
         [Export] public float WeightVerticalSeparation = 12;
 
-        public bool IsBeingCarried => this
-            .SingleChildOfType<ICarryable>()
-            .IsBeingCarried;
+        public bool IsBeingHeld => this
+            .SingleChildOfType<IHoldable>()
+            .IsBeingHeld;
 
         private Node2D _weightVisualTemplate => GetNode<Node2D>("%WeightVisualTemplate");
         private Node2D _weightStack => GetNode<Node2D>("%WeightStack");

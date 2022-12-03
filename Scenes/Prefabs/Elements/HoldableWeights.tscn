@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://Scripts/Components/CarryableParent.cs" type="Script" id=1]
-[ext_resource path="res://Scripts/Elements/CarryableWeights.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/Components/Holdables/HoldableParent.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Elements/HoldableWeights.cs" type="Script" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 32.0
@@ -46,14 +46,13 @@ fill = 1
 fill_from = Vector2( 0.5, 0.5 )
 fill_to = Vector2( 0.1, 0.2 )
 
-[node name="CarryableWeights" type="Node2D"]
+[node name="HoldableWeights" type="Node2D"]
 script = ExtResource( 2 )
 
-[node name="CarryableParent" type="Area2D" parent="."]
+[node name="HoldableParent" type="Area2D" parent="."]
 script = ExtResource( 1 )
-RotatesWhileCarried = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CarryableParent"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HoldableParent"]
 shape = SubResource( 1 )
 __meta__ = {
 "_edit_lock_": true
@@ -100,7 +99,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[connection signal="PickedUp" from="CarryableParent" to="StaticBody2D/CollisionShape2D" method="set_disabled" binds= [ true ]]
-[connection signal="PickedUp" from="CarryableParent" to="Visuals/Shadow" method="set_visible" binds= [ false ]]
-[connection signal="Released" from="CarryableParent" to="StaticBody2D/CollisionShape2D" method="set_disabled" binds= [ false ]]
-[connection signal="Released" from="CarryableParent" to="Visuals/Shadow" method="set_visible" binds= [ true ]]
+[connection signal="PickedUp" from="HoldableParent" to="StaticBody2D/CollisionShape2D" method="set_disabled" binds= [ true ]]
+[connection signal="PickedUp" from="HoldableParent" to="Visuals/Shadow" method="set_visible" binds= [ false ]]
+[connection signal="Released" from="HoldableParent" to="StaticBody2D/CollisionShape2D" method="set_disabled" binds= [ false ]]
+[connection signal="Released" from="HoldableParent" to="Visuals/Shadow" method="set_visible" binds= [ true ]]

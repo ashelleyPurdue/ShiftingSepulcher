@@ -2,9 +2,10 @@
 
 [ext_resource path="res://Scripts/Components/HurtBox.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Elements/BreakablePot.cs" type="Script" id=2]
-[ext_resource path="res://Scripts/Components/CarryableParent.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/Components/Holdables/HoldableParent.cs" type="Script" id=3]
 [ext_resource path="res://Scripts/Components/HitBox.cs" type="Script" id=4]
 [ext_resource path="res://Scripts/Components/Circle2D.cs" type="Script" id=5]
+[ext_resource path="res://Scripts/Components/Holdables/ThrowableParentKinematic.cs" type="Script" id=6]
 
 [sub_resource type="CircleShape2D" id=7]
 radius = 16.0
@@ -194,59 +195,6 @@ tracks/6/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=9]
-resource_name = "Throw"
-tracks/0/type = "value"
-tracks/0/path = NodePath("Shadow:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Visuals:position")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.25, 0.5, 0.75, 1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 0, -9 ), Vector2( 0, -26.25 ), Vector2( 0, -32 ), Vector2( 0, -26.25 ), Vector2( 0, -9 ) ]
-}
-tracks/2/type = "method"
-tracks/2/path = NodePath(".")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 1 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "Shatter"
-} ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("HitBox:monitoring")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-
 [node name="BreakablePot" type="KinematicBody2D"]
 script = ExtResource( 2 )
 
@@ -277,11 +225,16 @@ IgnoredHurtBoxes = [ NodePath("../HurtBox") ]
 position = Vector2( 16, 16 )
 shape = SubResource( 10 )
 
-[node name="CarryableParent" type="Area2D" parent="."]
+[node name="HoldableParent" type="Area2D" parent="."]
 script = ExtResource( 3 )
+RotatesWhileHeld = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CarryableParent"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HoldableParent"]
 shape = SubResource( 5 )
+
+[node name="ThrowableParentKinematic" type="Node" parent="."]
+script = ExtResource( 6 )
+Visuals = NodePath("../Visuals")
 
 [node name="Shadow" type="Node2D" parent="."]
 script = ExtResource( 5 )
@@ -312,12 +265,13 @@ polygon = PoolVector2Array( 13, 0, 19, 0, 20, 2, 19, 5, 13, 5, 12, 2 )
 unique_name_in_owner = true
 anims/RESET = SubResource( 3 )
 anims/Shatter = SubResource( 4 )
-anims/Throw = SubResource( 9 )
 
 [connection signal="TookDamage" from="HurtBox" to="." method="OnTookDamage"]
 [connection signal="DealtDamage" from="HitBox" to="." method="OnDealtDamage"]
-[connection signal="PickedUp" from="CarryableParent" to="CollisionShape2D" method="set_disabled" binds= [ true ]]
-[connection signal="PickedUp" from="CarryableParent" to="Shadow" method="set_visible" binds= [ false ]]
-[connection signal="Released" from="CarryableParent" to="CollisionShape2D" method="set_disabled" binds= [ false ]]
-[connection signal="Released" from="CarryableParent" to="Shadow" method="set_visible" binds= [ true ]]
-[connection signal="Thrown" from="CarryableParent" to="." method="OnThrown"]
+[connection signal="PickedUp" from="HoldableParent" to="CollisionShape2D" method="set_disabled" binds= [ true ]]
+[connection signal="PickedUp" from="HoldableParent" to="Shadow" method="set_visible" binds= [ false ]]
+[connection signal="Released" from="HoldableParent" to="CollisionShape2D" method="set_disabled" binds= [ false ]]
+[connection signal="Released" from="HoldableParent" to="Shadow" method="set_visible" binds= [ true ]]
+[connection signal="Thrown" from="HoldableParent" to="ThrowableParentKinematic" method="OnThrown"]
+[connection signal="HitFloor" from="ThrowableParentKinematic" to="." method="Shatter"]
+[connection signal="HitWall" from="ThrowableParentKinematic" to="." method="Shatter"]

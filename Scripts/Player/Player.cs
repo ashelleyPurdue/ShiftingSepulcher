@@ -19,10 +19,6 @@ namespace RandomDungeons
         /// </summary>
         public bool ControlsEnabled = true;
 
-        public bool IsCarryingSomething => _carriedObject is Godot.Object gdObj
-            ? IsInstanceValid(gdObj)
-            : _carriedObject != null;
-
         public float FacingAngleRadians
         {
             get => _visuals.Rotation;
@@ -36,11 +32,11 @@ namespace RandomDungeons
 
         private Node2D _visuals => GetNode<Node2D>("%Visuals");
         private PlayerSword _sword => GetNode<PlayerSword>("%Sword");
+        private ObjectHolder _objectHolder => GetNode<ObjectHolder>("%ObjectHolder");
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
         private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
 
         private Vector2 _velocity;
-        private ICarryable _carriedObject;
 
         private bool _isDead = false;
         private float _knockbackTimer = 0;
@@ -117,39 +113,28 @@ namespace RandomDungeons
             return velocity.Length() / KnockbackFriction;
         }
 
-        private void TryPickUpCarryable()
+        private void TryPickUpHoldable()
         {
-            var carriable = GetNode<Area2D>("%CarryableDetector")
+            var holdable = GetNode<Area2D>("%HoldableDetector")
                 .GetOverlappingAreas()
                 .Cast<Area2D>()
-                .OfType<ICarryable>()
+                .OfType<IHoldable>()
                 .FirstOrDefault();
 
-            if (carriable == null)
+            if (holdable == null)
                 return;
 
-            _carriedObject = carriable;
-            carriable.PickUp(GetNode<Node2D>("%CarriedObjectHoldPos"));
+            _objectHolder.PickUp(holdable);
         }
 
-        public void ReleaseCarriedObject()
+        public void ReleaseHeldObject()
         {
-            if (!IsCarryingSomething)
-                return;
-
-            var pos = GetNode<Node2D>("%CarriedObjectReleasePos").GlobalPosition;
-            _carriedObject.Release(pos);
-            _carriedObject = null;
+            _objectHolder.ReleaseHeldObject();
         }
 
-        public void ThrowCarriedObject()
+        public void ThrowHeldObject()
         {
-            if (!IsCarryingSomething)
-                return;
-
-            var pos = GetNode<Node2D>("%CarriedObjectReleasePos").GlobalPosition;
-            _carriedObject.Throw(pos, FacingDirection);
-            _carriedObject = null;
+            _objectHolder.ThrowHeldObject(FacingDirection);
         }
 
         private readonly IState Walking = new WalkingState();
@@ -172,18 +157,18 @@ namespace RandomDungeons
                     .LimitLength(1)
                     .Length();
 
-                if (Owner.IsCarryingSomething)
+                if (Owner._objectHolder.IsHoldingSomething)
                 {
                     if (InputService.ActivatePressed)
-                        Owner.ReleaseCarriedObject();
+                        Owner.ReleaseHeldObject();
                     else if (InputService.AttackPressed)
-                        Owner.ThrowCarriedObject();
+                        Owner.ThrowHeldObject();
 
                     return;
                 }
 
                 if (InputService.ActivatePressed)
-                    Owner.TryPickUpCarryable();
+                    Owner.TryPickUpHoldable();
 
                 if (InputService.AttackPressed)
                     ChangeState(Owner.SwingingSword);

@@ -1,11 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scenes/Components/Circle2D.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Components/HitBox.cs" type="Script" id=2]
+[ext_resource path="res://Audio/SFX/BossDeathExplosion.ogg" type="AudioStream" id=3]
 
 [sub_resource type="Animation" id=2]
 resource_name = "Explode"
-length = 0.42
 step = 0.01
 tracks/0/type = "value"
 tracks/0/path = NodePath("GrowingPart:scale")
@@ -50,12 +50,26 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0.42 ),
+"times": PoolRealArray( 1 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
 "method": "queue_free"
 } ]
+}
+tracks/4/type = "audio"
+tracks/4/path = NodePath("AudioStreamPlayer")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 3 )
+} ],
+"times": PoolRealArray( 0 )
 }
 
 [sub_resource type="Animation" id=3]
@@ -107,6 +121,10 @@ scale = Vector2( 64, 64 )
 autoplay = "Explode"
 anims/Explode = SubResource( 2 )
 anims/RESET = SubResource( 3 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+pitch_scale = 3.0
 
 [node name="GrowingPart" type="Node2D" parent="."]
 

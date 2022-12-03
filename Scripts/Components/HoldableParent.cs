@@ -11,56 +11,31 @@ namespace RandomDungeons
 
         public Node2D Node => GetParent<Node2D>();
 
-        [Export] public bool RotatesWhileHeld = true;
+        [Export] public bool RotatesWhileHeld {get; set;} = true;
 
         public bool IsBeingHeld {get; private set;} = false;
 
-        private Node _originalParent;
-        private float _originalGlobalRotation;
-
-        public override void _Process(float delta)
-        {
-            if (IsBeingHeld && !RotatesWhileHeld)
-                Node.GlobalRotation = _originalGlobalRotation;
-        }
-
-        public void PickUp(Node2D carrier)
+        public void PickUp()
         {
             if (IsBeingHeld)
                 throw new InvalidOperationException($"{Node.Name} is already being held");
 
             IsBeingHeld = true;
-
-            _originalGlobalRotation = Node.GlobalRotation;
-            _originalParent = Node.GetParent();
-
-            _originalParent.RemoveChild(Node);
-            carrier.AddChild(Node);
-
-            Node.Position = Vector2.Zero;
-
             EmitSignal(nameof(PickedUp));
         }
 
-        public void Release(Vector2 releasePosGlobal)
+        public void Release()
         {
             if (!IsBeingHeld)
                 throw new InvalidOperationException($"{Node.Name} is not being held");
 
             IsBeingHeld = false;
-
-            Node.GetParent().RemoveChild(Node);
-            _originalParent.AddChild(Node);
-
-            Node.GlobalRotation = _originalGlobalRotation;
-            Node.GlobalPosition = releasePosGlobal;
-
             EmitSignal(nameof(Released));
         }
 
-        public void Throw(Vector2 releasePosGlobal, Vector2 direction)
+        public void Throw(Vector2 direction)
         {
-            Release(releasePosGlobal);
+            Release();
             EmitSignal(nameof(Thrown), direction);
         }
     }

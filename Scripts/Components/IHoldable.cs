@@ -12,8 +12,10 @@ namespace RandomDungeons
 
         bool IsBeingHeld {get;}
 
-        void PickUp(Node2D carrier);
-        void Release(Vector2 releasePosGlobal);
-        void Throw(Vector2 releasePosGlobal, Vector2 direction);
+        bool RotatesWhileHeld {get;}
+
+        void PickUp();
+        void Release();
+        void Throw(Vector2 direction);
     }
 }

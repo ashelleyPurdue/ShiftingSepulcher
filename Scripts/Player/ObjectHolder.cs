@@ -17,6 +17,18 @@ namespace RandomDungeons
         private Node2D _releasePos => GetNode<Node2D>(ReleasePos);
 
         private IHoldable _heldObject;
+        private float _originalGlobalRotation;
+
+        public override void _PhysicsProcess(float delta)
+        {
+            if (!IsHoldingSomething)
+                return;
+
+            _heldObject.Node.GlobalPosition = _holdPos.GlobalPosition;
+
+            if (_heldObject.RotatesWhileHeld)
+                _heldObject.Node.GlobalRotation = _holdPos.GlobalRotation;
+        }
 
         public void PickUp(IHoldable holdable)
         {
@@ -24,7 +36,9 @@ namespace RandomDungeons
                 throw new Exception("Already holding something");
 
             _heldObject = holdable;
-            holdable.PickUp(_holdPos);
+            _originalGlobalRotation = holdable.Node.GlobalRotation;
+
+            holdable.PickUp();
         }
 
         public void ReleaseHeldObject()
@@ -32,7 +46,10 @@ namespace RandomDungeons
             if (!IsHoldingSomething)
                 return;
 
-            _heldObject.Release(_releasePos.GlobalPosition);
+            _heldObject.Node.GlobalPosition = _releasePos.GlobalPosition;
+            _heldObject.Node.GlobalRotation = _originalGlobalRotation;
+
+            _heldObject.Release();
             _heldObject = null;
         }
 
@@ -41,7 +58,10 @@ namespace RandomDungeons
             if (!IsHoldingSomething)
                 return;
 
-            _heldObject.Throw(_releasePos.GlobalPosition, direction);
+            _heldObject.Node.GlobalPosition = _releasePos.GlobalPosition;
+            _heldObject.Node.GlobalRotation = _originalGlobalRotation;
+
+            _heldObject.Throw(direction);
             _heldObject = null;
         }
     }

@@ -63,6 +63,22 @@ namespace RandomDungeons
                 .Single();
         }
 
+
+        /// <summary>
+        /// Returns true this node or one of its ancestors are in the given
+        /// group
+        /// </summary>
+        public static bool IsAncestorInGroup(this Node n, string groupName)
+        {
+            if (n == null)
+                return false;
+
+            if (n.IsInGroup(groupName))
+                return true;
+
+            return n.GetParent().IsAncestorInGroup(groupName);
+        }
+
         /// <summary>
         /// Enables (or disables) all processing for the given node and its
         /// descendants.  Use this when you want to pause specific nodes instead

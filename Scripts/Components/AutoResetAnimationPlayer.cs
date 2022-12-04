@@ -37,8 +37,11 @@ namespace RandomDungeons
 
                 const float timeOffset = 0.00001f;
 
+                var sourceAnim = targetPlayer.GetAnimation(animName);
                 var mirrorAnim = new Animation();
-                mirrorAnim.Length = targetPlayer.GetAnimation(animName).Length + timeOffset;
+                mirrorAnim.Length = sourceAnim.Length + timeOffset;
+                mirrorAnim.Loop = sourceAnim.Loop;
+                mirrorAnim.Step = sourceAnim.Step;
 
                 int trackId = mirrorAnim.AddTrack(Animation.TrackType.Animation);
                 mirrorAnim.TrackSetPath(trackId, GetParent().GetPathTo(targetPlayer));

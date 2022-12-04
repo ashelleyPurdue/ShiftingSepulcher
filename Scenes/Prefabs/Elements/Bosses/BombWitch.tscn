@@ -1497,4 +1497,5 @@ update_rotation = false
 update_scale = false
 
 [connection signal="TookDamage" from="HurtBox" to="." method="OnTookDamage"]
-[connection signal="GroupAreaEntered" from="ExplosionDetector" to="AI" method="OnShieldShattered"]
+[connection signal="TookDamage" from="HurtBox" to="AI" method="OnTookDamage" flags=3]
+[connection signal="GroupAreaEntered" from="ExplosionDetector" to="AI" method="OnShieldShattered" flags=3]

@@ -240,6 +240,18 @@ tracks/12/keys = {
 "update": 0,
 "values": [ 0.0, 360.0 ]
 }
+tracks/13/type = "value"
+tracks/13/path = NodePath("HurtBox/HurtBoxShape:disabled")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
 
 [sub_resource type="Animation" id=3]
 length = 0.001
@@ -602,6 +614,18 @@ tracks/29/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ false ]
+}
+tracks/30/type = "value"
+tracks/30/path = NodePath("HurtBox/HurtBoxShape:disabled")
+tracks/30/interp = 1
+tracks/30/loop_wrap = true
+tracks/30/imported = false
+tracks/30/enabled = true
+tracks/30/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -1244,6 +1268,7 @@ script = ExtResource( 7 )
 
 [node name="HurtBoxShape" type="CollisionShape2D" parent="HurtBox"]
 shape = SubResource( 11 )
+disabled = true
 
 [node name="ExplosionDetector" type="Area2D" parent="."]
 script = ExtResource( 12 )

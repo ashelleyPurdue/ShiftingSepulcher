@@ -5,12 +5,18 @@ namespace RandomDungeons
 {
     public class BombWitch : Node
     {
+        [Export] public PackedScene SpawningSpellPrefab;
+        [Export] public PackedScene BombPrefab;
+
         [Export] public float TeleportRadius = 6 * 32;
         [Export] public bool RotateTowardPlayer = false;
 
         private AnimationPlayer _attackPatterns => GetNode<AnimationPlayer>("%AttackPatterns");
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
+        private Node2D _spellSpawnPos => GetNode<Node2D>("%SpellSpawnPos");
         private Node2D _body => GetParent<Node2D>();
+
+        private Action _queuedSpell;
 
         public override void _PhysicsProcess(float delta)
         {
@@ -57,6 +63,31 @@ namespace RandomDungeons
         public void RecoverFromDazed()
         {
             _attackPatterns.PlayAndAdvance("MainCycle");
+        }
+
+        public void CastQueuedSpell()
+        {
+            _queuedSpell?.Invoke();
+        }
+
+        public void QueueBombSpell()
+        {
+            _queuedSpell = CastBombSpell;
+        }
+
+        private void CastBombSpell()
+        {
+            var bomb = BombPrefab.Instance<Bomb>();
+            bomb.LightFuse();   // The timer doesn't actually start ticking down
+                                // until the spell reaches its destination and
+                                // adds the bomb to the scene tree
+
+            var spawningSpell = SpawningSpellPrefab.Instance<SpawningSpell>();
+            _body.GetParent().AddChild(spawningSpell);
+
+            spawningSpell.NodeToSpawn = bomb;
+            spawningSpell.TargetPosGlobal = PlayerGlobalPos();
+            spawningSpell.GlobalPosition = _spellSpawnPos.GlobalPosition;
         }
 
         private Vector2 PlayerGlobalPos()

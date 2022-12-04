@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Scripts/Components/LineTrail2D.cs" type="Script" id=1]
 [ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Scenes/Prefabs/UI/Widgets/BossHealthBar.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/Bomb.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/SpawningSpell.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scripts/Components/GroupDetectorArea2D.cs" type="Script" id=12]
 
 [sub_resource type="Animation" id=12]
 resource_name = "DazedLoop"
@@ -1191,6 +1192,9 @@ radius = 32.0
 [sub_resource type="CircleShape2D" id=11]
 radius = 32.0
 
+[sub_resource type="CircleShape2D" id=13]
+radius = 32.0
+
 [sub_resource type="GradientTexture2D" id=2]
 gradient = ExtResource( 2 )
 fill = 1
@@ -1240,6 +1244,13 @@ script = ExtResource( 7 )
 
 [node name="HurtBoxShape" type="CollisionShape2D" parent="HurtBox"]
 shape = SubResource( 11 )
+
+[node name="ExplosionDetector" type="Area2D" parent="."]
+script = ExtResource( 12 )
+GroupsToDetect = PoolStringArray( "Explosion" )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionDetector"]
+shape = SubResource( 13 )
 
 [node name="Visuals" type="Node2D" parent="."]
 
@@ -1461,4 +1472,4 @@ update_rotation = false
 update_scale = false
 
 [connection signal="TookDamage" from="HurtBox" to="." method="OnTookDamage"]
-[connection signal="TookDamage" from="HurtBox" to="AI" method="OnShieldShattered"]
+[connection signal="GroupAreaEntered" from="ExplosionDetector" to="AI" method="OnShieldShattered"]

@@ -55,7 +55,7 @@ namespace RandomDungeons
             );
         }
 
-        public void OnShieldShattered(HitBox hitBox)
+        public void OnShieldShattered(Area2D area)
         {
             _attackPatterns.PlayAndAdvance("DazedLoop");
         }

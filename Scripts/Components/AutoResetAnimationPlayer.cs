@@ -35,12 +35,17 @@ namespace RandomDungeons
                 if (animName == "RESET")
                     continue;
 
+                const float timeOffset = 0.000001f;
+
                 var mirrorAnim = new Animation();
-                AddAnimation(animName, mirrorAnim);
+                mirrorAnim.Length = targetPlayer.GetAnimation(animName).Length + timeOffset;
 
                 int trackId = mirrorAnim.AddTrack(Animation.TrackType.Animation);
+                mirrorAnim.TrackSetPath(trackId, TargetAnimationPlayer);
                 mirrorAnim.AnimationTrackInsertKey(trackId, 0, "RESET");
-                mirrorAnim.AnimationTrackInsertKey(trackId, 0.000001f, animName);
+                mirrorAnim.AnimationTrackInsertKey(trackId, timeOffset, animName);
+
+                AddAnimation(animName, mirrorAnim);
             }
         }
     }

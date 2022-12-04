@@ -307,11 +307,11 @@ texture = SubResource( 2 )
 
 [node name="Circle2D" parent="Visuals" instance=ExtResource( 2 )]
 position = Vector2( 0, -8 )
-Radius = 16.0
+Radius = 14.0
 Color = Color( 0, 0.180392, 0.658824, 1 )
 
 [node name="Polygon2D" type="Polygon2D" parent="Visuals"]
-position = Vector2( 0, -25 )
+position = Vector2( 0, -23 )
 scale = Vector2( 0.159999, 0.0799972 )
 color = Color( 0.521569, 0.521569, 0.521569, 1 )
 polygon = PoolVector2Array( -32, -32, 32, -32, 32, 32, -32, 32 )

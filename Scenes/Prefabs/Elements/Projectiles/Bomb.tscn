@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=1]
 [ext_resource path="res://Scenes/Components/Circle2D.tscn" type="PackedScene" id=2]
@@ -50,9 +50,33 @@ tracks/2/keys = {
 } ],
 "times": PoolRealArray( 0 )
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("FuseParticles:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
 
 [sub_resource type="Animation" id=9]
 length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("FuseParticles:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=7]
 resource_name = "BigShortPulse"
@@ -204,6 +228,21 @@ tracks/2/keys = {
 "values": [ Color( 0, 0.180392, 0.658824, 1 ), Color( 1, 0, 0, 1 ), Color( 0, 0.180392, 0.658824, 1 ) ]
 }
 
+[sub_resource type="CanvasItemMaterial" id=10]
+
+[sub_resource type="ParticlesMaterial" id=11]
+emission_shape = 1
+emission_sphere_radius = 1.0
+flag_disable_z = true
+direction = Vector3( 0, -1, 0 )
+spread = 30.0
+gravity = Vector3( 0, 98, 0 )
+initial_velocity = 79.64
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 2.0
+color = Color( 0.952941, 0.760784, 0, 1 )
+
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.0
 
@@ -239,6 +278,14 @@ pitch_scale = 2.0
 
 [node name="FuseHissSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
+
+[node name="FuseParticles" type="Particles2D" parent="."]
+material = SubResource( 10 )
+position = Vector2( 0, -32 )
+emitting = false
+amount = 20
+local_coords = false
+process_material = SubResource( 11 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )

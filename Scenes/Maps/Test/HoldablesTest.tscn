@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scenes/Maps/Test/EmptyTestRoom.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Prefabs/Elements/BreakablePot.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Prefabs/Elements/HoldableWeights.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/Bomb.tscn" type="PackedScene" id=4]
 
 [node name="HoldablesTest" instance=ExtResource( 1 )]
 
@@ -17,3 +18,6 @@ position = Vector2( 96, -160 )
 
 [node name="HoldableWeight" parent="." index="6" instance=ExtResource( 3 )]
 position = Vector2( 96, -32 )
+
+[node name="Bomb" parent="." index="7" instance=ExtResource( 4 )]
+position = Vector2( 192, 32 )

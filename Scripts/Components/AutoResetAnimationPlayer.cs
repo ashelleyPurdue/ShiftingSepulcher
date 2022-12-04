@@ -35,13 +35,13 @@ namespace RandomDungeons
                 if (animName == "RESET")
                     continue;
 
-                const float timeOffset = 0.000001f;
+                const float timeOffset = 0.00001f;
 
                 var mirrorAnim = new Animation();
                 mirrorAnim.Length = targetPlayer.GetAnimation(animName).Length + timeOffset;
 
                 int trackId = mirrorAnim.AddTrack(Animation.TrackType.Animation);
-                mirrorAnim.TrackSetPath(trackId, TargetAnimationPlayer);
+                mirrorAnim.TrackSetPath(trackId, GetParent().GetPathTo(targetPlayer));
                 mirrorAnim.AnimationTrackInsertKey(trackId, 0, "RESET");
                 mirrorAnim.AnimationTrackInsertKey(trackId, timeOffset, animName);
 

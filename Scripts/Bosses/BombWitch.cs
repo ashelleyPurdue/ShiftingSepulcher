@@ -14,14 +14,14 @@ namespace RandomDungeons
 
         public override void _PhysicsProcess(float delta)
         {
-            var player = GetTree().FindPlayer();
-
             // Rotate toward the player while aiming
-            if (RotateTowardPlayer && player != null)
+            if (RotateTowardPlayer)
             {
+                Vector2 playerPos = PlayerGlobalPos();
+
                 float targetRotRad = _body
                     .GlobalPosition
-                    .AngleToPoint(player.GlobalPosition);
+                    .AngleToPoint(playerPos);
 
                 targetRotRad -= Mathf.Deg2Rad(90 + 180);
 
@@ -57,6 +57,20 @@ namespace RandomDungeons
         public void RecoverFromDazed()
         {
             _attackPatterns.PlayAndAdvance("MainCycle");
+        }
+
+        private Vector2 PlayerGlobalPos()
+        {
+            var player = GetTree().FindPlayer();
+
+            // If there is no player in this scene, just pretend that the player
+            // is in the center of the room.
+            // This way, the script does crash inside debug scenes where the
+            // player doesn't exist
+            if (player == null)
+                return _body.GetParent<Node2D>().GlobalPosition;
+
+            return player.GlobalPosition;
         }
     }
 }

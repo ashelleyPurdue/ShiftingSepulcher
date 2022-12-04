@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=1]
 [ext_resource path="res://Scenes/Components/Circle2D.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/Explosion.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scripts/Projectiles/Bomb.cs" type="Script" id=6]
 [ext_resource path="res://Audio/SFX/SingleBombTick.wav" type="AudioStream" id=7]
+[ext_resource path="res://Audio/SFX/BombFuseHiss.ogg" type="AudioStream" id=8]
 
 [sub_resource type="Animation" id=4]
 resource_name = "FuseRunning"
@@ -36,15 +37,22 @@ tracks/1/keys = {
 } ]
 }
 tracks/2/type = "audio"
-tracks/2/path = NodePath("TickSound")
+tracks/2/path = NodePath("FuseHissSound")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"clips": [  ],
-"times": PoolRealArray(  )
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 8 )
+} ],
+"times": PoolRealArray( 0 )
 }
+
+[sub_resource type="Animation" id=9]
+length = 0.001
 
 [sub_resource type="Animation" id=7]
 resource_name = "BigShortPulse"
@@ -217,6 +225,7 @@ ExplosionPrefab = ExtResource( 5 )
 unique_name_in_owner = true
 playback_process_mode = 0
 anims/FuseRunning = SubResource( 4 )
+anims/RESET = SubResource( 9 )
 
 [node name="PulseAnimator" type="AnimationPlayer" parent="."]
 anims/BigShortPulse = SubResource( 7 )
@@ -227,6 +236,9 @@ anims/SmallShortPulse = SubResource( 8 )
 [node name="TickSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
 pitch_scale = 2.0
+
+[node name="FuseHissSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )

@@ -42,6 +42,9 @@ namespace RandomDungeons
 
         private void RefreshAnimations()
         {
+            if (!Engine.EditorHint)
+                return;
+
             // Clear out existing animations
             foreach (string animName in GetAnimationList())
             {

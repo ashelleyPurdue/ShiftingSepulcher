@@ -12,6 +12,34 @@ namespace RandomDungeons
             set => RefreshAnimations();
         }
 
+        public override void _EnterTree()
+        {
+            // Set it up to refresh when the scene is saved
+            if (Engine.EditorHint)
+            {
+                var editorNode = GetTree().Root.GetNode("EditorNode");
+                if (!editorNode.IsConnected("scene_saved", this, nameof(OnSceneSaved)))
+                    editorNode.Connect("scene_saved", this, nameof(OnSceneSaved));
+            }
+        }
+
+        public override void _ExitTree()
+        {
+            // Stop listening to the scene being saved
+            if (Engine.EditorHint)
+            {
+                var editorNode = GetTree().Root.GetNode("EditorNode");
+                if (editorNode.IsConnected("scene_saved", this, nameof(OnSceneSaved)))
+                    editorNode.Disconnect("scene_saved", this, nameof(OnSceneSaved));
+            }
+        }
+
+        private void OnSceneSaved(object idk)
+        {
+            GD.Print($"Scene saved.  Refreshing {Name}'s animations");
+            RefreshAnimations();
+        }
+
         private void RefreshAnimations()
         {
             // Clear out existing animations

@@ -5,7 +5,17 @@ namespace RandomDungeons
     [Tool]
     public class AutoResetAnimationPlayer : AnimationPlayer
     {
-        [Export] public NodePath TargetAnimationPlayer;
+        [Export] public NodePath TargetAnimationPlayer
+        {
+            get => _targetAnimationPlayer;
+            set
+            {
+                _targetAnimationPlayer = value;
+                RefreshAnimations();
+            }
+        }
+        private NodePath _targetAnimationPlayer;
+
         [Export] public bool Refresh
         {
             get => false;

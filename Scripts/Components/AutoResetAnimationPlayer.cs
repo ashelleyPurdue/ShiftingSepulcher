@@ -24,24 +24,28 @@ namespace RandomDungeons
 
         public override void _EnterTree()
         {
-            // Set it up to refresh when the scene is saved
             if (Engine.EditorHint)
-            {
-                var editorNode = GetTree().Root.GetNode("EditorNode");
-                if (!editorNode.IsConnected("scene_saved", this, nameof(OnSceneSaved)))
-                    editorNode.Connect("scene_saved", this, nameof(OnSceneSaved));
-            }
+                ListenForSceneSave();
         }
 
         public override void _ExitTree()
         {
-            // Stop listening to the scene being saved
             if (Engine.EditorHint)
-            {
-                var editorNode = GetTree().Root.GetNode("EditorNode");
-                if (editorNode.IsConnected("scene_saved", this, nameof(OnSceneSaved)))
-                    editorNode.Disconnect("scene_saved", this, nameof(OnSceneSaved));
-            }
+                StopListeningForSceneSave();
+        }
+
+        private void ListenForSceneSave()
+        {
+            var editorNode = GetTree().Root.GetNode("EditorNode");
+            if (!editorNode.IsConnected("scene_saved", this, nameof(OnSceneSaved)))
+                editorNode.Connect("scene_saved", this, nameof(OnSceneSaved));
+        }
+
+        private void StopListeningForSceneSave()
+        {
+            var editorNode = GetTree().Root.GetNode("EditorNode");
+            if (editorNode.IsConnected("scene_saved", this, nameof(OnSceneSaved)))
+                editorNode.Disconnect("scene_saved", this, nameof(OnSceneSaved));
         }
 
         private void OnSceneSaved(object idk)
@@ -54,6 +58,8 @@ namespace RandomDungeons
         {
             if (!Engine.EditorHint)
                 return;
+
+            ListenForSceneSave();
 
             // Clear out existing animations
             foreach (string animName in GetAnimationList())

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://Scripts/Components/LineTrail2D.cs" type="Script" id=1]
 [ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=2]
@@ -12,34 +12,18 @@
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/Bomb.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/SpawningSpell.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Scripts/Components/GroupDetectorArea2D.cs" type="Script" id=12]
+[ext_resource path="res://Scripts/Components/AutoResetAnimationPlayer.cs" type="Script" id=13]
 
 [sub_resource type="Animation" id=12]
 resource_name = "DazedLoop"
 length = 6.0
-tracks/0/type = "method"
-tracks/0/path = NodePath("AI")
+tracks/0/type = "animation"
+tracks/0/path = NodePath("AutoResetAnimationPlayer")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 6 ),
-"transitions": PoolRealArray( 1, 1 ),
-"values": [ {
-"args": [  ],
-"method": "ResetAnimator"
-}, {
-"args": [  ],
-"method": "RecoverFromDazed"
-} ]
-}
-tracks/1/type = "animation"
-tracks/1/path = NodePath("AnimationPlayer")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
 "clips": PoolStringArray( "Dazed" ),
 "times": PoolRealArray( 0 )
 }
@@ -55,24 +39,18 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 2, 3.2, 3.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PoolRealArray( 2, 3.2 ),
+"transitions": PoolRealArray( 1, 1 ),
 "values": [ {
-"args": [  ],
-"method": "ResetAnimator"
-}, {
 "args": [  ],
 "method": "TeleportToRandomSpot"
 }, {
 "args": [  ],
 "method": "QueueBombSpell"
-}, {
-"args": [  ],
-"method": "ResetAnimator"
 } ]
 }
 tracks/1/type = "animation"
-tracks/1/path = NodePath("AnimationPlayer")
+tracks/1/path = NodePath("AutoResetAnimationPlayer")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -80,6 +58,74 @@ tracks/1/enabled = true
 tracks/1/keys = {
 "clips": PoolStringArray( "TeleportAway", "TeleportIn", "Throw" ),
 "times": PoolRealArray( 0, 2.1, 3.3 )
+}
+
+[sub_resource type="Animation" id=14]
+length = 2.00001
+loop = true
+tracks/0/type = "animation"
+tracks/0/path = NodePath("AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"clips": PoolStringArray( "RESET", "Dazed" ),
+"times": PoolRealArray( 0, 1e-05 )
+}
+
+[sub_resource type="Animation" id=15]
+length = 1.00001
+tracks/0/type = "animation"
+tracks/0/path = NodePath("AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"clips": PoolStringArray( "RESET", "TeleportAway" ),
+"times": PoolRealArray( 0, 1e-05 )
+}
+
+[sub_resource type="Animation" id=16]
+length = 1.00001
+tracks/0/type = "animation"
+tracks/0/path = NodePath("AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"clips": PoolStringArray( "RESET", "TeleportIn" ),
+"times": PoolRealArray( 0, 1e-05 )
+}
+
+[sub_resource type="Animation" id=17]
+length = 2.00001
+step = 0.01
+tracks/0/type = "animation"
+tracks/0/path = NodePath("AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"clips": PoolStringArray( "RESET", "Throw" ),
+"times": PoolRealArray( 0, 1e-05 )
+}
+
+[sub_resource type="Animation" id=18]
+length = 4.00001
+loop = true
+tracks/0/type = "animation"
+tracks/0/path = NodePath("AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"clips": PoolStringArray( "RESET", "Twirl" ),
+"times": PoolRealArray( 0, 1e-05 )
 }
 
 [sub_resource type="Animation" id=8]
@@ -1249,6 +1295,15 @@ autoplay = "MainCycle"
 method_call_mode = 1
 anims/DazedLoop = SubResource( 12 )
 anims/MainCycle = SubResource( 9 )
+
+[node name="AutoResetAnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Dazed = SubResource( 14 )
+anims/TeleportAway = SubResource( 15 )
+anims/TeleportIn = SubResource( 16 )
+anims/Throw = SubResource( 17 )
+anims/Twirl = SubResource( 18 )
+script = ExtResource( 13 )
+TargetAnimationPlayer = NodePath("../AnimationPlayer")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true

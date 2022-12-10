@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Scripts/Components/LineTrail2D.cs" type="Script" id=1]
 [ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/Bomb.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/SpawningSpell.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Scripts/Components/GroupDetectorArea2D.cs" type="Script" id=12]
+[ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/Fireball.tscn" type="PackedScene" id=13]
 
 [sub_resource type="Animation" id=12]
 resource_name = "DazedLoop"
@@ -46,7 +47,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id=9]
 resource_name = "MainCycle"
-length = 6.0
+length = 8.0
 loop = true
 tracks/0/type = "method"
 tracks/0/path = NodePath("AI")
@@ -55,14 +56,20 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 2 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 2, 4, 6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
 "values": [ {
 "args": [  ],
 "method": "StartTeleport"
 }, {
 "args": [  ],
 "method": "CastBombSpell"
+}, {
+"args": [  ],
+"method": "StartTeleport"
+}, {
+"args": [  ],
+"method": "CastFireballSpell"
 } ]
 }
 
@@ -1072,6 +1079,7 @@ MaxHealth = 10
 script = ExtResource( 5 )
 SpawningSpellPrefab = ExtResource( 11 )
 BombPrefab = ExtResource( 10 )
+FireballPrefab = ExtResource( 13 )
 
 [node name="HurtFlasher" type="Node" parent="."]
 unique_name_in_owner = true

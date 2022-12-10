@@ -7,8 +7,10 @@ namespace RandomDungeons
     {
         [Export] public PackedScene SpawningSpellPrefab;
         [Export] public PackedScene BombPrefab;
+        [Export] public PackedScene FireballPrefab;
 
         [Export] public float TeleportRadius = 6 * 32;
+        [Export] public float FireballSpeed = 6 * 32;
         [Export] public bool RotateTowardPlayer = false;
 
         private AnimationPlayer _attackPatterns => GetNode<AnimationPlayer>("%AttackPatterns");
@@ -47,6 +49,12 @@ namespace RandomDungeons
         public void CastBombSpell()
         {
             _queuedSpell = ExecuteBombSpell;
+            _animator.ResetAndPlay("Throw");
+        }
+
+        public void CastFireballSpell()
+        {
+            _queuedSpell = ExecuteFireballSpell;
             _animator.ResetAndPlay("Throw");
         }
 
@@ -99,6 +107,16 @@ namespace RandomDungeons
             spawningSpell.NodeToSpawn = bomb;
             spawningSpell.TargetPosGlobal = PlayerGlobalPos();
             spawningSpell.GlobalPosition = _spellSpawnPos.GlobalPosition;
+        }
+
+        private void ExecuteFireballSpell()
+        {
+            var fireball = FireballPrefab.Instance<Fireball>();
+            fireball.Velocity = _body.GlobalPosition.DirectionTo(PlayerGlobalPos());
+            fireball.Velocity *= FireballSpeed;
+
+            _body.GetParent().AddChild(fireball);
+            fireball.GlobalPosition = _spellSpawnPos.GlobalPosition;
         }
 
         private Vector2 PlayerGlobalPos()

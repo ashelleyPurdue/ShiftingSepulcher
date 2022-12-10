@@ -39,6 +39,17 @@ namespace RandomDungeons
             }
         }
 
+        public void StartTeleport()
+        {
+            _animator.ResetAndPlay("Teleport");
+        }
+
+        public void CastBombSpell()
+        {
+            _queuedSpell = ExecuteBombSpell;
+            _animator.ResetAndPlay("Throw");
+        }
+
         public void ResetAnimator()
         {
             _animator.Reset();
@@ -70,17 +81,12 @@ namespace RandomDungeons
             _attackPatterns.PlayAndAdvance("MainCycle");
         }
 
-        public void CastQueuedSpell()
+        public void ExecuteQueuedSpell()
         {
             _queuedSpell?.Invoke();
         }
 
-        public void QueueBombSpell()
-        {
-            _queuedSpell = CastBombSpell;
-        }
-
-        private void CastBombSpell()
+        private void ExecuteBombSpell()
         {
             var bomb = BombPrefab.Instance<Bomb>();
             bomb.LightFuse();   // The timer doesn't actually start ticking down

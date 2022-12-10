@@ -5,7 +5,10 @@ namespace RandomDungeons
     public class GroupDetectorArea2D : Area2D
     {
         [Signal] public delegate void GroupAreaEntered(Area2D area);
+        [Signal] public delegate void GroupAreaEnteredNoParams();
+
         [Signal] public delegate void GroupAreaExited(Area2D area);
+        [Signal] public delegate void GroupAreaExitedNoParams();
 
         // TODO: Support bodies, too, not just other areas.
 
@@ -22,13 +25,19 @@ namespace RandomDungeons
         private void OnAreaEntered(Area2D area)
         {
             if (ShouldDetect(area))
+            {
                 EmitSignal(nameof(GroupAreaEntered), area);
+                EmitSignal(nameof(GroupAreaEnteredNoParams));
+            }
         }
 
         private void OnAreaExited(Area2D area)
         {
             if (ShouldDetect(area))
+            {
                 EmitSignal(nameof(GroupAreaExited), area);
+                EmitSignal(nameof(GroupAreaExitedNoParams));
+            }
         }
 
         private bool ShouldDetect(Node node)

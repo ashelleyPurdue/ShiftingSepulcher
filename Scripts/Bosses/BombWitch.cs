@@ -17,6 +17,9 @@ namespace RandomDungeons
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
         private AnimationPlayer _shieldAnimator => GetNode<AnimationPlayer>("%ShieldAnimator");
 
+        private HurtBox _hurtBox => GetNode<HurtBox>("%HurtBox");
+        private HurtBox _shieldHurtBox => GetNode<HurtBox>("%ShieldHurtBox");
+
         private Node2D _spellSpawnPos => GetNode<Node2D>("%SpellSpawnPos");
         private Node2D _body => GetParent<Node2D>();
 
@@ -127,6 +130,13 @@ namespace RandomDungeons
 
             _body.GetParent().AddChild(fireball);
             fireball.GlobalPosition = _spellSpawnPos.GlobalPosition;
+
+            // Make the fireballs ignore our own hurtboxes
+            foreach (var hitbox in fireball.AllDescendantsOfType<HitBox>())
+            {
+                hitbox.IgnoreHurtBox(_hurtBox);
+                hitbox.IgnoreHurtBox(_shieldHurtBox);
+            }
         }
 
         private Vector2 PlayerGlobalPos()

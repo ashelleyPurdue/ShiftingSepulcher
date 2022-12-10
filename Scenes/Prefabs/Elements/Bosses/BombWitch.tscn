@@ -1100,7 +1100,7 @@ tracks/1/keys = {
 "values": [ Vector2( 1, 1 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("../../../ShieldBounceHurtBox/ShieldCollisionShape:disabled")
+tracks/2/path = NodePath("../../../ShieldHurtBox/ShieldCollisionShape:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -1140,7 +1140,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("../../../ShieldBounceHurtBox/ShieldCollisionShape:disabled")
+tracks/2/path = NodePath("../../../ShieldHurtBox/ShieldCollisionShape:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -1180,7 +1180,7 @@ tracks/1/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 2, 2 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("../../../ShieldBounceHurtBox/ShieldCollisionShape:disabled")
+tracks/2/path = NodePath("../../../ShieldHurtBox/ShieldCollisionShape:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -1261,11 +1261,12 @@ anims/RESET = SubResource( 19 )
 anims/Reform = SubResource( 21 )
 anims/Shatter = SubResource( 20 )
 
-[node name="ShieldBounceHurtBox" type="Area2D" parent="." groups=["DetonatesBombs"]]
+[node name="ShieldHurtBox" type="Area2D" parent="." groups=["DetonatesBombs"]]
+unique_name_in_owner = true
 script = ExtResource( 7 )
 RecoilDistance = 256.0
 
-[node name="ShieldCollisionShape" type="CollisionShape2D" parent="ShieldBounceHurtBox"]
+[node name="ShieldCollisionShape" type="CollisionShape2D" parent="ShieldHurtBox"]
 shape = SubResource( 18 )
 
 [node name="KinematicBodyCollider" type="CollisionShape2D" parent="."]
@@ -1274,6 +1275,7 @@ shape = SubResource( 10 )
 disabled = true
 
 [node name="HurtBox" type="Area2D" parent="."]
+unique_name_in_owner = true
 visible = false
 script = ExtResource( 7 )
 
@@ -1505,6 +1507,6 @@ update_scale = false
 [node name="Sprite" type="Sprite" parent="Visuals/Model/Shield"]
 texture = SubResource( 16 )
 
-[connection signal="TookDamage" from="ShieldBounceHurtBox" to="AI" method="OnShieldTookDamage"]
+[connection signal="TookDamage" from="ShieldHurtBox" to="AI" method="OnShieldTookDamage"]
 [connection signal="TookDamage" from="HurtBox" to="." method="OnTookDamage"]
 [connection signal="TookDamage" from="HurtBox" to="AI" method="OnTookDamage" flags=3]

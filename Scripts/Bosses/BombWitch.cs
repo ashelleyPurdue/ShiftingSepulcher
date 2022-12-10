@@ -85,7 +85,7 @@ namespace RandomDungeons
         {
             if (hitbox.IsAncestorInGroup("Explosion"))
             {
-                _attackPatterns.ResetAndPlay("DazedLoop");
+                _attackPatterns.PlayAndAdvance("DazedLoop");
                 _shieldAnimator.ResetAndPlay("Shatter");
                 return;
             }

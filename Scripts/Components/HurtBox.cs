@@ -6,6 +6,7 @@ namespace RandomDungeons
     public class HurtBox : Area2D
     {
         [Signal] public delegate void TookDamage(HitBox hitBox);
+        [Signal] public delegate void TookDamageNoParams();
 
         [Export] public float RecoilDistance = 32;
 
@@ -24,6 +25,7 @@ namespace RandomDungeons
         {
             _cooldownTimer = hitBox.InvlunerabilityTime;
             EmitSignal(nameof(TookDamage), hitBox);
+            EmitSignal(nameof(TookDamageNoParams));
         }
 
         public void IgnoreHitBox(HitBox hitBox)

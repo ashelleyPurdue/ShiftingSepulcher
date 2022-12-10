@@ -15,6 +15,8 @@ namespace RandomDungeons
 
         private AnimationPlayer _attackPatterns => GetNode<AnimationPlayer>("%AttackPatterns");
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
+        private AnimationPlayer _shieldAnimator => GetNode<AnimationPlayer>("%ShieldAnimator");
+
         private Node2D _spellSpawnPos => GetNode<Node2D>("%SpellSpawnPos");
         private Node2D _body => GetParent<Node2D>();
 
@@ -79,14 +81,22 @@ namespace RandomDungeons
             RecoverFromDazed();
         }
 
-        public void OnShieldShattered(Area2D area)
+        public void OnShieldTookDamage(HitBox hitbox)
         {
-            _attackPatterns.PlayAndAdvance("DazedLoop");
+            if (hitbox.IsAncestorInGroup("Explosion"))
+            {
+                _attackPatterns.ResetAndPlay("DazedLoop");
+                _shieldAnimator.ResetAndPlay("Shatter");
+                return;
+            }
+
+            _shieldAnimator.ResetAndPlay("Pulse");
         }
 
         public void RecoverFromDazed()
         {
             _attackPatterns.PlayAndAdvance("MainCycle");
+            _shieldAnimator.ResetAndPlay("Reform");
         }
 
         public void ExecuteQueuedSpell()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Scripts/Components/LineTrail2D.cs" type="Script" id=1]
 [ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=2]
@@ -11,7 +11,6 @@
 [ext_resource path="res://Scenes/Prefabs/UI/Widgets/BossHealthBar.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/Bomb.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/SpawningSpell.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Scripts/Components/GroupDetectorArea2D.cs" type="Script" id=12]
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/Fireball.tscn" type="PackedScene" id=13]
 
 [sub_resource type="Animation" id=12]
@@ -1057,19 +1056,167 @@ tracks/12/keys = {
 "values": [ 1.0 ]
 }
 
+[sub_resource type="Animation" id=22]
+resource_name = "Pulse"
+length = 0.2
+step = 0.025
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.025, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.9, 0.9 ), Vector2( 1.1, 1.1 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=19]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../../../ShieldBounceHurtBox/ShieldCollisionShape:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=21]
+resource_name = "Reform"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../../../ShieldBounceHurtBox/ShieldCollisionShape:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=20]
+resource_name = "Shatter"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 2, 2 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../../../ShieldBounceHurtBox/ShieldCollisionShape:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="CircleShape2D" id=18]
+radius = 39.63
+
 [sub_resource type="CircleShape2D" id=10]
 radius = 32.0
 
 [sub_resource type="CircleShape2D" id=11]
 radius = 32.0
 
-[sub_resource type="CircleShape2D" id=13]
-radius = 32.0
-
 [sub_resource type="GradientTexture2D" id=2]
 gradient = ExtResource( 2 )
 fill = 1
 fill_from = Vector2( 0.5, 0.5 )
+
+[sub_resource type="Gradient" id=15]
+offsets = PoolRealArray( 0.369767, 0.432558, 0.448837 )
+colors = PoolColorArray( 0, 0.976471, 1, 0, 0, 0.976471, 1, 0.431373, 0, 0.976471, 1, 0 )
+
+[sub_resource type="GradientTexture2D" id=16]
+gradient = SubResource( 15 )
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2( 0.5, 0.5 )
+fill_to = Vector2( 0, 0 )
 
 [node name="BombWitch" type="KinematicBody2D"]
 script = ExtResource( 6 )
@@ -1106,23 +1253,33 @@ anims/Teleport = SubResource( 14 )
 anims/Throw = SubResource( 5 )
 anims/Twirl = SubResource( 4 )
 
+[node name="ShieldAnimator" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+root_node = NodePath("../Visuals/Model/Shield")
+anims/Pulse = SubResource( 22 )
+anims/RESET = SubResource( 19 )
+anims/Reform = SubResource( 21 )
+anims/Shatter = SubResource( 20 )
+
+[node name="ShieldBounceHurtBox" type="Area2D" parent="."]
+script = ExtResource( 7 )
+RecoilDistance = 256.0
+
+[node name="ShieldCollisionShape" type="CollisionShape2D" parent="ShieldBounceHurtBox"]
+shape = SubResource( 18 )
+
 [node name="KinematicBodyCollider" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource( 10 )
 disabled = true
 
 [node name="HurtBox" type="Area2D" parent="."]
+visible = false
 script = ExtResource( 7 )
 
 [node name="HurtBoxShape" type="CollisionShape2D" parent="HurtBox"]
 shape = SubResource( 11 )
 disabled = true
-
-[node name="ExplosionDetector" type="Area2D" parent="."]
-script = ExtResource( 12 )
-GroupsToDetect = PoolStringArray( "Explosion" )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionDetector"]
-shape = SubResource( 13 )
 
 [node name="Visuals" type="Node2D" parent="."]
 
@@ -1343,6 +1500,11 @@ remote_path = NodePath("../../Stars/Star4")
 update_rotation = false
 update_scale = false
 
+[node name="Shield" type="Node2D" parent="Visuals/Model"]
+
+[node name="Sprite" type="Sprite" parent="Visuals/Model/Shield"]
+texture = SubResource( 16 )
+
+[connection signal="TookDamage" from="ShieldBounceHurtBox" to="AI" method="OnShieldTookDamage"]
 [connection signal="TookDamage" from="HurtBox" to="." method="OnTookDamage"]
 [connection signal="TookDamage" from="HurtBox" to="AI" method="OnTookDamage" flags=3]
-[connection signal="GroupAreaEntered" from="ExplosionDetector" to="AI" method="OnShieldShattered" flags=3]

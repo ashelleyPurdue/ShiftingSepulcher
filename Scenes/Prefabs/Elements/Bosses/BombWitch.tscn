@@ -1261,7 +1261,7 @@ anims/RESET = SubResource( 19 )
 anims/Reform = SubResource( 21 )
 anims/Shatter = SubResource( 20 )
 
-[node name="ShieldBounceHurtBox" type="Area2D" parent="."]
+[node name="ShieldBounceHurtBox" type="Area2D" parent="." groups=["DetonatesBombs"]]
 script = ExtResource( 7 )
 RecoilDistance = 256.0
 

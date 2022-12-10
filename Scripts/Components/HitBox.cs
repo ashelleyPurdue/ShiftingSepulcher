@@ -8,6 +8,7 @@ namespace RandomDungeons
     public class HitBox : Area2D
     {
         [Signal] public delegate void DealtDamage(HurtBox hurtBox);
+        [Signal] public delegate void DealtDamageNoParams();
 
         [Export] public int Damage = 1;
         [Export] public float InvlunerabilityTime = 1.5f;
@@ -46,6 +47,7 @@ namespace RandomDungeons
 
                     hurtBox.TakeDamage(this);
                     EmitSignal(nameof(DealtDamage), hurtBox);
+                    EmitSignal(nameof(DealtDamageNoParams));
                 }
             }
         }

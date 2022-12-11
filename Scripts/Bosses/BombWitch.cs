@@ -81,7 +81,9 @@ namespace RandomDungeons
 
         public void OnTookDamage(HitBox hitbox)
         {
-            RecoverFromDazed();
+            _attackPatterns.Stop();
+            _animator.ResetAndPlay("Ouch");
+            _animator.Queue("DazeRecover");
         }
 
         public void OnShieldTookDamage(HitBox hitbox)
@@ -96,10 +98,16 @@ namespace RandomDungeons
             _shieldAnimator.ResetAndPlay("Pulse");
         }
 
-        public void RecoverFromDazed()
+        public void OnFinishedRecoveringFromDaze()
         {
             _attackPatterns.PlayAndAdvance("MainCycle");
             _shieldAnimator.ResetAndPlay("Reform");
+        }
+
+        public void RecoverFromDazed()
+        {
+            _attackPatterns.Stop();
+            _animator.ResetAndPlay("DazeRecover");
         }
 
         public void ExecuteQueuedSpell()

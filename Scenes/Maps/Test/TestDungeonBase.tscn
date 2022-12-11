@@ -71,3 +71,4 @@ BossRoomTable = ExtResource( 3 )
 unique_name_in_owner = true
 
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/GenerateButton" to="." method="Generate"]
+[connection signal="DeathAnimationFinished" from="Player" to="RoomTransitionManager" method="RespawnPlayer"]

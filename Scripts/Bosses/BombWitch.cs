@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 namespace RandomDungeons
@@ -24,6 +26,8 @@ namespace RandomDungeons
         private Node2D _body => GetParent<Node2D>();
 
         private Action _queuedSpell;
+
+        private List<Node> _spawnedProjectiles = new List<Node>();
 
         public override void _PhysicsProcess(float delta)
         {
@@ -79,6 +83,16 @@ namespace RandomDungeons
             );
         }
 
+        public void OnRespawning()
+        {
+            _animator.Reset();
+            _shieldAnimator.Reset();
+            _attackPatterns.Stop(true);
+            _attackPatterns.PlayAndAdvance("MainCycle");
+
+            DeleteAllProjectiles();
+        }
+
         public void OnTookDamage(HitBox hitbox)
         {
             _attackPatterns.Stop();
@@ -117,12 +131,12 @@ namespace RandomDungeons
 
         private void ExecuteBombSpell()
         {
-            var bomb = BombPrefab.Instance<Bomb>();
+            var bomb = SpawnProjectile<Bomb>(BombPrefab);
             bomb.LightFuse();   // The timer doesn't actually start ticking down
                                 // until the spell reaches its destination and
                                 // adds the bomb to the scene tree
 
-            var spawningSpell = SpawningSpellPrefab.Instance<SpawningSpell>();
+            var spawningSpell = SpawnProjectile<SpawningSpell>(SpawningSpellPrefab);
             _body.GetParent().AddChild(spawningSpell);
 
             spawningSpell.NodeToSpawn = bomb;
@@ -132,12 +146,12 @@ namespace RandomDungeons
 
         private void ExecuteFireballSpell()
         {
-            var fireball = FireballPrefab.Instance<Fireball>();
-            fireball.Velocity = _body.GlobalPosition.DirectionTo(PlayerGlobalPos());
-            fireball.Velocity *= FireballSpeed;
-
+            var fireball = SpawnProjectile<Fireball>(FireballPrefab);
             _body.GetParent().AddChild(fireball);
             fireball.GlobalPosition = _spellSpawnPos.GlobalPosition;
+
+            fireball.Velocity = _body.GlobalPosition.DirectionTo(PlayerGlobalPos());
+            fireball.Velocity *= FireballSpeed;
 
             // Make the fireballs ignore our own hurtboxes
             foreach (var hitbox in fireball.AllDescendantsOfType<HitBox>())
@@ -145,6 +159,48 @@ namespace RandomDungeons
                 hitbox.IgnoreHurtBox(_hurtBox);
                 hitbox.IgnoreHurtBox(_shieldHurtBox);
             }
+        }
+
+        /// <summary>
+        /// Spawns an instance of the given prefab and keeps track of it, such
+        /// that we can delete all created projectiles later.
+        ///
+        /// This does NOT add the node to the scene tree, or does it set its
+        /// position.
+        /// </summary>
+        /// <param name="prefab"></param>
+        /// <typeparam name="TNode"></typeparam>
+        /// <returns></returns>
+        private TNode SpawnProjectile<TNode>(PackedScene prefab)
+            where TNode : Node2D
+        {
+            ForgetDeletedProjectiles();
+
+            var projectile = prefab.Instance<TNode>();
+            _spawnedProjectiles.Add(projectile);
+
+            return projectile;
+        }
+
+        private void DeleteAllProjectiles()
+        {
+            foreach (var n in _spawnedProjectiles)
+            {
+                if (IsInstanceValid(n))
+                    n.QueueFree();
+            }
+
+            ForgetDeletedProjectiles();
+        }
+
+        private void ForgetDeletedProjectiles()
+        {
+            var deadRefs = _spawnedProjectiles
+                .Where(n => !IsInstanceValid(n) || n.IsQueuedForDeletion())
+                .ToArray();
+
+            foreach (Node n in deadRefs)
+                _spawnedProjectiles.Remove(n);
         }
 
         private Vector2 PlayerGlobalPos()

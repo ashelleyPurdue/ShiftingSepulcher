@@ -1808,6 +1808,7 @@ update_scale = false
 [node name="Sprite" type="Sprite" parent="Visuals/Model/Shield"]
 texture = SubResource( 16 )
 
+[connection signal="Respawning" from="." to="AI" method="OnRespawning"]
 [connection signal="TookDamage" from="ShieldHurtBox" to="AI" method="OnShieldTookDamage"]
 [connection signal="TookDamage" from="HurtBox" to="." method="OnTookDamage"]
 [connection signal="TookDamage" from="HurtBox" to="AI" method="OnTookDamage" flags=3]

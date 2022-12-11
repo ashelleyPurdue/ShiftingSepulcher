@@ -118,6 +118,12 @@ namespace RandomDungeons
             _shieldAnimator.ResetAndPlay("Reform");
         }
 
+        public void OnDead()
+        {
+            _attackPatterns.Stop();
+            _animator.ResetAndPlay("Death");
+        }
+
         public void RecoverFromDazed()
         {
             _attackPatterns.Stop();

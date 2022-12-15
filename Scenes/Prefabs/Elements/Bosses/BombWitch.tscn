@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://Scripts/Components/LineTrail2D.cs" type="Script" id=1]
 [ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Scenes/Prefabs/UI/Widgets/BossHealthBar.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/Bomb.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/SpawningSpell.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scenes/Prefabs/Elements/VictoryChest.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/Fireball.tscn" type="PackedScene" id=13]
 
 [sub_resource type="Animation" id=12]
@@ -550,6 +551,20 @@ tracks/18/keys = {
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/19/type = "method"
+tracks/19/path = NodePath("AI")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/keys = {
+"times": PoolRealArray( 12 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "OnDeathAnimationFinished"
+} ]
 }
 
 [sub_resource type="Animation" id=23]
@@ -1920,6 +1935,7 @@ MaxHealth = 10
 
 [node name="AI" type="Node" parent="."]
 script = ExtResource( 5 )
+VictoryChestPrefab = ExtResource( 12 )
 SpawningSpellPrefab = ExtResource( 11 )
 BombPrefab = ExtResource( 10 )
 FireballPrefab = ExtResource( 13 )

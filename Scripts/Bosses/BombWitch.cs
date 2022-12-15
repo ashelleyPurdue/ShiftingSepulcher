@@ -7,6 +7,7 @@ namespace RandomDungeons
 {
     public class BombWitch : Node
     {
+        [Export] public PackedScene VictoryChestPrefab;
         [Export] public PackedScene SpawningSpellPrefab;
         [Export] public PackedScene BombPrefab;
         [Export] public PackedScene FireballPrefab;
@@ -122,6 +123,12 @@ namespace RandomDungeons
         {
             _attackPatterns.Stop();
             _animator.ResetAndPlay("Death");
+        }
+
+        public void OnDeathAnimationFinished()
+        {
+            var chest = VictoryChestPrefab.Instance<Node2D>();
+            _body.GetParent().AddChild(chest);
         }
 
         public void RecoverFromDazed()

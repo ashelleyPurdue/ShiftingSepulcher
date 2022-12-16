@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://Scripts/Components/LineTrail2D.cs" type="Script" id=1]
 [ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=2]
@@ -704,7 +704,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -40, 0 ) ]
+"values": [ Vector2( -11, -8 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Visuals/Model/Body/Hands/RightHand:position")
@@ -716,7 +716,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 40, 0 ) ]
+"values": [ Vector2( 11, -8 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Visuals/Model/Body:rotation_degrees")
@@ -1724,21 +1724,6 @@ tracks/3/keys = {
 "values": [ Vector2( 25, 0 ) ]
 }
 
-[sub_resource type="Animation" id=32]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("../Visuals/Model/Body/Hands:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 0, -5 ) ]
-}
-
 [sub_resource type="Animation" id=22]
 resource_name = "Pulse"
 length = 0.2
@@ -1970,7 +1955,6 @@ anims/Twirl = SubResource( 4 )
 
 [node name="HandsFlailingAnimator" type="AnimationPlayer" parent="AnimationPlayer"]
 anims/HandsFlailing = SubResource( 31 )
-anims/RESET = SubResource( 32 )
 
 [node name="ShieldAnimator" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
@@ -2073,7 +2057,7 @@ polygon = PoolVector2Array( -2, -1.5873, 2, -0.396825, 1, -0.396825, -2, -1.1904
 
 [node name="Eye" parent="Visuals/Model/Body/Neck/Head/Eyes/Left" instance=ExtResource( 3 )]
 position = Vector2( -4, 0 )
-rotation = 1.5232e-05
+rotation = 1.5378e-05
 scale = Vector2( 1, 2.52 )
 Radius = 1.0
 Color = Color( 0, 0, 0, 1 )
@@ -2097,7 +2081,7 @@ polygon = PoolVector2Array( -2, -1.5873, 2, -0.396825, 1, -0.396825, -2, -1.1904
 
 [node name="Eye" parent="Visuals/Model/Body/Neck/Head/Eyes/Right" instance=ExtResource( 3 )]
 position = Vector2( 4, 0 )
-rotation = 1.48297e-05
+rotation = 1.4931e-05
 scale = Vector2( 1, 2.52 )
 Radius = 1.0
 Color = Color( 0, 0, 0, 1 )
@@ -2126,11 +2110,11 @@ color = Color( 0.427451, 0.407843, 0, 1 )
 polygon = PoolVector2Array( -16.1765, -15.7895, -1.47059, -9.21055, 11.7647, -9.21055, 32.3529, -15.7895, 29.4118, -18.4211, 11.7647, -11.8421, -1.47059, -11.8421, -14.7059, -18.4211 )
 
 [node name="Hands" type="Node2D" parent="Visuals/Model/Body"]
-position = Vector2( 0, -5 )
+position = Vector2( 0, 10 )
 
 [node name="LeftHand" type="Sprite" parent="Visuals/Model/Body/Hands"]
 modulate = Color( 0.894118, 0.796078, 0.701961, 1 )
-position = Vector2( -40, 0 )
+position = Vector2( -11, -8 )
 scale = Vector2( 0.203125, 0.203125 )
 texture = ExtResource( 4 )
 
@@ -2146,7 +2130,7 @@ unique_name_in_owner = true
 
 [node name="RightHand" type="Sprite" parent="Visuals/Model/Body/Hands"]
 modulate = Color( 0.894118, 0.796078, 0.701961, 1 )
-position = Vector2( 40, 0 )
+position = Vector2( 11, -8 )
 scale = Vector2( 0.203125, 0.203125 )
 texture = ExtResource( 4 )
 

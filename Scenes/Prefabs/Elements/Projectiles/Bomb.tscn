@@ -327,7 +327,7 @@ scale = Vector2( 0.159999, 0.0799972 )
 color = Color( 0.521569, 0.521569, 0.521569, 1 )
 polygon = PoolVector2Array( -32, -32, 32, -32, 32, 32, -32, 32 )
 
-[connection signal="GroupAreaEnteredNoParams" from="InstantDetonateDetector" to="." method="Detonate"]
+[connection signal="GroupAreaEnteredNoParams" from="InstantDetonateDetector" to="." method="Detonate" flags=3]
 [connection signal="PickedUp" from="HoldableParent" to="." method="LightFuse"]
 [connection signal="PickedUp" from="HoldableParent" to="CollisionShape2D" method="set_disabled" binds= [ true ]]
 [connection signal="Released" from="HoldableParent" to="CollisionShape2D" method="set_disabled" binds= [ false ]]

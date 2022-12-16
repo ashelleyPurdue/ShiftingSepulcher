@@ -86,10 +86,9 @@ namespace RandomDungeons
 
         public void OnRespawning()
         {
-            _animator.Reset();
             _shieldAnimator.Reset();
             _attackPatterns.Stop(true);
-            _attackPatterns.PlayAndAdvance("MainCycle");
+            _animator.ResetAndPlay("Intro");
 
             DeleteAllProjectiles();
         }

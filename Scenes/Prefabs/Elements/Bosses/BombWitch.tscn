@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://Scripts/Components/LineTrail2D.cs" type="Script" id=1]
 [ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=2]
@@ -14,6 +14,9 @@
 [ext_resource path="res://Scenes/Prefabs/Elements/VictoryChest.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/Fireball.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Fonts/The Wild Breath of Zelda.otf" type="DynamicFontData" id=14]
+[ext_resource path="res://Scripts/Components/MusicServiceAccessor.cs" type="Script" id=15]
+[ext_resource path="res://Audio/Music/BossIntro.ogg" type="AudioStream" id=16]
+[ext_resource path="res://Audio/Music/wyver9_Boss_main(8-bit).ogg" type="AudioStream" id=17]
 
 [sub_resource type="DynamicFont" id=33]
 size = 100
@@ -583,7 +586,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1, 2, 2.4, 2.85, 3.5, 3.55, 3.6, 4.4, 4.5, 5.2, 5.3 ),
+"times": PoolRealArray( 0, 1, 2, 2.4, 2.85, 3.5, 3.55, 3.6, 5.3, 5.4, 5.9, 6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( -19.4254, -31.7406 ), Vector2( -19.4254, -31.7406 ), Vector2( -22, -7.00002 ), Vector2( -22, -7.00002 ), Vector2( -4.00001, -12 ), Vector2( -4.00001, -12 ), Vector2( -23, -5.00002 ), Vector2( -22, -7.00002 ), Vector2( -22, -7.00002 ), Vector2( -22, -28 ), Vector2( -22, -28 ), Vector2( -22, -7.00002 ) ]
@@ -595,7 +598,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 1, 2, 2.4, 2.85, 3.5, 3.55, 3.6, 4.4, 4.5, 5.2, 5.3 ),
+"times": PoolRealArray( 0, 1, 2, 2.4, 2.85, 3.5, 3.55, 3.6, 5.3, 5.4, 5.9, 6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( -3.95277, -1.91449 ), Vector2( -3.95277, -1.91449 ), Vector2( 22, -7 ), Vector2( 22, -7 ), Vector2( 4, -12 ), Vector2( 4, -12 ), Vector2( 23, -5 ), Vector2( 22, -7 ), Vector2( 22, -7 ), Vector2( 5.99999, -7 ), Vector2( 5.99999, -7 ), Vector2( 22, -7 ) ]
@@ -667,7 +670,7 @@ tracks/7/loop_wrap = true
 tracks/7/imported = false
 tracks/7/enabled = true
 tracks/7/keys = {
-"times": PoolRealArray( 0, 1.7, 2, 2.4, 2.85, 3.5, 3.55, 3.6, 4.4, 4.5, 5.2, 5.3 ),
+"times": PoolRealArray( 0, 1.7, 2, 2.4, 2.85, 3.5, 3.55, 3.6, 5.3, 5.4, 5.9, 6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 3, 0.2 ), Vector2( 3, 0.2 ), Vector2( 1, 2.52 ), Vector2( 1, 2.52 ), Vector2( 3, 0.2 ), Vector2( 3, 0.2 ), Vector2( 1, 3 ), Vector2( 1, 2.52 ), Vector2( 1, 2.52 ), Vector2( 3, 0.2 ), Vector2( 3, 0.2 ), Vector2( 1, 2.52 ) ]
@@ -703,7 +706,7 @@ tracks/10/loop_wrap = true
 tracks/10/imported = false
 tracks/10/enabled = true
 tracks/10/keys = {
-"times": PoolRealArray( 0, 1, 2, 4.4, 4.5, 5.2, 5.3 ),
+"times": PoolRealArray( 0, 1, 2, 5.3, 5.4, 5.9, 6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ 40.5666, 40.5666, 0.0, 0.0, 28.3867, 28.3867, 0.0 ]
@@ -739,7 +742,7 @@ tracks/13/loop_wrap = true
 tracks/13/imported = false
 tracks/13/enabled = true
 tracks/13/keys = {
-"times": PoolRealArray( 5.3 ),
+"times": PoolRealArray( 6 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
@@ -765,7 +768,7 @@ tracks/15/loop_wrap = true
 tracks/15/imported = false
 tracks/15/enabled = true
 tracks/15/keys = {
-"times": PoolRealArray( 0, 5.2, 5.3 ),
+"times": PoolRealArray( 0, 5.9, 6 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
@@ -777,10 +780,30 @@ tracks/16/loop_wrap = true
 tracks/16/imported = false
 tracks/16/enabled = true
 tracks/16/keys = {
-"times": PoolRealArray( 0, 5.25 ),
+"times": PoolRealArray( 0, 5.95 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ false, true ]
+}
+tracks/17/type = "method"
+tracks/17/path = NodePath("MusicServiceAccessor")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/keys = {
+"times": PoolRealArray( 0, 3.55, 5.95 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "StopSong"
+}, {
+"args": [ ExtResource( 16 ) ],
+"method": "PlaySong"
+}, {
+"args": [ ExtResource( 17 ) ],
+"method": "PlaySong"
+} ]
 }
 
 [sub_resource type="Animation" id=23]
@@ -2183,6 +2206,9 @@ unique_name_in_owner = true
 script = ExtResource( 8 )
 VisualsPath = NodePath("../Visuals")
 
+[node name="MusicServiceAccessor" type="Node" parent="."]
+script = ExtResource( 15 )
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="BossNameText" type="Label" parent="CanvasLayer"]
@@ -2329,7 +2355,7 @@ polygon = PoolVector2Array( -2, -1.5873, 2, -0.396825, 1, -0.396825, -2, -1.1904
 
 [node name="Eye" parent="Visuals/Model/Body/Neck/Head/Eyes/Left" instance=ExtResource( 3 )]
 position = Vector2( -4, 0 )
-rotation = 4.91608e-05
+rotation = 4.7097e-05
 scale = Vector2( 1, 2.52 )
 Radius = 1.0
 Color = Color( 0, 0, 0, 1 )
@@ -2353,7 +2379,7 @@ polygon = PoolVector2Array( -2, -1.5873, 2, -0.396825, 1, -0.396825, -2, -1.1904
 
 [node name="Eye" parent="Visuals/Model/Body/Neck/Head/Eyes/Right" instance=ExtResource( 3 )]
 position = Vector2( 4, 0 )
-rotation = 4.71361e-05
+rotation = 4.67021e-05
 scale = Vector2( 1, 2.52 )
 Radius = 1.0
 Color = Color( 0, 0, 0, 1 )

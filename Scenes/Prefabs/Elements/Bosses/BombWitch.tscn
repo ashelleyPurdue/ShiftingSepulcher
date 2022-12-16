@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=2]
+[gd_scene load_steps=49 format=2]
 
 [ext_resource path="res://Scripts/Components/LineTrail2D.cs" type="Script" id=1]
 [ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=2]
@@ -17,6 +17,9 @@
 [ext_resource path="res://Scripts/Components/MusicServiceAccessor.cs" type="Script" id=15]
 [ext_resource path="res://Audio/Music/BossIntro.ogg" type="AudioStream" id=16]
 [ext_resource path="res://Audio/Music/wyver9_Boss_main(8-bit).ogg" type="AudioStream" id=17]
+[ext_resource path="res://Audio/SFX/BossPaperTear.ogg" type="AudioStream" id=18]
+[ext_resource path="res://Audio/SFX/BossDeathExplosion.ogg" type="AudioStream" id=19]
+[ext_resource path="res://Audio/Music/BossVictory.ogg" type="AudioStream" id=20]
 
 [sub_resource type="DynamicFont" id=33]
 size = 100
@@ -572,6 +575,37 @@ tracks/19/keys = {
 "values": [ {
 "args": [  ],
 "method": "OnDeathAnimationFinished"
+} ]
+}
+tracks/20/type = "audio"
+tracks/20/path = NodePath("AudioStreamPlayer")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 18 )
+} ],
+"times": PoolRealArray( 0 )
+}
+tracks/21/type = "method"
+tracks/21/path = NodePath("MusicServiceAccessor")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/keys = {
+"times": PoolRealArray( 0, 6.58 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "StopSong"
+}, {
+"args": [ ExtResource( 20 ) ],
+"method": "PlaySong"
 } ]
 }
 
@@ -2209,6 +2243,9 @@ VisualsPath = NodePath("../Visuals")
 [node name="MusicServiceAccessor" type="Node" parent="."]
 script = ExtResource( 15 )
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 19 )
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="BossNameText" type="Label" parent="CanvasLayer"]
@@ -2355,7 +2392,7 @@ polygon = PoolVector2Array( -2, -1.5873, 2, -0.396825, 1, -0.396825, -2, -1.1904
 
 [node name="Eye" parent="Visuals/Model/Body/Neck/Head/Eyes/Left" instance=ExtResource( 3 )]
 position = Vector2( -4, 0 )
-rotation = 4.7097e-05
+rotation = 4.66108e-05
 scale = Vector2( 1, 2.52 )
 Radius = 1.0
 Color = Color( 0, 0, 0, 1 )
@@ -2379,7 +2416,7 @@ polygon = PoolVector2Array( -2, -1.5873, 2, -0.396825, 1, -0.396825, -2, -1.1904
 
 [node name="Eye" parent="Visuals/Model/Body/Neck/Head/Eyes/Right" instance=ExtResource( 3 )]
 position = Vector2( 4, 0 )
-rotation = 4.67021e-05
+rotation = 4.66108e-05
 scale = Vector2( 1, 2.52 )
 Radius = 1.0
 Color = Color( 0, 0, 0, 1 )

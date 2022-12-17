@@ -655,7 +655,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 1, 2, 2.4, 2.85, 3.5, 3.55, 3.6, 5.3, 5.4, 5.9, 6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( -3.95277, -1.91449 ), Vector2( -3.95277, -1.91449 ), Vector2( 22, -7 ), Vector2( 22, -7 ), Vector2( 4, -12 ), Vector2( 4, -12 ), Vector2( 23, -5 ), Vector2( 22, -7 ), Vector2( 22, -7 ), Vector2( 5.99999, -7 ), Vector2( 5.99999, -7 ), Vector2( 22, -7 ) ]
+"values": [ Vector2( -3.95277, -1.91449 ), Vector2( -3.95277, -1.91449 ), Vector2( 22, -7 ), Vector2( 22, -7 ), Vector2( 4, -12 ), Vector2( 4, -12 ), Vector2( 23, -5 ), Vector2( 22, -7 ), Vector2( 22, -7 ), Vector2( 6.85713, -0.142853 ), Vector2( 6.85713, -0.142853 ), Vector2( 22, -7 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Visuals/Model/Body:rotation_degrees")

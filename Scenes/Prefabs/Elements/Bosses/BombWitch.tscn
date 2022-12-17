@@ -18,8 +18,8 @@
 [ext_resource path="res://Audio/Music/BossIntro.ogg" type="AudioStream" id=16]
 [ext_resource path="res://Audio/Music/wyver9_Boss_main(8-bit).ogg" type="AudioStream" id=17]
 [ext_resource path="res://Audio/SFX/BossPaperTear.ogg" type="AudioStream" id=18]
-[ext_resource path="res://Audio/SFX/BossDeathExplosion.ogg" type="AudioStream" id=19]
 [ext_resource path="res://Audio/Music/BossVictory.ogg" type="AudioStream" id=20]
+[ext_resource path="res://Audio/SFX/FireBurning.wav" type="AudioStream" id=21]
 
 [sub_resource type="DynamicFont" id=33]
 size = 100
@@ -588,8 +588,16 @@ tracks/20/keys = {
 "end_offset": 0.0,
 "start_offset": 0.0,
 "stream": ExtResource( 18 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 21 )
+}, {
+"end_offset": 2.63291,
+"start_offset": 0.0,
+"stream": ExtResource( 21 )
 } ],
-"times": PoolRealArray( 0 )
+"times": PoolRealArray( 0, 4.14, 9.12 )
 }
 tracks/21/type = "method"
 tracks/21/path = NodePath("MusicServiceAccessor")
@@ -607,6 +615,18 @@ tracks/21/keys = {
 "args": [ ExtResource( 20 ) ],
 "method": "PlaySong"
 } ]
+}
+tracks/22/type = "value"
+tracks/22/path = NodePath("AudioStreamPlayer:volume_db")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/keys = {
+"times": PoolRealArray( 0, 4, 4.1, 4.2, 11.16, 11.54 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, -10.0, 0.0, 0.0, -10.0 ]
 }
 
 [sub_resource type="Animation" id=32]
@@ -1541,6 +1561,18 @@ tracks/47/keys = {
 "update": 0,
 "values": [ true ]
 }
+tracks/48/type = "value"
+tracks/48/path = NodePath("AudioStreamPlayer:volume_db")
+tracks/48/interp = 1
+tracks/48/loop_wrap = true
+tracks/48/imported = false
+tracks/48/enabled = true
+tracks/48/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
 
 [sub_resource type="Animation" id=14]
 resource_name = "Teleport"
@@ -2244,7 +2276,7 @@ VisualsPath = NodePath("../Visuals")
 script = ExtResource( 15 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 19 )
+stream = ExtResource( 21 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -2392,7 +2424,7 @@ polygon = PoolVector2Array( -2, -1.5873, 2, -0.396825, 1, -0.396825, -2, -1.1904
 
 [node name="Eye" parent="Visuals/Model/Body/Neck/Head/Eyes/Left" instance=ExtResource( 3 )]
 position = Vector2( -4, 0 )
-rotation = 4.66108e-05
+rotation = 3.92795e-05
 scale = Vector2( 1, 2.52 )
 Radius = 1.0
 Color = Color( 0, 0, 0, 1 )
@@ -2416,7 +2448,7 @@ polygon = PoolVector2Array( -2, -1.5873, 2, -0.396825, 1, -0.396825, -2, -1.1904
 
 [node name="Eye" parent="Visuals/Model/Body/Neck/Head/Eyes/Right" instance=ExtResource( 3 )]
 position = Vector2( 4, 0 )
-rotation = 4.66108e-05
+rotation = 3.78489e-05
 scale = Vector2( 1, 2.52 )
 Radius = 1.0
 Color = Color( 0, 0, 0, 1 )

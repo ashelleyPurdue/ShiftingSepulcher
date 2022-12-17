@@ -1783,22 +1783,22 @@ tracks/0/loop_wrap = false
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.55, 0.65, 0.77 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.37, 0.55, 0.65, 0.77 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( -26, -39 ), Vector2( -26, -39 ), Vector2( -13.2054, 13.6351 ), Vector2( -9, 3 ) ]
+"values": [ Vector2( -13.2054, 13.6351 ), Vector2( -26, -39 ), Vector2( -26, -39 ), Vector2( -13.2054, 13.6351 ), Vector2( -9, 3 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Visuals/Model/Body/Hands/RightHand:position")
-tracks/1/interp = 2
+tracks/1/interp = 1
 tracks/1/loop_wrap = false
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.55, 0.65, 0.77, 0.91, 1.21, 1.36 ),
-"transitions": PoolRealArray( 1e-05, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.37, 0.55, 0.65, 0.77, 0.91, 1.21, 1.36 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 7, 1 ), Vector2( 7, 1 ), Vector2( 25.619, -42.7669 ), Vector2( 25.429, -23.3964 ), Vector2( 24.2732, -21.8664 ), Vector2( 24.2732, -21.8664 ), Vector2( 24.193, -40.6545 ) ]
+"values": [ Vector2( 25.619, -42.7669 ), Vector2( 7, 1 ), Vector2( 7, 1 ), Vector2( 25.619, -42.7669 ), Vector2( 25.429, -23.3964 ), Vector2( 24.2732, -21.8664 ), Vector2( 24.2732, -21.8664 ), Vector2( 24.193, -40.6545 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Visuals/Model/Body:rotation_degrees")
@@ -1807,10 +1807,10 @@ tracks/2/loop_wrap = false
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.55, 0.71 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.37, 0.55, 0.71 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
-"values": [ 22.1013, 22.1013, -24.9565 ]
+"values": [ -24.9565, 22.1013, 22.1013, -24.9565 ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("Visuals/Model/Body/Neck/Head/Hat:rotation_degrees")
@@ -1846,7 +1846,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0, 0.55, 0.66 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ true, true, false ]
+"values": [ false, true, false ]
 }
 tracks/6/type = "value"
 tracks/6/path = NodePath("AI:RotateTowardPlayer")
@@ -1855,7 +1855,7 @@ tracks/6/loop_wrap = true
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
-"times": PoolRealArray( 0, 0.66 ),
+"times": PoolRealArray( 0, 0.65 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ true, false ]
@@ -1884,7 +1884,7 @@ tracks/8/loop_wrap = true
 tracks/8/imported = false
 tracks/8/enabled = true
 tracks/8/keys = {
-"times": PoolRealArray( 0, 0.65 ),
+"times": PoolRealArray( 0, 0.54 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ 0.0, 1.0 ]
@@ -2305,7 +2305,6 @@ VictoryChestPrefab = ExtResource( 12 )
 SpawningSpellPrefab = ExtResource( 11 )
 BombPrefab = ExtResource( 10 )
 FireballPrefab = ExtResource( 13 )
-AimProgressPercent = 0.713046
 
 [node name="HurtFlasher" type="Node" parent="."]
 unique_name_in_owner = true

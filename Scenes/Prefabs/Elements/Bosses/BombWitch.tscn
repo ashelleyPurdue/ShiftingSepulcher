@@ -1783,7 +1783,7 @@ tracks/0/loop_wrap = false
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1, 1.1, 1.22 ),
+"times": PoolRealArray( 0, 0.55, 0.65, 0.77 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( -26, -39 ), Vector2( -26, -39 ), Vector2( -13.2054, 13.6351 ), Vector2( -9, 3 ) ]
@@ -1795,7 +1795,7 @@ tracks/1/loop_wrap = false
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 1, 1.1, 1.22, 1.36, 1.66, 1.81 ),
+"times": PoolRealArray( 0, 0.55, 0.65, 0.77, 0.91, 1.21, 1.36 ),
 "transitions": PoolRealArray( 1e-05, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 7, 1 ), Vector2( 7, 1 ), Vector2( 25.619, -42.7669 ), Vector2( 25.429, -23.3964 ), Vector2( 24.2732, -21.8664 ), Vector2( 24.2732, -21.8664 ), Vector2( 24.193, -40.6545 ) ]
@@ -1807,7 +1807,7 @@ tracks/2/loop_wrap = false
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 1, 1.16 ),
+"times": PoolRealArray( 0, 0.55, 0.71 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ 22.1013, 22.1013, -24.9565 ]
@@ -1819,7 +1819,7 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 1, 1.16, 1.24, 1.36, 1.66, 1.81 ),
+"times": PoolRealArray( 0, 0.55, 0.71, 0.79, 0.91, 1.21, 1.36 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ -19.6459, -19.6459, 20.5059, 20.5059, 36.5294, 36.5294, -3.44791 ]
@@ -1831,7 +1831,7 @@ tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 1, 1.04, 1.07, 1.1, 1.16, 1.24 ),
+"times": PoolRealArray( 0, 0.55, 0.59, 0.62, 0.65, 0.71, 0.79 ),
 "transitions": PoolRealArray( 1.07177e-05, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( -4.55362, 6.42659 ), Vector2( -4.55362, 6.42659 ), Vector2( -1.60261, -4.97754 ), Vector2( 2.17704, -9.92295 ), Vector2( 6.9609, -13.3394 ), Vector2( 6.07579, -15.7129 ), Vector2( -2.35993, 1.05015 ) ]
@@ -1843,7 +1843,7 @@ tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0, 1, 1.11 ),
+"times": PoolRealArray( 0, 0.55, 0.66 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ true, true, false ]
@@ -1855,7 +1855,7 @@ tracks/6/loop_wrap = true
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
-"times": PoolRealArray( 0, 1 ),
+"times": PoolRealArray( 0, 0.66 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ true, false ]
@@ -1867,12 +1867,27 @@ tracks/7/loop_wrap = true
 tracks/7/imported = false
 tracks/7/enabled = true
 tracks/7/keys = {
-"times": PoolRealArray( 1.1 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 0.65 ),
+"transitions": PoolRealArray( 1, 1 ),
 "values": [ {
+"args": [  ],
+"method": "StartAiming"
+}, {
 "args": [  ],
 "method": "ExecuteQueuedSpell"
 } ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("AI:AimProgressPercent")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 0.65 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -2290,6 +2305,7 @@ VictoryChestPrefab = ExtResource( 12 )
 SpawningSpellPrefab = ExtResource( 11 )
 BombPrefab = ExtResource( 10 )
 FireballPrefab = ExtResource( 13 )
+AimProgressPercent = 0.713046
 
 [node name="HurtFlasher" type="Node" parent="."]
 unique_name_in_owner = true

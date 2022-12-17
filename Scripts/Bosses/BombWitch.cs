@@ -15,6 +15,7 @@ namespace RandomDungeons
         [Export] public float TeleportRadius = 6 * 32;
         [Export] public float FireballSpeed = 6 * 32;
         [Export] public bool RotateTowardPlayer = false;
+        [Export] public float AimProgressPercent = 0;
 
         private AnimationPlayer _attackPatterns => GetNode<AnimationPlayer>("%AttackPatterns");
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
@@ -30,6 +31,8 @@ namespace RandomDungeons
 
         private List<Node> _spawnedProjectiles = new List<Node>();
 
+        private float _aimStartRotRad;
+
         public override void _PhysicsProcess(float delta)
         {
             // Rotate toward the player while aiming
@@ -44,9 +47,9 @@ namespace RandomDungeons
                 targetRotRad -= Mathf.Deg2Rad(90 + 180);
 
                 _body.Rotation = Mathf.LerpAngle(
-                    _body.Rotation,
+                    _aimStartRotRad,
                     targetRotRad,
-                    0.125f
+                    AimProgressPercent
                 );
             }
         }
@@ -54,6 +57,11 @@ namespace RandomDungeons
         public void StartTeleport()
         {
             _animator.ResetAndPlay("Teleport");
+        }
+
+        public void StartAiming()
+        {
+            _aimStartRotRad = _body.Rotation;
         }
 
         public void CastBombSpell()

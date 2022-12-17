@@ -1573,6 +1573,30 @@ tracks/48/keys = {
 "update": 0,
 "values": [ 0.0 ]
 }
+tracks/49/type = "value"
+tracks/49/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Left:rotation_degrees")
+tracks/49/interp = 1
+tracks/49/loop_wrap = true
+tracks/49/imported = false
+tracks/49/enabled = true
+tracks/49/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/50/type = "value"
+tracks/50/path = NodePath("Visuals/Model/Body/Neck/Head/Eyes/Right:rotation_degrees")
+tracks/50/interp = 1
+tracks/50/loop_wrap = true
+tracks/50/imported = false
+tracks/50/enabled = true
+tracks/50/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
 
 [sub_resource type="Animation" id=14]
 resource_name = "Teleport"
@@ -2424,7 +2448,6 @@ polygon = PoolVector2Array( -2, -1.5873, 2, -0.396825, 1, -0.396825, -2, -1.1904
 
 [node name="Eye" parent="Visuals/Model/Body/Neck/Head/Eyes/Left" instance=ExtResource( 3 )]
 position = Vector2( -4, 0 )
-rotation = 3.92795e-05
 scale = Vector2( 1, 2.52 )
 Radius = 1.0
 Color = Color( 0, 0, 0, 1 )
@@ -2448,7 +2471,6 @@ polygon = PoolVector2Array( -2, -1.5873, 2, -0.396825, 1, -0.396825, -2, -1.1904
 
 [node name="Eye" parent="Visuals/Model/Body/Neck/Head/Eyes/Right" instance=ExtResource( 3 )]
 position = Vector2( 4, 0 )
-rotation = 3.78489e-05
 scale = Vector2( 1, 2.52 )
 Radius = 1.0
 Color = Color( 0, 0, 0, 1 )

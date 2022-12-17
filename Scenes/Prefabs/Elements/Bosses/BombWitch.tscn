@@ -450,7 +450,7 @@ tracks/9/loop_wrap = true
 tracks/9/imported = false
 tracks/9/enabled = true
 tracks/9/keys = {
-"times": PoolRealArray( 0, 7.3, 7.5 ),
+"times": PoolRealArray( 0, 6.54, 6.74 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ 180.0, 180.0, 245.251 ]

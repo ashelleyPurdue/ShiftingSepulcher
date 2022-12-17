@@ -15,6 +15,14 @@ namespace RandomDungeons
             _animator.PlaybackSpeed = _animator.CurrentAnimationLength / FuseDuration;
         }
 
+        public void OnHitInstantDetonateTrigger()
+        {
+            var throwable = this.SingleChildOfType<ThrowableParentKinematic>();
+
+            if (throwable.IsFlying)
+                Detonate();
+        }
+
         public void Detonate()
         {
             var parent = GetParent<Node2D>();

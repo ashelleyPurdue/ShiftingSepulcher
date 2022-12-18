@@ -1,9 +1,12 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scripts/PhysicalDungeons/DoorWarp.cs" type="Script" id=1]
 
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 64, 64 )
+
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 96, 16 )
+extents = Vector2( 64, 16 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 96, 16 )
@@ -11,24 +14,54 @@ extents = Vector2( 96, 16 )
 [node name="DoorWarp" type="Node2D"]
 script = ExtResource( 1 )
 
-[node name="LeftGuide" type="Polygon2D" parent="."]
-polygon = PoolVector2Array( -64, -32, -64, 0, -96, 0, -96, -32 )
+[node name="TunnelWalls" type="StaticBody2D" parent="."]
+collision_layer = 8
 
-[node name="RightGuide" type="Polygon2D" parent="."]
-polygon = PoolVector2Array( 64, 0, 64, -32, 96, -32, 96, 0 )
+[node name="LeftWall" type="Polygon2D" parent="TunnelWalls"]
+position = Vector2( -96, -32 )
+polygon = PoolVector2Array( 32, 0, 32, 32, 0, 32, 0, 0 )
+
+[node name="RightWall" type="Polygon2D" parent="TunnelWalls"]
+position = Vector2( 64, -32 )
+polygon = PoolVector2Array( 32, 0, 32, 32, 0, 32, 0, 0 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TunnelWalls"]
+polygon = PoolVector2Array( -64, 0, -64, -96, 64, -96, 64, 0, 96, 0, 96, -128, -96, -128, -96, 0 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Floor" type="Polygon2D" parent="."]
+color = Color( 0.509804, 0.509804, 0.509804, 1 )
+polygon = PoolVector2Array( -64, -32, 64, -32, 64, 0, -64, 0 )
+
+[node name="TunelArea" type="Area2D" parent="." groups=["TunnelArea"]]
+collision_layer = 9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TunelArea"]
+position = Vector2( 0, -32 )
+shape = SubResource( 3 )
 
 [node name="WarpTrigger" type="Area2D" parent="."]
 unique_name_in_owner = true
+collision_layer = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WarpTrigger"]
 position = Vector2( 0, -48 )
 shape = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="WarpEnableTrigger" type="Area2D" parent="."]
+collision_layer = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WarpEnableTrigger"]
 position = Vector2( 0, 16 )
 shape = SubResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [connection signal="body_entered" from="WarpTrigger" to="." method="WarpTriggerBodyEntered" flags=3]
 [connection signal="body_entered" from="WarpEnableTrigger" to="." method="WarpEnableTriggerBodyEntered" flags=3]

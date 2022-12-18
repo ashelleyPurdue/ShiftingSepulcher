@@ -234,6 +234,7 @@ ReleasePos = NodePath("../Visuals/HeldObjectReleasePos")
 shape = SubResource( 77 )
 
 [node name="HurtBox" type="Area2D" parent="ShadowAndCollisionShape"]
+unique_name_in_owner = true
 script = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ShadowAndCollisionShape/HurtBox"]

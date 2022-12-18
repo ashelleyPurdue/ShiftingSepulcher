@@ -35,6 +35,7 @@ namespace RandomDungeons
         private ObjectHolder _objectHolder => GetNode<ObjectHolder>("%ObjectHolder");
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
         private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
+        private HurtBox _hurtBox => GetNode<HurtBox>("%HurtBox");
 
         private Vector2 _velocity;
 
@@ -57,6 +58,17 @@ namespace RandomDungeons
         {
             base._PhysicsProcess(delta);
             _knockbackTimer -= delta;
+
+            // If we're in a tunnel, only interact with things inside the
+            // tunnel
+            bool isInTunnel = _hurtBox
+                .GetOverlappingAreas()
+                .Cast<Area2D>()
+                .Any(a => a.IsInGroup("TunnelArea"));
+
+            CollisionMask = isInTunnel
+                ? (uint)8
+                : (uint)1;
 
             // Move
             _velocity = MoveAndSlide(_velocity);

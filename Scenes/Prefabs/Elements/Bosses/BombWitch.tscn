@@ -1597,6 +1597,18 @@ tracks/50/keys = {
 "update": 0,
 "values": [ 0.0 ]
 }
+tracks/51/type = "value"
+tracks/51/path = NodePath("AI:AimProgressPercent")
+tracks/51/interp = 1
+tracks/51/loop_wrap = true
+tracks/51/imported = false
+tracks/51/enabled = true
+tracks/51/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
 
 [sub_resource type="Animation" id=14]
 resource_name = "Teleport"
@@ -1884,7 +1896,7 @@ tracks/8/loop_wrap = true
 tracks/8/imported = false
 tracks/8/enabled = true
 tracks/8/keys = {
-"times": PoolRealArray( 0, 0.54 ),
+"times": PoolRealArray( 0, 0.41 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ 0.0, 1.0 ]

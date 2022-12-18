@@ -24,6 +24,10 @@ namespace RandomDungeons
         public static T PickFrom<T>(this Random rng, IEnumerable<T> options)
         {
             T[] optionsArray = options.ToArray();
+
+            if (optionsArray.Length <= 0)
+                throw new Exception("Options array is empty");
+
             int i = rng.Next(0, optionsArray.Length);
             return optionsArray[i];
         }

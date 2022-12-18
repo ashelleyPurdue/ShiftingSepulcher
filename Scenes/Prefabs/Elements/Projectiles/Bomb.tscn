@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=1]
 [ext_resource path="res://Scenes/Components/Circle2D.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Scripts/Projectiles/Bomb.cs" type="Script" id=6]
 [ext_resource path="res://Audio/SFX/SingleBombTick.wav" type="AudioStream" id=7]
 [ext_resource path="res://Audio/SFX/BombFuseHiss.ogg" type="AudioStream" id=8]
+[ext_resource path="res://Scripts/Components/GroupDetectorArea2D.cs" type="Script" id=9]
 
 [sub_resource type="Animation" id=4]
 resource_name = "FuseRunning"
@@ -246,6 +247,9 @@ color = Color( 0.952941, 0.760784, 0, 1 )
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.0
 
+[sub_resource type="CircleShape2D" id=12]
+radius = 16.0
+
 [sub_resource type="CircleShape2D" id=3]
 radius = 32.0
 
@@ -290,6 +294,13 @@ process_material = SubResource( 11 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
+[node name="InstantDetonateDetector" type="Area2D" parent="."]
+script = ExtResource( 9 )
+GroupsToDetect = PoolStringArray( "DetonatesBombs" )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InstantDetonateDetector"]
+shape = SubResource( 12 )
+
 [node name="HoldableParent" type="Area2D" parent="."]
 script = ExtResource( 3 )
 
@@ -316,6 +327,7 @@ scale = Vector2( 0.159999, 0.0799972 )
 color = Color( 0.521569, 0.521569, 0.521569, 1 )
 polygon = PoolVector2Array( -32, -32, 32, -32, 32, 32, -32, 32 )
 
+[connection signal="GroupAreaEnteredNoParams" from="InstantDetonateDetector" to="." method="OnHitInstantDetonateTrigger" flags=3]
 [connection signal="PickedUp" from="HoldableParent" to="." method="LightFuse"]
 [connection signal="PickedUp" from="HoldableParent" to="CollisionShape2D" method="set_disabled" binds= [ true ]]
 [connection signal="Released" from="HoldableParent" to="CollisionShape2D" method="set_disabled" binds= [ false ]]

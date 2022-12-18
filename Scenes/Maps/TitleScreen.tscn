@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Scenes/Maps/Test/SlidingIcePuzzleTest.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Maps/Test/Puzzles/SlidingIcePuzzleTest.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Maps/DungeonMode.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/UI/TitleScreen.cs" type="Script" id=4]
 [ext_resource path="res://Scenes/Prefabs/UI/Widgets/SeedInput.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Prefabs/UI/SettingsMenu.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scenes/Maps/Test/ScalePuzzleTest.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Maps/Test/Puzzles/ScalePuzzleTest.tscn" type="PackedScene" id=7]
 
 [node name="TitleScreen" type="Control"]
 anchor_right = 1.0

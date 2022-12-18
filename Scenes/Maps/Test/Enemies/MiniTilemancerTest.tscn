@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scenes/Prefabs/Elements/Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Scenes/Prefabs/Elements/Enemies/MiniTilemancer.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Prefabs/Elements/Enemies/MiniTilemancer.tscn" type="PackedScene" id=2]
 
 [node name="MiniTilemancerTest" type="Node2D"]
 
@@ -23,5 +23,5 @@ polygon = PoolVector2Array( -320, -256, 320, -256, 320, 240, -320, 240 )
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Walls/StaticBody2D"]
 polygon = PoolVector2Array( -352, -288, 352, -288, 352, 272, -352, 272, -320, 240, 320, 240, 320, -256, -320, -256, -320, 240, -352, 272 )
 
-[node name="MiniTilemancer" parent="." instance=ExtResource( 3 )]
+[node name="MiniTilemancer" parent="." instance=ExtResource( 2 )]
 position = Vector2( 0, -192 )

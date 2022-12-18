@@ -67,8 +67,8 @@ namespace RandomDungeons
                 .Any(a => a.IsInGroup("TunnelArea"));
 
             CollisionMask = isInTunnel
-                ? (uint)8
-                : (uint)1;
+                ? (uint)CollisionLayers.StopsPlayerInTunnelOnly
+                : (uint)CollisionLayers.Walls;
 
             // Move
             _velocity = MoveAndSlide(_velocity);

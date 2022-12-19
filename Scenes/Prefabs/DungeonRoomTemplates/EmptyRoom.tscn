@@ -11,35 +11,15 @@ DoorPrefabs = ExtResource( 2 )
 color = Color( 0.511719, 0.511719, 0.511719, 1 )
 polygon = PoolVector2Array( -288, -288, 288, -288, 288, 288, -288, 288 )
 
-[node name="Walls" type="Node2D" parent="."]
+[node name="Walls" type="StaticBody2D" parent="."]
 
-[node name="Visuals" type="Node2D" parent="Walls"]
+[node name="Polygon2D" type="Polygon2D" parent="Walls"]
+invert_enable = true
+invert_border = 32.0
+polygon = PoolVector2Array( -256, -256, 256, -256, 256, 256, -256, 256 )
 
-[node name="NorthWest" type="Polygon2D" parent="Walls/Visuals"]
-polygon = PoolVector2Array( -64, -256, -256, -256, -256, -64, -288, -64, -288, -288, -64, -288 )
-
-[node name="NorthEast" type="Polygon2D" parent="Walls/Visuals"]
-polygon = PoolVector2Array( 64, -256, 64, -288, 288, -288, 288, -64, 256, -64, 256, -256 )
-
-[node name="SouthWest" type="Polygon2D" parent="Walls/Visuals"]
-polygon = PoolVector2Array( -288, 64, -256, 64, -256, 256, -64, 256, -64, 288, -288, 288 )
-
-[node name="SouthEast" type="Polygon2D" parent="Walls/Visuals"]
-polygon = PoolVector2Array( 64, 288, 64, 256, 256, 256, 256, 64, 288, 64, 288, 288 )
-
-[node name="StaticBody2D" type="StaticBody2D" parent="Walls"]
-
-[node name="NorthWest" type="CollisionPolygon2D" parent="Walls/StaticBody2D"]
-polygon = PoolVector2Array( -288, -64, -256, -64, -256, -256, -64, -256, -64, -288, -288, -288 )
-
-[node name="NorthEast" type="CollisionPolygon2D" parent="Walls/StaticBody2D"]
-polygon = PoolVector2Array( 64, -288, 288, -288, 288, -64, 256, -64, 256, -256, 64, -256 )
-
-[node name="SouthWest" type="CollisionPolygon2D" parent="Walls/StaticBody2D"]
-polygon = PoolVector2Array( -288, 64, -256, 64, -256, 256, -64, 256, -64, 288, -288, 288 )
-
-[node name="SouthEast" type="CollisionPolygon2D" parent="Walls/StaticBody2D"]
-polygon = PoolVector2Array( 64, 256, 256, 256, 256, 64, 288, 64, 288, 288, 64, 288 )
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Walls"]
+polygon = PoolVector2Array( -288, -288, 288, -288, 288, 288, -288, 288, -256, 256, 256, 256, 256, -256, -256, -256, -256, 256, -288, 288 )
 
 [node name="DoorSpawns" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -58,10 +38,3 @@ rotation = 1.5708
 [node name="West" type="Position2D" parent="DoorSpawns"]
 position = Vector2( -256, 0 )
 rotation = -1.5708
-
-[node name="EnemyContainmentBarrier" type="StaticBody2D" parent="."]
-collision_layer = 2
-collision_mask = 0
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="EnemyContainmentBarrier"]
-polygon = PoolVector2Array( -288, -288, 288, -288, 288, 288, -288, 288, -256, 256, 256, 256, 256, -256, -256, -256, -256, 256, -288, 288 )

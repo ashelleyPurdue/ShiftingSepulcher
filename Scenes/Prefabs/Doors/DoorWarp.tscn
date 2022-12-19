@@ -1,12 +1,18 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/PhysicalDungeons/DoorWarp.cs" type="Script" id=1]
 
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 16, 16 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 16, 16 )
+
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 64, 64 )
+extents = Vector2( 64, 48 )
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 64, 16 )
+extents = Vector2( 96, 16 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 96, 16 )
@@ -25,11 +31,13 @@ polygon = PoolVector2Array( 32, 0, 32, 32, 0, 32, 0, 0 )
 position = Vector2( 64, -32 )
 polygon = PoolVector2Array( 32, 0, 32, 32, 0, 32, 0, 0 )
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TunnelWalls"]
-polygon = PoolVector2Array( -64, 0, -64, -96, 64, -96, 64, 0, 96, 0, 96, -128, -96, -128, -96, 0 )
-__meta__ = {
-"_edit_lock_": true
-}
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TunnelWalls"]
+position = Vector2( -80, -16 )
+shape = SubResource( 4 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="TunnelWalls"]
+position = Vector2( 80, -16 )
+shape = SubResource( 5 )
 
 [node name="Floor" type="Polygon2D" parent="."]
 color = Color( 0.509804, 0.509804, 0.509804, 1 )
@@ -39,7 +47,7 @@ polygon = PoolVector2Array( -64, -32, 64, -32, 64, 0, -64, 0 )
 collision_layer = 9
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TunelArea"]
-position = Vector2( 0, -32 )
+position = Vector2( 0, -16 )
 shape = SubResource( 3 )
 
 [node name="WarpTrigger" type="Area2D" parent="."]

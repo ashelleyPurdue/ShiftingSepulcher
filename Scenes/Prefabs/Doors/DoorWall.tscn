@@ -9,6 +9,7 @@ extents = Vector2( 64, 16 )
 polygon = PoolVector2Array( -64, 0, -64, -32, 64, -32, 64, 0 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 9
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2( 0, -16 )

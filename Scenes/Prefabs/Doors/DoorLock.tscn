@@ -16,6 +16,7 @@ color = Color( 0.796078, 0.796078, 0.796078, 1 )
 polygon = PoolVector2Array( -64, -32, 64, -32, 64, 0, -64, 0 )
 
 [node name="DoorCollider" type="StaticBody2D" parent="."]
+collision_layer = 9
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DoorCollider"]
 position = Vector2( 0, -16 )

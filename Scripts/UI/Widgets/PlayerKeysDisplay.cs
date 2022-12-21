@@ -3,6 +3,7 @@ using Godot;
 
 namespace RandomDungeons
 {
+    [Tool]
     public class PlayerKeysDisplay : Control
     {
         [Export] public Texture Image;
@@ -10,7 +11,14 @@ namespace RandomDungeons
 
         public override void _Draw()
         {
-            int[] heldKeys = PlayerInventory.HeldKeys.ToArray();
+            if (Image == null)
+                return;
+
+            int[] heldKeys = Engine.EditorHint
+                ? new[] {1, 2, 3, 4}
+                : PlayerInventory.HeldKeys.ToArray();
+
+
             for (int i = 0; i < heldKeys.Length; i++)
             {
                 var offset = new Vector2(ImageRectSize.x * i, 0);

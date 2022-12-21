@@ -1,9 +1,8 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/PhysicalDungeons/DungeonInstantiator.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/DungeonRooms/DungeonRoomFactory.cs" type="Script" id=2]
 [ext_resource path="res://Scenes/Prefabs/Elements/Player.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scenes/Prefabs/UI/HUD.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Prefabs/DungeonRoomTemplates/KeyRoom.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Prefabs/DungeonRoomTemplates/EmptyRoom.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Audio/Music/JRPG_labyrinth_loop.ogg" type="AudioStream" id=7]
@@ -35,10 +34,6 @@ BossRoomTable = ExtResource( 11 )
 
 [node name="TreeTemplates" type="Node" parent="DungeonInstantiator"]
 unique_name_in_owner = true
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="HUD" parent="CanvasLayer" instance=ExtResource( 4 )]
 
 [connection signal="DeathAnimationFinished" from="Player" to="RoomTransitionManager" method="RespawnPlayer"]
 [connection signal="ready" from="DungeonInstantiator" to="DungeonInstantiator" method="Generate"]

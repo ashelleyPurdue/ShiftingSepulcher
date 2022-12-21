@@ -61,8 +61,8 @@ namespace RandomDungeons
                     room.RoomSeed = rng.Next();
                     room.ChallengeType = rng.PickFromWeighted(
                         (ChallengeType.None, 1),
-                        (ChallengeType.Combat, 1),
-                        (ChallengeType.Puzzle, 3)
+                        (ChallengeType.Combat, 3),
+                        (ChallengeType.Puzzle, 2)
                     );
 
                     if (prevRoom == null)

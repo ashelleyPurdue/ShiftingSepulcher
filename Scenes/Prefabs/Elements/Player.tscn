@@ -246,6 +246,7 @@ texture = ExtResource( 1 )
 
 [node name="HoldableDetector" type="Area2D" parent="."]
 unique_name_in_owner = true
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HoldableDetector"]
 shape = SubResource( 83 )

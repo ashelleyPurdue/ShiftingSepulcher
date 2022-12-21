@@ -2,7 +2,7 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class RecoveryHeart : Node
+    public class RecoveryHeart : Node2D
     {
         public void OnPickedUp()
         {

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Godot;
 
 namespace RandomDungeons
 {
@@ -61,6 +62,17 @@ namespace RandomDungeons
                 .ToArray();
 
             return rng.PickFromWeighted<T>(convertedWeights);
+        }
+
+        public static Vector2 PointInUnitCircle(this Random rng)
+        {
+            float angle = (float)rng.NextDouble() * Mathf.Deg2Rad(360);
+            float length = (float)rng.NextDouble();
+
+            return new Vector2(
+                length * Mathf.Cos(angle),
+                length * Mathf.Sin(angle)
+            );
         }
     }
 }

@@ -17,23 +17,27 @@ namespace RandomDungeons
             root.ChallengeType = ChallengeType.None;
 
             DungeonTreeRoom prevRunRoot = root;
-            for (int i = 0; i < numRuns; i++)
+            for (int runNumber = 0; runNumber < numRuns; runNumber++)
             {
                 int runLength = rng.Next(minRunLength, maxRunLength);
-                var runRoot = GenerateRun(i, runLength);
+                var runRoot = GenerateRun(runNumber, runLength);
 
-                // Pick a random room to start this run in
+                // Pick a random room to start this run in.
+                // Don't pick the room where we hid this run's key, because that
+                // would result in a key being in the same room as the door it
+                // unlocks, which would look silly.
                 // TODO: Bias it toward rooms that are close to the previous
                 // run's root, to minimize backtracking
                 var availableRooms = root
                     .AllDescendants()
-                    .Where(r => r.ChildDoors.Count < 3);
+                    .Where(r => r.ChildDoors.Count < 3)
+                    .Where(r => runNumber == 0 || r.KeyId != runNumber);
                 var runStartRoom = rng.PickFrom(availableRooms);
 
                 // Lock the door to this run, unless it's the first run of the
                 // dungeon
-                if (i != 0)
-                    runStartRoom.AddLockedDoor(runRoot, i);
+                if (runNumber != 0)
+                    runStartRoom.AddLockedDoor(runRoot, runNumber);
                 else
                     runStartRoom.AddChallengeDoor(runRoot);
 

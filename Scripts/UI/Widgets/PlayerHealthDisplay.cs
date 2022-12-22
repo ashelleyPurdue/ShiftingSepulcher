@@ -24,7 +24,7 @@ namespace RandomDungeons
                 DrawTextureRect(
                     texture: Image,
                     rect: new Rect2(
-                        RectPosition + offset,
+                        offset,
                         ImageRectSize
                     ),
                     tile: false

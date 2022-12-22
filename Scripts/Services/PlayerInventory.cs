@@ -13,9 +13,11 @@ namespace RandomDungeons
         private static Content _content = new Content();
         private class Content
         {
-            public HashSet<int> HeldKeys = new HashSet<int>();
             public int MaxHealth = 6;
             public int Health;
+
+            public HashSet<int> HeldKeys = new HashSet<int>();
+            public int Gold;
         }
 
         public static int MaxHealth
@@ -28,6 +30,12 @@ namespace RandomDungeons
         {
             get => _content.Health;
             set => _content.Health = value;
+        }
+
+        public static int Gold
+        {
+            get => _content.Gold;
+            set => _content.Gold = value;
         }
 
         public static void Reset()

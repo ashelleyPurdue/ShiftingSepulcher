@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scripts/Components/HitBox.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Components/HurtBox.cs" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/TilemancerTile.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scripts/Enemies/EnemyBody.cs" type="Script" id=6]
 [ext_resource path="res://Scenes/Components/LootDroppers/RecoveryHeartDropper.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Components/LootDroppers/GoldLootDropper.tscn" type="PackedScene" id=8]
 
 [sub_resource type="Animation" id=4]
 resource_name = "Cycle"
@@ -190,6 +191,8 @@ MaxHealth = 2
 
 [node name="RecoveryHeartDropper" parent="." instance=ExtResource( 7 )]
 
+[node name="GoldLootDropper" parent="." instance=ExtResource( 8 )]
+
 [node name="AI" type="Node" parent="."]
 script = ExtResource( 3 )
 TilePrefab = ExtResource( 5 )
@@ -264,5 +267,6 @@ VisualsPath = NodePath("../Visuals")
 
 [connection signal="Dead" from="." to="RecoveryHeartDropper" method="DropLoot"]
 [connection signal="Dead" from="." to="AI" method="OnDead"]
+[connection signal="Dead" from="." to="GoldLootDropper" method="DropLoot"]
 [connection signal="Respawning" from="." to="AI" method="OnRespawning"]
 [connection signal="TookDamage" from="HurtBox" to="." method="OnTookDamage"]

@@ -14,7 +14,7 @@ namespace RandomDungeons
 
         public override void _EnterTree()
         {
-            Register<DungeonTreeTemplateRoom>("Node");
+            Register(typeof(DungeonTreeTemplateRoom), "Node");
         }
 
         public override void _ExitTree()
@@ -25,13 +25,14 @@ namespace RandomDungeons
             _addedTypes.Clear();
         }
 
-        private void Register<TNode>(
+        private void Register(
+            Type type,
             string parent,
             Texture icon = null
-        ) where TNode : Node
+        )
         {
-            string name = typeof(TNode).Name;
-            string path = FindScriptFilePath<TNode>();
+            string name = type.Name;
+            string path = FindScriptFilePath(type);
 
             if (icon == null)
             {
@@ -50,9 +51,9 @@ namespace RandomDungeons
             return gui.GetIcon(name, "EditorIcons");
         }
 
-        private static string FindScriptFilePath<TNode>()
+        private static string FindScriptFilePath(Type type)
         {
-            string classSignature = $"public class {typeof(TNode).Name}";
+            string classSignature = $"public class {type.Name}";
 
             // Search for the first ".cs" file that contains this node's
             // declaration

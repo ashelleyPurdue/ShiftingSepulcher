@@ -14,11 +14,7 @@ namespace RandomDungeons
 
         public override void _EnterTree()
         {
-            Register(
-                "Node",
-                "DungeonTreeTemplateRoom",
-                FindScriptFilePath<DungeonTreeTemplateRoom>()
-            );
+            Register<DungeonTreeTemplateRoom>("Node");
         }
 
         public override void _ExitTree()
@@ -29,13 +25,14 @@ namespace RandomDungeons
             _addedTypes.Clear();
         }
 
-        private void Register(
+        private void Register<TNode>(
             string parent,
-            string name,
-            string path,
             Texture icon = null
-        )
+        ) where TNode : Node
         {
+            string name = typeof(TNode).Name;
+            string path = FindScriptFilePath<TNode>();
+
             if (icon == null)
             {
                 icon = GetBuiltInIcon("Script");

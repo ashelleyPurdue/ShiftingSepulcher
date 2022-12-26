@@ -8,6 +8,14 @@ namespace RandomDungeons
     public static class NodeExtensions
     {
         /// <summary>
+        /// Returns the room that this node lives in
+        /// </summary>
+        /// <param name="node"></param>
+        /// <typeparam name="Room2D"></typeparam>
+        /// <returns></returns>
+        public static Room2D GetRoom(this Node node) => node.FindAncestor<Room2D>();
+
+        /// <summary>
         /// Returns the closest ancestor node of the given type.
         /// </summary>
         /// <param name="node"></param>

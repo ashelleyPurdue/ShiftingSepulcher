@@ -2,6 +2,7 @@ using Godot;
 
 namespace RandomDungeons
 {
+    [CustomNode(parent: "Area2D", icon: "Area2D")]
     public class GroupDetectorArea2D : Area2D
     {
         [Signal] public delegate void GroupAreaEntered(Area2D area);

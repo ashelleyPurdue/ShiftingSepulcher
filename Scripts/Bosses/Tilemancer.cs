@@ -111,7 +111,7 @@ namespace RandomDungeons
             var tile = TilePrefab.Instance<TilemancerTile>();
             _tilesToThrow.Enqueue(tile);
 
-            GetParent().AddChild(tile);
+            this.GetRoom().AddChild(tile);
             tile.Position = tilePos;
 
             // Set it up so we can remotely detonate this tile without holding
@@ -165,7 +165,7 @@ namespace RandomDungeons
         public void SpawnVictoryChest()
         {
             var chest = VictoryChestPrefab.Instance<Node2D>();
-            GetParent().AddChild(chest);
+            this.GetRoom().AddChild(chest);
             chest.Position = Vector2.Zero;
         }
 

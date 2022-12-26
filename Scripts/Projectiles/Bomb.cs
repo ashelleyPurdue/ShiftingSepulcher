@@ -25,9 +25,8 @@ namespace RandomDungeons
 
         public void Detonate()
         {
-            var parent = GetParent<Node2D>();
             var explosion = ExplosionPrefab.Instance<Node2D>();
-            parent.AddChild(explosion);
+            this.GetRoom().AddChild(explosion);
             explosion.Position = Position;
 
             QueueFree();

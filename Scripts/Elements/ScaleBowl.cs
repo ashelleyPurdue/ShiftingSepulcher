@@ -40,7 +40,7 @@ namespace RandomDungeons
                 var pos = weight.GlobalPosition;
 
                 _attachedWeightContainer.RemoveChild(weight);
-                GetParent().AddChild(weight);
+                this.GetRoom().AddChild(weight);
                 weight.GlobalPosition = pos;
             }
 

@@ -1,6 +1,7 @@
 #if TOOLS
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.IO;
 using System.Linq;
 using Godot;
@@ -14,7 +15,12 @@ namespace RandomDungeons
 
         public override void _EnterTree()
         {
-            Register(typeof(DungeonTreeTemplateRoom), "Node");
+            var customNodeClasses = Assembly.GetExecutingAssembly()
+                .GetTypes()
+                .Where(t => t.GetCustomAttributes<CustomNodeAttribute>().Any());
+
+            foreach (var nodeClass in customNodeClasses)
+                Register(nodeClass, "Node");
         }
 
         public override void _ExitTree()

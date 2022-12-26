@@ -20,7 +20,7 @@ namespace RandomDungeons
                 .Where(t => t.GetCustomAttributes<CustomNodeAttribute>().Any());
 
             foreach (var nodeClass in customNodeClasses)
-                Register(nodeClass, "Node");
+                Register(nodeClass);
         }
 
         public override void _ExitTree()
@@ -33,12 +33,14 @@ namespace RandomDungeons
 
         private void Register(
             Type type,
-            string parent,
             Texture icon = null
         )
         {
+            var attribute = type.GetCustomAttribute<CustomNodeAttribute>();
+
             string name = type.Name;
             string path = FindScriptFilePath(type);
+            string parent = attribute.Parent;
 
             if (icon == null)
             {

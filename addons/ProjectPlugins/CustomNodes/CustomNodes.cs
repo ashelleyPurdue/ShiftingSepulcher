@@ -1,6 +1,8 @@
 #if TOOLS
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using Godot;
 
 namespace RandomDungeons
@@ -15,7 +17,7 @@ namespace RandomDungeons
             Register(
                 "Node",
                 "DungeonTreeTemplateRoom",
-                "res://Scripts/DungeonTreeTemplates/DungeonTreeTemplateRoom.cs"
+                FindScriptFilePath<DungeonTreeTemplateRoom>()
             );
         }
 

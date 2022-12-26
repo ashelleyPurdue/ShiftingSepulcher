@@ -17,6 +17,7 @@ config/icon="res://icon.png"
 [autoload]
 
 MusicService="*res://Scenes/AutoLoadSingletons/MusicService.tscn"
+FallbackRoom2D="*res://Scenes/AutoLoadSingletons/FallbackRoom2D.tscn"
 
 [editor_plugins]
 

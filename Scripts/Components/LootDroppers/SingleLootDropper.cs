@@ -22,7 +22,7 @@ namespace RandomDungeons
                 return;
 
             var lootItem = LootPrefab.Instance<Node2D>();
-            GetParent().GetParent<Node2D>().AddChild(lootItem);
+            this.GetRoom().AddChild(lootItem);
             lootItem.GlobalPosition = GlobalPosition;
         }
     }

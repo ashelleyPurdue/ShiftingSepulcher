@@ -15,7 +15,7 @@ namespace RandomDungeons
 
             if (GlobalPosition == TargetPosGlobal)
             {
-                GetParent().AddChild(NodeToSpawn);
+                this.GetRoom().AddChild(NodeToSpawn);
                 NodeToSpawn.GlobalPosition = TargetPosGlobal;
                 QueueFree();
             }

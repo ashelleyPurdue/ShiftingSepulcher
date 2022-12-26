@@ -28,7 +28,7 @@ namespace RandomDungeons
             for (int i = 0; i < amount; i++)
             {
                 var coin = CoinPrefab.Instance<Node2D>();
-                GetParent().GetParent<Node2D>().AddChild(coin);
+                this.GetRoom().AddChild(coin);
 
                 var offset = rng.PointInUnitCircle() * 16;
                 coin.GlobalPosition = GlobalPosition + offset;

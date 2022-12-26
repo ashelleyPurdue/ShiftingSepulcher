@@ -7,7 +7,7 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class SimpleDungeonRoom : Node2D, IDungeonRoom
+    public class SimpleDungeonRoom : Room2D, IDungeonRoom
     {
         public Node2D Node => this;
 

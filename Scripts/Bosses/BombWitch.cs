@@ -135,7 +135,7 @@ namespace RandomDungeons
         public void OnDeathAnimationFinished()
         {
             var chest = VictoryChestPrefab.Instance<Node2D>();
-            _body.GetParent().AddChild(chest);
+            this.GetRoom().AddChild(chest);
         }
 
         public void RecoverFromDazed()
@@ -157,7 +157,7 @@ namespace RandomDungeons
                                 // adds the bomb to the scene tree
 
             var spawningSpell = SpawnProjectile<SpawningSpell>(SpawningSpellPrefab);
-            _body.GetParent().AddChild(spawningSpell);
+            this.GetRoom().AddChild(spawningSpell);
 
             spawningSpell.NodeToSpawn = bomb;
             spawningSpell.TargetPosGlobal = PlayerGlobalPos();
@@ -167,7 +167,7 @@ namespace RandomDungeons
         private void ExecuteFireballSpell()
         {
             var fireball = SpawnProjectile<Fireball>(FireballPrefab);
-            _body.GetParent().AddChild(fireball);
+            this.GetRoom().AddChild(fireball);
             fireball.GlobalPosition = _spellSpawnPos.GlobalPosition;
 
             fireball.Velocity = _body.GlobalPosition.DirectionTo(PlayerGlobalPos());
@@ -232,7 +232,7 @@ namespace RandomDungeons
             // This way, the script does crash inside debug scenes where the
             // player doesn't exist
             if (player == null)
-                return _body.GetParent<Node2D>().GlobalPosition;
+                return this.GetRoom().GlobalPosition;
 
             return player.GlobalPosition;
         }

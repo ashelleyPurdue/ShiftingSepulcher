@@ -80,7 +80,7 @@ namespace RandomDungeons
             );
 
 
-            _body.GetParent().AddChild(_currentTile);
+            this.GetRoom().AddChild(_currentTile);
             _currentTile.GlobalPosition = RandomTileSpawnPos();
         }
 

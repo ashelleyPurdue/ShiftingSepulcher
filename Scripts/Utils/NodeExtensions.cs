@@ -8,6 +8,20 @@ namespace RandomDungeons
     public static class NodeExtensions
     {
         /// <summary>
+        /// Returns the room that this node lives in
+        /// </summary>
+        /// <param name="node"></param>
+        /// <typeparam name="Room2D"></typeparam>
+        /// <returns></returns>
+        public static Room2D GetRoom(this Node node)
+        {
+            return node.FindAncestor<Room2D>()
+                ?? node.GetNode<Room2D>("/root/FallbackRoom2D");
+            // Use the fallback room singleton if there is no Room2D ancestor.
+            // This way, it'll still work when testing scenes in isolation.
+        }
+
+        /// <summary>
         /// Returns the closest ancestor node of the given type.
         /// </summary>
         /// <param name="node"></param>

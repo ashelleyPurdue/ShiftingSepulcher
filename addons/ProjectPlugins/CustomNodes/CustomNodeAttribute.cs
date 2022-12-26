@@ -6,12 +6,15 @@ namespace RandomDungeons
     public class CustomNodeAttribute : Attribute
     {
         public readonly string Parent;
+        public readonly string Icon;
 
         public CustomNodeAttribute(
-            string parent = "Node"
+            string parent = "Node",
+            string icon = "Script"
         )
         {
             Parent = parent;
+            Icon = icon;
         }
     }
 }

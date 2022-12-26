@@ -31,21 +31,14 @@ namespace RandomDungeons
             _addedTypes.Clear();
         }
 
-        private void Register(
-            Type type,
-            Texture icon = null
-        )
+        private void Register(Type type)
         {
             var attribute = type.GetCustomAttribute<CustomNodeAttribute>();
 
             string name = type.Name;
             string path = FindScriptFilePath(type);
             string parent = attribute.Parent;
-
-            if (icon == null)
-            {
-                icon = GetBuiltInIcon("Script");
-            }
+            var icon = GetBuiltInIcon(attribute.Icon);
 
             var script = GD.Load<Script>(path);
             AddCustomType(name, parent, script, icon);

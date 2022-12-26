@@ -15,7 +15,7 @@ namespace RandomDungeons
             Register(
                 "Node",
                 "DungeonTreeTemplateRoom",
-                "res://Scripts/Nodes/DungeonTreeTemplates/DungeonTreeTemplateRoom.cs"
+                "res://Scripts/DungeonTreeTemplates/DungeonTreeTemplateRoom.cs"
             );
         }
 

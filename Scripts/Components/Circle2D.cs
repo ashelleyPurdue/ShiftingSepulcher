@@ -3,6 +3,7 @@ using Godot;
 namespace RandomDungeons
 {
     [Tool]
+    [CustomNode(parent: "Node2D", icon: "CircleShape2D")]
     public class Circle2D : Node2D
     {
         [Export] public float Radius

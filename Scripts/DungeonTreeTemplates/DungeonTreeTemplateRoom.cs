@@ -6,6 +6,7 @@ using Godot;
 namespace RandomDungeons
 {
     [Tool]
+    [CustomNode(icon: "Room")]
     public class DungeonTreeTemplateRoom : Node
     {
         [Export] public ChallengeType ChallengeType;

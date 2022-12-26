@@ -13,7 +13,13 @@ namespace RandomDungeons
         /// <param name="node"></param>
         /// <typeparam name="Room2D"></typeparam>
         /// <returns></returns>
-        public static Room2D GetRoom(this Node node) => node.FindAncestor<Room2D>();
+        public static Room2D GetRoom(this Node node)
+        {
+            return node.FindAncestor<Room2D>()
+                ?? node.GetNode<Room2D>("/root/FallbackRoom2D");
+            // Use the fallback room singleton if there is no Room2D ancestor.
+            // This way, it'll still work when testing scenes in isolation.
+        }
 
         /// <summary>
         /// Returns the closest ancestor node of the given type.

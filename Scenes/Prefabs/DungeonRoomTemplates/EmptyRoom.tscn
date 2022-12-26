@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scripts/DungeonRooms/SimpleDungeonRoom.cs" type="Script" id=1]
 [ext_resource path="res://DoorPrefabs.tres" type="Resource" id=2]
+[ext_resource path="res://Scripts/Elements/RoomEntrance.cs" type="Script" id=3]
 
 [node name="EmptyRoom" type="Node2D"]
 script = ExtResource( 1 )
@@ -46,18 +47,22 @@ unique_name_in_owner = true
 
 [node name="North" type="Position2D" parent="DoorSpawns"]
 position = Vector2( 0, -256 )
+script = ExtResource( 3 )
 
 [node name="South" type="Position2D" parent="DoorSpawns"]
 position = Vector2( 0, 256 )
 rotation = 3.14159
+script = ExtResource( 3 )
 
 [node name="East" type="Position2D" parent="DoorSpawns"]
 position = Vector2( 256, 0 )
 rotation = 1.5708
+script = ExtResource( 3 )
 
 [node name="West" type="Position2D" parent="DoorSpawns"]
 position = Vector2( -256, 0 )
 rotation = -1.5708
+script = ExtResource( 3 )
 
 [node name="EnemyContainmentBarrier" type="StaticBody2D" parent="."]
 collision_layer = 2

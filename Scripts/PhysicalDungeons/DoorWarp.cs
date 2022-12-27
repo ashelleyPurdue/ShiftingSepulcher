@@ -6,6 +6,9 @@ namespace RandomDungeons
 {
     public class DoorWarp : Node2D
     {
+        public Room2D TargetRoom;
+        public string TargetEntrance;
+
         public event Action DoorUsed;
 
         public override void _EnterTree()

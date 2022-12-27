@@ -6,7 +6,8 @@ namespace RandomDungeons
 {
     public class DoorWarp : Node2D
     {
-        public event Action DoorUsed;
+        public Room2D TargetRoom;
+        public string TargetEntrance;
 
         public override void _EnterTree()
         {
@@ -29,7 +30,11 @@ namespace RandomDungeons
         {
             if (body is Player)
             {
-                DoorUsed?.Invoke();
+                RoomTransitionManager.Instance.EnterRoom(
+                    TargetRoom,
+                    TargetEntrance,
+                    GlobalPosition
+                );
             }
         }
 

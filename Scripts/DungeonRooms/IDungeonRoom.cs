@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Godot;
 
 namespace RandomDungeons
@@ -14,6 +15,8 @@ namespace RandomDungeons
         Node2D GetDoorSpawn(CardinalDirection dir);
 
         void Populate(DungeonGraphRoom graphRoom);
+
+        void ConnectDoors(Dictionary<DungeonGraphRoom, Room2D> graphRoomToRealRoom);
 
         bool IsChallengeSolved();
     }

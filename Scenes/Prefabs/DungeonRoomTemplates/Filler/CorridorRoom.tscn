@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scripts/DungeonRooms/CorridorRoom.cs" type="Script" id=1]
 [ext_resource path="res://DoorPrefabs.tres" type="Resource" id=2]
 [ext_resource path="res://Scenes/Prefabs/Elements/CorridorRoomCorridor.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scripts/Elements/RoomEntrance.cs" type="Script" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 16 )
@@ -14,6 +15,24 @@ DoorPrefabs = ExtResource( 2 )
 [node name="CenterFloor" type="Polygon2D" parent="."]
 color = Color( 0.511719, 0.511719, 0.511719, 1 )
 polygon = PoolVector2Array( -64, 64, -64, -64, 64, -64, 64, 64 )
+
+[node name="RoomEntrances" type="Node2D" parent="."]
+
+[node name="North" type="Position2D" parent="RoomEntrances"]
+position = Vector2( 0, -288 )
+script = ExtResource( 4 )
+
+[node name="South" type="Position2D" parent="RoomEntrances"]
+position = Vector2( 0, 288 )
+script = ExtResource( 4 )
+
+[node name="West" type="Position2D" parent="RoomEntrances"]
+position = Vector2( -288, 0 )
+script = ExtResource( 4 )
+
+[node name="East" type="Position2D" parent="RoomEntrances"]
+position = Vector2( 288, 0 )
+script = ExtResource( 4 )
 
 [node name="Corridors" type="Node2D" parent="."]
 unique_name_in_owner = true

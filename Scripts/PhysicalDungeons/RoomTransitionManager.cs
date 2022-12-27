@@ -117,13 +117,12 @@ namespace RandomDungeons
             Room2D nextRoom = _graphRoomToRealRoom[nextGraphRoom];
 
             var prevEntrance = _activeRoom.GetEntrance(dir.ToString());
-            var nextEntrance = nextRoom.GetEntrance(dir.Opposite().ToString());
 
-            Vector2 offset = GetRelativePosition(nextRoom, nextEntrance);
-            Vector2 nextRoomPos = prevEntrance.GlobalPosition - offset;
-            nextRoomPos -= offset.Normalized() * 32;
-
-            EnterRoom(nextRoom, nextRoomPos);
+            EnterRoom(
+                room: nextRoom,
+                entranceName: dir.Opposite().ToString(),
+                position: prevEntrance.GlobalPosition
+            );
         }
 
         private Vector2 GetRelativePosition(Node2D parent, Node2D descendant)
@@ -141,7 +140,11 @@ namespace RandomDungeons
             return result;
         }
 
-        private void EnterRoom(Room2D room, Vector2 position)
+        private void EnterRoom(
+            Room2D room,
+            string entranceName,
+            Vector2 position
+        )
         {
             if (_activeRoom == room)
                 return;
@@ -151,6 +154,9 @@ namespace RandomDungeons
             RemovePreviousRoom();
             SetPreviousRoom(_activeRoom);
             SetActiveRoom(room);
+
+            var entrance = room.GetEntrance(entranceName);
+            position -= GetRelativePosition(room, entrance);
 
             room.GlobalPosition = position;
             _camera.GlobalPosition = position;

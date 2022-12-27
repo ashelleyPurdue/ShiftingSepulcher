@@ -123,7 +123,7 @@ namespace RandomDungeons
             Vector2 nextRoomPos = prevEntrance.GlobalPosition - offset;
             nextRoomPos -= offset.Normalized() * 32;
 
-            EnterRoom(nextGraphRoom, nextRoomPos);
+            EnterRoom(nextRoom, nextRoomPos);
         }
 
         private Vector2 GetRelativePosition(Node2D parent, Node2D descendant)
@@ -141,10 +141,8 @@ namespace RandomDungeons
             return result;
         }
 
-        private void EnterRoom(DungeonGraphRoom graphRoom, Vector2 position)
+        private void EnterRoom(Room2D room, Vector2 position)
         {
-            Room2D room = _graphRoomToRealRoom[graphRoom];
-
             if (_activeRoom == room)
                 return;
 

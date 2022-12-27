@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/PhysicalDungeons/DoorWarp.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Components/ParentVisibleInEditorOnly.cs" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 16, 32 )
@@ -27,11 +28,16 @@ shape = SubResource( 3 )
 position = Vector2( 80, 0 )
 shape = SubResource( 4 )
 
-[node name="LeftGuide" type="Polygon2D" parent="."]
+[node name="Guides" type="Node2D" parent="."]
+
+[node name="ParentVisibleInEditorOnly" type="Node" parent="Guides"]
+script = ExtResource( 2 )
+
+[node name="LeftGuide" type="Polygon2D" parent="Guides"]
 position = Vector2( 0, 32 )
 polygon = PoolVector2Array( -64, -32, -64, 0, -96, 0, -96, -32 )
 
-[node name="RightGuide" type="Polygon2D" parent="."]
+[node name="RightGuide" type="Polygon2D" parent="Guides"]
 position = Vector2( 0, 32 )
 polygon = PoolVector2Array( 64, 0, 64, -32, 96, -32, 96, 0 )
 

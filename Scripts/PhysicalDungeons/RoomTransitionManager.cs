@@ -63,6 +63,37 @@ namespace RandomDungeons
             _transitionAnimator.Play("Respawn");
         }
 
+        public void EnterRoom(
+            Room2D room,
+            string entranceName,
+            Vector2 position
+        )
+        {
+            if (_activeRoom == room)
+                return;
+
+            GetTree().FindPlayer().ReleaseHeldObject();
+
+            RemovePreviousRoom();
+            SetPreviousRoom(_activeRoom);
+            SetActiveRoom(room);
+
+            var entrance = room.GetEntrance(entranceName);
+            position -= GetRelativePosition(room, entrance);
+
+            room.GlobalPosition = position;
+            _camera.GlobalPosition = position;
+            _transitionAnimator.Play("Fade");
+
+            // Notify nodes that the room is being entered.
+            // Puzzles can listen for this and reset themselves when you re-enter
+            // the room, for example.
+            foreach (var node in room.AllDescendantsOfType<IOnRoomEnter>())
+            {
+                node.OnRoomEnter();
+            }
+        }
+
         public void RespawnTransitionFinished()
         {
             // Respawn the player
@@ -138,37 +169,6 @@ namespace RandomDungeons
                 RemoveChild(parent);
 
             return result;
-        }
-
-        private void EnterRoom(
-            Room2D room,
-            string entranceName,
-            Vector2 position
-        )
-        {
-            if (_activeRoom == room)
-                return;
-
-            GetTree().FindPlayer().ReleaseHeldObject();
-
-            RemovePreviousRoom();
-            SetPreviousRoom(_activeRoom);
-            SetActiveRoom(room);
-
-            var entrance = room.GetEntrance(entranceName);
-            position -= GetRelativePosition(room, entrance);
-
-            room.GlobalPosition = position;
-            _camera.GlobalPosition = position;
-            _transitionAnimator.Play("Fade");
-
-            // Notify nodes that the room is being entered.
-            // Puzzles can listen for this and reset themselves when you re-enter
-            // the room, for example.
-            foreach (var node in room.AllDescendantsOfType<IOnRoomEnter>())
-            {
-                node.OnRoomEnter();
-            }
         }
 
         private void SetPreviousRoom(Room2D room)

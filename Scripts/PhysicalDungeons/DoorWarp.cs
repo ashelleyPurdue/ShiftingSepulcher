@@ -32,7 +32,11 @@ namespace RandomDungeons
         {
             if (body is Player)
             {
-                DoorUsed?.Invoke();
+                RoomTransitionManager.Instance.EnterRoom(
+                    TargetRoom,
+                    TargetEntrance,
+                    GlobalPosition
+                );
             }
         }
 

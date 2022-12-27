@@ -7,6 +7,8 @@ namespace RandomDungeons
 {
     public class RoomTransitionManager : Node
     {
+        public static RoomTransitionManager Instance {get; private set;}
+
         [Export] public AudioStream BackgroundMusic;
 
         private AnimationPlayer _transitionAnimator => GetNode<AnimationPlayer>("%RoomTransitionAnimator");
@@ -21,6 +23,11 @@ namespace RandomDungeons
         private Room2D _activeRoom;
         private Room2D _prevRoom;
 
+        public override void _Ready()
+        {
+            Instance = this;
+        }
+
         public void SetGraph(
             DungeonGraph graph,
             Dictionary<DungeonGraphRoom, IDungeonRoom> graphRoomToRealRoom
@@ -34,11 +41,9 @@ namespace RandomDungeons
             );
             _realRoomToGraphRoom = _graphRoomToRealRoom.Invert();
 
+            // TODO: Move this out of RoomTransitionManager
             foreach (var realRoom in graphRoomToRealRoom.Values)
             {
-                realRoom.DoorUsed += OnDoorUsed;
-
-                // TODO: Move this out of RoomTransitionManager
                 realRoom.ConnectDoors(_graphRoomToRealRoom);
             }
 
@@ -135,26 +140,6 @@ namespace RandomDungeons
 
             _previousRoomHolder.RemoveChild(_prevRoom);
             _prevRoom = null;
-        }
-
-        private void OnDoorUsed(CardinalDirection dir)
-        {
-            if (_activeRoom == null)
-                throw new Exception("How did you use a door?  There's no active room!");
-
-            DungeonGraphRoom nextGraphRoom = _realRoomToGraphRoom[_activeRoom]
-                .GetDoor(dir)
-                .Destination;
-
-            Room2D nextRoom = _graphRoomToRealRoom[nextGraphRoom];
-
-            var prevEntrance = _activeRoom.GetEntrance(dir.ToString());
-
-            EnterRoom(
-                room: nextRoom,
-                entranceName: dir.Opposite().ToString(),
-                position: prevEntrance.GlobalPosition
-            );
         }
 
         private Vector2 GetRelativePosition(Node2D parent, Node2D descendant)

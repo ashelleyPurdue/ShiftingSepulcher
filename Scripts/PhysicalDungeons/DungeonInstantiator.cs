@@ -28,15 +28,27 @@ namespace RandomDungeons
             // Create a "real" version of each room, but don't add it to the
             // scene yet.  We'll add it to the scene later, when the player
             // actually _enters_ it.
-            var graphRoomToRealRoom = new Dictionary<DungeonGraphRoom, IDungeonRoom>();
+            var graphRoomToDungeonRoom = new Dictionary<DungeonGraphRoom, IDungeonRoom>();
+            var graphRoomToRoom2D = new Dictionary<DungeonGraphRoom, Room2D>();
             foreach (var coordinates in graph.AllRoomCoordinates())
             {
                 var graphRoom = graph.GetRoom(coordinates);
                 var realRoom = _roomFactory.BuildRoom(graphRoom);
-                graphRoomToRealRoom[graphRoom] = realRoom;
+
+                graphRoomToDungeonRoom[graphRoom] = realRoom;
+                graphRoomToRoom2D[graphRoom] = (Room2D)realRoom;
             }
 
-            _transitionManager.SetGraph(graph, graphRoomToRealRoom);
+            // Connect all the doors
+            foreach (var realRoom in graphRoomToDungeonRoom.Values)
+            {
+                realRoom.ConnectDoors(graphRoomToRoom2D);
+            }
+
+            _transitionManager.StartDungeon(
+                startRoom: graphRoomToRoom2D[graph.StartRoom],
+                roomsToRespawn: graphRoomToRoom2D.Values
+            );
         }
 
         private DungeonTreeRoom GenerateTree(int seed)

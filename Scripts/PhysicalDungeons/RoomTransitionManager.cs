@@ -16,38 +16,26 @@ namespace RandomDungeons
         private Node2D _previousRoomHolder => GetNode<Node2D>("%PreviousRoomHolder");
         private Camera2D _camera => GetNode<Camera2D>("%Camera");
 
-        private Dictionary<DungeonGraphRoom, Room2D> _graphRoomToRealRoom;
-        private Dictionary<Room2D, DungeonGraphRoom> _realRoomToGraphRoom;
-
         private Room2D _startRoom;
         private Room2D _activeRoom;
         private Room2D _prevRoom;
+
+        private IEnumerable<Room2D> _roomsToRespawn;
 
         public override void _Ready()
         {
             Instance = this;
         }
 
-        public void SetGraph(
-            DungeonGraph graph,
-            Dictionary<DungeonGraphRoom, IDungeonRoom> graphRoomToRealRoom
+        public void StartDungeon(
+            Room2D startRoom,
+            IEnumerable<Room2D> roomsToRespawn
         )
         {
+            _startRoom = startRoom;
+            _roomsToRespawn = roomsToRespawn;
+
             PlayerInventory.Reset();
-
-            _graphRoomToRealRoom = graphRoomToRealRoom.ToDictionary(
-                kvp => kvp.Key,
-                kvp => (Room2D)kvp.Value.Node
-            );
-            _realRoomToGraphRoom = _graphRoomToRealRoom.Invert();
-
-            // TODO: Move this out of RoomTransitionManager
-            foreach (var realRoom in graphRoomToRealRoom.Values)
-            {
-                realRoom.ConnectDoors(_graphRoomToRealRoom);
-            }
-
-            _startRoom = _graphRoomToRealRoom[graph.StartRoom];
             RespawnPlayer();
         }
 
@@ -108,7 +96,7 @@ namespace RandomDungeons
             player.Resurrect();
 
             // Respawn all the enemies
-            foreach (var room in _realRoomToGraphRoom.Keys)
+            foreach (var room in _roomsToRespawn)
             {
                 foreach (var enemy in room.AllDescendantsOfType<IRespawnable>())
                 {

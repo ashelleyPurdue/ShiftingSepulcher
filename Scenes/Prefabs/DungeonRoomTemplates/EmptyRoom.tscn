@@ -46,21 +46,21 @@ polygon = PoolVector2Array( 64, 256, 256, 256, 256, 64, 288, 64, 288, 288, 64, 2
 unique_name_in_owner = true
 
 [node name="North" type="Position2D" parent="DoorSpawns"]
-position = Vector2( 0, -256 )
+position = Vector2( 0, -288 )
 script = ExtResource( 3 )
 
 [node name="South" type="Position2D" parent="DoorSpawns"]
-position = Vector2( 0, 256 )
+position = Vector2( 0, 288 )
 rotation = 3.14159
 script = ExtResource( 3 )
 
 [node name="East" type="Position2D" parent="DoorSpawns"]
-position = Vector2( 256, 0 )
+position = Vector2( 288, 0 )
 rotation = 1.5708
 script = ExtResource( 3 )
 
 [node name="West" type="Position2D" parent="DoorSpawns"]
-position = Vector2( -256, 0 )
+position = Vector2( -288, 0 )
 rotation = -1.5708
 script = ExtResource( 3 )
 

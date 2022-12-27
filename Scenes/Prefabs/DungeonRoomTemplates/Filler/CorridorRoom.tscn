@@ -19,19 +19,19 @@ polygon = PoolVector2Array( -64, 64, -64, -64, 64, -64, 64, 64 )
 [node name="RoomEntrances" type="Node2D" parent="."]
 
 [node name="North" type="Position2D" parent="RoomEntrances"]
-position = Vector2( 0, -256 )
+position = Vector2( 0, -288 )
 script = ExtResource( 4 )
 
 [node name="South" type="Position2D" parent="RoomEntrances"]
-position = Vector2( 0, 256 )
+position = Vector2( 0, 288 )
 script = ExtResource( 4 )
 
 [node name="West" type="Position2D" parent="RoomEntrances"]
-position = Vector2( -256, 0 )
+position = Vector2( -288, 0 )
 script = ExtResource( 4 )
 
 [node name="East" type="Position2D" parent="RoomEntrances"]
-position = Vector2( 256, 0 )
+position = Vector2( 288, 0 )
 script = ExtResource( 4 )
 
 [node name="Corridors" type="Node2D" parent="."]

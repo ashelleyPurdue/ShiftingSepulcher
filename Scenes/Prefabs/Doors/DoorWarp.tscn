@@ -12,19 +12,23 @@ extents = Vector2( 96, 16 )
 script = ExtResource( 1 )
 
 [node name="LeftGuide" type="Polygon2D" parent="."]
+position = Vector2( 0, 32 )
 polygon = PoolVector2Array( -64, -32, -64, 0, -96, 0, -96, -32 )
 
 [node name="RightGuide" type="Polygon2D" parent="."]
+position = Vector2( 0, 32 )
 polygon = PoolVector2Array( 64, 0, 64, -32, 96, -32, 96, 0 )
 
 [node name="WarpTrigger" type="Area2D" parent="."]
 unique_name_in_owner = true
+position = Vector2( 0, 32 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WarpTrigger"]
 position = Vector2( 0, -48 )
 shape = SubResource( 1 )
 
 [node name="WarpEnableTrigger" type="Area2D" parent="."]
+position = Vector2( 0, 32 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WarpEnableTrigger"]
 position = Vector2( 0, 16 )

@@ -29,7 +29,7 @@ position = Vector2( 80, -192 )
 shape = SubResource( 1 )
 
 [node name="DoorSpawn" type="Position2D" parent="."]
-position = Vector2( 0, -256 )
+position = Vector2( 0, -288 )
 
 [node name="ShortenedDoorSpawn" type="Position2D" parent="."]
 position = Vector2( 0, -64 )

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 namespace RandomDungeons
@@ -13,12 +14,12 @@ namespace RandomDungeons
         private Node2D _previousRoomHolder => GetNode<Node2D>("%PreviousRoomHolder");
         private Camera2D _camera => GetNode<Camera2D>("%Camera");
 
-        private Dictionary<DungeonGraphRoom, IDungeonRoom> _graphRoomToRealRoom;
-        private Dictionary<IDungeonRoom, DungeonGraphRoom> _realRoomToGraphRoom;
+        private Dictionary<DungeonGraphRoom, Room2D> _graphRoomToRealRoom;
+        private Dictionary<Room2D, DungeonGraphRoom> _realRoomToGraphRoom;
         private DungeonGraphRoom _startRoom;
 
-        private IDungeonRoom _activeRoom;
-        private IDungeonRoom _prevRoom;
+        private Room2D _activeRoom;
+        private Room2D _prevRoom;
 
         public void SetGraph(
             DungeonGraph graph,
@@ -28,10 +29,13 @@ namespace RandomDungeons
             PlayerInventory.Reset();
 
             _startRoom = graph.StartRoom;
-            _graphRoomToRealRoom = graphRoomToRealRoom;
-            _realRoomToGraphRoom = graphRoomToRealRoom.Invert();
+            _graphRoomToRealRoom = graphRoomToRealRoom.ToDictionary(
+                kvp => kvp.Key,
+                kvp => (Room2D)kvp.Value.Node
+            );
+            _realRoomToGraphRoom = _graphRoomToRealRoom.Invert();
 
-            foreach (var realRoom in _graphRoomToRealRoom.Values)
+            foreach (var realRoom in graphRoomToRealRoom.Values)
             {
                 realRoom.DoorUsed += OnDoorUsed;
             }
@@ -54,7 +58,7 @@ namespace RandomDungeons
             RemovePreviousRoom();
             SetActiveRoom(realStartRoom);
 
-            realStartRoom.Node.GlobalPosition = Vector2.Zero;
+            realStartRoom.GlobalPosition = Vector2.Zero;
             _camera.GlobalPosition = Vector2.Zero;
             _transitionAnimator.Play("Respawn");
         }
@@ -69,7 +73,7 @@ namespace RandomDungeons
             // Respawn all the enemies
             foreach (var room in _realRoomToGraphRoom.Keys)
             {
-                foreach (var enemy in room.Node.AllDescendantsOfType<IRespawnable>())
+                foreach (var enemy in room.AllDescendantsOfType<IRespawnable>())
                 {
                     enemy.Respawn();
                 }
@@ -97,7 +101,7 @@ namespace RandomDungeons
             if (_prevRoom == null)
                 return;
 
-            _previousRoomHolder.RemoveChild(_prevRoom.Node);
+            _previousRoomHolder.RemoveChild(_prevRoom);
             _prevRoom = null;
         }
 
@@ -110,13 +114,13 @@ namespace RandomDungeons
                 .GetDoor(dir)
                 .Destination;
 
-            IDungeonRoom nextRoom = _graphRoomToRealRoom[nextGraphRoom];
+            Room2D nextRoom = _graphRoomToRealRoom[nextGraphRoom];
 
-            var prevDoorSpawn = _activeRoom.GetDoorSpawn(dir);
-            var nextDoorSpawn = nextRoom.GetDoorSpawn(dir.Opposite());
+            var prevEntrance = _activeRoom.GetEntrance(dir.ToString());
+            var nextEntrance = nextRoom.GetEntrance(dir.Opposite().ToString());
 
-            Vector2 offset = GetRelativePosition(nextRoom.Node, nextDoorSpawn);
-            Vector2 nextRoomPos = prevDoorSpawn.GlobalPosition - offset;
+            Vector2 offset = GetRelativePosition(nextRoom, nextEntrance);
+            Vector2 nextRoomPos = prevEntrance.GlobalPosition - offset;
             nextRoomPos -= offset.Normalized() * 32;
 
             EnterRoom(nextGraphRoom, nextRoomPos);
@@ -139,7 +143,7 @@ namespace RandomDungeons
 
         private void EnterRoom(DungeonGraphRoom graphRoom, Vector2 position)
         {
-            IDungeonRoom room = _graphRoomToRealRoom[graphRoom];
+            Room2D room = _graphRoomToRealRoom[graphRoom];
 
             if (_activeRoom == room)
                 return;
@@ -150,36 +154,36 @@ namespace RandomDungeons
             SetPreviousRoom(_activeRoom);
             SetActiveRoom(room);
 
-            room.Node.GlobalPosition = position;
+            room.GlobalPosition = position;
             _camera.GlobalPosition = position;
             _transitionAnimator.Play("Fade");
 
             // Notify nodes that the room is being entered.
             // Puzzles can listen for this and reset themselves when you re-enter
             // the room, for example.
-            foreach (var node in room.Node.AllDescendantsOfType<IOnRoomEnter>())
+            foreach (var node in room.AllDescendantsOfType<IOnRoomEnter>())
             {
                 node.OnRoomEnter();
             }
         }
 
-        private void SetPreviousRoom(IDungeonRoom room)
+        private void SetPreviousRoom(Room2D room)
         {
             if (_prevRoom == room)
                 return;
 
-            ReparentNode(room.Node, _previousRoomHolder);
-            room.Node.SetPaused(true);
+            ReparentNode(room, _previousRoomHolder);
+            room.SetPaused(true);
             _prevRoom = room;
         }
 
-        private void SetActiveRoom(IDungeonRoom room)
+        private void SetActiveRoom(Room2D room)
         {
             if (_activeRoom == room)
                 return;
 
-            ReparentNode(room.Node, _activeRoomHolder);
-            room.Node.SetPaused(false);
+            ReparentNode(room, _activeRoomHolder);
+            room.SetPaused(false);
             _activeRoom = room;
         }
 

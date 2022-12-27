@@ -80,7 +80,6 @@ namespace RandomDungeons
 
             warp.TargetRoom = graphRoomToRealRoom[targetGraphRoom];
             warp.TargetEntrance = dir.Opposite().ToString();
-            warp.DoorUsed += () => DoorUsed?.Invoke(dir);
 
             // Spawn the correct kind of door
             if (graphDoor is KeyDungeonGraphDoor lockedDoor)

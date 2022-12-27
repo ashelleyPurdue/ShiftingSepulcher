@@ -9,8 +9,6 @@ namespace RandomDungeons
         public Room2D TargetRoom;
         public string TargetEntrance;
 
-        public event Action DoorUsed;
-
         public override void _EnterTree()
         {
             // To prevent the player from rapidly "jittering" between two rooms

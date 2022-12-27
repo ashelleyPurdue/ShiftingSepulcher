@@ -16,8 +16,8 @@ namespace RandomDungeons
 
         private Dictionary<DungeonGraphRoom, Room2D> _graphRoomToRealRoom;
         private Dictionary<Room2D, DungeonGraphRoom> _realRoomToGraphRoom;
-        private DungeonGraphRoom _startRoom;
 
+        private Room2D _startRoom;
         private Room2D _activeRoom;
         private Room2D _prevRoom;
 
@@ -28,7 +28,6 @@ namespace RandomDungeons
         {
             PlayerInventory.Reset();
 
-            _startRoom = graph.StartRoom;
             _graphRoomToRealRoom = graphRoomToRealRoom.ToDictionary(
                 kvp => kvp.Key,
                 kvp => (Room2D)kvp.Value.Node
@@ -40,14 +39,13 @@ namespace RandomDungeons
                 realRoom.DoorUsed += OnDoorUsed;
             }
 
+            _startRoom = _graphRoomToRealRoom[graph.StartRoom];
             RespawnPlayer();
         }
 
         public void RespawnPlayer()
         {
-            var realStartRoom = _graphRoomToRealRoom[_startRoom];
-
-            if (_activeRoom == realStartRoom)
+            if (_activeRoom == _startRoom)
             {
                 RespawnTransitionFinished();
                 return;
@@ -56,9 +54,9 @@ namespace RandomDungeons
             RemovePreviousRoom();
             SetPreviousRoom(_activeRoom);
             RemovePreviousRoom();
-            SetActiveRoom(realStartRoom);
+            SetActiveRoom(_startRoom);
 
-            realStartRoom.GlobalPosition = Vector2.Zero;
+            _startRoom.GlobalPosition = Vector2.Zero;
             _camera.GlobalPosition = Vector2.Zero;
             _transitionAnimator.Play("Respawn");
         }

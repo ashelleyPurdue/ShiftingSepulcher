@@ -37,6 +37,9 @@ namespace RandomDungeons
             foreach (var realRoom in graphRoomToRealRoom.Values)
             {
                 realRoom.DoorUsed += OnDoorUsed;
+
+                // TODO: Move this out of RoomTransitionManager
+                realRoom.ConnectDoors(_graphRoomToRealRoom);
             }
 
             _startRoom = _graphRoomToRealRoom[graph.StartRoom];

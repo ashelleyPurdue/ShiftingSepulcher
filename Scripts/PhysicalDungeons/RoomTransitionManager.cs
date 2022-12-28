@@ -137,7 +137,7 @@ namespace RandomDungeons
             if (!isParentInTree)
                 AddChild(parent);
 
-            Vector2 result = descendant.GlobalPosition - parent.Position;
+            Vector2 result = descendant.GlobalPosition - parent.GlobalPosition;
 
             if (!isParentInTree)
                 RemoveChild(parent);

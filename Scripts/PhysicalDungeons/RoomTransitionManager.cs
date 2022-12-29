@@ -85,7 +85,10 @@ namespace RandomDungeons
             if (_activeRoom == room)
                 return;
 
-            GetTree().FindPlayer().ReleaseHeldObject();
+            // Freeze the player during the transition
+            var player = GetTree().FindPlayer();
+            player.ReleaseHeldObject();
+            player.ControlsEnabled = false;
 
             // Notify nodes that the room is being entered.
             // Puzzles can listen for this and reset themselves when you re-enter
@@ -120,6 +123,9 @@ namespace RandomDungeons
             _activeRoomHolder.GlobalPosition = _nextRoomTexture.GlobalPosition;
             ReparentNode(_activeRoom, _activeRoomHolder);
             UnparentNode(_prevRoom);
+
+            var player = GetTree().FindPlayer();
+            player.ControlsEnabled = true;
         }
 
         public override void _Process(float delta)

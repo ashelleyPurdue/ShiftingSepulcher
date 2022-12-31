@@ -1,78 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/PhysicalDungeons/RoomTransitionManager.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Components/ParentVisibleInEditorOnly.cs" type="Script" id=2]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Fade"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/path = NodePath("ActiveRoomHolder:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("PreviousRoomHolder:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
-}
-tracks/2/type = "method"
-tracks/2/path = NodePath(".")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0.3 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "RemovePreviousRoom"
-} ]
-}
-
-[sub_resource type="Animation" id=2]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("ActiveRoomHolder:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("PreviousRoomHolder:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ) ]
-}
-
-[sub_resource type="Animation" id=3]
-resource_name = "Respawn"
 length = 0.3
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -85,11 +17,11 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
-"method": "RespawnTransitionFinished"
+"method": "TransitionAnimationFinished"
 } ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("ActiveRoomHolder:modulate")
+tracks/1/path = NodePath("NextRoomTexture:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -100,6 +32,51 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("PreviousRoomTexture:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("NextRoomTexture:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("PreviousRoomTexture:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="ViewportTexture" id=4]
+viewport_path = NodePath("PreviousRoomViewport")
+
+[sub_resource type="ViewportTexture" id=5]
+viewport_path = NodePath("NextRoomViewport")
 
 [node name="RoomTransitionManager" type="Node2D"]
 unique_name_in_owner = true
@@ -114,10 +91,60 @@ smoothing_enabled = true
 unique_name_in_owner = true
 anims/Fade = SubResource( 1 )
 anims/RESET = SubResource( 2 )
-anims/Respawn = SubResource( 3 )
 
 [node name="ActiveRoomHolder" type="Node2D" parent="."]
 unique_name_in_owner = true
 
-[node name="PreviousRoomHolder" type="Node2D" parent="."]
+[node name="PreviousRoomTexture" type="Polygon2D" parent="."]
 unique_name_in_owner = true
+position = Vector2( 288, 0 )
+texture = SubResource( 4 )
+texture_offset = Vector2( 512, 300 )
+polygon = PoolVector2Array( -512, -300, 512, -300, 512, 300, -512, 300 )
+
+[node name="NextRoomTexture" type="Polygon2D" parent="."]
+unique_name_in_owner = true
+position = Vector2( -288, 0 )
+texture = SubResource( 5 )
+texture_offset = Vector2( 512, 300 )
+polygon = PoolVector2Array( -512, -300, 512, -300, 512, 300, -512, 300 )
+
+[node name="PreviousRoomViewport" type="Viewport" parent="."]
+size = Vector2( 1024, 600 )
+transparent_bg = true
+hdr = false
+usage = 1
+render_target_v_flip = true
+render_target_update_mode = 3
+
+[node name="PreviousRoomHolder" type="Node2D" parent="PreviousRoomViewport"]
+unique_name_in_owner = true
+position = Vector2( 512, 300 )
+
+[node name="EditorVisuals" type="Polygon2D" parent="PreviousRoomViewport/PreviousRoomHolder"]
+invert_enable = true
+invert_border = 32.0
+polygon = PoolVector2Array( -256, -256, 256, -256, 256, 256, -256, 256 )
+
+[node name="ParentVisibleInEditorOnly" type="Node" parent="PreviousRoomViewport/PreviousRoomHolder/EditorVisuals"]
+script = ExtResource( 2 )
+
+[node name="NextRoomViewport" type="Viewport" parent="."]
+size = Vector2( 1024, 600 )
+transparent_bg = true
+hdr = false
+usage = 1
+render_target_v_flip = true
+render_target_update_mode = 3
+
+[node name="NextRoomHolder" type="Node2D" parent="NextRoomViewport"]
+unique_name_in_owner = true
+position = Vector2( 512, 300 )
+
+[node name="EditorVisuals" type="Polygon2D" parent="NextRoomViewport/NextRoomHolder"]
+invert_enable = true
+invert_border = 32.0
+polygon = PoolVector2Array( -256, -256, 256, -256, 256, 256, -256, 256 )
+
+[node name="ParentVisibleInEditorOnly" type="Node" parent="NextRoomViewport/NextRoomHolder/EditorVisuals"]
+script = ExtResource( 2 )

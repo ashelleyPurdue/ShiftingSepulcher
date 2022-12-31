@@ -12,8 +12,14 @@ namespace RandomDungeons
         [Export] public AudioStream BackgroundMusic;
 
         private AnimationPlayer _transitionAnimator => GetNode<AnimationPlayer>("%RoomTransitionAnimator");
+
         private Node2D _activeRoomHolder => GetNode<Node2D>("%ActiveRoomHolder");
         private Node2D _previousRoomHolder => GetNode<Node2D>("%PreviousRoomHolder");
+        private Node2D _nextRoomHolder => GetNode<Node2D>("%NextRoomHolder");
+
+        private Node2D _previousRoomTexture => GetNode<Node2D>("%PreviousRoomTexture");
+        private Node2D _nextRoomTexture => GetNode<Node2D>("%NextRoomTexture");
+
         private Camera2D _camera => GetNode<Camera2D>("%Camera");
 
         private Room2D _startRoom;
@@ -41,56 +47,15 @@ namespace RandomDungeons
 
         public void RespawnPlayer()
         {
-            if (_activeRoom == _startRoom)
-            {
-                RespawnTransitionFinished();
-                return;
-            }
+            // Go back to the start room
+            UnparentNode(_activeRoom);
+            ReparentNode(_startRoom, _activeRoomHolder);
+            _activeRoom = _startRoom;
+            _activeRoomHolder.GlobalPosition = Vector2.Zero;
 
-            RemovePreviousRoom();
-            SetPreviousRoom(_activeRoom);
-            RemovePreviousRoom();
-            SetActiveRoom(_startRoom);
-
-            _startRoom.GlobalPosition = Vector2.Zero;
             _camera.GlobalPosition = Vector2.Zero;
-            _transitionAnimator.Play("Respawn");
-        }
 
-        public void EnterRoom(
-            Room2D room,
-            string entranceName,
-            Vector2 position
-        )
-        {
-            if (_activeRoom == room)
-                return;
-
-            GetTree().FindPlayer().ReleaseHeldObject();
-
-            RemovePreviousRoom();
-            SetPreviousRoom(_activeRoom);
-            SetActiveRoom(room);
-
-            var entrance = room.GetEntrance(entranceName);
-            position -= GetRelativePosition(room, entrance);
-
-            room.GlobalPosition = position;
-            _camera.GlobalPosition = position;
-            _transitionAnimator.Play("Fade");
-
-            // Notify nodes that the room is being entered.
-            // Puzzles can listen for this and reset themselves when you re-enter
-            // the room, for example.
-            foreach (var node in room.AllDescendantsOfType<IOnRoomEnter>())
-            {
-                node.OnRoomEnter();
-            }
-        }
-
-        public void RespawnTransitionFinished()
-        {
-            // Respawn the player
+            // Resurrect the player
             var player = GetTree().FindPlayer();
             player.GlobalPosition = Vector2.Zero;
             player.Resurrect();
@@ -104,7 +69,84 @@ namespace RandomDungeons
                 }
             }
 
+            // Restart the music
             MusicService.Instance.PlaySong(BackgroundMusic);
+        }
+
+        public void EnterRoom(
+            Room2D room,
+            string entranceName,
+            Vector2 position
+        )
+        {
+            var entrance = room.GetEntrance(entranceName);
+            position -= GetRelativePosition(room, entrance);
+
+            if (_activeRoom == room)
+                return;
+
+            // Notify nodes that the room is being entered.
+            // Puzzles can listen for this and reset themselves when you re-enter
+            // the room, for example.
+            foreach (var node in room.AllDescendantsOfType<IOnRoomEnter>())
+            {
+                node.OnRoomEnter();
+            }
+
+            // Freeze the player during the transition, to prevent them from
+            // taking advantage of the fact that the walls are intangible during
+            // the transition animation.
+            var player = GetTree().FindPlayer();
+            player.ControlsEnabled = false;
+
+            // Force the player to drop whatever object they're holding, to
+            // prevent them from carrying objects between rooms.
+            // Otherwise, players would be able to cheat at puzzles.
+            player.ReleaseHeldObject();
+
+            // Put the next and previous rooms inside separate viewports, so they
+            // can't interact with things during the transition animation.
+            // The next room will be moved back to the "main" viewport after the
+            // transition animation is finished.
+            //
+            // A viewport is like a "pocket dimension" with its own isolated
+            // physics.  Physics colliders can only interact with each other if
+            // they're inside the same viewport.
+            // Make the active room the previous room, and put it in the viewport
+            _prevRoom = _activeRoom;
+            _activeRoom = room;
+
+            ReparentNode(_prevRoom, _previousRoomHolder);
+            ReparentNode(_activeRoom, _nextRoomHolder);
+
+            // Move the render-textures for both rooms into the correct
+            // positions for the start of the animation.
+            //
+            // Because the next and previous rooms aren't in the "main" viewport
+            // during the transition, they won't appear on-screen by default.
+            // Instead, they get rendered to textures, which then get displayed
+            // on two giant rectangles.  These rectangles are what get manipulated
+            // during the transition animation.
+            _previousRoomTexture.GlobalPosition = _activeRoomHolder.GlobalPosition;
+            _nextRoomTexture.GlobalPosition = position;
+
+            // Freeze the previous room, and unfreeze the next room
+            _activeRoom.SetPaused(false);
+            _prevRoom.SetPaused(true);
+
+            // Play the transition animation, now that it's been set up
+            _transitionAnimator.ResetAndPlay("Fade");
+            _camera.GlobalPosition = position;
+        }
+
+        private void TransitionAnimationFinished()
+        {
+            _activeRoomHolder.GlobalPosition = _nextRoomTexture.GlobalPosition;
+            ReparentNode(_activeRoom, _activeRoomHolder);
+            UnparentNode(_prevRoom);
+
+            var player = GetTree().FindPlayer();
+            player.ControlsEnabled = true;
         }
 
         public override void _Process(float delta)
@@ -119,17 +161,6 @@ namespace RandomDungeons
         }
         private bool _wasPressed = false;
 
-        public void RemovePreviousRoom()
-        {
-            _transitionAnimator.Stop();
-
-            if (_prevRoom == null)
-                return;
-
-            _previousRoomHolder.RemoveChild(_prevRoom);
-            _prevRoom = null;
-        }
-
         private Vector2 GetRelativePosition(Node2D parent, Node2D descendant)
         {
             bool isParentInTree = parent.IsInsideTree();
@@ -137,7 +168,7 @@ namespace RandomDungeons
             if (!isParentInTree)
                 AddChild(parent);
 
-            Vector2 result = descendant.GlobalPosition - parent.Position;
+            Vector2 result = descendant.GlobalPosition - parent.GlobalPosition;
 
             if (!isParentInTree)
                 RemoveChild(parent);
@@ -145,30 +176,15 @@ namespace RandomDungeons
             return result;
         }
 
-        private void SetPreviousRoom(Room2D room)
-        {
-            if (_prevRoom == room)
-                return;
-
-            ReparentNode(room, _previousRoomHolder);
-            room.SetPaused(true);
-            _prevRoom = room;
-        }
-
-        private void SetActiveRoom(Room2D room)
-        {
-            if (_activeRoom == room)
-                return;
-
-            ReparentNode(room, _activeRoomHolder);
-            room.SetPaused(false);
-            _activeRoom = room;
-        }
-
         private void ReparentNode(Node node, Node newParent)
         {
             node.GetParent()?.RemoveChild(node);
             newParent.AddChild(node);
+        }
+
+        private void UnparentNode(Node node)
+        {
+            node?.GetParent()?.RemoveChild(node);
         }
     }
 }

@@ -118,6 +118,7 @@ namespace RandomDungeons
 
             ReparentNode(_prevRoom, _previousRoomHolder);
             ReparentNode(_activeRoom, _nextRoomHolder);
+            _activeRoom.Position = Vector2.Zero;
 
             // Move the render-textures for both rooms into the correct
             // positions for the start of the animation.

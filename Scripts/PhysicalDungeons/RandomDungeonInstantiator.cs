@@ -5,7 +5,7 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class DungeonInstantiator : Node
+    public class RandomDungeonInstantiator : Node
     {
         [Export] public bool AlwaysUseTreeTemplate = false;
 

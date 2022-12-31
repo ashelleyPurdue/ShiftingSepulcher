@@ -15,18 +15,6 @@ namespace RandomDungeons
         public Room2D TargetRoom;
         public string TargetEntrance;
 
-        /// <summary>
-        /// Called at the start of a hand-crafted dungeon, while all the rooms
-        /// are still in the scene tree simultaneously.
-        ///
-        /// Connects the door to the room specified by TargetRoomPath
-        /// </summary>
-        public void ConnectToTargetRoomPath()
-        {
-            if (TargetRoomPath != null)
-                TargetRoom = GetNode<Room2D>(TargetRoomPath);
-        }
-
         public override void _EnterTree()
         {
             // To prevent the player from rapidly "jittering" between two rooms

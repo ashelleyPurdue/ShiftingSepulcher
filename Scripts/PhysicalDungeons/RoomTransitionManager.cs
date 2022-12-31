@@ -85,11 +85,6 @@ namespace RandomDungeons
             if (_activeRoom == room)
                 return;
 
-            // Freeze the player during the transition
-            var player = GetTree().FindPlayer();
-            player.ReleaseHeldObject();
-            player.ControlsEnabled = false;
-
             // Notify nodes that the room is being entered.
             // Puzzles can listen for this and reset themselves when you re-enter
             // the room, for example.
@@ -98,14 +93,41 @@ namespace RandomDungeons
                 node.OnRoomEnter();
             }
 
+            // Freeze the player during the transition, to prevent them from
+            // taking advantage of the fact that the walls are intangible during
+            // the transition animation.
+            var player = GetTree().FindPlayer();
+            player.ControlsEnabled = false;
+
+            // Force the player to drop whatever object they're holding, to
+            // prevent them from carrying objects between rooms.
+            // Otherwise, players would be able to cheat at puzzles.
+            player.ReleaseHeldObject();
+
+            // Put the next and previous rooms inside separate viewports, so they
+            // can't interact with things during the transition animation.
+            // The next room will be moved back to the "main" viewport after the
+            // transition animation is finished.
+            //
+            // A viewport is like a "pocket dimension" with its own isolated
+            // physics.  Physics colliders can only interact with each other if
+            // they're inside the same viewport.
             // Make the active room the previous room, and put it in the viewport
             _prevRoom = _activeRoom;
-            ReparentNode(_prevRoom, _previousRoomHolder);
-            _previousRoomTexture.GlobalPosition = _activeRoomHolder.GlobalPosition;
-
-            // Put the next room in the other viewport
             _activeRoom = room;
+
+            ReparentNode(_prevRoom, _previousRoomHolder);
             ReparentNode(_activeRoom, _nextRoomHolder);
+
+            // Move the render-textures for both rooms into the correct
+            // positions for the start of the animation.
+            //
+            // Because the next and previous rooms aren't in the "main" viewport
+            // during the transition, they won't appear on-screen by default.
+            // Instead, they get rendered to textures, which then get displayed
+            // on two giant rectangles.  These rectangles are what get manipulated
+            // during the transition animation.
+            _previousRoomTexture.GlobalPosition = _activeRoomHolder.GlobalPosition;
             _nextRoomTexture.GlobalPosition = position;
 
             // Freeze the previous room, and unfreeze the next room
@@ -114,7 +136,6 @@ namespace RandomDungeons
 
             // Play the transition animation, now that it's been set up
             _transitionAnimator.ResetAndPlay("Fade");
-
             _camera.GlobalPosition = position;
         }
 

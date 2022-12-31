@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scenes/Maps/Test/HandCraftedTestDungeons/HandCraftedTestDungeonBase.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Room2D.cs" type="Script" id=2]
+[ext_resource path="res://Scenes/Prefabs/Doors/DoorWarp.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scripts/Elements/RoomEntrance.cs" type="Script" id=4]
 
 [node name="SimpleHandCraftedDungeon" instance=ExtResource( 1 )]
 
@@ -40,3 +42,55 @@ polygon = PoolVector2Array( -288, 64, -256, 64, -256, 256, -64, 256, -64, 288, -
 
 [node name="SouthEast" type="CollisionPolygon2D" parent="HandCraftedDungeonInstantiator/StartRoom/Walls/StaticBody2D" index="3"]
 polygon = PoolVector2Array( 64, 256, 256, 256, 256, 64, 288, 64, 288, 288, 64, 288 )
+
+[node name="WestDoor" parent="HandCraftedDungeonInstantiator/StartRoom" index="1" instance=ExtResource( 3 )]
+position = Vector2( -288, 0 )
+rotation = -1.5708
+TargetRoomPath = NodePath("../../LeftRoom")
+TargetEntrance = "East"
+
+[node name="West" type="Position2D" parent="HandCraftedDungeonInstantiator/StartRoom/WestDoor" index="4"]
+script = ExtResource( 4 )
+
+[node name="LeftRoom" type="Node2D" parent="HandCraftedDungeonInstantiator" index="1"]
+position = Vector2( -576, 0 )
+script = ExtResource( 2 )
+
+[node name="Walls" type="Node2D" parent="HandCraftedDungeonInstantiator/LeftRoom" index="0"]
+
+[node name="Visuals" type="Node2D" parent="HandCraftedDungeonInstantiator/LeftRoom/Walls" index="0"]
+
+[node name="NorthWest" type="Polygon2D" parent="HandCraftedDungeonInstantiator/LeftRoom/Walls/Visuals" index="0"]
+polygon = PoolVector2Array( -64, -256, -256, -256, -256, -64, -288, -64, -288, -288, -64, -288 )
+
+[node name="NorthEast" type="Polygon2D" parent="HandCraftedDungeonInstantiator/LeftRoom/Walls/Visuals" index="1"]
+polygon = PoolVector2Array( 64, -256, 64, -288, 288, -288, 288, -64, 256, -64, 256, -256 )
+
+[node name="SouthWest" type="Polygon2D" parent="HandCraftedDungeonInstantiator/LeftRoom/Walls/Visuals" index="2"]
+polygon = PoolVector2Array( -288, 64, -256, 64, -256, 256, -64, 256, -64, 288, -288, 288 )
+
+[node name="SouthEast" type="Polygon2D" parent="HandCraftedDungeonInstantiator/LeftRoom/Walls/Visuals" index="3"]
+polygon = PoolVector2Array( 64, 288, 64, 256, 256, 256, 256, 64, 288, 64, 288, 288 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="HandCraftedDungeonInstantiator/LeftRoom/Walls" index="1"]
+
+[node name="NorthWest" type="CollisionPolygon2D" parent="HandCraftedDungeonInstantiator/LeftRoom/Walls/StaticBody2D" index="0"]
+polygon = PoolVector2Array( -288, -64, -256, -64, -256, -256, -64, -256, -64, -288, -288, -288 )
+
+[node name="NorthEast" type="CollisionPolygon2D" parent="HandCraftedDungeonInstantiator/LeftRoom/Walls/StaticBody2D" index="1"]
+polygon = PoolVector2Array( 64, -288, 288, -288, 288, -64, 256, -64, 256, -256, 64, -256 )
+
+[node name="SouthWest" type="CollisionPolygon2D" parent="HandCraftedDungeonInstantiator/LeftRoom/Walls/StaticBody2D" index="2"]
+polygon = PoolVector2Array( -288, 64, -256, 64, -256, 256, -64, 256, -64, 288, -288, 288 )
+
+[node name="SouthEast" type="CollisionPolygon2D" parent="HandCraftedDungeonInstantiator/LeftRoom/Walls/StaticBody2D" index="3"]
+polygon = PoolVector2Array( 64, 256, 256, 256, 256, 64, 288, 64, 288, 288, 64, 288 )
+
+[node name="EastDoor" parent="HandCraftedDungeonInstantiator/LeftRoom" index="1" instance=ExtResource( 3 )]
+position = Vector2( 288, 0 )
+rotation = 1.5708
+TargetRoomPath = NodePath("../../StartRoom")
+TargetEntrance = "West"
+
+[node name="East" type="Position2D" parent="HandCraftedDungeonInstantiator/LeftRoom/EastDoor" index="4"]
+script = ExtResource( 4 )

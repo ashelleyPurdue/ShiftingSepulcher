@@ -73,7 +73,7 @@ namespace RandomDungeons
             }
 
             // Set up the warp
-            var warp = Create<DoorWarp>(spawn, DoorPrefabs.Warp);
+            var warp = Create<WarpTrigger>(spawn, DoorPrefabs.Warp);
             DungeonGraphRoom targetGraphRoom = GraphRoom
                 .GetDoor(dir)
                 .Destination;

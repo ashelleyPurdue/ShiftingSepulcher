@@ -6,8 +6,15 @@ namespace RandomDungeons
 {
     public class DoorWarp : Node2D
     {
+        /// <summary>
+        /// The path to the Room2D that this warp takes you to.
+        /// This is only used for hand-crafted dungeons.
+        /// </summary>
+        [Export] public NodePath TargetRoomPath;
+        [Export] public string TargetEntrance;
+
         public Room2D TargetRoom;
-        public string TargetEntrance;
+
 
         public override void _EnterTree()
         {

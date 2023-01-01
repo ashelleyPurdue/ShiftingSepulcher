@@ -122,12 +122,17 @@ unique_name_in_owner = true
 position = Vector2( 512, 300 )
 
 [node name="EditorVisuals" type="Polygon2D" parent="PreviousRoomViewport/PreviousRoomHolder"]
+modulate = Color( 1, 1, 1, 0.470588 )
 invert_enable = true
 invert_border = 32.0
 polygon = PoolVector2Array( -256, -256, 256, -256, 256, 256, -256, 256 )
 
 [node name="ParentVisibleInEditorOnly" type="Node" parent="PreviousRoomViewport/PreviousRoomHolder/EditorVisuals"]
 script = ExtResource( 2 )
+
+[node name="Floor" type="Polygon2D" parent="PreviousRoomViewport/PreviousRoomHolder/EditorVisuals"]
+color = Color( 0.745098, 0.745098, 0.745098, 1 )
+polygon = PoolVector2Array( -256, -256, 256, -256, 256, 256, -256, 256 )
 
 [node name="NextRoomViewport" type="Viewport" parent="."]
 size = Vector2( 1024, 600 )
@@ -142,9 +147,14 @@ unique_name_in_owner = true
 position = Vector2( 512, 300 )
 
 [node name="EditorVisuals" type="Polygon2D" parent="NextRoomViewport/NextRoomHolder"]
+modulate = Color( 1, 1, 1, 0.470588 )
 invert_enable = true
 invert_border = 32.0
 polygon = PoolVector2Array( -256, -256, 256, -256, 256, 256, -256, 256 )
 
 [node name="ParentVisibleInEditorOnly" type="Node" parent="NextRoomViewport/NextRoomHolder/EditorVisuals"]
 script = ExtResource( 2 )
+
+[node name="Floor" type="Polygon2D" parent="NextRoomViewport/NextRoomHolder/EditorVisuals"]
+color = Color( 0.745098, 0.745098, 0.745098, 1 )
+polygon = PoolVector2Array( -256, -256, 256, -256, 256, 256, -256, 256 )

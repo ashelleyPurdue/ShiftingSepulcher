@@ -4,7 +4,7 @@ namespace RandomDungeons
 {
     public class TestDungeonBase : Node
     {
-        private DungeonInstantiator _instantiator => GetNode<DungeonInstantiator>("%DungeonInstantiator");
+        private RandomDungeonInstantiator _instantiator => GetNode<RandomDungeonInstantiator>("%DungeonInstantiator");
         private SeedInput _seedInput => GetNode<SeedInput>("%SeedInput");
         private Node2D _player => GetNode<Node2D>("%Player");
 

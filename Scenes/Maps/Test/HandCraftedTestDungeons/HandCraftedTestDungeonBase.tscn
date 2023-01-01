@@ -13,3 +13,5 @@ unique_name_in_owner = true
 
 [node name="HandCraftedDungeonInstantiator" type="Node2D" parent="."]
 script = ExtResource( 4 )
+
+[connection signal="DeathAnimationFinished" from="Player" to="RoomTransitionManager" method="RespawnPlayer"]

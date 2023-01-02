@@ -16,7 +16,12 @@ namespace RandomDungeons
 
         void Populate(DungeonGraphRoom graphRoom);
 
-        void ConnectDoors(Dictionary<DungeonGraphRoom, Room2D> graphRoomToRealRoom);
+        void ConnectDoors(
+            Dictionary<DungeonGraphRoom, Room2D> graphRoomToRealRoom,
+            Dictionary<OneWayClosedSideGraphDoor, OneWayDoorClosedSide> closedSideGraphToClosedSideReal,
+            Dictionary<OneWayDoorClosedSide, OneWayOpenSideGraphDoor> closedSideRealToOpenSideGraph,
+            Dictionary<OneWayOpenSideGraphDoor, OneWayDoorOpenSide> openSideGraphToOpenSideReal
+        );
 
         bool IsChallengeSolved();
     }

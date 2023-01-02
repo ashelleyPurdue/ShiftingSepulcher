@@ -40,9 +40,28 @@ namespace RandomDungeons
             }
 
             // Connect all the doors
+            var closedSideGraphToClosedSideReal = new Dictionary<OneWayClosedSideGraphDoor, OneWayDoorClosedSide>();
+            var closedSideRealToOpenSideGraph = new Dictionary<OneWayDoorClosedSide, OneWayOpenSideGraphDoor>();
+            var openSideGraphToOpenSideReal = new Dictionary<OneWayOpenSideGraphDoor, OneWayDoorOpenSide>();
             foreach (var realRoom in graphRoomToDungeonRoom.Values)
             {
-                realRoom.ConnectDoors(graphRoomToRoom2D);
+                realRoom.ConnectDoors(
+                    graphRoomToRoom2D,
+                    closedSideGraphToClosedSideReal,
+                    closedSideRealToOpenSideGraph,
+                    openSideGraphToOpenSideReal
+                );
+            }
+
+            // Connect all the one-way doors
+            foreach (var kvp in closedSideGraphToClosedSideReal)
+            {
+                var closedSideGraph = kvp.Key;
+                var closedSideReal = kvp.Value;
+                var openSideGraph = closedSideGraph.OtherSide;
+                var openSideReal = openSideGraphToOpenSideReal[openSideGraph];
+
+                closedSideReal.OpenSide = openSideReal;
             }
 
             _transitionManager.StartDungeon(

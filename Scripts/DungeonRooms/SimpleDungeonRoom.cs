@@ -51,20 +51,52 @@ namespace RandomDungeons
             _challenges = this.AllDescendantsOfType<IChallenge>().ToArray();
         }
 
-        public void ConnectDoors(Dictionary<DungeonGraphRoom, Room2D> graphRoomToRealRoom)
+        public void ConnectDoors(
+            Dictionary<DungeonGraphRoom, Room2D> graphRoomToRealRoom,
+            Dictionary<OneWayClosedSideGraphDoor, OneWayDoorClosedSide> closedSideGraphToClosedSideReal,
+            Dictionary<OneWayDoorClosedSide, OneWayOpenSideGraphDoor> closedSideRealToOpenSideGraph,
+            Dictionary<OneWayOpenSideGraphDoor, OneWayDoorOpenSide> openSideGraphToOpenSideReal
+        )
         {
             // Fill in all the door slots
-            SetDoor(CardinalDirection.North, graphRoomToRealRoom);
-            SetDoor(CardinalDirection.South, graphRoomToRealRoom);
-            SetDoor(CardinalDirection.East, graphRoomToRealRoom);
-            SetDoor(CardinalDirection.West, graphRoomToRealRoom);
+            SetDoor(
+                CardinalDirection.North,
+                graphRoomToRealRoom,
+                closedSideGraphToClosedSideReal,
+                closedSideRealToOpenSideGraph,
+                openSideGraphToOpenSideReal
+            );
+            SetDoor(
+                CardinalDirection.South,
+                graphRoomToRealRoom,
+                closedSideGraphToClosedSideReal,
+                closedSideRealToOpenSideGraph,
+                openSideGraphToOpenSideReal
+            );
+            SetDoor(
+                CardinalDirection.East,
+                graphRoomToRealRoom,
+                closedSideGraphToClosedSideReal,
+                closedSideRealToOpenSideGraph,
+                openSideGraphToOpenSideReal
+            );
+            SetDoor(
+                CardinalDirection.West,
+                graphRoomToRealRoom,
+                closedSideGraphToClosedSideReal,
+                closedSideRealToOpenSideGraph,
+                openSideGraphToOpenSideReal
+            );
 
             // TODO: Connect all the one-way doors to each other
         }
 
         private void SetDoor(
             CardinalDirection dir,
-            Dictionary<DungeonGraphRoom, Room2D> graphRoomToRealRoom
+            Dictionary<DungeonGraphRoom, Room2D> graphRoomToRealRoom,
+            Dictionary<OneWayClosedSideGraphDoor, OneWayDoorClosedSide> closedSideGraphToClosedSideReal,
+            Dictionary<OneWayDoorClosedSide, OneWayOpenSideGraphDoor> closedSideRealToOpenSideGraph,
+            Dictionary<OneWayOpenSideGraphDoor, OneWayDoorOpenSide> openSideGraphToOpenSideReal
         )
         {
             var spawn = GetDoorSpawn(dir);
@@ -99,10 +131,13 @@ namespace RandomDungeons
             else if (graphDoor is OneWayClosedSideGraphDoor closedSideGraphDoor)
             {
                 var door = Create<OneWayDoorClosedSide>(spawn, DoorPrefabs.OneWayClosedSide);
+                closedSideGraphToClosedSideReal[closedSideGraphDoor] = door;
+                closedSideRealToOpenSideGraph[door] = closedSideGraphDoor.OtherSide;
             }
             else if (graphDoor is OneWayOpenSideGraphDoor openSideGraphDoor)
             {
                 var door = Create<OneWayDoorOpenSide>(spawn, DoorPrefabs.OneWayOpenSide);
+                openSideGraphToOpenSideReal[openSideGraphDoor] = door;
             }
         }
 

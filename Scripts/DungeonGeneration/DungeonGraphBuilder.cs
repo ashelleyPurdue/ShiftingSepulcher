@@ -5,7 +5,7 @@ namespace RandomDungeons
     {
         public static DungeonGraph BuildFromLayout(DungeonLayout layout)
         {
-            var graph = new DungeonGraph();
+            var graph = new DungeonGraph(layout);
 
             // Add graph rooms
             foreach ((Vector2i coords, DungeonTreeRoom treeRoom) in layout.AllRooms())

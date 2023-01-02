@@ -58,6 +58,8 @@ namespace RandomDungeons
             SetDoor(CardinalDirection.South, graphRoomToRealRoom);
             SetDoor(CardinalDirection.East, graphRoomToRealRoom);
             SetDoor(CardinalDirection.West, graphRoomToRealRoom);
+
+            // TODO: Connect all the one-way doors to each other
         }
 
         private void SetDoor(
@@ -97,12 +99,10 @@ namespace RandomDungeons
             else if (graphDoor is OneWayClosedSideGraphDoor closedSideGraphDoor)
             {
                 var door = Create<OneWayDoorClosedSide>(spawn, DoorPrefabs.OneWayClosedSide);
-                door.SetGraphDoor(closedSideGraphDoor);
             }
             else if (graphDoor is OneWayOpenSideGraphDoor openSideGraphDoor)
             {
                 var door = Create<OneWayDoorOpenSide>(spawn, DoorPrefabs.OneWayOpenSide);
-                door.SetGraphDoor(openSideGraphDoor);
             }
         }
 

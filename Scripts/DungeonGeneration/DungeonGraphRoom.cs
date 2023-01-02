@@ -47,62 +47,6 @@ namespace RandomDungeons
             return _doors[dir];
         }
 
-        public bool CanAddRoom(CardinalDirection dir)
-        {
-            var newCoords = Position.Adjacent(dir);
-            return !Graph.CoordinatesInUse(newCoords);
-        }
-
-        public bool CanAddAnyRooms()
-        {
-            return
-                CanAddRoom(CardinalDirection.North) ||
-                CanAddRoom(CardinalDirection.South) ||
-                CanAddRoom(CardinalDirection.East) ||
-                CanAddRoom(CardinalDirection.West);
-        }
-
-        public CardinalDirection[] UnusedDoors()
-        {
-            return _doors
-                .Keys
-                .Where(CanAddRoom)
-                .ToArray();
-        }
-
-        public IEnumerable<CardinalDirection> AllWalls()
-        {
-            return CardinalDirectionUtils.All()
-                .Where(dir => _doors[dir] is DungeonGraphDoor)
-                .Where(dir => _doors[dir].Destination == null);
-        }
-
-        /// <summary>
-        /// Creates a new room in the given direction, and joins them together
-        /// with a (normal) door.
-        ///
-        /// Fails if there is already a room in that direction.
-        /// </summary>
-        /// <param name="dir"></param>
-        /// <param name="sequenceNum"></param>
-        /// <returns></returns>
-        public DungeonGraphRoom CreateNeighbor(
-            CardinalDirection dir,
-            int sequenceNum
-        )
-        {
-            if (!CanAddRoom(dir))
-                throw new DungeonGraphException("Another room is already there.");
-
-            var neighborPos = Position.Adjacent(dir);
-            var neighbor = Graph.CreateRoom(neighborPos, sequenceNum);
-
-            GetDoor(dir).Destination = neighbor;
-            neighbor.GetDoor(dir.Opposite()).Destination = this;
-
-            return neighbor;
-        }
-
         /// <summary>
         /// Replaces the given door with a locked one, using the given keyId.
         /// Preserves the old door's <see cref="IDungeonGraphDoor.Destination"/>

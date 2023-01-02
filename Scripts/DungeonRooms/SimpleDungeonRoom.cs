@@ -78,8 +78,8 @@ namespace RandomDungeons
                 .GetDoor(dir)
                 .Destination;
 
-            warp.TargetRoom = graphRoomToRealRoom[targetGraphRoom];
-            warp.TargetEntrance = dir.Opposite().ToString();
+            var targetRoom = graphRoomToRealRoom[targetGraphRoom];
+            warp.TargetEntrance = targetRoom.GetEntrance(dir.Opposite().ToString());
 
             // Spawn the correct kind of door
             if (graphDoor is KeyDungeonGraphDoor lockedDoor)

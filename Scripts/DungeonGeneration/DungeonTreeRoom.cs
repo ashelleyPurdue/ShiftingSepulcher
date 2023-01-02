@@ -52,6 +52,20 @@ namespace RandomDungeons
             shortcutDest._incomingShortcuts.Add(this);
         }
 
+        public IEnumerable<IDungeonTreeDoor> AllDoors()
+        {
+            yield return new PlainDoor { Destination = Parent };
+
+            foreach (var childDoor in ChildDoors)
+                yield return childDoor;
+
+            foreach (var dest in IncomingShortcuts)
+                yield return new IncomingShortcutDoor { Destination = dest };
+
+            foreach (var dest in OutgoingShortcuts)
+                yield return new OutgoingShortcutDoor { Destination = dest };
+        }
+
         /// <summary>
         /// Yields this room's parent, and its parent's parent, and so on.
         /// </summary>

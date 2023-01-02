@@ -13,6 +13,8 @@ namespace RandomDungeons
         [Export] public NodePath TargetRoomPath;
         [Export] public string TargetEntrance;
 
+        [Export] public RoomTransitionAnimation TransitionAnimation = RoomTransitionAnimation.Fade;
+
         public Room2D TargetRoom;
 
         private int _ignoreBodyEnteredTimer;
@@ -61,7 +63,8 @@ namespace RandomDungeons
                 RoomTransitionManager.Instance.EnterRoom(
                     TargetRoom,
                     TargetEntrance,
-                    GlobalPosition
+                    GlobalPosition,
+                    TransitionAnimation
                 );
             }
         }

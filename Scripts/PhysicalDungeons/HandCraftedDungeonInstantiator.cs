@@ -18,9 +18,9 @@ namespace RandomDungeons
                 if (warp.TargetEntrancePath == null)
                     throw new Exception($"Door has no target room: {warp.GetPath()}");
 
-                var targetEntrance = warp.GetNode<Node2D>(warp.TargetEntrancePath);
-                warp.TargetRoom = targetEntrance.GetRoom();
-                warp.TargetEntrance = targetEntrance.Name;
+                var targetEntrance = warp.GetNode<IRoomEntrance>(warp.TargetEntrancePath);
+                warp.TargetRoom = targetEntrance.Node.GetRoom();
+                warp.TargetEntrance = targetEntrance.EntranceName;
             }
 
             // Remove all the rooms from the scene tree, and then start the

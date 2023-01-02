@@ -90,7 +90,7 @@ namespace RandomDungeons
         )
         {
             var entrance = room.GetEntrance(entranceName);
-            position -= GetRelativePosition(room, entrance);
+            position -= GetRelativePosition(room, entrance.Node);
 
             if (_activeRoom == room)
                 return;

@@ -4,7 +4,7 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class WarpTrigger : Area2D
+    public class WarpTrigger : Area2D, IRoomEntrance
     {
         /// <summary>
         /// The path to the RoomEntrance that this warp takes you to.
@@ -12,6 +12,9 @@ namespace RandomDungeons
         /// </summary>
         [Export] public NodePath TargetEntrancePath;
         [Export] public RoomTransitionAnimation TransitionAnimation = RoomTransitionAnimation.Fade;
+
+        public Node2D Node => this;
+        public string EntranceName => Name;
 
         public Room2D TargetRoom;
         public string TargetEntrance;

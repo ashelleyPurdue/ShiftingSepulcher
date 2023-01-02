@@ -4,18 +4,19 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class WarpTrigger : Area2D
+    public class WarpTrigger : Area2D, IRoomEntrance
     {
         /// <summary>
-        /// The path to the Room2D that this warp takes you to.
+        /// The path to the RoomEntrance that this warp takes you to.
         /// This is only used for hand-crafted dungeons.
         /// </summary>
-        [Export] public NodePath TargetRoomPath;
-        [Export] public string TargetEntrance;
-
+        [Export] public NodePath TargetEntrancePath;
         [Export] public RoomTransitionAnimation TransitionAnimation = RoomTransitionAnimation.Fade;
 
-        public Room2D TargetRoom;
+        public Node2D Node => this;
+        public string EntranceName => Name;
+
+        public IRoomEntrance TargetEntrance;
 
         private int _ignoreBodyEnteredTimer;
 
@@ -61,8 +62,8 @@ namespace RandomDungeons
             if (body is Player)
             {
                 RoomTransitionManager.Instance.EnterRoom(
-                    TargetRoom,
-                    TargetEntrance,
+                    TargetEntrance.Node.GetRoom(),
+                    TargetEntrance.EntranceName,
                     GlobalPosition,
                     TransitionAnimation
                 );

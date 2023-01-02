@@ -11,9 +11,9 @@ namespace RandomDungeons
 
         private IEnumerable<IEnemy> _enemies;
 
-        public override void Populate(DungeonGraphRoom graphRoom)
+        public override void Populate(DungeonLayoutRoom layoutRoom)
         {
-            base.Populate(graphRoom);
+            base.Populate(layoutRoom);
             _enemies = this.AllDescendantsOfType<IEnemy>();
         }
 

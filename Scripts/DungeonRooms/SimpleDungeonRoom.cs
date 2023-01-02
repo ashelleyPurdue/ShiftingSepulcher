@@ -15,7 +15,7 @@ namespace RandomDungeons
 
         [Export] public DoorPrefabCollection DoorPrefabs;
 
-        public DungeonGraphRoom GraphRoom {get; protected set;}
+        public DungeonLayoutRoom LayoutRoom {get; protected set;}
 
         private IChallenge[] _challenges;
 
@@ -36,14 +36,14 @@ namespace RandomDungeons
             }
         }
 
-        public virtual void Populate(DungeonGraphRoom graphRoom)
+        public virtual void Populate(DungeonLayoutRoom layoutRoom)
         {
-            GraphRoom = graphRoom;
+            LayoutRoom = layoutRoom;
 
-            var rng = new Random(graphRoom.RoomSeed);
+            var rng = new Random(layoutRoom.TreeRoom.RoomSeed);
             foreach (var populator in this.AllDescendantsOfType<IRoomPopulator>())
             {
-                populator.Populate(graphRoom.TreeRoom, rng);
+                populator.Populate(layoutRoom.TreeRoom, rng);
             }
 
             // Gather up all IChallenge nodes, so we don't need to do a full
@@ -52,58 +52,28 @@ namespace RandomDungeons
         }
 
         public void ConnectDoors(
-            Dictionary<DungeonGraphRoom, Room2D> graphRoomToRealRoom,
-            Dictionary<OneWayClosedSideGraphDoor, OneWayDoorClosedSide> closedSideGraphToClosedSideReal,
-            Dictionary<OneWayDoorClosedSide, OneWayOpenSideGraphDoor> closedSideRealToOpenSideGraph,
-            Dictionary<OneWayOpenSideGraphDoor, OneWayDoorOpenSide> openSideGraphToOpenSideReal
+            Dictionary<DungeonTreeRoom, Room2D> treeRoomToRealRoom,
+            ShortcutDoorMap shortcutDoorMap
         )
         {
             // Fill in all the door slots
-            SetDoor(
-                CardinalDirection.North,
-                graphRoomToRealRoom,
-                closedSideGraphToClosedSideReal,
-                closedSideRealToOpenSideGraph,
-                openSideGraphToOpenSideReal
-            );
-            SetDoor(
-                CardinalDirection.South,
-                graphRoomToRealRoom,
-                closedSideGraphToClosedSideReal,
-                closedSideRealToOpenSideGraph,
-                openSideGraphToOpenSideReal
-            );
-            SetDoor(
-                CardinalDirection.East,
-                graphRoomToRealRoom,
-                closedSideGraphToClosedSideReal,
-                closedSideRealToOpenSideGraph,
-                openSideGraphToOpenSideReal
-            );
-            SetDoor(
-                CardinalDirection.West,
-                graphRoomToRealRoom,
-                closedSideGraphToClosedSideReal,
-                closedSideRealToOpenSideGraph,
-                openSideGraphToOpenSideReal
-            );
-
-            // TODO: Connect all the one-way doors to each other
+            SetDoor(CardinalDirection.North, treeRoomToRealRoom, shortcutDoorMap);
+            SetDoor(CardinalDirection.South, treeRoomToRealRoom, shortcutDoorMap);
+            SetDoor(CardinalDirection.East, treeRoomToRealRoom, shortcutDoorMap);
+            SetDoor(CardinalDirection.West, treeRoomToRealRoom, shortcutDoorMap);
         }
 
         private void SetDoor(
             CardinalDirection dir,
-            Dictionary<DungeonGraphRoom, Room2D> graphRoomToRealRoom,
-            Dictionary<OneWayClosedSideGraphDoor, OneWayDoorClosedSide> closedSideGraphToClosedSideReal,
-            Dictionary<OneWayDoorClosedSide, OneWayOpenSideGraphDoor> closedSideRealToOpenSideGraph,
-            Dictionary<OneWayOpenSideGraphDoor, OneWayDoorOpenSide> openSideGraphToOpenSideReal
+            Dictionary<DungeonTreeRoom, Room2D> treeRoomToRealRoom,
+            ShortcutDoorMap shortcutDoorMap
         )
         {
             var spawn = GetDoorSpawn(dir);
-            var graphDoor = GraphRoom.GetDoor(dir);
+            var treeDoor = LayoutRoom.DoorAtDirection(dir);
 
             // If the door doesn't go anywhere, just put a wall here.
-            if (graphDoor.Destination == null)
+            if (treeDoor?.Destination == null)
             {
                 Create<Node2D>(spawn, DoorPrefabs.Wall);
                 return;
@@ -111,33 +81,28 @@ namespace RandomDungeons
 
             // Set up the warp
             var warp = Create<WarpTrigger>(spawn, DoorPrefabs.Warp);
-            DungeonGraphRoom targetGraphRoom = GraphRoom
-                .GetDoor(dir)
-                .Destination;
-
-            var targetRoom = graphRoomToRealRoom[targetGraphRoom];
+            var targetRoom = treeRoomToRealRoom[treeDoor.Destination];
             warp.TargetEntrance = targetRoom.GetEntrance(dir.Opposite().ToString());
 
             // Spawn the correct kind of door
-            if (graphDoor is KeyDungeonGraphDoor lockedDoor)
+            if (treeDoor is LockedDoor lockedDoor)
             {
                 var doorLock = Create<DoorLock>(spawn, DoorPrefabs.Lock);
                 doorLock.KeyId = lockedDoor.KeyId;
             }
-            else if (graphDoor is ChallengeDungeonGraphDoor challengeDoor)
+            else if (treeDoor is ChallengeDoor challengeDoor)
             {
                 Create<DoorBars>(spawn, DoorPrefabs.Bars);
             }
-            else if (graphDoor is OneWayClosedSideGraphDoor closedSideGraphDoor)
+            else if (treeDoor is IncomingShortcutDoor incomingDoor)
             {
                 var door = Create<OneWayDoorClosedSide>(spawn, DoorPrefabs.OneWayClosedSide);
-                closedSideGraphToClosedSideReal[closedSideGraphDoor] = door;
-                closedSideRealToOpenSideGraph[door] = closedSideGraphDoor.OtherSide;
+                shortcutDoorMap.IncomingFakeToReal[incomingDoor] = door;
             }
-            else if (graphDoor is OneWayOpenSideGraphDoor openSideGraphDoor)
+            else if (treeDoor is OutgoingShortcutDoor outgoingDoor)
             {
                 var door = Create<OneWayDoorOpenSide>(spawn, DoorPrefabs.OneWayOpenSide);
-                openSideGraphToOpenSideReal[openSideGraphDoor] = door;
+                shortcutDoorMap.OutgoingFakeToReal[outgoingDoor] = door;
             }
         }
 

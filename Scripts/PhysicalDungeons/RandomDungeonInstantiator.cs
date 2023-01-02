@@ -28,45 +28,37 @@ namespace RandomDungeons
             // Create a "real" version of each room, but don't add it to the
             // scene yet.  We'll add it to the scene later, when the player
             // actually _enters_ it.
-            var graphRoomToDungeonRoom = new Dictionary<DungeonGraphRoom, IDungeonRoom>();
-            var graphRoomToRoom2D = new Dictionary<DungeonGraphRoom, Room2D>();
+            var treeRoomToRoom2D = new Dictionary<DungeonTreeRoom, Room2D>();
             foreach (var coordinates in graph.AllRoomCoordinates())
             {
-                var graphRoom = graph.GetRoom(coordinates);
-                var realRoom = _roomFactory.BuildRoom(graphRoom);
+                var layoutRoom = new DungeonLayoutRoom(layout, coordinates);
+                var realRoom = _roomFactory.BuildRoom(layoutRoom);
 
-                graphRoomToDungeonRoom[graphRoom] = realRoom;
-                graphRoomToRoom2D[graphRoom] = (Room2D)realRoom;
+                treeRoomToRoom2D[layoutRoom.TreeRoom] = (Room2D)realRoom;
             }
 
             // Connect all the doors
-            var closedSideGraphToClosedSideReal = new Dictionary<OneWayClosedSideGraphDoor, OneWayDoorClosedSide>();
-            var closedSideRealToOpenSideGraph = new Dictionary<OneWayDoorClosedSide, OneWayOpenSideGraphDoor>();
-            var openSideGraphToOpenSideReal = new Dictionary<OneWayOpenSideGraphDoor, OneWayDoorOpenSide>();
-            foreach (var realRoom in graphRoomToDungeonRoom.Values)
+            var shortcutDoorMap = new ShortcutDoorMap();
+            foreach (var realRoom in treeRoomToRoom2D.Values)
             {
-                realRoom.ConnectDoors(
-                    graphRoomToRoom2D,
-                    closedSideGraphToClosedSideReal,
-                    closedSideRealToOpenSideGraph,
-                    openSideGraphToOpenSideReal
-                );
+                ((IDungeonRoom)realRoom).ConnectDoors(treeRoomToRoom2D, shortcutDoorMap);
             }
 
             // Connect all the one-way doors
-            foreach (var kvp in closedSideGraphToClosedSideReal)
+            foreach (var kvp in shortcutDoorMap.IncomingFakeToReal)
             {
-                var closedSideGraph = kvp.Key;
-                var closedSideReal = kvp.Value;
-                var openSideGraph = closedSideGraph.OtherSide;
-                var openSideReal = openSideGraphToOpenSideReal[openSideGraph];
+                var incomingFake = kvp.Key;
+                var incomingReal = kvp.Value;
+                var outgoingFake = shortcutDoorMap.IncomingFakeToOutgoingFake[incomingFake];
+                var outgoingReal = shortcutDoorMap.OutgoingFakeToReal[outgoingFake];
 
-                closedSideReal.OpenSide = openSideReal;
+                incomingReal.OpenSide = outgoingReal;
             }
 
+            var startRoom = layout.RoomAt(Vector2i.Zero);
             _transitionManager.StartDungeon(
-                startRoom: graphRoomToRoom2D[graph.StartRoom],
-                roomsToRespawn: graphRoomToRoom2D.Values
+                startRoom: treeRoomToRoom2D[startRoom],
+                roomsToRespawn: treeRoomToRoom2D.Values
             );
         }
 

@@ -27,16 +27,14 @@ tile_data = PoolIntArray( -524297, 0, 0, -524296, 0, 0, -524295, 0, 0, -524294, 
 [node name="WestDoor" parent="HandCraftedDungeonInstantiator/StartRoom" index="1" instance=ExtResource( 3 )]
 position = Vector2( -288, 0 )
 rotation = -1.5708
-TargetRoomPath = NodePath("../../LeftRoom")
-TargetEntrance = "East"
+TargetEntrancePath = NodePath("../../LeftRoom/EastDoor/East")
 
 [node name="West" type="Position2D" parent="HandCraftedDungeonInstantiator/StartRoom/WestDoor" index="3"]
 script = ExtResource( 4 )
 
 [node name="StairsDownTile" parent="HandCraftedDungeonInstantiator/StartRoom" index="2" instance=ExtResource( 8 )]
 position = Vector2( -32, -192 )
-TargetRoomPath = NodePath("../../Basement")
-TargetEntrance = "Stairs"
+TargetEntrancePath = NodePath("../../Basement/StairsUpTile/Stairs")
 
 [node name="Stairs" type="Position2D" parent="HandCraftedDungeonInstantiator/StartRoom/StairsDownTile" index="2"]
 script = ExtResource( 4 )
@@ -54,8 +52,7 @@ tile_data = PoolIntArray( -524297, 0, 0, -524296, 0, 0, -524295, 0, 0, -524294, 
 [node name="EastDoor" parent="HandCraftedDungeonInstantiator/LeftRoom" index="1" instance=ExtResource( 3 )]
 position = Vector2( 288, 0 )
 rotation = 1.5708
-TargetRoomPath = NodePath("../../StartRoom")
-TargetEntrance = "West"
+TargetEntrancePath = NodePath("../../StartRoom/WestDoor/West")
 
 [node name="East" type="Position2D" parent="HandCraftedDungeonInstantiator/LeftRoom/EastDoor" index="3"]
 script = ExtResource( 4 )
@@ -78,8 +75,7 @@ tile_data = PoolIntArray( -262149, 0, 0, -262148, 0, 0, -262147, 0, 0, -262146, 
 
 [node name="StairsUpTile" parent="HandCraftedDungeonInstantiator/Basement" index="1" instance=ExtResource( 9 )]
 position = Vector2( -32, -96 )
-TargetRoomPath = NodePath("../../StartRoom")
-TargetEntrance = "Stairs"
+TargetEntrancePath = NodePath("../../StartRoom/StairsDownTile/Stairs")
 
 [node name="Stairs" type="Position2D" parent="HandCraftedDungeonInstantiator/Basement/StairsUpTile" index="2"]
 script = ExtResource( 4 )

@@ -13,12 +13,14 @@ namespace RandomDungeons
         public override void _Ready()
         {
             // Connect all the doors
-            foreach (var door in this.AllDescendantsOfType<WarpTrigger>())
+            foreach (var warp in this.AllDescendantsOfType<WarpTrigger>())
             {
-                if (door.TargetRoomPath == null)
-                    throw new Exception($"Door has no target room: {door.GetPath()}");
+                if (warp.TargetEntrancePath == null)
+                    throw new Exception($"Door has no target room: {warp.GetPath()}");
 
-                door.TargetRoom = door.GetNode<Room2D>(door.TargetRoomPath);
+                var targetEntrance = warp.GetNode<Node2D>(warp.TargetEntrancePath);
+                warp.TargetRoom = targetEntrance.GetRoom();
+                warp.TargetEntrance = targetEntrance.Name;
             }
 
             // Remove all the rooms from the scene tree, and then start the

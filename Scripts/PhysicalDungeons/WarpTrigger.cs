@@ -7,15 +7,14 @@ namespace RandomDungeons
     public class WarpTrigger : Area2D
     {
         /// <summary>
-        /// The path to the Room2D that this warp takes you to.
+        /// The path to the RoomEntrance that this warp takes you to.
         /// This is only used for hand-crafted dungeons.
         /// </summary>
-        [Export] public NodePath TargetRoomPath;
-        [Export] public string TargetEntrance;
-
+        [Export] public NodePath TargetEntrancePath;
         [Export] public RoomTransitionAnimation TransitionAnimation = RoomTransitionAnimation.Fade;
 
         public Room2D TargetRoom;
+        public string TargetEntrance;
 
         private int _ignoreBodyEnteredTimer;
 

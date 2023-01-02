@@ -11,15 +11,19 @@ namespace RandomDungeons
         private Dictionary<DungeonTreeRoom, Vector2i> _roomToCoords =
             new Dictionary<DungeonTreeRoom, Vector2i>();
 
-        public DungeonTreeRoom RoomAt(Vector2i coords) => _coordsToRoom[coords];
         public bool HasRoomAt(Vector2i coords) => _coordsToRoom.ContainsKey(coords);
 
         public Vector2i CoordsOf(DungeonTreeRoom room) => _roomToCoords[room];
         public bool IsPlaced(DungeonTreeRoom room) => _roomToCoords.ContainsKey(room);
 
+        public DungeonLayoutRoom RoomAt(Vector2i coords)
+        {
+            return new DungeonLayoutRoom(this, coords, _coordsToRoom[coords]);
+        }
+
         public IEnumerable<DungeonLayoutRoom> AllRooms()
         {
-            return _coordsToRoom.Select(p => new DungeonLayoutRoom(this, p.Key));
+            return _coordsToRoom.Select(p => new DungeonLayoutRoom(this, p.Key, p.Value));
         }
 
         public DungeonLayout WithRoomAt(Vector2i coords, DungeonTreeRoom room)

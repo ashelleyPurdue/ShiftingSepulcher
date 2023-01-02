@@ -29,7 +29,7 @@ namespace RandomDungeons
 
             // Populate it
             var layout = new DungeonLayout().WithRoomAt(Vector2i.Zero, new DungeonTreeRoom());
-            var layoutRoom = new DungeonLayoutRoom(layout, Vector2i.Zero);
+            var layoutRoom = layout.RoomAt(Vector2i.Zero);
             _roomInstance.Populate(layoutRoom);
         }
     }

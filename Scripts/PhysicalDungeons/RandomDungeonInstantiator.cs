@@ -29,11 +29,9 @@ namespace RandomDungeons
             // scene yet.  We'll add it to the scene later, when the player
             // actually _enters_ it.
             var treeRoomToRoom2D = new Dictionary<DungeonTreeRoom, Room2D>();
-            foreach (var coordinates in graph.AllRoomCoordinates())
+            foreach (var layoutRoom in layout.AllRooms())
             {
-                var layoutRoom = new DungeonLayoutRoom(layout, coordinates);
                 var realRoom = _roomFactory.BuildRoom(layoutRoom);
-
                 treeRoomToRoom2D[layoutRoom.TreeRoom] = (Room2D)realRoom;
             }
 
@@ -55,7 +53,7 @@ namespace RandomDungeons
                 incomingReal.OpenSide = outgoingReal;
             }
 
-            var startRoom = layout.RoomAt(Vector2i.Zero);
+            var startRoom = layout.RoomAt(Vector2i.Zero).TreeRoom;
             _transitionManager.StartDungeon(
                 startRoom: treeRoomToRoom2D[startRoom],
                 roomsToRespawn: treeRoomToRoom2D.Values

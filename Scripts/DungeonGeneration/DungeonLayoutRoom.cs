@@ -8,12 +8,17 @@ namespace RandomDungeons
     {
         public readonly DungeonLayout Layout;
         public readonly Vector2i Position;
-        public DungeonTreeRoom TreeRoom => Layout.RoomAt(Position);
+        public readonly DungeonTreeRoom TreeRoom;
 
-        public DungeonLayoutRoom(DungeonLayout layout, Vector2i position)
+        public DungeonLayoutRoom(
+            DungeonLayout layout,
+            Vector2i position,
+            DungeonTreeRoom treeRoom
+        )
         {
             Layout = layout;
             Position = position;
+            TreeRoom = treeRoom;
         }
 
         /// <summary>
@@ -32,7 +37,7 @@ namespace RandomDungeons
 
             return TreeRoom
                 .AllDoors()
-                .FirstOrDefault(d => d.Destination == dest);
+                .FirstOrDefault(d => d.Destination == dest.TreeRoom);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace RandomDungeons
     {
         public override Node2D GetDoorSpawn(CardinalDirection dir)
         {
-            string path = LayoutRoom.DoorAtDirection(dir).Destination == null
+            string path = LayoutRoom.DoorAtDirection(dir)?.Destination == null
                 ? $"%Corridors/{dir}/ShortenedDoorSpawn"
                 : $"%Corridors/{dir}/DoorSpawn";
 
@@ -21,9 +21,9 @@ namespace RandomDungeons
 
             foreach (var dir in CardinalDirectionUtils.All())
             {
-                var graphDoor = layoutRoom.DoorAtDirection(dir);
+                var treeDoor = layoutRoom.DoorAtDirection(dir);
                 var corridor = GetNode<Node2D>($"%Corridors/{dir}/Visuals");
-                corridor.Visible = graphDoor.Destination != null;
+                corridor.Visible = treeDoor?.Destination != null;
             }
         }
     }

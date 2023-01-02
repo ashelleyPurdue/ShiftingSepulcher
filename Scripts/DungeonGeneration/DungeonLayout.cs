@@ -17,9 +17,9 @@ namespace RandomDungeons
         public Vector2i CoordsOf(DungeonTreeRoom room) => _roomToCoords[room];
         public bool IsPlaced(DungeonTreeRoom room) => _roomToCoords.ContainsKey(room);
 
-        public IEnumerable<(Vector2i coords, DungeonTreeRoom room)> AllRooms()
+        public IEnumerable<DungeonLayoutRoom> AllRooms()
         {
-            return _coordsToRoom.Select(p => (p.Key, p.Value));
+            return _coordsToRoom.Select(p => new DungeonLayoutRoom(this, p.Key));
         }
 
         public DungeonLayout WithRoomAt(Vector2i coords, DungeonTreeRoom room)

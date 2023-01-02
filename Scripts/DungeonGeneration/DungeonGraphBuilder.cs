@@ -8,17 +8,22 @@ namespace RandomDungeons
             var graph = new DungeonGraph(layout);
 
             // Add graph rooms
-            foreach ((Vector2i coords, DungeonTreeRoom treeRoom) in layout.AllRooms())
+            foreach (var layoutRoom in layout.AllRooms())
             {
-                var graphRoom = graph.CreateRoom(coords, 0);
+                var graphRoom = graph.CreateRoom(layoutRoom.Position, 0);
+                var treeRoom = layoutRoom.TreeRoom;
+
                 graphRoom.ChallengeType = treeRoom.ChallengeType;
                 graphRoom.RoomSeed = treeRoom.RoomSeed;
                 graphRoom.KeyId = treeRoom.KeyId;
             }
 
             // Connect adjacent rooms with doors
-            foreach ((Vector2i coords, DungeonTreeRoom treeRoom) in layout.AllRooms())
+            foreach (var layoutRoom in layout.AllRooms())
             {
+                var coords = layoutRoom.Position;
+                var treeRoom = layoutRoom.TreeRoom;
+
                 DungeonGraphRoom graphRoom = graph.GetRoom(coords);
 
                 // Create doors for all the child rooms

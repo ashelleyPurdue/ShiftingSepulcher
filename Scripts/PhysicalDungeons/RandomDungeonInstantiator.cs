@@ -23,7 +23,6 @@ namespace RandomDungeons
 
             var tree = GenerateTree(TitleScreen.ChosenSeed);
             var layout = DungeonLayoutBuilder.LayoutFromTree(tree);
-            var graph = DungeonGraphBuilder.BuildFromLayout(layout);
 
             // Create a "real" version of each room, but don't add it to the
             // scene yet.  We'll add it to the scene later, when the player

@@ -6,8 +6,6 @@ namespace RandomDungeons
     public class SlidingIcePuzzleTestMap : Node2D
     {
         private SlidingIcePuzzle _puzzle => GetNode<SlidingIcePuzzle>("%SlidingIcePuzzle");
-        private ChallengeDungeonGraphDoor _graphDoor = new ChallengeDungeonGraphDoor();
-
         private DoorBars _bars => GetNode<DoorBars>("%DoorBars");
 
         public override void _Ready()

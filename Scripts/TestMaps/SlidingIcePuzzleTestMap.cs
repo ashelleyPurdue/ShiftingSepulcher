@@ -21,12 +21,11 @@ namespace RandomDungeons
 
             var rng = new Random(TitleScreen.ChosenSeed);
             _puzzle.Populate(graphRoom, rng);
-            _bars.SetGraphDoor(_graphDoor);
         }
 
         public override void _PhysicsProcess(float delta)
         {
-            _graphDoor.IsOpened =_puzzle.IsSolved();
+            _bars.IsOpened =_puzzle.IsSolved();
         }
     }
 }

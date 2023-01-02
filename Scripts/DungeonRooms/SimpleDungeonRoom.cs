@@ -26,10 +26,13 @@ namespace RandomDungeons
 
         public override void _Process(float deltaTime)
         {
-            // Open challenge doors if they've been solved
-            foreach (var door in ChallengeDoors())
+            // Open all door bars if the the challenge has been solved
+            if (IsChallengeSolved())
             {
-                door.IsOpened = IsChallengeSolved();
+                foreach (var bars in this.AllDescendantsOfType<DoorBars>())
+                {
+                    bars.IsOpened = true;
+                }
             }
         }
 
@@ -89,8 +92,7 @@ namespace RandomDungeons
             }
             else if (graphDoor is ChallengeDungeonGraphDoor challengeDoor)
             {
-                var bars = Create<DoorBars>(spawn, DoorPrefabs.Bars);
-                bars.SetGraphDoor(challengeDoor);
+                Create<DoorBars>(spawn, DoorPrefabs.Bars);
             }
             else if (graphDoor is OneWayClosedSideGraphDoor closedSideGraphDoor)
             {
@@ -117,14 +119,6 @@ namespace RandomDungeons
                 return true;
 
             return _challenges.All(c => c.IsSolved());
-        }
-
-        private IEnumerable<ChallengeDungeonGraphDoor> ChallengeDoors()
-        {
-            return CardinalDirectionUtils.All()
-                .Select(dir => GraphRoom.GetDoor(dir))
-                .Where(door => door is ChallengeDungeonGraphDoor)
-                .Cast<ChallengeDungeonGraphDoor>();
         }
     }
 }

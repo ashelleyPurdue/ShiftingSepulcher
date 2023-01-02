@@ -16,8 +16,7 @@ namespace RandomDungeons
         public Node2D Node => this;
         public string EntranceName => Name;
 
-        public Room2D TargetRoom;
-        public string TargetEntrance;
+        public IRoomEntrance TargetEntrance;
 
         private int _ignoreBodyEnteredTimer;
 
@@ -63,8 +62,8 @@ namespace RandomDungeons
             if (body is Player)
             {
                 RoomTransitionManager.Instance.EnterRoom(
-                    TargetRoom,
-                    TargetEntrance,
+                    TargetEntrance.Node.GetRoom(),
+                    TargetEntrance.EntranceName,
                     GlobalPosition,
                     TransitionAnimation
                 );

@@ -5,15 +5,15 @@ namespace RandomDungeons
     [Tool]
     public class DoorDisplay : Node2D
     {
-        public void SetGraphDoor(IDungeonGraphDoor graphDoor)
+        public void SetDoor(IDungeonTreeDoor door)
         {
-            bool isWall = (graphDoor.Destination == null);
+            bool isWall = (door?.Destination == null);
             Visible = !isWall;
 
-            GetNode<Node2D>("%OneWayIcon").Visible = graphDoor is OneWayClosedSideGraphDoor;
-            GetNode<Node2D>("%Lock").Visible = graphDoor is KeyDungeonGraphDoor;
+            GetNode<Node2D>("%OneWayIcon").Visible = door is IncomingShortcutDoor;
+            GetNode<Node2D>("%Lock").Visible = door is LockedDoor;
 
-            if (graphDoor is KeyDungeonGraphDoor k)
+            if (door is LockedDoor k)
             {
                 GetNode<Node2D>("%Lock").Modulate = KeyColors.ForId(k.KeyId);
             }

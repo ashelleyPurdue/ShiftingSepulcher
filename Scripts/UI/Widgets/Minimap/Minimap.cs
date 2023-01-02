@@ -12,7 +12,7 @@ namespace RandomDungeons
         [Export] public PackedScene RoomDisplayPrefab;
         private Node2D _rooms => GetNode<Node2D>("%Rooms");
 
-        public void SetGraph(DungeonGraph graph)
+        public void SetLayout(DungeonLayout layout)
         {
             // Clear out old rooms
             foreach (var child in _rooms.GetChildren())
@@ -21,19 +21,23 @@ namespace RandomDungeons
             }
 
             // Create new rooms
-            foreach (var c in graph.AllRoomCoordinates())
+            foreach (var layoutRoom in layout.AllRooms())
             {
-                var graphRoom = graph.GetRoom(c);
                 var roomDisplay = RoomDisplayPrefab.Instance<RoomDisplay>();
 
                 _rooms.AddChild(roomDisplay);
-                roomDisplay.Position = RoomSize * new Vector2(c.x, -c.y);
-                roomDisplay.SetGraphRoom(graphRoom);
+
+                roomDisplay.Position = new Vector2(
+                    layoutRoom.Position.x,
+                    -layoutRoom.Position.y
+                ) * RoomSize;
+
+                roomDisplay.SetRoom(layoutRoom);
             }
 
             // Keep the rooms centered
-            var xValues = graph.AllRoomCoordinates().Select(c => c.x * RoomSize);
-            var yValues = graph.AllRoomCoordinates().Select(c => c.y * RoomSize);
+            var xValues = layout.AllRooms().Select(r => r.Position.x * RoomSize);
+            var yValues = layout.AllRooms().Select(r => r.Position.y * RoomSize);
 
             Vector2 center = new Vector2(
                 (xValues.Min() + xValues.Max()) / 2,

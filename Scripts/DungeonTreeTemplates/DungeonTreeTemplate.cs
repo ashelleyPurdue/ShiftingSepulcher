@@ -36,9 +36,8 @@ namespace RandomDungeons
             {
                 var tree = ToDungeonTree(new Random(1337));
                 var layout = DungeonLayoutBuilder.LayoutFromTree(tree);
-                var graph = DungeonGraphBuilder.BuildFromLayout(layout);
 
-                _minimapInEditor.SetGraph(graph);
+                _minimapInEditor.SetLayout(layout);
             }
             catch (DungeonGenerationException e)
             {

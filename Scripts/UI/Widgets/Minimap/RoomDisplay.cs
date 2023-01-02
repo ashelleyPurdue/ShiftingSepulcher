@@ -7,20 +7,19 @@ namespace RandomDungeons
         private Node2D _bossIcon => GetNode<Node2D>("%BossIcon");
         private Node2D _keyIcon => GetNode<Node2D>("%KeyIcon");
 
-
-        public void SetGraphRoom(DungeonGraphRoom graphRoom)
+        public void SetRoom(DungeonLayoutRoom layoutRoom)
         {
-            _bossIcon.Visible = graphRoom.ChallengeType == ChallengeType.Boss;
+            _bossIcon.Visible = layoutRoom.TreeRoom.ChallengeType == ChallengeType.Boss;
 
-            _keyIcon.Visible = graphRoom.KeyId > 0;
-            _keyIcon.Modulate = KeyColors.ForId(graphRoom.KeyId);
+            _keyIcon.Visible = layoutRoom.TreeRoom.KeyId > 0;
+            _keyIcon.Modulate = KeyColors.ForId(layoutRoom.TreeRoom.KeyId);
 
             foreach (var dir in CardinalDirectionUtils.All())
             {
-                var graphDoor = graphRoom.GetDoor(dir);
+                var graphDoor = layoutRoom.DoorAtDirection(dir);
                 var display = GetDoorDisplay(dir);
 
-                display.SetGraphDoor(graphDoor);
+                display.SetDoor(graphDoor);
             }
         }
 

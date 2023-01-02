@@ -87,8 +87,7 @@ namespace RandomDungeons
         private void UpdateMinimap(DungeonTreeRoom tree)
         {
             var layout = DungeonLayoutBuilder.LayoutFromTree(tree);
-            var graph = DungeonGraphBuilder.BuildFromLayout(layout);
-            _minimap.SetGraph(graph);
+            _minimap.SetLayout(layout);
         }
     }
 }

@@ -5,6 +5,12 @@ using Godot;
 
 namespace RandomDungeons
 {
+    public enum RoomTransitionAnimation
+    {
+        Fade,
+        StairsUp,
+        StairsDown
+    }
     public class RoomTransitionManager : Node
     {
         public static RoomTransitionManager Instance {get; private set;}
@@ -19,6 +25,9 @@ namespace RandomDungeons
 
         private Node2D _previousRoomTexture => GetNode<Node2D>("%PreviousRoomTexture");
         private Node2D _nextRoomTexture => GetNode<Node2D>("%NextRoomTexture");
+
+        private Node2D _previousRoomTextureScaler => GetNode<Node2D>("%PreviousRoomTextureScaler");
+        private Node2D _nextRoomTextureScaler => GetNode<Node2D>("%NextRoomTextureScaler");
 
         private Camera2D _camera => GetNode<Camera2D>("%Camera");
 
@@ -76,7 +85,8 @@ namespace RandomDungeons
         public void EnterRoom(
             Room2D room,
             string entranceName,
-            Vector2 position
+            Vector2 position,
+            RoomTransitionAnimation anim = RoomTransitionAnimation.Fade
         )
         {
             var entrance = room.GetEntrance(entranceName);
@@ -128,6 +138,12 @@ namespace RandomDungeons
             // Instead, they get rendered to textures, which then get displayed
             // on two giant rectangles.  These rectangles are what get manipulated
             // during the transition animation.
+            _previousRoomTextureScaler.Scale = Vector2.One;
+            _nextRoomTextureScaler.Scale = Vector2.One;
+
+            _previousRoomTextureScaler.GlobalPosition = player.GlobalPosition;
+            _nextRoomTextureScaler.GlobalPosition = player.GlobalPosition;
+
             _previousRoomTexture.GlobalPosition = _activeRoomHolder.GlobalPosition;
             _nextRoomTexture.GlobalPosition = position;
 
@@ -136,7 +152,7 @@ namespace RandomDungeons
             _prevRoom.SetPaused(true);
 
             // Play the transition animation, now that it's been set up
-            _transitionAnimator.ResetAndPlay("Fade");
+            _transitionAnimator.ResetAndPlay(anim.ToString());
             _camera.GlobalPosition = position;
         }
 

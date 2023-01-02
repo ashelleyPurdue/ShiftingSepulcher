@@ -13,7 +13,7 @@ namespace RandomDungeons
         public override void _Ready()
         {
             // Connect all the doors
-            foreach (var door in this.AllDescendantsOfType<DoorWarp>())
+            foreach (var door in this.AllDescendantsOfType<WarpTrigger>())
             {
                 if (door.TargetRoomPath == null)
                     throw new Exception($"Door has no target room: {door.GetPath()}");

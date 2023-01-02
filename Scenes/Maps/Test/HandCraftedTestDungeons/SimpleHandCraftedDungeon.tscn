@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scenes/Maps/Test/HandCraftedTestDungeons/HandCraftedTestDungeonBase.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Room2D.cs" type="Script" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://TileSets/PlainWhiteTileSet/PlainWhiteTileSet.tres" type="TileSet" id=5]
 [ext_resource path="res://Scenes/Prefabs/Elements/Enemies/MiniTilemancer.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/Prefabs/Elements/Enemies/Zombie.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Prefabs/Doors/StairsDownTile.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/Prefabs/Doors/StairsUpTile.tscn" type="PackedScene" id=9]
 
 [node name="SimpleHandCraftedDungeon" instance=ExtResource( 1 )]
 
@@ -28,7 +30,15 @@ rotation = -1.5708
 TargetRoomPath = NodePath("../../LeftRoom")
 TargetEntrance = "East"
 
-[node name="West" type="Position2D" parent="HandCraftedDungeonInstantiator/StartRoom/WestDoor" index="4"]
+[node name="West" type="Position2D" parent="HandCraftedDungeonInstantiator/StartRoom/WestDoor" index="3"]
+script = ExtResource( 4 )
+
+[node name="StairsDownTile" parent="HandCraftedDungeonInstantiator/StartRoom" index="2" instance=ExtResource( 8 )]
+position = Vector2( -32, -192 )
+TargetRoomPath = NodePath("../../Basement")
+TargetEntrance = "Stairs"
+
+[node name="Stairs" type="Position2D" parent="HandCraftedDungeonInstantiator/StartRoom/StairsDownTile" index="2"]
 script = ExtResource( 4 )
 
 [node name="LeftRoom" type="Node2D" parent="HandCraftedDungeonInstantiator" index="1"]
@@ -47,7 +57,7 @@ rotation = 1.5708
 TargetRoomPath = NodePath("../../StartRoom")
 TargetEntrance = "West"
 
-[node name="East" type="Position2D" parent="HandCraftedDungeonInstantiator/LeftRoom/EastDoor" index="4"]
+[node name="East" type="Position2D" parent="HandCraftedDungeonInstantiator/LeftRoom/EastDoor" index="3"]
 script = ExtResource( 4 )
 
 [node name="Zombie" parent="HandCraftedDungeonInstantiator/LeftRoom" index="2" instance=ExtResource( 7 )]
@@ -55,3 +65,21 @@ position = Vector2( -96, -96 )
 
 [node name="MiniTilemancer" parent="HandCraftedDungeonInstantiator/LeftRoom" index="3" instance=ExtResource( 6 )]
 position = Vector2( 96, 192 )
+
+[node name="Basement" type="Node2D" parent="HandCraftedDungeonInstantiator" index="2"]
+position = Vector2( -640, 640 )
+script = ExtResource( 2 )
+
+[node name="TileMap" type="TileMap" parent="HandCraftedDungeonInstantiator/Basement" index="0"]
+tile_set = ExtResource( 5 )
+cell_size = Vector2( 32, 32 )
+format = 1
+tile_data = PoolIntArray( -262149, 0, 0, -262148, 0, 0, -262147, 0, 0, -262146, 0, 0, -262145, 0, 0, -327680, 0, 0, -327679, 0, 0, -327678, 0, 0, -327677, 0, 0, -327676, 0, 0, -196613, 0, 0, -196612, 1, 0, -196611, 1, 0, -196610, 1, 0, -196609, 1, 0, -262144, 1, 0, -262143, 1, 0, -262142, 1, 0, -262141, 1, 0, -262140, 0, 0, -131077, 0, 0, -131076, 1, 0, -131075, 1, 0, -131074, 1, 0, -131073, 1, 0, -196608, 1, 0, -196607, 1, 0, -196606, 1, 0, -196605, 1, 0, -196604, 0, 0, -65541, 0, 0, -65540, 1, 0, -65539, 1, 0, -65538, 1, 0, -65537, 1, 0, -131072, 1, 0, -131071, 1, 0, -131070, 1, 0, -131069, 1, 0, -131068, 0, 0, -5, 0, 0, -4, 1, 0, -3, 1, 0, -2, 1, 0, -1, 1, 0, -65536, 1, 0, -65535, 1, 0, -65534, 1, 0, -65533, 1, 0, -65532, 0, 0, 65531, 0, 0, 65532, 1, 0, 65533, 1, 0, 65534, 1, 0, 65535, 1, 0, 0, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 0, 0, 131067, 0, 0, 131068, 1, 0, 131069, 1, 0, 131070, 1, 0, 131071, 1, 0, 65536, 1, 0, 65537, 1, 0, 65538, 1, 0, 65539, 1, 0, 65540, 0, 0, 196603, 0, 0, 196604, 1, 0, 196605, 1, 0, 196606, 1, 0, 196607, 1, 0, 131072, 1, 0, 131073, 1, 0, 131074, 1, 0, 131075, 1, 0, 131076, 0, 0, 262139, 0, 0, 262140, 1, 0, 262141, 1, 0, 262142, 1, 0, 262143, 1, 0, 196608, 1, 0, 196609, 1, 0, 196610, 1, 0, 196611, 1, 0, 196612, 0, 0, 327675, 0, 0, 327676, 0, 0, 327677, 0, 0, 327678, 0, 0, 327679, 0, 0, 262144, 0, 0, 262145, 0, 0, 262146, 0, 0, 262147, 0, 0, 262148, 0, 0 )
+
+[node name="StairsUpTile" parent="HandCraftedDungeonInstantiator/Basement" index="1" instance=ExtResource( 9 )]
+position = Vector2( -32, -96 )
+TargetRoomPath = NodePath("../../StartRoom")
+TargetEntrance = "Stairs"
+
+[node name="Stairs" type="Position2D" parent="HandCraftedDungeonInstantiator/Basement/StairsUpTile" index="2"]
+script = ExtResource( 4 )

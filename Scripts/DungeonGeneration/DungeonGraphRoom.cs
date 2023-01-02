@@ -9,6 +9,8 @@ namespace RandomDungeons
         public readonly DungeonGraph Graph;
         public readonly Vector2i Position;
 
+        public DungeonTreeRoom TreeRoom => Graph.ToLayout.RoomAt(Position);
+
         /// <summary>
         /// Seed used to generate this room's content.
         /// This is a separate seed from the one used to lay out all the rooms.

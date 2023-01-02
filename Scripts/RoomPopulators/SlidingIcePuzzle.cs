@@ -22,10 +22,10 @@ namespace RandomDungeons
 
         private SlidingIceGraph _graph;
 
-        public void Populate(DungeonGraphRoom graphRoom, Random rng)
+        public void Populate(DungeonTreeRoom treeRoom, Random rng)
         {
             _graph = SlidingIceGraph.Generate(
-                seed: graphRoom.RoomSeed,
+                seed: treeRoom.RoomSeed,
                 width: 10,
                 height: 10,
                 numPushes: 5,

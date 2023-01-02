@@ -16,9 +16,8 @@ namespace RandomDungeons
                 numRuns: 6
             );
             var layout = DungeonLayoutBuilder.LayoutFromTree(tree);
-            var graph = DungeonGraphBuilder.BuildFromLayout(layout);
 
-            _minimap.SetGraph(graph);
+            _minimap.SetLayout(layout);
         }
     }
 }

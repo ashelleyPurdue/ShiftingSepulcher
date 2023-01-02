@@ -4,6 +4,6 @@ namespace RandomDungeons
 {
     public interface IRoomPopulator
     {
-        void Populate(DungeonGraphRoom graphRoom, Random rng);
+        void Populate(DungeonTreeRoom graphRoom, Random rng);
     }
 }

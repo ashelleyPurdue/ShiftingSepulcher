@@ -15,33 +15,33 @@ namespace RandomDungeons
         [Export] public SceneSpawnTable PuzzleRoomTable;
         [Export] public SceneSpawnTable BossRoomTable;
 
-        public IDungeonRoom BuildRoom(DungeonGraphRoom graphRoom)
+        public IDungeonRoom BuildRoom(DungeonLayoutRoom layoutRoom)
         {
-            switch (graphRoom.ChallengeType)
+            switch (layoutRoom.TreeRoom.ChallengeType)
             {
-                case ChallengeType.None: return SpawnFromTable(FillerRoomTable, graphRoom);
-                case ChallengeType.Loot: return UseTemplate(KeyRoom, graphRoom);
-                case ChallengeType.Combat: return SpawnFromTable(CombatRoomTable, graphRoom);
-                case ChallengeType.Puzzle: return SpawnFromTable(PuzzleRoomTable, graphRoom);
-                case ChallengeType.Boss: return SpawnFromTable(BossRoomTable, graphRoom);
+                case ChallengeType.None: return SpawnFromTable(FillerRoomTable, layoutRoom);
+                case ChallengeType.Loot: return UseTemplate(KeyRoom, layoutRoom);
+                case ChallengeType.Combat: return SpawnFromTable(CombatRoomTable, layoutRoom);
+                case ChallengeType.Puzzle: return SpawnFromTable(PuzzleRoomTable, layoutRoom);
+                case ChallengeType.Boss: return SpawnFromTable(BossRoomTable, layoutRoom);
 
-                default: return UseTemplate(EmptyRoom, graphRoom);
+                default: return UseTemplate(EmptyRoom, layoutRoom);
             }
         }
 
-        private IDungeonRoom SpawnFromTable(SceneSpawnTable table, DungeonGraphRoom graphRoom)
+        private IDungeonRoom SpawnFromTable(SceneSpawnTable table, DungeonLayoutRoom layoutRoom)
         {
-            var rng = new Random(graphRoom.RoomSeed);
+            var rng = new Random(layoutRoom.TreeRoom.RoomSeed);
             var realRoom = table.Spawn<IDungeonRoom>(rng);
-            realRoom.Populate(graphRoom);
+            realRoom.Populate(layoutRoom);
 
             return realRoom;
         }
 
-        private IDungeonRoom UseTemplate(PackedScene template, DungeonGraphRoom graphRoom)
+        private IDungeonRoom UseTemplate(PackedScene template, DungeonLayoutRoom layoutRoom)
         {
             var realRoom = template.Instance<IDungeonRoom>();
-            realRoom.Populate(graphRoom);
+            realRoom.Populate(layoutRoom);
             return realRoom;
         }
     }

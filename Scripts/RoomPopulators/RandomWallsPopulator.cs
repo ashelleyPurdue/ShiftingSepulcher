@@ -7,7 +7,7 @@ namespace RandomDungeons
 {
     public class RandomWallsPopulator : Node, IRoomPopulator
     {
-        public void Populate(DungeonGraphRoom graphRoom, Random rng)
+        public void Populate(DungeonTreeRoom treeRoom, Random rng)
         {
             // Randomly knock down walls until all cells are connected
             var graph = new WallsGraph();

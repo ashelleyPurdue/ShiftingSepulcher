@@ -20,7 +20,7 @@ namespace RandomDungeons
 
         public bool IsSolved() => _puzzleGraph.IsSolved();
 
-        public void Populate(DungeonGraphRoom graphRoom, Random rng)
+        public void Populate(DungeonTreeRoom treeRoom, Random rng)
         {
             var puzzleGraph = PipePuzzleGraph.Generate(
                 rng: rng,

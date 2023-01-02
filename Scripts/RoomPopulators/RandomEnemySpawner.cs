@@ -10,7 +10,7 @@ namespace RandomDungeons
         [Export] public int MaxCount = 1;
         [Export] public float SpawnRadius = 0;
 
-        public void Populate(DungeonGraphRoom graphRoom, Random rng)
+        public void Populate(DungeonTreeRoom treeRoom, Random rng)
         {
             int count = rng.Next(MinCount, MaxCount);
 

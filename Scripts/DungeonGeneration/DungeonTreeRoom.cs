@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RandomDungeons
 {
@@ -12,12 +13,14 @@ namespace RandomDungeons
         public DungeonTreeRoom Parent {get; private set;}
 
         public IReadOnlyList<IDungeonTreeDoor> ChildDoors => _childDoors;
-        public IEnumerable<DungeonTreeRoom> OutgoingShortcuts => _outgoingShortcuts;
-        public IEnumerable<DungeonTreeRoom> IncomingShortcuts => _incomingShortcuts;
+        public IEnumerable<DungeonTreeRoom> OutgoingShortcuts =>
+            _outgoingShortcuts.Select(d => d.Destination);
+        public IEnumerable<DungeonTreeRoom> IncomingShortcuts =>
+            _incomingShortcuts.Select(d => d.Destination);
 
         private List<IDungeonTreeDoor> _childDoors = new List<IDungeonTreeDoor>();
-        private HashSet<DungeonTreeRoom> _incomingShortcuts = new HashSet<DungeonTreeRoom>();
-        private HashSet<DungeonTreeRoom> _outgoingShortcuts = new HashSet<DungeonTreeRoom>();
+        private HashSet<IncomingShortcutDoor> _incomingShortcuts = new HashSet<IncomingShortcutDoor>();
+        private HashSet<OutgoingShortcutDoor> _outgoingShortcuts = new HashSet<OutgoingShortcutDoor>();
 
         public void AddChallengeDoor(DungeonTreeRoom room)
         {
@@ -48,8 +51,32 @@ namespace RandomDungeons
 
         public void AddOutgoingShortcut(DungeonTreeRoom shortcutDest)
         {
-            _outgoingShortcuts.Add(shortcutDest);
-            shortcutDest._incomingShortcuts.Add(this);
+            var outgoingDoor = new OutgoingShortcutDoor
+            {
+                Destination = shortcutDest
+            };
+            var incomingDoor = new IncomingShortcutDoor
+            {
+                Destination = this,
+                OtherSide = outgoingDoor
+            };
+
+            _outgoingShortcuts.Add(outgoingDoor);
+            shortcutDest._incomingShortcuts.Add(incomingDoor);
+        }
+
+        public IEnumerable<IDungeonTreeDoor> AllDoors()
+        {
+            yield return new PlainDoor { Destination = Parent };
+
+            foreach (var childDoor in ChildDoors)
+                yield return childDoor;
+
+            foreach (var door in _incomingShortcuts)
+                yield return door;
+
+            foreach (var door in _outgoingShortcuts)
+                yield return door;
         }
 
         /// <summary>

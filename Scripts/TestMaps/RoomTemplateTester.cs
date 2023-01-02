@@ -28,11 +28,9 @@ namespace RandomDungeons
             _roomLocation.AddChild(_roomInstance.Node);
 
             // Populate it
-            var graph = new DungeonGraph();
-            var graphRoom = graph.CreateRoom(Vector2i.Zero, 0);
-            graphRoom.RoomSeed = _seedInput.ParseSeedTextbox();
-
-            _roomInstance.Populate(graphRoom);
+            var layout = new DungeonLayout().WithRoomAt(Vector2i.Zero, new DungeonTreeRoom());
+            var layoutRoom = layout.RoomAt(Vector2i.Zero);
+            _roomInstance.Populate(layoutRoom);
         }
     }
 }

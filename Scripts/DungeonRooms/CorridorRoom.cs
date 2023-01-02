@@ -8,22 +8,22 @@ namespace RandomDungeons
     {
         public override Node2D GetDoorSpawn(CardinalDirection dir)
         {
-            string path = GraphRoom.GetDoor(dir).Destination == null
+            string path = LayoutRoom.DoorAtDirection(dir)?.Destination == null
                 ? $"%Corridors/{dir}/ShortenedDoorSpawn"
                 : $"%Corridors/{dir}/DoorSpawn";
 
             return GetNode<Node2D>(path);
         }
 
-        public override void Populate(DungeonGraphRoom graphRoom)
+        public override void Populate(DungeonLayoutRoom layoutRoom)
         {
-            base.Populate(graphRoom);
+            base.Populate(layoutRoom);
 
             foreach (var dir in CardinalDirectionUtils.All())
             {
-                var graphDoor = graphRoom.GetDoor(dir);
+                var treeDoor = layoutRoom.DoorAtDirection(dir);
                 var corridor = GetNode<Node2D>($"%Corridors/{dir}/Visuals");
-                corridor.Visible = graphDoor.Destination != null;
+                corridor.Visible = treeDoor?.Destination != null;
             }
         }
     }

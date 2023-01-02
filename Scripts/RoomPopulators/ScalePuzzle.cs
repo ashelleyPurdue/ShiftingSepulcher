@@ -22,7 +22,7 @@ namespace RandomDungeons
 
         private List<HoldableWeights> _weights = new List<HoldableWeights>();
 
-        public void Populate(DungeonGraphRoom graphRoom, Random rng)
+        public void Populate(DungeonTreeRoom treeRoom, Random rng)
         {
             var leftSide = new List<int>();
             var rightSide = new List<int>();

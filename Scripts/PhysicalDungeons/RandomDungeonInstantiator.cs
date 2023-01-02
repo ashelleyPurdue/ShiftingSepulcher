@@ -23,31 +23,39 @@ namespace RandomDungeons
 
             var tree = GenerateTree(TitleScreen.ChosenSeed);
             var layout = DungeonLayoutBuilder.LayoutFromTree(tree);
-            var graph = DungeonGraphBuilder.BuildFromLayout(layout);
 
             // Create a "real" version of each room, but don't add it to the
             // scene yet.  We'll add it to the scene later, when the player
             // actually _enters_ it.
-            var graphRoomToDungeonRoom = new Dictionary<DungeonGraphRoom, IDungeonRoom>();
-            var graphRoomToRoom2D = new Dictionary<DungeonGraphRoom, Room2D>();
-            foreach (var coordinates in graph.AllRoomCoordinates())
+            var treeRoomToRoom2D = new Dictionary<DungeonTreeRoom, Room2D>();
+            foreach (var layoutRoom in layout.AllRooms())
             {
-                var graphRoom = graph.GetRoom(coordinates);
-                var realRoom = _roomFactory.BuildRoom(graphRoom);
-
-                graphRoomToDungeonRoom[graphRoom] = realRoom;
-                graphRoomToRoom2D[graphRoom] = (Room2D)realRoom;
+                var realRoom = _roomFactory.BuildRoom(layoutRoom);
+                treeRoomToRoom2D[layoutRoom.TreeRoom] = (Room2D)realRoom;
             }
 
             // Connect all the doors
-            foreach (var realRoom in graphRoomToDungeonRoom.Values)
+            var shortcutDoorMap = new ShortcutDoorMap();
+            foreach (var realRoom in treeRoomToRoom2D.Values)
             {
-                realRoom.ConnectDoors(graphRoomToRoom2D);
+                ((IDungeonRoom)realRoom).ConnectDoors(treeRoomToRoom2D, shortcutDoorMap);
             }
 
+            // Connect all the one-way doors
+            foreach (var kvp in shortcutDoorMap.IncomingFakeToReal)
+            {
+                var incomingFake = kvp.Key;
+                var incomingReal = kvp.Value;
+                var outgoingFake = incomingFake.OtherSide;
+                var outgoingReal = shortcutDoorMap.OutgoingFakeToReal[outgoingFake];
+
+                incomingReal.OpenSide = outgoingReal;
+            }
+
+            var startRoom = layout.RoomAt(Vector2i.Zero).TreeRoom;
             _transitionManager.StartDungeon(
-                startRoom: graphRoomToRoom2D[graph.StartRoom],
-                roomsToRespawn: graphRoomToRoom2D.Values
+                startRoom: treeRoomToRoom2D[startRoom],
+                roomsToRespawn: treeRoomToRoom2D.Values
             );
         }
 

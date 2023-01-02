@@ -4,23 +4,28 @@ namespace RandomDungeons
 {
     public class OneWayDoorOpenSide : Node2D
     {
-        private OneWayOpenSideGraphDoor _graphDoor;
+        public const float OpenCloseTime = 0.1f;
 
-        public void SetGraphDoor(OneWayOpenSideGraphDoor graphDoor)
-        {
-            _graphDoor = graphDoor;
-        }
+        public bool IsOpened = false;
 
-        public override void _PhysicsProcess(float delta)
+        private Node2D _visuals => GetNode<Node2D>("%Visuals");
+
+        public override void _Process(float delta)
         {
-            if (_graphDoor.IsOpened)
-                QueueFree();
+            GetNode<CollisionShape2D>("%CollisionShape").Disabled = IsOpened;
+
+            var targetScale = IsOpened
+                ? new Vector2(0, 1)
+                : new Vector2(1, 1);
+
+            float speed = 1f / OpenCloseTime;
+            _visuals.Scale = _visuals.Scale.MoveToward(targetScale, speed * delta);
         }
 
         public void OnUnlockTriggerBodyEnter(object body)
         {
             if (body is Player)
-                _graphDoor.IsOpened = true;
+                IsOpened = true;
         }
     }
 }

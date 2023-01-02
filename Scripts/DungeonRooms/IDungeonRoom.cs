@@ -10,14 +10,26 @@ namespace RandomDungeons
 
         event Action<CardinalDirection> DoorUsed;
 
-        DungeonGraphRoom GraphRoom {get;}
+        DungeonLayoutRoom LayoutRoom {get;}
 
         Node2D GetDoorSpawn(CardinalDirection dir);
 
-        void Populate(DungeonGraphRoom graphRoom);
+        void Populate(DungeonLayoutRoom treeRoom);
 
-        void ConnectDoors(Dictionary<DungeonGraphRoom, Room2D> graphRoomToRealRoom);
+        void ConnectDoors(
+            Dictionary<DungeonTreeRoom, Room2D> treeRoomToRealRoom,
+            ShortcutDoorMap shortcutDoorMap
+        );
 
         bool IsChallengeSolved();
+    }
+
+    public class ShortcutDoorMap
+    {
+        public readonly Dictionary<IncomingShortcutDoor, OneWayDoorClosedSide> IncomingFakeToReal
+            = new Dictionary<IncomingShortcutDoor, OneWayDoorClosedSide>();
+
+        public readonly Dictionary<OutgoingShortcutDoor, OneWayDoorOpenSide> OutgoingFakeToReal
+            = new Dictionary<OutgoingShortcutDoor, OneWayDoorOpenSide>();
     }
 }

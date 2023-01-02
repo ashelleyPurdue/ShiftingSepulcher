@@ -6,10 +6,10 @@ namespace RandomDungeons
     {
         private Key _key => GetNode<Key>("%Key");
 
-        public override void Populate(DungeonGraphRoom graphRoom)
+        public override void Populate(DungeonLayoutRoom layoutRoom)
         {
-            base.Populate(graphRoom);
-            _key.KeyId = graphRoom.KeyId;
+            base.Populate(layoutRoom);
+            _key.KeyId = layoutRoom.TreeRoom.KeyId;
         }
     }
 }

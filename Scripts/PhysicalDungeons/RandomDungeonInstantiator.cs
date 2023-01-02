@@ -49,7 +49,7 @@ namespace RandomDungeons
             {
                 var incomingFake = kvp.Key;
                 var incomingReal = kvp.Value;
-                var outgoingFake = shortcutDoorMap.IncomingFakeToOutgoingFake[incomingFake];
+                var outgoingFake = incomingFake.OtherSide;
                 var outgoingReal = shortcutDoorMap.OutgoingFakeToReal[outgoingFake];
 
                 incomingReal.OpenSide = outgoingReal;

@@ -31,8 +31,5 @@ namespace RandomDungeons
 
         public readonly Dictionary<OutgoingShortcutDoor, OneWayDoorOpenSide> OutgoingFakeToReal
             = new Dictionary<OutgoingShortcutDoor, OneWayDoorOpenSide>();
-
-        public readonly Dictionary<IncomingShortcutDoor, OutgoingShortcutDoor> IncomingFakeToOutgoingFake
-            = new Dictionary<IncomingShortcutDoor, OutgoingShortcutDoor>();
     }
 }

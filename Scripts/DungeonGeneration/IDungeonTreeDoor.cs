@@ -24,6 +24,7 @@ namespace RandomDungeons
     public class IncomingShortcutDoor : IDungeonTreeDoor
     {
         public DungeonTreeRoom Destination {get; set;}
+        public OutgoingShortcutDoor OtherSide {get; set;}
     }
 
     public class OutgoingShortcutDoor : IDungeonTreeDoor

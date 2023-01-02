@@ -43,7 +43,7 @@ namespace RandomDungeons
             var rng = new Random(graphRoom.RoomSeed);
             foreach (var populator in this.AllDescendantsOfType<IRoomPopulator>())
             {
-                populator.Populate(graphRoom, rng);
+                populator.Populate(graphRoom.TreeRoom, rng);
             }
 
             // Gather up all IChallenge nodes, so we don't need to do a full

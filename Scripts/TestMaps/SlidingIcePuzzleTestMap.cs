@@ -12,15 +12,11 @@ namespace RandomDungeons
 
         public override void _Ready()
         {
-            var graphRoom = new DungeonGraphRoom(
-                new DungeonGraph(),
-                Vector2i.Zero,
-                0
-            );
-            graphRoom.RoomSeed = TitleScreen.ChosenSeed;
+            var treeRoom = new DungeonTreeRoom();
+            treeRoom.RoomSeed = TitleScreen.ChosenSeed;
 
             var rng = new Random(TitleScreen.ChosenSeed);
-            _puzzle.Populate(graphRoom, rng);
+            _puzzle.Populate(treeRoom, rng);
         }
 
         public override void _PhysicsProcess(float delta)

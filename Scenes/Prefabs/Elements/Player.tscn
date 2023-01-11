@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Sprites/OutlinedCircle.svg" type="Texture" id=1]
 [ext_resource path="res://Scripts/Components/HurtFlasher.cs" type="Script" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Scripts/Components/InvulnerableFlasher.cs" type="Script" id=7]
 [ext_resource path="res://Scripts/Player/ObjectHolder.cs" type="Script" id=8]
 [ext_resource path="res://Scenes/Prefabs/UI/HUD.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Audio/SFX/SwordSwish.wav" type="AudioStream" id=10]
 
 [sub_resource type="CircleShape2D" id=77]
 radius = 14.0
@@ -345,6 +346,10 @@ position = Vector2( 14, 0 )
 [node name="Sword" type="Node2D" parent="."]
 unique_name_in_owner = true
 script = ExtResource( 6 )
+
+[node name="SwordSwishSound" type="AudioStreamPlayer" parent="Sword"]
+unique_name_in_owner = true
+stream = ExtResource( 10 )
 
 [node name="Visuals" type="Node2D" parent="Sword"]
 position = Vector2( 8, 0 )

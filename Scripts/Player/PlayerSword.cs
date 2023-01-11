@@ -11,6 +11,7 @@ namespace RandomDungeons
         private float SwingSpeed => SwingAngleDeg / SwingDuration;
 
         private HitBox _hitBox => GetNode<HitBox>("HitBox");
+        private AudioStreamPlayer _swishSoundPlayer => GetNode<AudioStreamPlayer>("%SwordSwishSound");
 
         private float _swingTimer = 0;
 
@@ -28,6 +29,7 @@ namespace RandomDungeons
         {
             _swingTimer = SwingDuration;
             RotationDegrees = angleDeg - (SwingAngleDeg / 2);
+            _swishSoundPlayer.Play();
         }
     }
 }

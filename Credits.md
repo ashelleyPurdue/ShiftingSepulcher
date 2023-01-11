@@ -18,3 +18,7 @@ Ticking clock sound effect:
     https://opengameart.org/content/ticking-clock
     Author: bart
     Patreon: https://www.patreon.com/opengameart
+
+RPG Sound Pack:
+    https://opengameart.org/content/rpg-sound-pack
+    Author: artisticdude

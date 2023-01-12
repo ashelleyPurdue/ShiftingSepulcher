@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scripts/Components/RotateParent.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Projectiles/TilemancerTile.cs" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Scripts/Components/HurtBox.cs" type="Script" id=4]
 [ext_resource path="res://Scripts/Components/LingeringAudioStreamPlayer.cs" type="Script" id=5]
 [ext_resource path="res://Audio/SFX/BottleBreak.wav" type="AudioStream" id=6]
+[ext_resource path="res://Audio/SFX/TileSummon.wav" type="AudioStream" id=7]
 
 [sub_resource type="Animation" id=7]
 length = 0.001
@@ -116,6 +117,20 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Vector2( 0, 0 ), Vector2( 1, 1 ) ]
 }
+tracks/1/type = "method"
+tracks/1/path = NodePath("../SummonSound")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Play"
+} ]
+}
 
 [sub_resource type="CircleShape2D" id=5]
 radius = 16.0
@@ -154,6 +169,10 @@ anims/Summon = SubResource( 8 )
 [node name="ShatterSound" type="Node" parent="."]
 script = ExtResource( 5 )
 Sound = ExtResource( 6 )
+
+[node name="SummonSound" type="Node" parent="."]
+script = ExtResource( 5 )
+Sound = ExtResource( 7 )
 
 [node name="Collider" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true

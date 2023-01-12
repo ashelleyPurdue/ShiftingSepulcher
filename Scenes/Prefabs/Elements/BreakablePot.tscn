@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scripts/Components/HurtBox.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Elements/BreakablePot.cs" type="Script" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://Scripts/Components/HitBox.cs" type="Script" id=4]
 [ext_resource path="res://Scripts/Components/Circle2D.cs" type="Script" id=5]
 [ext_resource path="res://Scripts/Components/Holdables/ThrowableParentKinematic.cs" type="Script" id=6]
+[ext_resource path="res://Audio/SFX/BottleBreak.wav" type="AudioStream" id=7]
+[ext_resource path="res://Scripts/Components/LingeringAudioStreamPlayer.cs" type="Script" id=8]
 
 [sub_resource type="CircleShape2D" id=7]
 radius = 16.0
@@ -189,10 +191,24 @@ tracks/6/loop_wrap = true
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
-"times": PoolRealArray( 0.3 ),
+"times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ false ]
+}
+tracks/7/type = "method"
+tracks/7/path = NodePath("ShatterSound")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Play"
+} ]
 }
 
 [node name="BreakablePot" type="KinematicBody2D"]
@@ -265,6 +281,10 @@ polygon = PoolVector2Array( 13, 0, 19, 0, 20, 2, 19, 5, 13, 5, 12, 2 )
 unique_name_in_owner = true
 anims/RESET = SubResource( 3 )
 anims/Shatter = SubResource( 4 )
+
+[node name="ShatterSound" type="Node" parent="."]
+script = ExtResource( 8 )
+Sound = ExtResource( 7 )
 
 [connection signal="TookDamage" from="HurtBox" to="." method="OnTookDamage"]
 [connection signal="DealtDamage" from="HitBox" to="." method="OnDealtDamage"]

@@ -6,6 +6,7 @@ namespace RandomDungeons
     /// Use this to play sound effects that continue playing (or "linger") even
     /// after this node has been destroyed.
     /// </summary>
+    [CustomNode(icon: "AudioStreamPlayer")]
     public class LingeringAudioStreamPlayer : Node
     {
         [Export] public AudioStream Sound;

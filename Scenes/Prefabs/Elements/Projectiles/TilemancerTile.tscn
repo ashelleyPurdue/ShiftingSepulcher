@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scripts/Components/RotateParent.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Projectiles/TilemancerTile.cs" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Scripts/Components/LingeringAudioStreamPlayer.cs" type="Script" id=5]
 [ext_resource path="res://Audio/SFX/BottleBreak.wav" type="AudioStream" id=6]
 [ext_resource path="res://Audio/SFX/TileSummon.wav" type="AudioStream" id=7]
+[ext_resource path="res://Audio/SFX/TileThrow.wav" type="AudioStream" id=8]
 
 [sub_resource type="Animation" id=7]
 length = 0.001
@@ -173,6 +174,10 @@ Sound = ExtResource( 6 )
 [node name="SummonSound" type="Node" parent="."]
 script = ExtResource( 5 )
 Sound = ExtResource( 7 )
+
+[node name="ThrowSound" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource( 8 )
 
 [node name="Collider" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true

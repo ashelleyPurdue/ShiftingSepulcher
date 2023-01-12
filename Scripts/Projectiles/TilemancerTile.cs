@@ -8,6 +8,7 @@ namespace RandomDungeons
         private CollisionShape2D _collider => GetNode<CollisionShape2D>("%Collider");
         private HitBox _hitBox => GetNode<HitBox>("%HitBox");
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
+        private AudioStreamPlayer _throwSoundPlayer => GetNode<AudioStreamPlayer>("%ThrowSound");
 
         private Vector2 _velocity;
 
@@ -31,6 +32,7 @@ namespace RandomDungeons
 
             _collider.Disabled = false;
             _hitBox.Monitoring = true;
+            _throwSoundPlayer.Play();
         }
 
         public void Shatter()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Scripts/Components/HitBox.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Components/HurtBox.cs" type="Script" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://Scenes/Components/LootDroppers/RecoveryHeartDropper.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/Components/LootDroppers/GoldLootDropper.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Audio/SFX/SwordDamageOwWithSlime.wav" type="AudioStream" id=9]
+[ext_resource path="res://Scripts/Components/LingeringAudioStreamPlayer.cs" type="Script" id=10]
+[ext_resource path="res://Audio/SFX/EnemyDeath.wav" type="AudioStream" id=11]
 
 [sub_resource type="Animation" id=4]
 resource_name = "Cycle"
@@ -111,6 +113,20 @@ tracks/4/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ true ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath("DeathSound")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Play"
+} ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -269,6 +285,11 @@ VisualsPath = NodePath("../Visuals")
 [node name="TookDamageSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 9 )
 pitch_scale = 0.89
+
+[node name="DeathSound" type="Node" parent="."]
+script = ExtResource( 10 )
+Sound = ExtResource( 11 )
+VolumeLinear = 2.0
 
 [connection signal="Dead" from="." to="RecoveryHeartDropper" method="DropLoot"]
 [connection signal="Dead" from="." to="GoldLootDropper" method="DropLoot"]

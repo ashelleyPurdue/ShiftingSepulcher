@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/PipeRotate.wav-dc8bb315250067926f5b20824d19ec8e.sample"
+
+[deps]
+
+source_file="res://Audio/SFX/PipeRotate.wav"
+dest_files=[ "res://.import/PipeRotate.wav-dc8bb315250067926f5b20824d19ec8e.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

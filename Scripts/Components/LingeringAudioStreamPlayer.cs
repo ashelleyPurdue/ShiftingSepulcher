@@ -10,13 +10,13 @@ namespace RandomDungeons
     public class LingeringAudioStreamPlayer : Node
     {
         [Export] public AudioStream Sound;
-        [Export] public float VolumeDb = 0;
+        [Export] public float VolumeLinear = 1;
 
         public void Play()
         {
             var audioPlayer = new AudioStreamPlayer();
             audioPlayer.Stream = Sound;
-            audioPlayer.VolumeDb = VolumeDb;
+            audioPlayer.VolumeDb = GD.Linear2Db(VolumeLinear);
 
             GetTree().Root.AddChild(audioPlayer);
             audioPlayer.Play();

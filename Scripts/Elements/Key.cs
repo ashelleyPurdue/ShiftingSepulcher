@@ -17,6 +17,7 @@ namespace RandomDungeons
             if (body is Player)
             {
                 PlayerInventory.CollectKey(KeyId);
+                GetNode<LingeringAudioStreamPlayer>("%CollectSound").Play();
                 QueueFree();
             }
         }

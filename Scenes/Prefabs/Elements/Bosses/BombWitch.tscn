@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=2]
+[gd_scene load_steps=50 format=2]
 
 [ext_resource path="res://Scripts/Components/LineTrail2D.cs" type="Script" id=1]
 [ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=2]
@@ -18,6 +18,7 @@
 [ext_resource path="res://Audio/Music/BossIntro.ogg" type="AudioStream" id=16]
 [ext_resource path="res://Audio/Music/wyver9_Boss_main(8-bit).ogg" type="AudioStream" id=17]
 [ext_resource path="res://Audio/SFX/BossPaperTear.ogg" type="AudioStream" id=18]
+[ext_resource path="res://Audio/SFX/SwordDamageOwWithSlime.wav" type="AudioStream" id=19]
 [ext_resource path="res://Audio/Music/BossVictory.ogg" type="AudioStream" id=20]
 [ext_resource path="res://Audio/SFX/FireBurning.wav" type="AudioStream" id=21]
 
@@ -2329,6 +2330,10 @@ script = ExtResource( 15 )
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 21 )
 
+[node name="TookDamageSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 19 )
+pitch_scale = 0.89
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="BossNameText" type="Label" parent="CanvasLayer"]
@@ -2639,3 +2644,4 @@ process_material = SubResource( 30 )
 [connection signal="TookDamage" from="ShieldHurtBox" to="AI" method="OnShieldTookDamage"]
 [connection signal="TookDamage" from="HurtBox" to="." method="OnTookDamage"]
 [connection signal="TookDamage" from="HurtBox" to="AI" method="OnTookDamage" flags=3]
+[connection signal="TookDamageNoParams" from="HurtBox" to="TookDamageSound" method="play"]

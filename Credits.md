@@ -22,3 +22,7 @@ Ticking clock sound effect:
 RPG Sound Pack:
     https://opengameart.org/content/rpg-sound-pack
     Author: artisticdude
+
+Bottle Break sound effect:
+    https://opengameart.org/content/breaking-bottle
+    Author: spookymodem

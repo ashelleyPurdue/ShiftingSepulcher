@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/PhysicalDungeons/RoomTransitionManager.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Components/ParentVisibleInEditorOnly.cs" type="Script" id=2]
+[ext_resource path="res://Audio/SFX/StairsUp.wav" type="AudioStream" id=3]
 [ext_resource path="res://Audio/SFX/DoorEnter.wav" type="AudioStream" id=5]
 
 [sub_resource type="Animation" id=1]
@@ -179,7 +180,6 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id=6]
 resource_name = "StairsUp"
-length = 0.3
 tracks/0/type = "value"
 tracks/0/path = NodePath("PreviousRoomTextureScaler/PreviousRoomTexture:modulate")
 tracks/0/interp = 1
@@ -242,6 +242,20 @@ tracks/4/keys = {
 "method": "TransitionAnimationFinished"
 } ]
 }
+tracks/5/type = "audio"
+tracks/5/path = NodePath("TransitionAudioPlayer")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 3 )
+} ],
+"times": PoolRealArray( 0 )
+}
 
 [sub_resource type="ViewportTexture" id=4]
 viewport_path = NodePath("PreviousRoomViewport")
@@ -254,7 +268,7 @@ unique_name_in_owner = true
 script = ExtResource( 1 )
 
 [node name="TransitionAudioPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 5 )
+stream = ExtResource( 3 )
 volume_db = 3.99
 
 [node name="Camera" type="Camera2D" parent="." groups=["Camera"]]

@@ -23,6 +23,10 @@ RPG Sound Pack:
     https://opengameart.org/content/rpg-sound-pack
     Author: artisticdude
 
+RPG Sounds by Kenney Vleugels:
+    www.kenney.nl
+    Author: Kenney Vleugels
+
 Bottle Break sound effect:
     https://opengameart.org/content/breaking-bottle
     Author: spookymodem

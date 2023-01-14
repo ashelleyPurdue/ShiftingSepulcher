@@ -1,12 +1,131 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/Elements/DoorLock.cs" type="Script" id=1]
+[ext_resource path="res://Audio/SFX/DoorUnlock.wav" type="AudioStream" id=2]
+[ext_resource path="res://Scripts/Components/LingeringAudioStreamPlayer.cs" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 64, 16 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 32, 16 )
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("DoorCollider/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("LockVisuals:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("LockVisuals:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("DoorVisuals:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "Unlock"
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("DoorCollider/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.23 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("LockVisuals:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.04, 0.17, 0.23 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.75, 0.75 ), Vector2( 0.75, 0.75 ), Vector2( 2, 2 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("LockVisuals:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.17, 0.23 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("DoorVisuals:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.23, 0.35 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 0, 1 ) ]
+}
+tracks/4/type = "method"
+tracks/4/path = NodePath("UnlockSound")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Play"
+} ]
+}
 
 [node name="DoorLock" type="Node2D"]
 script = ExtResource( 1 )
@@ -41,5 +160,14 @@ position = Vector2( 0, 32 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="UnlockTrigger"]
 position = Vector2( 0, 16 )
 shape = SubResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+anims/RESET = SubResource( 4 )
+anims/Unlock = SubResource( 3 )
+
+[node name="UnlockSound" type="Node" parent="."]
+script = ExtResource( 3 )
+Sound = ExtResource( 2 )
 
 [connection signal="body_entered" from="UnlockTrigger" to="." method="OnUnlockTriggerBodyEnter"]

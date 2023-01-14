@@ -38,3 +38,7 @@ Thud Underfoot sound effect:
         This sound was modified and combined with other sounds.
         The Creative Commons 3.0 license requires me to indicate that I have
         made changes to it.
+
+DoorLockSounds:
+    https://opengameart.org/content/door-lock-sounds
+    Author: Cough-E

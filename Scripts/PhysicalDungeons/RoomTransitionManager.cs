@@ -61,6 +61,7 @@ namespace RandomDungeons
             ReparentNode(_startRoom, _activeRoomHolder);
             _activeRoom = _startRoom;
             _activeRoomHolder.GlobalPosition = Vector2.Zero;
+            _activeRoom.SetPaused(false);
 
             _camera.GlobalPosition = Vector2.Zero;
 

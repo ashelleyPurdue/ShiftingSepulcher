@@ -13,11 +13,14 @@ namespace RandomDungeons
 
         public event Action<CardinalDirection> DoorUsed;
 
+        [Signal] public delegate void ChallengeSolved();
+
         [Export] public DoorPrefabCollection DoorPrefabs;
 
         public DungeonLayoutRoom LayoutRoom {get; protected set;}
 
         private IChallenge[] _challenges;
+        private bool _sentChallengeSolvedSignal = false;
 
         public virtual Node2D GetDoorSpawn(CardinalDirection dir)
         {
@@ -29,6 +32,12 @@ namespace RandomDungeons
             // Open all door bars if the the challenge has been solved
             if (IsChallengeSolved())
             {
+                if (_challenges.Any() && !_sentChallengeSolvedSignal)
+                {
+                    _sentChallengeSolvedSignal = true;
+                    EmitSignal(nameof(ChallengeSolved));
+                }
+
                 foreach (var bars in this.AllDescendantsOfType<DoorBars>())
                 {
                     bars.IsOpened = true;

@@ -125,6 +125,15 @@ namespace RandomDungeons
 
             _velocity = hitBox.GetKnockbackVelocity(this, KnockbackFriction);
             _knockbackTimer = KnockbackDuration(_velocity);
+
+            if (PlayerInventory.Health <= 0)
+            {
+                // TODO: Play the death sound
+            }
+            else
+            {
+                GetNode<AudioStreamPlayer>("%HurtSound").Play();
+            }
         }
 
         public void OnSwordDealtDamage(HurtBox hurtBox)

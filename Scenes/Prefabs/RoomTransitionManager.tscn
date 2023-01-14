@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/PhysicalDungeons/RoomTransitionManager.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Components/ParentVisibleInEditorOnly.cs" type="Script" id=2]
 [ext_resource path="res://Audio/SFX/StairsUp.wav" type="AudioStream" id=3]
+[ext_resource path="res://Audio/SFX/StairsDown.wav" type="AudioStream" id=4]
 [ext_resource path="res://Audio/SFX/DoorEnter.wav" type="AudioStream" id=5]
 
 [sub_resource type="Animation" id=1]
@@ -176,6 +177,20 @@ tracks/4/keys = {
 "args": [  ],
 "method": "TransitionAnimationFinished"
 } ]
+}
+tracks/5/type = "audio"
+tracks/5/path = NodePath("TransitionAudioPlayer")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 4 )
+} ],
+"times": PoolRealArray( 0 )
 }
 
 [sub_resource type="Animation" id=6]

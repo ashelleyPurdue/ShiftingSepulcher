@@ -26,3 +26,11 @@ RPG Sound Pack:
 Bottle Break sound effect:
     https://opengameart.org/content/breaking-bottle
     Author: spookymodem
+
+Thud Underfoot sound effect:
+    https://opengameart.org/content/thud-underfoot
+    Author: spookymodem
+    Note: 
+        This sound was modified and combined with other sounds.
+        The Creative Commons 3.0 license requires me to indicate that I have
+        made changes to it.

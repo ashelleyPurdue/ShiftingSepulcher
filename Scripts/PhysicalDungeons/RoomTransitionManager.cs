@@ -57,13 +57,7 @@ namespace RandomDungeons
         public void RespawnPlayer()
         {
             // Go back to the start room
-            UnparentNode(_activeRoom);
-            ReparentNode(_startRoom, _activeRoomHolder);
-            _activeRoom = _startRoom;
-            _activeRoomHolder.GlobalPosition = Vector2.Zero;
-            _activeRoom.SetPaused(false);
-
-            _camera.GlobalPosition = Vector2.Zero;
+            EnterRoom(_startRoom, Vector2.Zero);
 
             // Resurrect the player
             var player = GetTree().FindPlayer();
@@ -93,6 +87,15 @@ namespace RandomDungeons
             var entrance = room.GetEntrance(entranceName);
             position -= GetRelativePosition(room, entrance.Node);
 
+            EnterRoom(room, position, anim);
+        }
+
+        public void EnterRoom(
+            Room2D room,
+            Vector2 position,
+            RoomTransitionAnimation anim = RoomTransitionAnimation.Fade
+        )
+        {
             if (_activeRoom == room)
                 return;
 
@@ -150,7 +153,7 @@ namespace RandomDungeons
 
             // Freeze the previous room, and unfreeze the next room
             _activeRoom.SetPaused(false);
-            _prevRoom.SetPaused(true);
+            _prevRoom?.SetPaused(true); // _prevRoom is null during the first transition
 
             // Play the transition animation, now that it's been set up
             _transitionAnimator.ResetAndPlay(anim.ToString());
@@ -196,6 +199,9 @@ namespace RandomDungeons
 
         private void ReparentNode(Node node, Node newParent)
         {
+            if (node == null)
+                return;
+
             node.GetParent()?.RemoveChild(node);
             newParent.AddChild(node);
         }

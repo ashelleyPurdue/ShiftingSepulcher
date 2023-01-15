@@ -168,6 +168,14 @@ namespace RandomDungeons
 
             var player = GetTree().FindPlayer();
             player.UnfreezeForCutscene();
+
+            // Notify nodes that the transition is finished
+            var nodesToNotify = _activeRoom
+                .AllDescendantsOfType<IOnRoomTransitionFinished>();
+            foreach (var node in nodesToNotify)
+            {
+                node.OnRoomTransitionFinished();
+            }
         }
 
         public override void _Process(float delta)

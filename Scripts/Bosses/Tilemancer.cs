@@ -52,11 +52,8 @@ namespace RandomDungeons
 
             _jumpStartPos = GlobalPosition;
 
-            _mainAnimationPlayer.Play("RESET");
-            _mainAnimationPlayer.Advance(0);
-
-            _individualAnimations.Play("RESET");
-            _individualAnimations.Advance(0);
+            _mainAnimationPlayer.Reset();
+            _individualAnimations.Reset();
 
             DestoryAllTiles();
         }
@@ -65,7 +62,7 @@ namespace RandomDungeons
         {
             if (!_isDead)
             {
-                _mainAnimationPlayer.Play("Intro");
+                _mainAnimationPlayer.ResetAndPlay("Intro");
             }
         }
 
@@ -106,7 +103,7 @@ namespace RandomDungeons
 
         public void StartAttackLoop()
         {
-            _mainAnimationPlayer.CurrentAnimation = "AttackLoop";
+            _mainAnimationPlayer.ResetAndPlay("AttackLoop");
         }
 
         public void SummonTile()
@@ -180,7 +177,7 @@ namespace RandomDungeons
         private void Die()
         {
             _isDead = true;
-            _mainAnimationPlayer.CurrentAnimation = "Death";
+            _mainAnimationPlayer.ResetAndPlay("Death");
         }
     }
 }

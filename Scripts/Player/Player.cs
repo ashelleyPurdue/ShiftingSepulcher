@@ -11,14 +11,6 @@ namespace RandomDungeons
 
         [Signal] public delegate void DeathAnimationFinished();
 
-        /// <summary>
-        /// Set this to false during cutscenes, dialog, etc. to prevent the
-        /// player from doing stuff.
-        ///
-        /// Please use this sparingly.
-        /// </summary>
-        public bool ControlsEnabled = true;
-
         public float FacingAngleRadians
         {
             get => _visuals.Rotation;
@@ -38,6 +30,7 @@ namespace RandomDungeons
 
         private Vector2 _velocity;
 
+        private bool _frozenForCutscene = false;
         private bool _isDead = false;
         private float _knockbackTimer = 0;
 
@@ -71,6 +64,38 @@ namespace RandomDungeons
         public void EmitDeathAnimationFinished()
         {
             EmitSignal(nameof(DeathAnimationFinished));
+        }
+
+        /// <summary>
+        /// Call this during cutscenes, dialog, etc. to prevent the
+        /// player from doing stuff.  Call <see cref="UnfreezeForCutscene"/>
+        /// to enable controls again.
+        ///
+        /// Please use this sparingly, because players HATE being stuck in
+        /// cutscenes.
+        ///
+        /// Only one "thing" is allowed to freeze the player at a time.
+        /// If anything else tries to freeze the player while they're already
+        /// frozen, an exception will be thrown.
+        ///
+        /// This is to prevent the following scenario:
+        /// * Cutscene A starts and freezes the player
+        /// * Cutscene B starts and freezes the player
+        /// * Cutscene A finishes and unfreezes the player
+        /// * The player can now move even though Cutscene B is still playing
+        ///
+        /// </summary>
+        public void FreezeForCutscene()
+        {
+            if (_frozenForCutscene)
+                throw new System.Exception("The player is already frozen");
+
+            _frozenForCutscene = true;
+        }
+
+        public void UnfreezeForCutscene()
+        {
+            _frozenForCutscene = false;
         }
 
         /// <summary>
@@ -147,7 +172,7 @@ namespace RandomDungeons
 
             public override void _Process(float delta)
             {
-                if (!Owner.ControlsEnabled)
+                if (Owner._frozenForCutscene)
                 {
                     Owner._animator.PlaybackSpeed = 0;
                     return;
@@ -176,7 +201,7 @@ namespace RandomDungeons
 
             public override void _PhysicsProcess(float delta)
             {
-                if (!Owner.ControlsEnabled)
+                if (Owner._frozenForCutscene)
                 {
                     Owner._velocity = Vector2.Zero;
                     return;

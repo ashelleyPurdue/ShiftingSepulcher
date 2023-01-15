@@ -92,12 +92,15 @@ namespace RandomDungeons
         /// <param name="frozen"></param>
         public void SetPlayerFrozen(bool frozen)
         {
-            _player.ControlsEnabled = !frozen;
+            if (frozen)
+                _player.FreezeForCutscene();
+            else
+                _player.UnfreezeForCutscene();
         }
 
         public void StartAttackLoop()
         {
-            _player.ControlsEnabled = true;
+            _player.UnfreezeForCutscene();
             _mainAnimationPlayer.CurrentAnimation = "AttackLoop";
         }
 

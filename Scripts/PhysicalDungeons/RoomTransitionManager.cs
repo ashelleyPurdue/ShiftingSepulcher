@@ -111,7 +111,7 @@ namespace RandomDungeons
             // taking advantage of the fact that the walls are intangible during
             // the transition animation.
             var player = GetTree().FindPlayer();
-            player.ControlsEnabled = false;
+            player.FreezeForCutscene();
 
             // Force the player to drop whatever object they're holding, to
             // prevent them from carrying objects between rooms.
@@ -167,7 +167,7 @@ namespace RandomDungeons
             UnparentNode(_prevRoom);
 
             var player = GetTree().FindPlayer();
-            player.ControlsEnabled = true;
+            player.UnfreezeForCutscene();
         }
 
         public override void _Process(float delta)

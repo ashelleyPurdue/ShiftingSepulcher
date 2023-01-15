@@ -4,7 +4,7 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class Tilemancer : Node2D, IRespawnable
+    public class Tilemancer : Node2D, IOnRoomTransitionFinished, IRespawnable
     {
         [Export] public PackedScene VictoryChestPrefab;
         [Export] public PackedScene TilePrefab;
@@ -58,9 +58,15 @@ namespace RandomDungeons
             _individualAnimations.Play("RESET");
             _individualAnimations.Advance(0);
 
-            _mainAnimationPlayer.Play("Intro");
-
             DestoryAllTiles();
+        }
+
+        public void OnRoomTransitionFinished()
+        {
+            if (!_isDead)
+            {
+                _mainAnimationPlayer.Play("Intro");
+            }
         }
 
         public override void _PhysicsProcess(float delta)
@@ -100,7 +106,6 @@ namespace RandomDungeons
 
         public void StartAttackLoop()
         {
-            _player.UnfreezeForCutscene();
             _mainAnimationPlayer.CurrentAnimation = "AttackLoop";
         }
 

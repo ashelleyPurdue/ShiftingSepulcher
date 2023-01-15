@@ -55,6 +55,11 @@ namespace RandomDungeons
             _mainAnimationPlayer.Reset();
             _individualAnimations.Reset();
 
+            // Jump to the first frame of the intro animation, but don't actually
+            // _play_ the animation until after the room transition finishes.
+            _mainAnimationPlayer.PlayAndAdvance("Intro");
+            _mainAnimationPlayer.PlaybackSpeed = 0;
+
             DestoryAllTiles();
         }
 
@@ -62,8 +67,16 @@ namespace RandomDungeons
         {
             if (!_isDead)
             {
+                _mainAnimationPlayer.PlaybackSpeed = 1;
                 _mainAnimationPlayer.ResetAndPlay("Intro");
+                _player.FreezeForCutscene();
             }
+        }
+
+        public void OnIntroAnimationFinished()
+        {
+            _player.UnfreezeForCutscene();
+            _mainAnimationPlayer.ResetAndPlay("AttackLoop");
         }
 
         public override void _PhysicsProcess(float delta)
@@ -86,24 +99,6 @@ namespace RandomDungeons
         {
             Health--;
             _hurtFlasher.Flash();
-        }
-
-        /// <summary>
-        /// Used to freeze the player during the intro animation, so they can't
-        /// just wail on the boss while he's doing his evil monologue.
-        /// </summary>
-        /// <param name="frozen"></param>
-        public void SetPlayerFrozen(bool frozen)
-        {
-            if (frozen)
-                _player.FreezeForCutscene();
-            else
-                _player.UnfreezeForCutscene();
-        }
-
-        public void StartAttackLoop()
-        {
-            _mainAnimationPlayer.ResetAndPlay("AttackLoop");
         }
 
         public void SummonTile()

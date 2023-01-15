@@ -22,19 +22,24 @@ namespace RandomDungeons
             if (!IsSliding)
                 return;
 
-            var dir = _velocity.Normalized();
-
-            _wallDetector.Position = new Vector2(16, 16) + (dir * 16);
-            _wallDetector.CastTo = _velocity * delta;
-            _wallDetector.ForceRaycastUpdate();
-
-            if (_wallDetector.IsColliding())
+            if (WouldHitWall(_velocity * delta))
             {
                 StopSliding();
                 return;
             }
 
             Position += _velocity * delta;
+        }
+
+        private bool WouldHitWall(Vector2 deltaPos)
+        {
+            var dir = deltaPos.Normalized();
+
+            _wallDetector.Position = new Vector2(16, 16) + (dir * 16);
+            _wallDetector.CastTo = deltaPos;
+            _wallDetector.ForceRaycastUpdate();
+
+            return _wallDetector.IsColliding();
         }
 
         private void StopSliding()
@@ -62,6 +67,9 @@ namespace RandomDungeons
         private void Push(Vector2 dir)
         {
             if (IsSliding)
+                return;
+
+            if (WouldHitWall(dir * 16))
                 return;
 
             IsSliding = true;

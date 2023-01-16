@@ -5,7 +5,7 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class BombWitch : Node
+    public class BombWitch : Node, IOnRoomTransitionFinished
     {
         [Export] public PackedScene VictoryChestPrefab;
         [Export] public PackedScene SpawningSpellPrefab;
@@ -25,7 +25,7 @@ namespace RandomDungeons
         private HurtBox _shieldHurtBox => GetNode<HurtBox>("%ShieldHurtBox");
 
         private Node2D _spellSpawnPos => GetNode<Node2D>("%SpellSpawnPos");
-        private Node2D _body => GetParent<Node2D>();
+        private EnemyBody _body => GetParent<EnemyBody>();
 
         private Action _queuedSpell;
 
@@ -94,11 +94,33 @@ namespace RandomDungeons
 
         public void OnRespawning()
         {
+            _body.RotationDegrees = 0;
+
             _shieldAnimator.Reset();
             _attackPatterns.Stop(true);
+
+            // Jump to the first frame of the intro animation,
+            // but don't start playing it until the room transition finishes
             _animator.ResetAndPlay("Intro");
+            _animator.PlaybackSpeed = 0;
 
             DeleteAllProjectiles();
+        }
+
+        public void OnRoomTransitionFinished()
+        {
+            if (_body.IsDead)
+                return;
+
+            _animator.PlaybackSpeed = 1;
+            _animator.ResetAndPlay("Intro");
+            GetTree().FindPlayer().FreezeForCutscene();
+        }
+
+        public void OnIntroAnimationFinished()
+        {
+            GetTree().FindPlayer().UnfreezeForCutscene();
+            OnFinishedRecoveringFromDaze();
         }
 
         public void OnTookDamage(HitBox hitbox)

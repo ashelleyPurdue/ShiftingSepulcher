@@ -789,63 +789,49 @@ tracks/12/keys = {
 "update": 1,
 "values": [ false, true, false ]
 }
-tracks/13/type = "method"
-tracks/13/path = NodePath("AI")
+tracks/13/type = "value"
+tracks/13/path = NodePath("CanvasLayer/BossNameText:visible")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/imported = false
 tracks/13/enabled = true
 tracks/13/keys = {
-"times": PoolRealArray( 6 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "OnFinishedRecoveringFromDaze"
-} ]
-}
-tracks/14/type = "value"
-tracks/14/path = NodePath("CanvasLayer/BossNameText:visible")
-tracks/14/interp = 1
-tracks/14/loop_wrap = true
-tracks/14/imported = false
-tracks/14/enabled = true
-tracks/14/keys = {
 "times": PoolRealArray( 0, 3.55 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ false, true ]
 }
-tracks/15/type = "value"
-tracks/15/path = NodePath("CanvasLayer/BossNameText:modulate")
-tracks/15/interp = 1
-tracks/15/loop_wrap = true
-tracks/15/imported = false
-tracks/15/enabled = true
-tracks/15/keys = {
+tracks/14/type = "value"
+tracks/14/path = NodePath("CanvasLayer/BossNameText:modulate")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
 "times": PoolRealArray( 0, 5.9, 6 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
-tracks/16/type = "value"
-tracks/16/path = NodePath("CanvasLayer/BossHealthBar:visible")
-tracks/16/interp = 1
-tracks/16/loop_wrap = true
-tracks/16/imported = false
-tracks/16/enabled = true
-tracks/16/keys = {
+tracks/15/type = "value"
+tracks/15/path = NodePath("CanvasLayer/BossHealthBar:visible")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
 "times": PoolRealArray( 0, 5.95 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ false, true ]
 }
-tracks/17/type = "method"
-tracks/17/path = NodePath("MusicServiceAccessor")
-tracks/17/interp = 1
-tracks/17/loop_wrap = true
-tracks/17/imported = false
-tracks/17/enabled = true
-tracks/17/keys = {
+tracks/16/type = "method"
+tracks/16/path = NodePath("MusicServiceAccessor")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/keys = {
 "times": PoolRealArray( 0, 3.55, 5.95 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "values": [ {
@@ -857,6 +843,20 @@ tracks/17/keys = {
 }, {
 "args": [ ExtResource( 17 ) ],
 "method": "PlaySong"
+} ]
+}
+tracks/17/type = "method"
+tracks/17/path = NodePath("AI")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/keys = {
+"times": PoolRealArray( 6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "OnIntroAnimationFinished"
 } ]
 }
 

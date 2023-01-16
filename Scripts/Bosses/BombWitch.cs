@@ -94,6 +94,8 @@ namespace RandomDungeons
 
         public void OnRespawning()
         {
+            _body.RotationDegrees = 0;
+
             _shieldAnimator.Reset();
             _attackPatterns.Stop(true);
 

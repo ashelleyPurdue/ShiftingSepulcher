@@ -42,3 +42,7 @@ Thud Underfoot sound effect:
 DoorLockSounds:
     https://opengameart.org/content/door-lock-sounds
     Author: Cough-E
+
+Wink sound effect:
+    https://opengameart.org/content/completion-sound
+    Author: Brandon Morris

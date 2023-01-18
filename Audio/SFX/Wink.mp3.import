@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Wink.mp3-a275b9bc29a05c9692a688a1f28e7244.mp3str"
+
+[deps]
+
+source_file="res://Audio/SFX/Wink.mp3"
+dest_files=[ "res://.import/Wink.mp3-a275b9bc29a05c9692a688a1f28e7244.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

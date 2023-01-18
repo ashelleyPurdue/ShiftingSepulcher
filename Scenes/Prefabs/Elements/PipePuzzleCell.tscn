@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/Elements/PipePuzzleCell.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Components/Circle2D.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/Components/HurtBox.cs" type="Script" id=3]
+[ext_resource path="res://Audio/SFX/PipeRotate.wav" type="AudioStream" id=4]
+[ext_resource path="res://Audio/SFX/PipeRotateStop.wav" type="AudioStream" id=5]
 
 [sub_resource type="Animation" id=3]
 length = 0.001
@@ -21,6 +23,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=4]
 resource_name = "RotateClockwise"
+step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("PipeDisplays:rotation_degrees")
 tracks/0/interp = 1
@@ -32,6 +35,24 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ -90.0, 0.0 ]
+}
+tracks/1/type = "audio"
+tracks/1/path = NodePath("AudioStreamPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"clips": [ {
+"end_offset": 1.1,
+"start_offset": 0.0,
+"stream": ExtResource( 4 )
+}, {
+"end_offset": 0.15,
+"start_offset": 0.0,
+"stream": ExtResource( 5 )
+} ],
+"times": PoolRealArray( 0, 0.15 )
 }
 
 [sub_resource type="CircleShape2D" id=2]
@@ -49,6 +70,9 @@ PoweredColor = Color( 0, 0.741176, 1, 1 )
 unique_name_in_owner = true
 anims/RESET = SubResource( 3 )
 anims/RotateClockwise = SubResource( 4 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
 
 [node name="PipeDisplays" type="Polygon2D" parent="."]
 unique_name_in_owner = true

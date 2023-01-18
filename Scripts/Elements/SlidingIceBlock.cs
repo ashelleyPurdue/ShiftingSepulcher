@@ -11,6 +11,10 @@ namespace RandomDungeons
         private RayCast2D _wallDetector => GetNode<RayCast2D>("%WallDetector");
         private CollisionShape2D _collider => GetNode<CollisionShape2D>("%Collider");
 
+        private AudioStreamPlayer _slideStartSound => GetNode<AudioStreamPlayer>("%SlideStartSound");
+        private AudioStreamPlayer _slideLoopSound => GetNode<AudioStreamPlayer>("%SlideLoopSound");
+        private AudioStreamPlayer _slideStopSound => GetNode<AudioStreamPlayer>("%SlideStopSound");
+
         private Vector2 _velocity;
 
         public override void _PhysicsProcess(float delta)
@@ -18,19 +22,24 @@ namespace RandomDungeons
             if (!IsSliding)
                 return;
 
-            var dir = _velocity.Normalized();
-
-            _wallDetector.Position = new Vector2(16, 16) + (dir * 16);
-            _wallDetector.CastTo = _velocity * delta;
-            _wallDetector.ForceRaycastUpdate();
-
-            if (_wallDetector.IsColliding())
+            if (WouldHitWall(_velocity * delta))
             {
                 StopSliding();
                 return;
             }
 
             Position += _velocity * delta;
+        }
+
+        private bool WouldHitWall(Vector2 deltaPos)
+        {
+            var dir = deltaPos.Normalized();
+
+            _wallDetector.Position = new Vector2(16, 16) + (dir * 16);
+            _wallDetector.CastTo = deltaPos;
+            _wallDetector.ForceRaycastUpdate();
+
+            return _wallDetector.IsColliding();
         }
 
         private void StopSliding()
@@ -41,6 +50,9 @@ namespace RandomDungeons
             _wallDetector.Enabled = false;
 
             SnapToGrid();
+
+            _slideLoopSound.Stop();
+            _slideStopSound.Play();
         }
 
         private void SnapToGrid()
@@ -57,11 +69,17 @@ namespace RandomDungeons
             if (IsSliding)
                 return;
 
+            if (WouldHitWall(dir * 16))
+                return;
+
             IsSliding = true;
 
             _velocity = dir.Normalized() * SlideSpeed;
             _collider.Disabled = true;
             _wallDetector.Enabled = true;
+
+            _slideStartSound.Play();
+            _slideLoopSound.Play();
         }
 
         private void OnPushedLeft() => Push(Vector2.Left);

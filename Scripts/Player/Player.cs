@@ -125,6 +125,9 @@ namespace RandomDungeons
 
             _velocity = hitBox.GetKnockbackVelocity(this, KnockbackFriction);
             _knockbackTimer = KnockbackDuration(_velocity);
+
+            if (PlayerInventory.Health >= 0)
+                GetNode<AudioStreamPlayer>("%HurtSound").Play();
         }
 
         public void OnSwordDealtDamage(HurtBox hurtBox)
@@ -258,6 +261,7 @@ namespace RandomDungeons
 
                 Owner._animator.PlaybackSpeed = 1;
                 Owner._animator.Play("Die");
+                Owner.GetNode<AudioStreamPlayer>("%DeathSound").Play();
 
                 MusicService.Instance.StopSong();
             }

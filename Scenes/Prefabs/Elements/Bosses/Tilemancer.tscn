@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/TilemancerTile.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Bosses/Tilemancer.cs" type="Script" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://Audio/SFX/BossDeathShudder.wav" type="AudioStream" id=12]
 [ext_resource path="res://Audio/SFX/BossDeathExplosion.ogg" type="AudioStream" id=13]
 [ext_resource path="res://Scenes/Prefabs/UI/Widgets/BossHealthBar.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Audio/SFX/SwordDamageOwWithSlime.wav" type="AudioStream" id=15]
 
 [sub_resource type="Animation" id=11]
 resource_name = "AttackLoop"
@@ -624,6 +625,10 @@ script = ExtResource( 10 )
 [node name="AnimationSoundPlayer" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 13 )
 
+[node name="TookDamageSound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 15 )
+pitch_scale = 0.89
+
 [node name="MainAnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
 autoplay = "Intro"
@@ -708,3 +713,4 @@ align = 1
 thing_with_health = NodePath("../..")
 
 [connection signal="TookDamage" from="Body/HurtBox" to="." method="OnTookDamage"]
+[connection signal="TookDamageNoParams" from="Body/HurtBox" to="Sounds/TookDamageSound" method="play"]

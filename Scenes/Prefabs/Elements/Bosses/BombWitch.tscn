@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=2]
+[gd_scene load_steps=51 format=2]
 
 [ext_resource path="res://Scripts/Components/LineTrail2D.cs" type="Script" id=1]
 [ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=2]
@@ -18,8 +18,10 @@
 [ext_resource path="res://Audio/Music/BossIntro.ogg" type="AudioStream" id=16]
 [ext_resource path="res://Audio/Music/wyver9_Boss_main(8-bit).ogg" type="AudioStream" id=17]
 [ext_resource path="res://Audio/SFX/BossPaperTear.ogg" type="AudioStream" id=18]
+[ext_resource path="res://Audio/SFX/SwordDamageOwWithSlime.wav" type="AudioStream" id=19]
 [ext_resource path="res://Audio/Music/BossVictory.ogg" type="AudioStream" id=20]
 [ext_resource path="res://Audio/SFX/FireBurning.wav" type="AudioStream" id=21]
+[ext_resource path="res://Audio/SFX/Wink.mp3" type="AudioStream" id=22]
 
 [sub_resource type="DynamicFont" id=33]
 size = 100
@@ -631,7 +633,7 @@ tracks/22/keys = {
 
 [sub_resource type="Animation" id=32]
 resource_name = "Intro"
-length = 6.0
+length = 7.0
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Visuals/Model/Body/Hands/LeftHand:position")
@@ -640,7 +642,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1, 2, 2.4, 2.85, 3.5, 3.55, 3.6, 5.3, 5.4, 5.9, 6 ),
+"times": PoolRealArray( 0, 1, 2, 2.4, 2.85, 3.5, 3.55, 3.6, 5.7, 5.8, 6.3, 6.4 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( -19.4254, -31.7406 ), Vector2( -19.4254, -31.7406 ), Vector2( -22, -7.00002 ), Vector2( -22, -7.00002 ), Vector2( -4.00001, -12 ), Vector2( -4.00001, -12 ), Vector2( -23, -5.00002 ), Vector2( -22, -7.00002 ), Vector2( -22, -7.00002 ), Vector2( -22, -28 ), Vector2( -22, -28 ), Vector2( -22, -7.00002 ) ]
@@ -652,7 +654,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 1, 2, 2.4, 2.85, 3.5, 3.55, 3.6, 5.3, 5.4, 5.9, 6 ),
+"times": PoolRealArray( 0, 1, 2, 2.4, 2.85, 3.5, 3.55, 3.6, 5.7, 5.8, 6.3, 6.4 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( -3.95277, -1.91449 ), Vector2( -3.95277, -1.91449 ), Vector2( 22, -7 ), Vector2( 22, -7 ), Vector2( 4, -12 ), Vector2( 4, -12 ), Vector2( 23, -5 ), Vector2( 22, -7 ), Vector2( 22, -7 ), Vector2( 6.85713, -0.142853 ), Vector2( 6.85713, -0.142853 ), Vector2( 22, -7 ) ]
@@ -724,7 +726,7 @@ tracks/7/loop_wrap = true
 tracks/7/imported = false
 tracks/7/enabled = true
 tracks/7/keys = {
-"times": PoolRealArray( 0, 1.7, 2, 2.4, 2.85, 3.5, 3.55, 3.6, 5.3, 5.4, 5.9, 6 ),
+"times": PoolRealArray( 0, 1.7, 2, 2.4, 2.85, 3.5, 3.55, 3.6, 5.7, 5.8, 6.3, 6.4 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 3, 0.2 ), Vector2( 3, 0.2 ), Vector2( 1, 2.52 ), Vector2( 1, 2.52 ), Vector2( 3, 0.2 ), Vector2( 3, 0.2 ), Vector2( 1, 3 ), Vector2( 1, 2.52 ), Vector2( 1, 2.52 ), Vector2( 3, 0.2 ), Vector2( 3, 0.2 ), Vector2( 1, 2.52 ) ]
@@ -760,7 +762,7 @@ tracks/10/loop_wrap = true
 tracks/10/imported = false
 tracks/10/enabled = true
 tracks/10/keys = {
-"times": PoolRealArray( 0, 1, 2, 5.3, 5.4, 5.9, 6 ),
+"times": PoolRealArray( 0, 1, 2, 5.7, 5.8, 6.3, 6.4 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ 40.5666, 40.5666, 0.0, 0.0, 28.3867, 28.3867, 0.0 ]
@@ -808,7 +810,7 @@ tracks/14/loop_wrap = true
 tracks/14/imported = false
 tracks/14/enabled = true
 tracks/14/keys = {
-"times": PoolRealArray( 0, 5.9, 6 ),
+"times": PoolRealArray( 0, 6.3, 6.4 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
@@ -820,7 +822,7 @@ tracks/15/loop_wrap = true
 tracks/15/imported = false
 tracks/15/enabled = true
 tracks/15/keys = {
-"times": PoolRealArray( 0, 5.95 ),
+"times": PoolRealArray( 0, 6.35 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ false, true ]
@@ -832,7 +834,7 @@ tracks/16/loop_wrap = true
 tracks/16/imported = false
 tracks/16/enabled = true
 tracks/16/keys = {
-"times": PoolRealArray( 0, 3.55, 5.95 ),
+"times": PoolRealArray( 0, 3.55, 6.4 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "values": [ {
 "args": [  ],
@@ -852,12 +854,26 @@ tracks/17/loop_wrap = true
 tracks/17/imported = false
 tracks/17/enabled = true
 tracks/17/keys = {
-"times": PoolRealArray( 6 ),
+"times": PoolRealArray( 6.4 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
 "method": "OnIntroAnimationFinished"
 } ]
+}
+tracks/18/type = "audio"
+tracks/18/path = NodePath("AudioStreamPlayer")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 22 )
+} ],
+"times": PoolRealArray( 5.8 )
 }
 
 [sub_resource type="Animation" id=23]
@@ -2327,7 +2343,11 @@ VisualsPath = NodePath("../Visuals")
 script = ExtResource( 15 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 21 )
+stream = ExtResource( 22 )
+
+[node name="TookDamageSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 19 )
+pitch_scale = 0.89
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -2639,3 +2659,4 @@ process_material = SubResource( 30 )
 [connection signal="TookDamage" from="ShieldHurtBox" to="AI" method="OnShieldTookDamage"]
 [connection signal="TookDamage" from="HurtBox" to="." method="OnTookDamage"]
 [connection signal="TookDamage" from="HurtBox" to="AI" method="OnTookDamage" flags=3]
+[connection signal="TookDamageNoParams" from="HurtBox" to="TookDamageSound" method="play"]

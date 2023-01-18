@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Scripts/Components/HurtBox.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Enemies/EnemyBody.cs" type="Script" id=2]
@@ -7,6 +7,9 @@
 [ext_resource path="res://Scripts/Enemies/Zombie.cs" type="Script" id=5]
 [ext_resource path="res://Scenes/Components/LootDroppers/RecoveryHeartDropper.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/Components/LootDroppers/GoldLootDropper.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Audio/SFX/SwordDamageOwWithSlime.wav" type="AudioStream" id=8]
+[ext_resource path="res://Scripts/Components/LingeringAudioStreamPlayer.cs" type="Script" id=9]
+[ext_resource path="res://Audio/SFX/EnemyDeath.wav" type="AudioStream" id=10]
 
 [sub_resource type="Animation" id=5]
 resource_name = "Death"
@@ -70,6 +73,20 @@ tracks/4/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ true ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath("DeathSound")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Play"
+} ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -222,9 +239,19 @@ unique_name_in_owner = true
 script = ExtResource( 4 )
 VisualsPath = NodePath("../Visuals")
 
+[node name="TookDamageSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+pitch_scale = 0.89
+
+[node name="DeathSound" type="Node" parent="."]
+script = ExtResource( 9 )
+Sound = ExtResource( 10 )
+VolumeLinear = 2.0
+
 [connection signal="Dead" from="." to="RecoveryHeartDropper" method="DropLoot"]
 [connection signal="Dead" from="." to="GoldLootDropper" method="DropLoot"]
 [connection signal="Dead" from="." to="AI" method="OnDead"]
 [connection signal="Respawning" from="." to="AI" method="OnRespawning"]
 [connection signal="body_entered" from="VisionCircle" to="AI" method="OnVisionCircleBodyEntered" flags=3]
 [connection signal="TookDamage" from="HurtBox" to="." method="OnTookDamage"]
+[connection signal="TookDamageNoParams" from="HurtBox" to="TookDamageSound" method="play"]

@@ -18,3 +18,31 @@ Ticking clock sound effect:
     https://opengameart.org/content/ticking-clock
     Author: bart
     Patreon: https://www.patreon.com/opengameart
+
+RPG Sound Pack:
+    https://opengameart.org/content/rpg-sound-pack
+    Author: artisticdude
+
+RPG Sounds by Kenney Vleugels:
+    www.kenney.nl
+    Author: Kenney Vleugels
+
+Bottle Break sound effect:
+    https://opengameart.org/content/breaking-bottle
+    Author: spookymodem
+
+Thud Underfoot sound effect:
+    https://opengameart.org/content/thud-underfoot
+    Author: spookymodem
+    Note: 
+        This sound was modified and combined with other sounds.
+        The Creative Commons 3.0 license requires me to indicate that I have
+        made changes to it.
+
+DoorLockSounds:
+    https://opengameart.org/content/door-lock-sounds
+    Author: Cough-E
+
+Wink sound effect:
+    https://opengameart.org/content/completion-sound
+    Author: Brandon Morris

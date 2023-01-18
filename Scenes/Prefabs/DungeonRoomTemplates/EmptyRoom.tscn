@@ -1,12 +1,19 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scripts/DungeonRooms/SimpleDungeonRoom.cs" type="Script" id=1]
 [ext_resource path="res://DoorPrefabs.tres" type="Resource" id=2]
 [ext_resource path="res://Scripts/Elements/RoomEntrance.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/Components/LingeringAudioStreamPlayer.cs" type="Script" id=4]
+[ext_resource path="res://Audio/SFX/ChallengeComplete.ogg" type="AudioStream" id=5]
 
 [node name="EmptyRoom" type="Node2D"]
 script = ExtResource( 1 )
 DoorPrefabs = ExtResource( 2 )
+
+[node name="ChallengeSolvedSound" type="Node" parent="."]
+script = ExtResource( 4 )
+Sound = ExtResource( 5 )
+VolumeLinear = 4.0
 
 [node name="Floor" type="Polygon2D" parent="."]
 color = Color( 0.511719, 0.511719, 0.511719, 1 )
@@ -70,3 +77,5 @@ collision_mask = 0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="EnemyContainmentBarrier"]
 polygon = PoolVector2Array( -288, -288, 288, -288, 288, 288, -288, 288, -256, 256, 256, 256, 256, -256, -256, -256, -256, 256, -288, 288 )
+
+[connection signal="ChallengeSolved" from="." to="ChallengeSolvedSound" method="Play"]

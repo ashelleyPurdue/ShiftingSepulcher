@@ -22,7 +22,7 @@
 [ext_resource path="res://Audio/Music/BossVictory.ogg" type="AudioStream" id=20]
 [ext_resource path="res://Audio/SFX/FireBurning.wav" type="AudioStream" id=21]
 [ext_resource path="res://Audio/SFX/Wink.mp3" type="AudioStream" id=22]
-[ext_resource path="res://Audio/SFX/BombellaTeleportSwoosh.wav" type="AudioStream" id=23]
+[ext_resource path="res://Audio/SFX/BombellaAppearIntro.wav" type="AudioStream" id=23]
 [ext_resource path="res://Scripts/Components/LingeringAudioStreamPlayer.cs" type="Script" id=24]
 [ext_resource path="res://Audio/SFX/BombellaTeleportOut.wav" type="AudioStream" id=25]
 [ext_resource path="res://Audio/SFX/BombellaTeleportIn.wav" type="AudioStream" id=26]
@@ -875,9 +875,13 @@ tracks/18/keys = {
 "clips": [ {
 "end_offset": 0.0,
 "start_offset": 0.0,
+"stream": ExtResource( 23 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
 "stream": ExtResource( 22 )
 } ],
-"times": PoolRealArray( 5.8 )
+"times": PoolRealArray( 0, 5.8 )
 }
 
 [sub_resource type="Animation" id=23]
@@ -2375,7 +2379,7 @@ VisualsPath = NodePath("../Visuals")
 script = ExtResource( 15 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 23 )
+stream = ExtResource( 22 )
 
 [node name="TookDamageSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 19 )

@@ -11,6 +11,13 @@ namespace RandomDungeons
     {
         [Export] public AudioStream Sound;
         [Export] public float VolumeLinear = 1;
+        [Export] public bool Autoplay = false;
+
+        public override void _Ready()
+        {
+            if (Autoplay)
+                Play();
+        }
 
         public void Play()
         {

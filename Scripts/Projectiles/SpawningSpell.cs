@@ -17,6 +17,7 @@ namespace RandomDungeons
             {
                 this.GetRoom().AddChild(NodeToSpawn);
                 NodeToSpawn.GlobalPosition = TargetPosGlobal;
+                GetNode<LingeringAudioStreamPlayer>("%PoofSound").Play();
                 QueueFree();
             }
         }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=2]
+[gd_scene load_steps=55 format=2]
 
 [ext_resource path="res://Scripts/Components/LineTrail2D.cs" type="Script" id=1]
 [ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=2]
@@ -22,6 +22,10 @@
 [ext_resource path="res://Audio/Music/BossVictory.ogg" type="AudioStream" id=20]
 [ext_resource path="res://Audio/SFX/FireBurning.wav" type="AudioStream" id=21]
 [ext_resource path="res://Audio/SFX/Wink.mp3" type="AudioStream" id=22]
+[ext_resource path="res://Audio/SFX/BombellaTeleportSwoosh.wav" type="AudioStream" id=23]
+[ext_resource path="res://Scripts/Components/LingeringAudioStreamPlayer.cs" type="Script" id=24]
+[ext_resource path="res://Audio/SFX/BombellaTeleportOut.wav" type="AudioStream" id=25]
+[ext_resource path="res://Audio/SFX/BombellaTeleportIn.wav" type="AudioStream" id=26]
 
 [sub_resource type="DynamicFont" id=33]
 size = 100
@@ -1799,6 +1803,34 @@ tracks/13/keys = {
 "method": "TeleportToRandomSpot"
 } ]
 }
+tracks/14/type = "method"
+tracks/14/path = NodePath("TeleportOutSound")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Play"
+} ]
+}
+tracks/15/type = "method"
+tracks/15/path = NodePath("TeleportInSound")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Play"
+} ]
+}
 
 [sub_resource type="Animation" id=5]
 resource_name = "Throw"
@@ -2343,11 +2375,19 @@ VisualsPath = NodePath("../Visuals")
 script = ExtResource( 15 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 22 )
+stream = ExtResource( 23 )
 
 [node name="TookDamageSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 19 )
 pitch_scale = 0.89
+
+[node name="TeleportOutSound" type="Node" parent="."]
+script = ExtResource( 24 )
+Sound = ExtResource( 25 )
+
+[node name="TeleportInSound" type="Node" parent="."]
+script = ExtResource( 24 )
+Sound = ExtResource( 26 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

@@ -46,3 +46,7 @@ DoorLockSounds:
 Wink sound effect:
     https://opengameart.org/content/completion-sound
     Author: Brandon Morris
+
+Fireball sound effect:
+    https://opengameart.org/content/fireball-1
+    Author: Julien Matthey

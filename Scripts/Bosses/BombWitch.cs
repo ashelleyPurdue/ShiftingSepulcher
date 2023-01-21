@@ -5,7 +5,7 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class BombWitch : Node, IOnRoomTransitionFinished
+    public class BombWitch : Node, IOnRoomTransitionFinished, IChallenge
     {
         [Export] public PackedScene VictoryChestPrefab;
         [Export] public PackedScene SpawningSpellPrefab;
@@ -32,6 +32,9 @@ namespace RandomDungeons
         private List<Node> _spawnedProjectiles = new List<Node>();
 
         private float _aimStartRotRad;
+        private bool _deathAnimationFinished = false;
+
+        bool IChallenge.IsSolved() => _deathAnimationFinished;
 
         public override void _PhysicsProcess(float delta)
         {
@@ -156,6 +159,8 @@ namespace RandomDungeons
 
         public void OnDeathAnimationFinished()
         {
+            _deathAnimationFinished = true;
+
             var chest = VictoryChestPrefab.Instance<Node2D>();
             this.GetRoom().AddChild(chest);
         }

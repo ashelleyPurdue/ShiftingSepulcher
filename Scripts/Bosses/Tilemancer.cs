@@ -4,7 +4,7 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class Tilemancer : Node2D, IOnRoomTransitionFinished, IRespawnable
+    public class Tilemancer : Node2D, IOnRoomTransitionFinished, IRespawnable, IChallenge
     {
         [Export] public PackedScene VictoryChestPrefab;
         [Export] public PackedScene TilePrefab;
@@ -26,9 +26,12 @@ namespace RandomDungeons
         private Vector2 _spawnPos;
         private Queue<TilemancerTile> _tilesToThrow = new Queue<TilemancerTile>();
         private bool _isDead = false;
+        private bool _deathAnimationFinished = false;
 
         [Signal] private delegate void ShatterAllTilesSignal();
         [Signal] private delegate void DestroyAllTilesSignal();
+
+        bool IChallenge.IsSolved() => _deathAnimationFinished;
 
         public override void _Ready()
         {
@@ -162,8 +165,10 @@ namespace RandomDungeons
             _tilesToThrow.Clear();
         }
 
-        public void SpawnVictoryChest()
+        public void OnDeathAnimationFinished()
         {
+            _deathAnimationFinished = true;
+
             var chest = VictoryChestPrefab.Instance<Node2D>();
             this.GetRoom().AddChild(chest);
             chest.Position = Vector2.Zero;
@@ -173,6 +178,8 @@ namespace RandomDungeons
         {
             _isDead = true;
             _mainAnimationPlayer.ResetAndPlay("Death");
+
+            ShatterAllTiles();
         }
     }
 }

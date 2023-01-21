@@ -1,20 +1,16 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Scenes/Maps/Test/RandomizedTestDungeons/SlidingIcePuzzleTest.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Maps/DungeonMode.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/UI/TitleScreen.cs" type="Script" id=4]
 [ext_resource path="res://Scenes/Prefabs/UI/Widgets/SeedInput.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Prefabs/UI/SettingsMenu.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scenes/Maps/Test/RandomizedTestDungeons/ScalePuzzleTest.tscn" type="PackedScene" id=7]
 
 [node name="TitleScreen" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 4 )
-DefaultFocusedOption = NodePath("PlayButtons/PlayDungeonButton")
+DefaultFocusedOption = NodePath("VBoxContainer/OpenPlayMenuButton")
 DungeonModeScene = ExtResource( 3 )
-SlidingIceModeScene = ExtResource( 2 )
-ScalePuzzleScene = ExtResource( 7 )
 
 [node name="Title" type="Label" parent="."]
 margin_left = 128.0
@@ -23,52 +19,116 @@ margin_right = 283.0
 margin_bottom = 78.0
 rect_scale = Vector2( 5, 5 )
 text = "Random Dungeon Game"
+align = 1
 
-[node name="PlayButtons" type="VBoxContainer" parent="."]
-margin_left = 200.0
-margin_top = 304.0
-margin_right = 355.0
-margin_bottom = 368.0
-custom_constants/separation = 5
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.0
+margin_top = -22.0
+margin_right = 80.0
+margin_bottom = 22.0
+custom_constants/separation = 16
 
-[node name="Label" type="Label" parent="PlayButtons"]
-margin_right = 155.0
-margin_bottom = 14.0
-text = "Select Game Mode"
+[node name="OpenPlayMenuButton" type="Button" parent="VBoxContainer"]
+margin_right = 160.0
+margin_bottom = 20.0
+text = "Play"
 
-[node name="PlayDungeonButton" type="Button" parent="PlayButtons"]
-margin_top = 19.0
-margin_right = 155.0
-margin_bottom = 39.0
-text = "Play Dungeon"
+[node name="OpenSettingsMenuButton" type="Button" parent="VBoxContainer"]
+margin_top = 36.0
+margin_right = 160.0
+margin_bottom = 56.0
+text = "Settings"
 
-[node name="PlaySlidingIceButton" type="Button" parent="PlayButtons"]
-margin_top = 44.0
-margin_right = 155.0
-margin_bottom = 64.0
-text = "Play Sliding Ice Puzzle"
+[node name="PlayMenu" type="Popup" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -224.0
+margin_top = -140.0
+margin_right = 224.0
+margin_bottom = 244.0
+popup_exclusive = true
 
-[node name="PlayScalePuzzleButton" type="Button" parent="PlayButtons"]
-margin_top = 69.0
-margin_right = 155.0
-margin_bottom = 89.0
-text = "Play Scale Puzzle"
+[node name="Panel" type="Panel" parent="PlayMenu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="SeedInput" parent="." instance=ExtResource( 5 )]
+[node name="PlayButton" type="Button" parent="PlayMenu"]
+anchor_left = 0.5
+anchor_top = 0.145
+anchor_right = 0.5
+anchor_bottom = 0.162
+margin_left = -77.5
+margin_right = 77.5
+margin_bottom = 20.0
+focus_neighbour_left = NodePath("../BackButton")
+focus_neighbour_top = NodePath("../BackButton")
+focus_neighbour_right = NodePath("../BackButton")
+focus_neighbour_bottom = NodePath("../SeedInput")
+focus_next = NodePath("../SeedInput")
+text = "Play"
+
+[node name="BackButton" type="Button" parent="PlayMenu"]
+margin_right = 42.0
+margin_bottom = 20.0
+focus_neighbour_left = NodePath("../PlayButton")
+focus_neighbour_right = NodePath("../PlayButton")
+focus_neighbour_bottom = NodePath("../PlayButton")
+text = "Back"
+
+[node name="SeedInput" parent="PlayMenu" instance=ExtResource( 5 )]
 unique_name_in_owner = true
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 512.0
-margin_top = 304.0
-margin_right = 673.0
-margin_bottom = 372.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -96.0
+margin_top = 64.0
+margin_right = 96.0
+margin_bottom = 130.0
 
-[node name="SettingsMenu" parent="." instance=ExtResource( 6 )]
-margin_left = 704.0
-margin_top = 288.0
-margin_right = 704.0
-margin_bottom = 288.0
+[node name="SettingsMenu" type="Popup" parent="."]
+margin_left = 384.0
+margin_top = 192.0
+margin_right = 672.0
+margin_bottom = 512.0
 
-[connection signal="pressed" from="PlayButtons/PlayDungeonButton" to="." method="PlayDungeonMode"]
-[connection signal="pressed" from="PlayButtons/PlaySlidingIceButton" to="." method="PlaySlidingIceMode"]
-[connection signal="pressed" from="PlayButtons/PlayScalePuzzleButton" to="." method="PlayScalePuzzleMode"]
+[node name="Panel" type="Panel" parent="SettingsMenu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="BackButton" type="Button" parent="SettingsMenu"]
+margin_right = 42.0
+margin_bottom = 20.0
+focus_neighbour_bottom = NodePath("../SettingsMenu")
+focus_next = NodePath("../SettingsMenu")
+text = "Back"
+
+[node name="SettingsMenu" parent="SettingsMenu" instance=ExtResource( 6 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -144.0
+margin_top = -64.0
+margin_right = 17.0
+margin_bottom = -64.0
+focus_neighbour_top = NodePath("../BackButton")
+focus_previous = NodePath("../BackButton")
+
+[connection signal="pressed" from="VBoxContainer/OpenPlayMenuButton" to="PlayMenu" method="popup"]
+[connection signal="pressed" from="VBoxContainer/OpenSettingsMenuButton" to="SettingsMenu" method="popup"]
+[connection signal="pressed" from="PlayMenu/PlayButton" to="." method="PlayDungeonMode"]
+[connection signal="pressed" from="PlayMenu/BackButton" to="PlayMenu" method="set_visible" binds= [ false ]]
+[connection signal="pressed" from="SettingsMenu/BackButton" to="SettingsMenu" method="set_visible" binds= [ false ]]

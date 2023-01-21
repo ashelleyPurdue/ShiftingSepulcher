@@ -341,7 +341,7 @@ tracks/13/keys = {
 
 [sub_resource type="Animation" id=25]
 resource_name = "Death"
-length = 12.0
+length = 13.5
 step = 0.02
 tracks/0/type = "value"
 tracks/0/path = NodePath("Visuals/Model/Body:rotation_degrees")
@@ -576,7 +576,7 @@ tracks/19/loop_wrap = true
 tracks/19/imported = false
 tracks/19/enabled = true
 tracks/19/keys = {
-"times": PoolRealArray( 12 ),
+"times": PoolRealArray( 13.5 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
@@ -2379,7 +2379,7 @@ VisualsPath = NodePath("../Visuals")
 script = ExtResource( 15 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 22 )
+stream = ExtResource( 21 )
 
 [node name="TookDamageSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 19 )

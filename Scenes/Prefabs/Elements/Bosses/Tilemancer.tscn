@@ -55,7 +55,7 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "values": [ {
 "args": [  ],
-"method": "SpawnVictoryChest"
+"method": "OnDeathAnimationFinished"
 }, {
 "args": [  ],
 "method": "queue_free"

@@ -6,7 +6,7 @@
 script = ExtResource( 1 )
 BasePath = "res://Scenes/Prefabs/DungeonRoomTemplates/Boss"
 Weights = {
-"BombWitchRoom": 1,
+"BombellaRoom": 1,
 "TilemancerRoom": 1,
 "VictoryChestRoom": 0
 }

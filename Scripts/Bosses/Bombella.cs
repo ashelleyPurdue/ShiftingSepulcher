@@ -5,7 +5,7 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class BombWitch : Node, IOnRoomTransitionFinished, IChallenge
+    public class Bombella : Node, IOnRoomTransitionFinished, IChallenge
     {
         [Export] public PackedScene VictoryChestPrefab;
         [Export] public PackedScene SpawningSpellPrefab;

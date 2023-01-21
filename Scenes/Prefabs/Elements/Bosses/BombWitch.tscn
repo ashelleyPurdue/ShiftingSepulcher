@@ -2362,6 +2362,7 @@ color_ramp = SubResource( 27 )
 scale = Vector2( 1.75, 1.75 )
 script = ExtResource( 6 )
 MaxHealth = 5
+DiesPermanently = true
 
 [node name="AI" type="Node" parent="."]
 script = ExtResource( 5 )

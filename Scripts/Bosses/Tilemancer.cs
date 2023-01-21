@@ -178,6 +178,8 @@ namespace RandomDungeons
         {
             _isDead = true;
             _mainAnimationPlayer.ResetAndPlay("Death");
+
+            ShatterAllTiles();
         }
     }
 }

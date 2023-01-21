@@ -27,7 +27,7 @@ namespace RandomDungeons
             return GetNode<Node2D>($"%DoorSpawns/{dir}");
         }
 
-        public override void _Process(float deltaTime)
+        public override void _PhysicsProcess(float deltaTime)
         {
             // Open all door bars if the the challenge has been solved
             if (IsChallengeSolved())

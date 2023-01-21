@@ -10,10 +10,13 @@ namespace RandomDungeons
 
         private Node2D _visuals => GetNode<Node2D>("%Visuals");
 
-        public override void _Process(float delta)
+        public override void _PhysicsProcess(float delta)
         {
             GetNode<CollisionShape2D>("%CollisionShape").Disabled = IsOpened;
+        }
 
+        public override void _Process(float delta)
+        {
             var targetScale = IsOpened
                 ? new Vector2(0, 1)
                 : new Vector2(1, 1);

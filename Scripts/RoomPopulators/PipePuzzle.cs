@@ -50,7 +50,7 @@ namespace RandomDungeons
             }
         }
 
-        public override void _Process(float delta)
+        public override void _PhysicsProcess(float delta)
         {
             var allPoweredGraphCells = _puzzleGraph
                 .AllSources()

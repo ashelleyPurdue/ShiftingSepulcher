@@ -9,7 +9,7 @@ namespace RandomDungeons
     {
         [Signal] public delegate void Interacted();
 
-        public override void _Process(float delta)
+        public override void _PhysicsProcess(float delta)
         {
             if (IsHighlighted() && InputService.ActivatePressed)
             {

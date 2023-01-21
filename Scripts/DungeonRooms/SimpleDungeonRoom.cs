@@ -113,6 +113,13 @@ namespace RandomDungeons
                 var door = Create<OneWayDoorOpenSide>(spawn, DoorPrefabs.OneWayOpenSide);
                 shortcutDoorMap.OutgoingFakeToReal[outgoingDoor] = door;
             }
+
+            // HACK: Close the door behind the player in boss rooms until the
+            // boss is dead.
+            // Well, technically, this closes _every_ door, but boss rooms only
+            // ever have one door anyway.
+            if (LayoutRoom.TreeRoom.ChallengeType == ChallengeType.Boss)
+                Create<DoorBars>(spawn, DoorPrefabs.Bars);
         }
 
         protected T Create<T>(Node2D parent, PackedScene prefab) where T : Node2D

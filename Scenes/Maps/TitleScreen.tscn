@@ -9,7 +9,7 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 4 )
-DefaultFocusedOption = NodePath("PlayButtons/PlayDungeonButton")
+DefaultFocusedOption = NodePath("PlayButton")
 DungeonModeScene = ExtResource( 3 )
 
 [node name="Title" type="Label" parent="."]
@@ -20,37 +20,26 @@ margin_bottom = 78.0
 rect_scale = Vector2( 5, 5 )
 text = "Random Dungeon Game"
 
-[node name="PlayButtons" type="VBoxContainer" parent="."]
-margin_left = 200.0
-margin_top = 304.0
-margin_right = 355.0
-margin_bottom = 368.0
-custom_constants/separation = 5
-
-[node name="Label" type="Label" parent="PlayButtons"]
-margin_right = 155.0
-margin_bottom = 14.0
-text = "Select Game Mode"
-
-[node name="PlayDungeonButton" type="Button" parent="PlayButtons"]
-margin_top = 19.0
-margin_right = 155.0
-margin_bottom = 39.0
+[node name="PlayButton" type="Button" parent="."]
+margin_left = 416.0
+margin_top = 320.0
+margin_right = 571.0
+margin_bottom = 340.0
 text = "Play Dungeon"
 
 [node name="SeedInput" parent="." instance=ExtResource( 5 )]
 unique_name_in_owner = true
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 512.0
-margin_top = 304.0
-margin_right = 673.0
-margin_bottom = 372.0
+margin_left = 704.0
+margin_top = 256.0
+margin_right = 865.0
+margin_bottom = 322.0
 
 [node name="SettingsMenu" parent="." instance=ExtResource( 6 )]
 margin_left = 704.0
-margin_top = 288.0
-margin_right = 704.0
-margin_bottom = 288.0
+margin_top = 384.0
+margin_right = 865.0
+margin_bottom = 384.0
 
-[connection signal="pressed" from="PlayButtons/PlayDungeonButton" to="." method="PlayDungeonMode"]
+[connection signal="pressed" from="PlayButton" to="." method="PlayDungeonMode"]

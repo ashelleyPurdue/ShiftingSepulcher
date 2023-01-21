@@ -1,11 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Scenes/Maps/Test/RandomizedTestDungeons/SlidingIcePuzzleTest.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Maps/DungeonMode.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/UI/TitleScreen.cs" type="Script" id=4]
 [ext_resource path="res://Scenes/Prefabs/UI/Widgets/SeedInput.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Prefabs/UI/SettingsMenu.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scenes/Maps/Test/RandomizedTestDungeons/ScalePuzzleTest.tscn" type="PackedScene" id=7]
 
 [node name="TitleScreen" type="Control"]
 anchor_right = 1.0
@@ -13,8 +11,6 @@ anchor_bottom = 1.0
 script = ExtResource( 4 )
 DefaultFocusedOption = NodePath("PlayButtons/PlayDungeonButton")
 DungeonModeScene = ExtResource( 3 )
-SlidingIceModeScene = ExtResource( 2 )
-ScalePuzzleScene = ExtResource( 7 )
 
 [node name="Title" type="Label" parent="."]
 margin_left = 128.0
@@ -42,18 +38,6 @@ margin_right = 155.0
 margin_bottom = 39.0
 text = "Play Dungeon"
 
-[node name="PlaySlidingIceButton" type="Button" parent="PlayButtons"]
-margin_top = 44.0
-margin_right = 155.0
-margin_bottom = 64.0
-text = "Play Sliding Ice Puzzle"
-
-[node name="PlayScalePuzzleButton" type="Button" parent="PlayButtons"]
-margin_top = 69.0
-margin_right = 155.0
-margin_bottom = 89.0
-text = "Play Scale Puzzle"
-
 [node name="SeedInput" parent="." instance=ExtResource( 5 )]
 unique_name_in_owner = true
 anchor_right = 0.0
@@ -70,5 +54,3 @@ margin_right = 704.0
 margin_bottom = 288.0
 
 [connection signal="pressed" from="PlayButtons/PlayDungeonButton" to="." method="PlayDungeonMode"]
-[connection signal="pressed" from="PlayButtons/PlaySlidingIceButton" to="." method="PlaySlidingIceMode"]
-[connection signal="pressed" from="PlayButtons/PlayScalePuzzleButton" to="." method="PlayScalePuzzleMode"]

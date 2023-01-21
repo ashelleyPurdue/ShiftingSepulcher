@@ -12,6 +12,13 @@ namespace RandomDungeons
         [Export] public float KnockbackFriction = 500;
         [Export] public float MinSpeedForHitWallTrigger = 90;
 
+        /// <summary>
+        /// If this is true, the enemy will stay dead when they're killed, even
+        /// after the player dies.
+        /// </summary>
+        /// <value></value>
+        [Export] public bool DiesPermanently = false;
+
         public bool IsDead {get; private set;}
 
         [Export] public int Health;
@@ -41,6 +48,9 @@ namespace RandomDungeons
 
         public void Respawn()
         {
+            if (IsDead && DiesPermanently)
+                return;
+
             Health = MaxHealth;
             IsDead = false;
 

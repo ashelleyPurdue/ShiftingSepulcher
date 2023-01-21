@@ -9,7 +9,7 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 4 )
-DefaultFocusedOption = NodePath("PlayButton")
+DefaultFocusedOption = NodePath("VBoxContainer/OpenPlayMenuButton")
 DungeonModeScene = ExtResource( 3 )
 
 [node name="Title" type="Label" parent="."]
@@ -19,27 +19,89 @@ margin_right = 283.0
 margin_bottom = 78.0
 rect_scale = Vector2( 5, 5 )
 text = "Random Dungeon Game"
+align = 1
 
-[node name="PlayButton" type="Button" parent="."]
-margin_left = 416.0
-margin_top = 320.0
-margin_right = 571.0
-margin_bottom = 340.0
-text = "Play Dungeon"
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.0
+margin_top = -22.0
+margin_right = 80.0
+margin_bottom = 22.0
+custom_constants/separation = 16
 
-[node name="SeedInput" parent="." instance=ExtResource( 5 )]
+[node name="OpenPlayMenuButton" type="Button" parent="VBoxContainer"]
+margin_right = 160.0
+margin_bottom = 20.0
+text = "Play"
+
+[node name="OpenSettingsMenuButton" type="Button" parent="VBoxContainer"]
+margin_top = 36.0
+margin_right = 160.0
+margin_bottom = 56.0
+text = "Settings"
+
+[node name="PlayMenu" type="Popup" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -224.0
+margin_top = -140.0
+margin_right = 224.0
+margin_bottom = 244.0
+
+[node name="Panel" type="Panel" parent="PlayMenu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="PlayButton" type="Button" parent="PlayMenu"]
+anchor_left = 0.5
+anchor_top = 0.145
+anchor_right = 0.5
+anchor_bottom = 0.162
+margin_left = -77.5
+margin_right = 77.5
+margin_bottom = 20.0
+text = "Play"
+
+[node name="SeedInput" parent="PlayMenu" instance=ExtResource( 5 )]
 unique_name_in_owner = true
+anchor_top = 1.0
 anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 704.0
-margin_top = 256.0
-margin_right = 865.0
-margin_bottom = 322.0
+margin_left = 64.0
+margin_top = -160.0
+margin_right = 225.0
+margin_bottom = -94.0
 
-[node name="SettingsMenu" parent="." instance=ExtResource( 6 )]
-margin_left = 704.0
-margin_top = 384.0
-margin_right = 865.0
-margin_bottom = 384.0
+[node name="SettingsMenu" type="Popup" parent="."]
+margin_left = 384.0
+margin_top = 192.0
+margin_right = 672.0
+margin_bottom = 512.0
 
-[connection signal="pressed" from="PlayButton" to="." method="PlayDungeonMode"]
+[node name="Panel" type="Panel" parent="SettingsMenu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="SettingsMenu" parent="SettingsMenu" instance=ExtResource( 6 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -144.0
+margin_top = -64.0
+margin_right = 17.0
+margin_bottom = -64.0
+
+[connection signal="pressed" from="VBoxContainer/OpenPlayMenuButton" to="PlayMenu" method="popup"]
+[connection signal="pressed" from="VBoxContainer/OpenSettingsMenuButton" to="SettingsMenu" method="popup"]
+[connection signal="pressed" from="PlayMenu/PlayButton" to="." method="PlayDungeonMode"]

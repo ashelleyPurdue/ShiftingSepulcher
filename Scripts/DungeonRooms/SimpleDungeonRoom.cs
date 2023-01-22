@@ -30,11 +30,12 @@ namespace RandomDungeons
         public override void _PhysicsProcess(float deltaTime)
         {
             // Open all door bars if the the challenge has been solved
-            if (IsChallengeSolved())
+            if (!_sentChallengeSolvedSignal && IsChallengeSolved())
             {
-                if (_challenges.Any() && !_sentChallengeSolvedSignal)
+                _sentChallengeSolvedSignal = true;
+
+                if (_challenges.Any())
                 {
-                    _sentChallengeSolvedSignal = true;
                     EmitSignal(nameof(ChallengeSolved));
                 }
 

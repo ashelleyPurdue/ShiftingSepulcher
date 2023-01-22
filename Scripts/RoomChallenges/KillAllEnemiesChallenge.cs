@@ -6,10 +6,18 @@ namespace RandomDungeons
 {
     public class KillAllEnemiesChallenge : Node, IChallenge
     {
+        private IEnemy[] _enemies;
+
+        public override void _EnterTree()
+        {
+            _enemies = this.GetRoom()
+                .AllDescendantsOfType<IEnemy>()
+                .ToArray();
+        }
+
         public bool IsSolved()
         {
-            var enemies = this.GetRoom().AllDescendantsOfType<IEnemy>();
-            return enemies.All(e => e.IsDead);
+            return _enemies.All(e => e.IsDead);
         }
     }
 }

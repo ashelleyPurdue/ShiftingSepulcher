@@ -36,7 +36,7 @@ namespace RandomDungeons
                 rng.Next(width),
                 rng.Next(height)
             );
-            puzzle.GetCell(source).Type = CellType.Source;
+            puzzle.CreateCell(source, CellType.Source);
 
             // Choose a bunch of cells to "grow" another cell off of
             for (int i = 0; i < minGrowths || AllLeafPipes().Count() < numSinks; i++)
@@ -52,8 +52,7 @@ namespace RandomDungeons
                 var parentCell = puzzle.GetCell(parentPos);
 
                 var childPos = parentPos + growth.dir.ToVector2i();
-                var childCell = puzzle.GetCell(childPos);
-                childCell.Type = CellType.Pipe;
+                var childCell = puzzle.CreateCell(childPos, CellType.Pipe);
 
                 parentCell.SetDirectionOpen(growth.dir, true);
                 childCell.SetDirectionOpen(growth.dir.Opposite(), true);
@@ -127,8 +126,7 @@ namespace RandomDungeons
                     if (cell.IsDirectionOpen(dir))
                         continue;
 
-                    var neighborCell = puzzle.GetCell(neighborPos);
-                    if (neighborCell.Type != CellType.Empty)
+                    if (!puzzle.IsCellEmpty(neighborPos))
                         continue;
 
                     yield return dir;
@@ -153,39 +151,25 @@ namespace RandomDungeons
         public Cell GetCell(Vector2i pos)
         {
             AssertInBounds(pos);
-
-            if (!_cells.ContainsKey(pos))
-                _cells[pos] = new Cell();
-
             return _cells[pos];
+        }
+
+        public Cell CreateCell(Vector2i pos, CellType type)
+        {
+            AssertInBounds(pos);
+            var cell = new Cell(type);
+            _cells[pos] = cell;
+
+            return cell;
         }
 
         public bool IsSolved()
         {
-            IEnumerable<Vector2i> sources = _cells
-                .Where(kvp => kvp.Value.Type == CellType.Source)
-                .Select(kvp => kvp.Key)
-                .ToArray();
-            // HACK: We're calling .ToArray() on `sources` to avoid an exception
-            // caused by altering `_cells` while the enumerable is still being
-            // looped through.
-            //
-            // This is because GetCell() modifies the _cells dictionary if you
-            // try to access a cell that doesn't exist.  AllCellsReachableFrom()
-            // calls GetCell(), which means it modifies the dictionary.
-            //
-            // TODO: A proper solution should make it so GetCell() doesn't
-            // automatically create new cells
-
-            IEnumerable<Vector2i> sinks = _cells
-                .Where(kvp => kvp.Value.Type == CellType.Sink)
-                .Select(kvp => kvp.Key);
-
-            HashSet<Vector2i> reachableCells = sources
+            HashSet<Vector2i> reachableCells = AllSources()
                 .SelectMany(src => AllCellsReachableFrom(src))
                 .ToHashSet();
 
-            return sinks.All(sink => reachableCells.Contains(sink));
+            return AllSinks().All(sink => reachableCells.Contains(sink));
         }
 
         public bool IsInBounds(Vector2i cellPos)
@@ -225,7 +209,7 @@ namespace RandomDungeons
             }
         }
 
-        public IEnumerable<Vector2i> AllConnectedNeighbors(Vector2i cellPos)
+        private IEnumerable<Vector2i> AllConnectedNeighbors(Vector2i cellPos)
         {
             var cell = GetCell(cellPos);
 
@@ -234,6 +218,9 @@ namespace RandomDungeons
                 var neighborPos = cellPos + dir.ToVector2i();
 
                 if (!IsInBounds(neighborPos))
+                    continue;
+
+                if (IsCellEmpty(neighborPos))
                     continue;
 
                 var neighborCell = GetCell(neighborPos);
@@ -246,11 +233,11 @@ namespace RandomDungeons
             }
         }
 
+        public bool IsCellEmpty(Vector2i pos) => !_cells.ContainsKey(pos);
+
         public IEnumerable<Vector2i> AllNonEmptyCells()
         {
-            return _cells
-                .Where(kvp => kvp.Value.Type != CellType.Empty)
-                .Select(kvp => kvp.Key);
+            return _cells.Select(kvp => kvp.Key);
         }
 
         public IEnumerable<Vector2i> AllPipes()
@@ -300,7 +287,6 @@ namespace RandomDungeons
 
         public enum CellType
         {
-            Empty,
             Pipe,
             Source,
             Sink
@@ -311,6 +297,11 @@ namespace RandomDungeons
             public CellType Type;
 
             private Dictionary<CardinalDirection, bool> _isDirectionOpen = new Dictionary<CardinalDirection, bool>();
+
+            public Cell(CellType type)
+            {
+                Type = type;
+            }
 
             public void RotateClockwise()
             {

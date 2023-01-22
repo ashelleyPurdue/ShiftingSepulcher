@@ -37,15 +37,20 @@ namespace RandomDungeons
             return parent?.FindAncestor<T>();
         }
 
-        public static IEnumerable<Node> AllDescendants(this Node n)
+        public static IEnumerable<Node> AllDescendants(this Node node)
         {
-            foreach (var child in n.GetChildren())
-            {
-                var childNode = (Node)child;
-                yield return childNode;
+            var list = new List<Node>();
+            Recursive(node);
+            return list;
 
-                foreach (var descendant in childNode.AllDescendants())
-                    yield return descendant;
+            void Recursive(Node n)
+            {
+                foreach (var child in n.GetChildren())
+                {
+                    var childNode = (Node)child;
+                    list.Add(childNode);
+                    Recursive(childNode);
+                }
             }
         }
 
@@ -55,11 +60,22 @@ namespace RandomDungeons
         /// <param name="n"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static IEnumerable<T> AllDescendantsOfType<T>(this Node n)
+        public static IEnumerable<T> AllDescendantsOfType<T>(this Node node)
         {
-            return n.AllDescendants()
-                .Where(d => d is T)
-                .Cast<T>();
+            var list = new List<T>();
+            Recursive(node);
+            return list;
+
+            void Recursive(Node n)
+            {
+                foreach (var child in n.GetChildren())
+                {
+                    if (child is T childAsT)
+                        list.Add(childAsT);
+
+                    Recursive((Node)child);
+                }
+            }
         }
 
         /// <summary>

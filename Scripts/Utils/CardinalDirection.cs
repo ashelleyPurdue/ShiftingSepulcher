@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 namespace RandomDungeons
@@ -58,12 +59,8 @@ namespace RandomDungeons
     {
         public static IEnumerable<CardinalDirection> All()
         {
-            var uncasted = Enum.GetValues(typeof(CardinalDirection));
-
-            foreach (var dir in uncasted)
-            {
-                yield return (CardinalDirection)dir;
-            }
+            return Enum.GetValues(typeof(CardinalDirection))
+                    .Cast<CardinalDirection>();
         }
     }
 }

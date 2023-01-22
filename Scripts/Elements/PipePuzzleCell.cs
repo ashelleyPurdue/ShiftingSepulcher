@@ -7,12 +7,19 @@ namespace RandomDungeons
         [Export] public Color UnpoweredColor;
         [Export] public Color PoweredColor;
 
+        public event System.Action CellRotated;
+
         public PipePuzzleGraph.Cell Cell;
         public bool IsPowered;
 
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%Animator");
 
-        public override void _Process(float delta)
+        public override void _EnterTree()
+        {
+            UpdatePipeDisplays();
+        }
+
+        public void UpdatePipeDisplays()
         {
             foreach (var dir in CardinalDirectionUtils.All())
             {
@@ -28,9 +35,9 @@ namespace RandomDungeons
         public void OnKnobHit(HitBox hitbox)
         {
             Cell.RotateClockwise();
-            _animator.Play("RESET");
-            _animator.Advance(0);
-            _animator.Play("RotateClockwise");
+            CellRotated?.Invoke();
+
+            _animator.ResetAndPlay("RotateClockwise");
         }
 
         private Node2D GetPipeDisplay(CardinalDirection dir)

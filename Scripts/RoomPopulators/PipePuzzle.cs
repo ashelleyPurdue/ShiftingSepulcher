@@ -31,6 +31,7 @@ namespace RandomDungeons
             );
             _puzzleGraph = puzzleGraph;
 
+            // Create nodes for all the cells in the graph
             foreach (var srcPos in puzzleGraph.AllSources())
             {
                 var src = Spawn<PipePuzzleCell>(SourceCellPrefab, srcPos);
@@ -48,9 +49,17 @@ namespace RandomDungeons
                 var sink = Spawn<PipePuzzleCell>(SinkCellPrefab, sinkPos);
                 sink.Cell = puzzleGraph.GetCell(sinkPos);
             }
+
+            // React when the cells get rotated
+            foreach (var cell in this.AllDescendantsOfType<PipePuzzleCell>())
+            {
+                cell.CellRotated += OnCellRotated;
+            }
+
+            OnCellRotated();
         }
 
-        public override void _PhysicsProcess(float delta)
+        private void OnCellRotated()
         {
             var allPoweredGraphCells = _puzzleGraph
                 .AllSources()
@@ -61,6 +70,7 @@ namespace RandomDungeons
             foreach (var realCell in this.AllDescendantsOfType<PipePuzzleCell>())
             {
                 realCell.IsPowered = allPoweredGraphCells.Contains(realCell.Cell);
+                realCell.UpdatePipeDisplays();
             }
         }
 

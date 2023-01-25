@@ -13,13 +13,6 @@ namespace RandomDungeons
             Instance = this;
         }
 
-        public override void _Process(float delta)
-        {
-            int busIndex = AudioServer.GetBusIndex("Music");
-            float musicVolumeDb = GD.Linear2Db(UserSettings.Get.MusicVolume);
-            AudioServer.SetBusVolumeDb(busIndex, musicVolumeDb);
-        }
-
         public void PlaySong(AudioStream song)
         {
             _audioPlayer.Stop();

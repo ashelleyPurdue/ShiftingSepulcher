@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/Resources/BackgroundMusicSong.cs" type="Script" id=1]
+[ext_resource path="res://Audio/Music/JRPG_labyrinth_loop.ogg" type="AudioStream" id=2]
+
+[resource]
+script = ExtResource( 1 )
+Song = ExtResource( 2 )
+VolumeLinear = 1.0

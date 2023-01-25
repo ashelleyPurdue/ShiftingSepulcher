@@ -8,6 +8,12 @@ namespace RandomDungeons
 
         public bool DisplayPerformanceStats = false;
 
+        public float MasterVolume
+        {
+            get => GetBusVolumeLinear("Master");
+            set => SetBusVolumeLinear("Master", value);
+        }
+
         public float MusicVolume
         {
             get => GetBusVolumeLinear("Music");

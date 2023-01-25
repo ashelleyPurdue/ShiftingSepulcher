@@ -7,10 +7,17 @@ namespace RandomDungeons
         public static UserSettings Get {get; private set;} = new UserSettings();
 
         public bool DisplayPerformanceStats = false;
+
         public float MusicVolume
         {
             get => GetBusVolumeLinear("Music");
             set => SetBusVolumeLinear("Music", value);
+        }
+
+        public float SoundVolume
+        {
+            get => GetBusVolumeLinear("Sound");
+            set => SetBusVolumeLinear("Sound", value);
         }
 
         public static void ResetToDefault()

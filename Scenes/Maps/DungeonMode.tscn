@@ -3,9 +3,9 @@
 [ext_resource path="res://Scripts/PhysicalDungeons/RandomDungeonInstantiator.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/DungeonRooms/DungeonRoomFactory.cs" type="Script" id=2]
 [ext_resource path="res://Scenes/Prefabs/Elements/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Audio/Music/JRPG_labyrinth_loop.tres" type="Resource" id=4]
 [ext_resource path="res://Scenes/Prefabs/DungeonRoomTemplates/KeyRoom.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Prefabs/DungeonRoomTemplates/EmptyRoom.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Audio/Music/JRPG_labyrinth_loop.ogg" type="AudioStream" id=7]
 [ext_resource path="res://Scenes/Prefabs/RoomTransitionManager.tscn" type="PackedScene" id=10]
 [ext_resource path="res://SceneSpawnTables/DungeonRoomTemplates/BossRoomWeights.tres" type="Resource" id=11]
 [ext_resource path="res://SceneSpawnTables/DungeonRoomTemplates/PuzzleRooms.tres" type="Resource" id=12]
@@ -15,7 +15,7 @@
 [node name="Node2D" type="Node2D"]
 
 [node name="RoomTransitionManager" parent="." instance=ExtResource( 10 )]
-BackgroundMusic = ExtResource( 7 )
+BackgroundMusic = ExtResource( 4 )
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 

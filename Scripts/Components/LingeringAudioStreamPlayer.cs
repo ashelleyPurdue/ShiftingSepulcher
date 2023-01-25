@@ -13,6 +13,8 @@ namespace RandomDungeons
         [Export] public float VolumeLinear = 1;
         [Export] public bool Autoplay = false;
 
+        [Export] public string Bus = "Sound";
+
         public override void _Ready()
         {
             if (Autoplay)
@@ -24,6 +26,7 @@ namespace RandomDungeons
             var audioPlayer = new AudioStreamPlayer();
             audioPlayer.Stream = Sound;
             audioPlayer.VolumeDb = GD.Linear2Db(VolumeLinear);
+            audioPlayer.Bus = Bus;
 
             GetTree().Root.AddChild(audioPlayer);
             audioPlayer.Play();

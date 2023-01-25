@@ -250,15 +250,18 @@ script = ExtResource( 5 )
 [node name="SwordSwishSound" type="AudioStreamPlayer" parent="Sounds"]
 unique_name_in_owner = true
 stream = ExtResource( 10 )
+bus = "Sound"
 
 [node name="HurtSound" type="AudioStreamPlayer" parent="Sounds"]
 unique_name_in_owner = true
 stream = ExtResource( 11 )
 volume_db = 8.778
+bus = "Sound"
 
 [node name="DeathSound" type="AudioStreamPlayer" parent="Sounds"]
 unique_name_in_owner = true
 stream = ExtResource( 12 )
+bus = "Sound"
 
 [node name="SpawnSound" type="Node" parent="Sounds"]
 script = ExtResource( 13 )
@@ -266,6 +269,7 @@ Sound = ExtResource( 14 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 14 )
+bus = "Sound"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

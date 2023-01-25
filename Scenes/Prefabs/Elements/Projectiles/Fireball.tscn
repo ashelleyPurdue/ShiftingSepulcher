@@ -182,6 +182,7 @@ Autoplay = true
 stream = ExtResource( 6 )
 volume_db = 5.32
 autoplay = true
+bus = "Sound"
 
 [node name="PoofSound" type="Node" parent="."]
 script = ExtResource( 4 )

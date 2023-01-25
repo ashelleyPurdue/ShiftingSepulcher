@@ -178,6 +178,7 @@ Sound = ExtResource( 7 )
 [node name="ThrowSound" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource( 8 )
+bus = "Sound"
 
 [node name="Collider" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true

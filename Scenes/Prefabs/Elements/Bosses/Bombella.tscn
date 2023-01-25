@@ -2381,10 +2381,12 @@ script = ExtResource( 15 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 25 )
+bus = "Sound"
 
 [node name="TookDamageSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 24 )
 pitch_scale = 0.89
+bus = "Sound"
 
 [node name="TeleportOutSound" type="Node" parent="."]
 script = ExtResource( 3 )

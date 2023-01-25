@@ -624,10 +624,12 @@ script = ExtResource( 10 )
 
 [node name="AnimationSoundPlayer" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 13 )
+bus = "Sound"
 
 [node name="TookDamageSound" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 15 )
 pitch_scale = 0.89
+bus = "Sound"
 
 [node name="MainAnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true

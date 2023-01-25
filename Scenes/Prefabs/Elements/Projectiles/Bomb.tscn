@@ -279,9 +279,11 @@ anims/SmallShortPulse = SubResource( 8 )
 [node name="TickSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
 pitch_scale = 2.0
+bus = "Sound"
 
 [node name="FuseHissSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
+bus = "Sound"
 
 [node name="FuseParticles" type="Particles2D" parent="."]
 material = SubResource( 10 )

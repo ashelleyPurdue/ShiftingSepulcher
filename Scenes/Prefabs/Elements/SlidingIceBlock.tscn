@@ -18,15 +18,18 @@ script = ExtResource( 1 )
 [node name="SlideLoopSound" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource( 3 )
+bus = "Sound"
 
 [node name="SlideStartSound" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource( 4 )
 volume_db = -10.548
+bus = "Sound"
 
 [node name="SlideStopSound" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource( 5 )
+bus = "Sound"
 
 [node name="Collider" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true

@@ -242,6 +242,7 @@ VisualsPath = NodePath("../Visuals")
 [node name="TookDamageSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
 pitch_scale = 0.89
+bus = "Sound"
 
 [node name="DeathSound" type="Node" parent="."]
 script = ExtResource( 9 )

@@ -125,6 +125,7 @@ anims/RESET = SubResource( 3 )
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
 pitch_scale = 3.0
+bus = "Sound"
 
 [node name="GrowingPart" type="Node2D" parent="."]
 

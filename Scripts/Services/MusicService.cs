@@ -6,18 +6,11 @@ namespace RandomDungeons
     {
         public static MusicService Instance {get; private set;}
 
-        public float VolumeMult = 1;
-
         private AudioStreamPlayer _audioPlayer => GetNode<AudioStreamPlayer>("%AudioPlayer");
 
         public override void _Ready()
         {
             Instance = this;
-        }
-
-        public override void _Process(float delta)
-        {
-            _audioPlayer.VolumeDb = GD.Linear2Db(UserSettings.Get.MusicVolume * VolumeMult);
         }
 
         public void PlaySong(AudioStream song)

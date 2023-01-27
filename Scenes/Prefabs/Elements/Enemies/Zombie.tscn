@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Scripts/Components/HurtBox.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Enemies/EnemyBody.cs" type="Script" id=2]
@@ -90,6 +90,9 @@ tracks/5/keys = {
 } ]
 }
 
+[sub_resource type="Animation" id=11]
+resource_name = "Idle"
+
 [sub_resource type="Animation" id=6]
 length = 0.001
 tracks/0/type = "value"
@@ -152,27 +155,82 @@ tracks/4/keys = {
 "update": 0,
 "values": [ false ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("Visuals/ZombieModel/Body/Feet/LeftFoot:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -5, 3 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Visuals/ZombieModel/Body/Feet/RightFoot:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 5, 3 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Visuals/ZombieModel/Body:scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.58082, 0.58082 ) ]
+}
 
-[sub_resource type="Animation" id=4]
-resource_name = "Search"
-length = 2.0
+[sub_resource type="Animation" id=12]
+resource_name = "Walk"
 loop = true
-tracks/0/type = "method"
-tracks/0/path = NodePath("AI")
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Visuals/ZombieModel/Body/Feet/LeftFoot:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
+"times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
-"values": [ {
-"args": [  ],
-"method": "StartIdling"
-}, {
-"args": [  ],
-"method": "StartWandering"
-} ]
+"update": 0,
+"values": [ Vector2( -5, 6 ), Vector2( -5, -6 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Visuals/ZombieModel/Body/Feet/RightFoot:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 5, -6 ), Vector2( 5, 6 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Visuals/ZombieModel/Body:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5, 0.75 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.58082, 0.58082 ), Vector2( 0.65, 0.65 ), Vector2( 0.58082, 0.58082 ), Vector2( 0.65, 0.65 ) ]
 }
 
 [sub_resource type="CircleShape2D" id=8]
@@ -202,10 +260,10 @@ script = ExtResource( 5 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
-autoplay = "Search"
 anims/Death = SubResource( 5 )
+anims/Idle = SubResource( 11 )
 anims/RESET = SubResource( 6 )
-anims/Search = SubResource( 4 )
+anims/Walk = SubResource( 12 )
 
 [node name="KinematicBodyCollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource( 8 )
@@ -256,3 +314,5 @@ VolumeLinear = 2.0
 [connection signal="body_entered" from="VisionCircle" to="AI" method="OnVisionCircleBodyEntered" flags=3]
 [connection signal="TookDamage" from="HurtBox" to="." method="OnTookDamage"]
 [connection signal="TookDamageNoParams" from="HurtBox" to="TookDamageSound" method="play"]
+
+[editable path="Visuals/ZombieModel"]

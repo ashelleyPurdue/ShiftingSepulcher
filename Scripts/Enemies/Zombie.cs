@@ -6,6 +6,7 @@ namespace RandomDungeons
     {
         [Export] public float MinIdleTime = 1f;
         [Export] public float MaxIdleTime = 2f;
+        [Export] public float WanderTime = 1f;
         [Export] public float WanderSpeed = 32 * 2;
 
         private EnemyBody _body => this.FindAncestor<EnemyBody>();
@@ -34,54 +35,71 @@ namespace RandomDungeons
 
         public void OnRespawning()
         {
-            _sm.ChangeState(Searching);
+            _sm.ChangeState(Idling);
         }
 
         public void OnVisionCircleBodyEntered(object body)
         {
-            if (body is Player p && _sm.CurrentState == Searching)
+            if (!(body is Player p))
+                return;
+
+            if (_sm.CurrentState == Wandering || _sm.CurrentState == Idling)
             {
                 _targetPlayer = p;
                 _sm.ChangeState(Chasing);
             }
         }
 
-        public void StartWandering()
+        private State<Zombie> Idling = new IdlingState();
+        private class IdlingState : State<Zombie>
         {
-            // Choose a random direction to walk in
-            float angle = Mathf.Deg2Rad(GD.Randf() * 360);
-            _body.WalkVelocity = WanderSpeed * new Vector2(
-                Mathf.Cos(angle),
-                Mathf.Sin(angle)
-            );
+            private float _timer = 0;
 
-            _animator.PlaybackSpeed = 1;
-        }
-
-        public void StartIdling()
-        {
-            _body.WalkVelocity = Vector2.Zero;
-
-            float idleDuration = (float)GD.RandRange(
-                MinIdleTime,
-                MaxIdleTime
-            );
-            _animator.PlaybackSpeed = 1f / idleDuration;
-        }
-
-        private State<Zombie> Searching = new SearchingState();
-        private class SearchingState : State<Zombie>
-        {
             public override void _StateEntered()
             {
-                Owner._animator.Play("RESET");
-                Owner._animator.Advance(0);
-                Owner._animator.Play("Search");
+                Owner._animator.ResetAndPlay("Idle");
+                Owner._body.WalkVelocity = Vector2.Zero;
+
+                _timer = (float)GD.RandRange(
+                    Owner.MinIdleTime,
+                    Owner.MaxIdleTime
+                );
             }
 
-            public override void _StateExited()
+            public override void _PhysicsProcess(float delta)
             {
-                Owner._animator.PlaybackSpeed = 1;
+                _timer -= delta;
+
+                if (_timer <= 0)
+                    ChangeState(Owner.Wandering);
+            }
+        }
+
+        private State<Zombie> Wandering;
+        private class WanderingState : State<Zombie>
+        {
+            private float _timer = 0;
+
+            public override void _StateEntered()
+            {
+                Owner._animator.ResetAndPlay("Walk");
+                _timer = Owner.WanderTime;
+
+                // Choose a random direction to walk in
+                float angle = Mathf.Deg2Rad(GD.Randf() * 360);
+
+                Owner._body.WalkVelocity = Owner.WanderSpeed * new Vector2(
+                    Mathf.Cos(angle),
+                    Mathf.Sin(angle)
+                );
+            }
+
+            public override void _PhysicsProcess(float delta)
+            {
+                _timer -= delta;
+
+                if (_timer <= 0)
+                    ChangeState(Owner.Idling);
             }
         }
 
@@ -90,12 +108,7 @@ namespace RandomDungeons
         {
             public override void _StateEntered()
             {
-                Owner._animator.Play("RESET");
-                Owner._animator.Advance(0);
-
-                // TODO: Play a special chasing animation, once this guy has
-                // actual graphics.
-                Owner._animator.Stop();
+                Owner._animator.ResetAndPlay("Walk");
             }
 
             public override void _PhysicsProcess(float delta)
@@ -114,10 +127,7 @@ namespace RandomDungeons
         {
             public override void _StateEntered()
             {
-                Owner._animator.Play("RESET");
-                Owner._animator.Advance(0);
-                Owner._animator.Play("Death");
-
+                Owner._animator.ResetAndPlay("Death");
                 Owner._body.WalkVelocity = Vector2.Zero;
             }
         }

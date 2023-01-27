@@ -9,6 +9,7 @@ namespace RandomDungeons
         [Export] public float WanderSpeed = 32 * 3;
 
         private EnemyBody _body => this.FindAncestor<EnemyBody>();
+        private Node2D _visuals => GetNode<Node2D>("%Visuals");
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
 
         private Player _targetPlayer;
@@ -18,6 +19,12 @@ namespace RandomDungeons
         public Zombie()
         {
             _sm = new StateMachine(this);
+        }
+
+        public override void _Process(float delta)
+        {
+            if (_body.WalkVelocity.Length() > 0.01f)
+                _visuals.Rotation = _body.WalkVelocity.Angle();
         }
 
         public void OnDead()

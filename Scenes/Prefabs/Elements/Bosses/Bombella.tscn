@@ -16,13 +16,13 @@
 [ext_resource path="res://Scripts/Enemies/EnemyBody.cs" type="Script" id=14]
 [ext_resource path="res://Scripts/Components/MusicServiceAccessor.cs" type="Script" id=15]
 [ext_resource path="res://Audio/SFX/BossPaperTear.ogg" type="AudioStream" id=16]
-[ext_resource path="res://Audio/Music/BossVictory.ogg" type="AudioStream" id=17]
-[ext_resource path="res://Audio/Music/wyver9_Boss_main(8-bit).ogg" type="AudioStream" id=18]
+[ext_resource path="res://Audio/Music/BossVictory.tres" type="Resource" id=17]
+[ext_resource path="res://Audio/Music/BossIntro.tres" type="Resource" id=18]
 [ext_resource path="res://Audio/SFX/Wink.mp3" type="AudioStream" id=19]
 [ext_resource path="res://Audio/SFX/BombellaAppearIntro.wav" type="AudioStream" id=20]
 [ext_resource path="res://Audio/SFX/BombellaTeleportOut.wav" type="AudioStream" id=21]
 [ext_resource path="res://Audio/SFX/BombellaTeleportIn.wav" type="AudioStream" id=22]
-[ext_resource path="res://Audio/Music/BossIntro.ogg" type="AudioStream" id=23]
+[ext_resource path="res://Audio/Music/BossMusic.tres" type="Resource" id=23]
 [ext_resource path="res://Audio/SFX/SwordDamageOwWithSlime.wav" type="AudioStream" id=24]
 [ext_resource path="res://Audio/SFX/FireBurning.wav" type="AudioStream" id=25]
 [ext_resource path="res://Fonts/The Wild Breath of Zelda.otf" type="DynamicFontData" id=26]
@@ -844,10 +844,10 @@ tracks/16/keys = {
 "args": [  ],
 "method": "StopSong"
 }, {
-"args": [ ExtResource( 23 ) ],
+"args": [ ExtResource( 18 ) ],
 "method": "PlaySong"
 }, {
-"args": [ ExtResource( 18 ) ],
+"args": [ ExtResource( 23 ) ],
 "method": "PlaySong"
 } ]
 }

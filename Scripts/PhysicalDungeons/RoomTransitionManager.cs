@@ -15,7 +15,7 @@ namespace RandomDungeons
     {
         public static RoomTransitionManager Instance {get; private set;}
 
-        [Export] public AudioStream BackgroundMusic;
+        [Export] public BackgroundMusicSong BackgroundMusic;
 
         private AnimationPlayer _transitionAnimator => GetNode<AnimationPlayer>("%RoomTransitionAnimator");
 

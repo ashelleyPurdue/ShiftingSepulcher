@@ -8,7 +8,7 @@ namespace RandomDungeons
     /// </summary>
     public class MusicServiceAccessor : Node
     {
-        public void PlaySong(AudioStream song) => MusicService.Instance.PlaySong(song);
+        public void PlaySong(BackgroundMusicSong song) => MusicService.Instance.PlaySong(song);
         public void StopSong() => MusicService.Instance.StopSong();
     }
 }

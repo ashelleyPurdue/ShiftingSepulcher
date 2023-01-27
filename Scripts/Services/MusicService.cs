@@ -13,10 +13,13 @@ namespace RandomDungeons
             Instance = this;
         }
 
-        public void PlaySong(AudioStream song)
+        public void PlaySong(BackgroundMusicSong song)
         {
             _audioPlayer.Stop();
-            _audioPlayer.Stream = song;
+
+            _audioPlayer.Stream = song.Song;
+            _audioPlayer.VolumeDb = GD.Linear2Db(song.VolumeLinear);
+
             _audioPlayer.Play();
         }
 

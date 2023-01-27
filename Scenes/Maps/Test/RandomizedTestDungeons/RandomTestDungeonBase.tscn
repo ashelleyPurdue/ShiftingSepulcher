@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://Audio/Music/JRPG_labyrinth_loop.ogg" type="AudioStream" id=1]
+[ext_resource path="res://Audio/Music/JRPG_labyrinth_loop.tres" type="Resource" id=1]
 [ext_resource path="res://Scripts/DungeonRooms/DungeonRoomFactory.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/TestMaps/TestDungeonBase.cs" type="Script" id=3]
 [ext_resource path="res://Scripts/PhysicalDungeons/RandomDungeonInstantiator.cs" type="Script" id=4]

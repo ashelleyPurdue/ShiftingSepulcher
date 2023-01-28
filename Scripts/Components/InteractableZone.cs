@@ -21,9 +21,7 @@ namespace RandomDungeons
 
         private bool IsHighlighted()
         {
-            return GetOverlappingBodies()
-                .OfType<Node>()
-                .Any(n => n is Player);
+            return GetTree().FindPlayer().HighlightedObject == this;
         }
     }
 }

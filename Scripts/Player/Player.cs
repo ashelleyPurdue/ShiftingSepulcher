@@ -11,6 +11,8 @@ namespace RandomDungeons
 
         [Signal] public delegate void DeathAnimationFinished();
 
+        public InteractableZone HighlightedObject => _interactor.HighlightedObject;
+
         public float FacingAngleRadians
         {
             get => _visuals.Rotation;
@@ -25,6 +27,7 @@ namespace RandomDungeons
         private Node2D _visuals => GetNode<Node2D>("%Visuals");
         private PlayerSword _sword => GetNode<PlayerSword>("%Sword");
         private ObjectHolder _objectHolder => GetNode<ObjectHolder>("%ObjectHolder");
+        private PlayerInteractor _interactor => GetNode<PlayerInteractor>("%Interactor");
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
         private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
 

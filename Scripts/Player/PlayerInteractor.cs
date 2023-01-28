@@ -6,8 +6,7 @@ namespace RandomDungeons
     {
         public InteractableZone HighlightedObject {get; private set;} = null;
 
-        // TODO: Rename the node
-        private Area2D _interactableDetector => GetNode<Area2D>("%HoldableDetector");
+        private Area2D _interactableDetector => GetNode<Area2D>("%InteractableDetector");
 
         public override void _PhysicsProcess(float delta)
         {

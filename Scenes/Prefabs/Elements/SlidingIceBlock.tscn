@@ -43,6 +43,7 @@ collision_mask = 5
 
 [node name="PushLeftTrigger" type="Area2D" parent="."]
 script = ExtResource( 2 )
+PromptText = "Push"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PushLeftTrigger"]
 position = Vector2( 36, 16 )
@@ -51,6 +52,7 @@ shape = SubResource( 1 )
 [node name="PushUpTrigger" type="Area2D" parent="."]
 rotation = 1.5708
 script = ExtResource( 2 )
+PromptText = "Push"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PushUpTrigger"]
 position = Vector2( 36, -16 )
@@ -59,6 +61,7 @@ shape = SubResource( 1 )
 [node name="PushRightTrigger" type="Area2D" parent="."]
 rotation = 3.14159
 script = ExtResource( 2 )
+PromptText = "Push"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PushRightTrigger"]
 position = Vector2( 4, -16 )
@@ -67,6 +70,7 @@ shape = SubResource( 1 )
 [node name="PushDownTrigger" type="Area2D" parent="."]
 rotation = -1.5708
 script = ExtResource( 2 )
+PromptText = "Push"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PushDownTrigger"]
 position = Vector2( 4, 16 )

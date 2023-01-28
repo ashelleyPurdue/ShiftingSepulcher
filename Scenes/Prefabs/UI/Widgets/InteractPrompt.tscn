@@ -1,12 +1,24 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scripts/UI/Widgets/InteractPrompt.cs" type="Script" id=1]
+[ext_resource path="res://Fonts/OFLFonts/OpenSans-VariableFont_wdth,wght.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Sprites/ControllerGlyphs/KeyboardAndMouse/Space_Key_Light.png" type="Texture" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 2 )
 
 [node name="InteractPrompt" type="Node2D"]
 z_index = 10
 z_as_relative = false
 script = ExtResource( 1 )
+
+[node name="SpaceKeyLight" type="Sprite" parent="."]
+position = Vector2( -32, -32 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 3 )
 
 [node name="PromptTextLabel" type="Label" parent="."]
 unique_name_in_owner = true
@@ -19,12 +31,8 @@ margin_top = -64.0
 margin_bottom = -38.0
 grow_horizontal = 2
 grow_vertical = 2
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
 text = "Pick up"
 align = 1
 valign = 1
-uppercase = true
-
-[node name="SpaceKeyLight" type="Sprite" parent="."]
-position = Vector2( -32, -32 )
-scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 3 )

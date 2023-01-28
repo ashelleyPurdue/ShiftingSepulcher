@@ -199,7 +199,12 @@ namespace RandomDungeons
                 }
 
                 if (InputService.ActivatePressed)
+                {
                     Owner.TryPickUpHoldable();
+
+                    if (!Owner._objectHolder.IsHoldingSomething)
+                        Owner._interactor.TryInteract();
+                }
 
                 if (InputService.AttackPressed)
                     ChangeState(Owner.SwingingSword);

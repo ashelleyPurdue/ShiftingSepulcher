@@ -11,17 +11,9 @@ namespace RandomDungeons
 
         [Export] public string PromptText = "";
 
-        public override void _PhysicsProcess(float delta)
+        public void Interact()
         {
-            if (IsHighlighted() && InputService.ActivatePressed)
-            {
-                EmitSignal(nameof(Interacted));
-            }
-        }
-
-        private bool IsHighlighted()
-        {
-            return GetTree().FindPlayer().HighlightedObject == this;
+            EmitSignal(nameof(Interacted));
         }
     }
 }

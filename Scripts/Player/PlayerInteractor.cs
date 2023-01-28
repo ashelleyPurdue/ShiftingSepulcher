@@ -14,6 +14,14 @@ namespace RandomDungeons
             UpdateHighlightedObject();
         }
 
+        public void TryInteract()
+        {
+            if (!Object.IsInstanceValid(HighlightedObject))
+                return;
+
+            HighlightedObject.Interact();
+        }
+
         private void UpdateHighlightedObject()
         {
             var hits = _interactableDetector.GetOverlappingAreas();

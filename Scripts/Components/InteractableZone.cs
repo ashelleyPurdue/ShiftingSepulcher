@@ -9,19 +9,11 @@ namespace RandomDungeons
     {
         [Signal] public delegate void Interacted();
 
-        public override void _PhysicsProcess(float delta)
-        {
-            if (IsHighlighted() && InputService.ActivatePressed)
-            {
-                EmitSignal(nameof(Interacted));
-            }
-        }
+        [Export] public string PromptText = "";
 
-        private bool IsHighlighted()
+        public void Interact()
         {
-            return GetOverlappingBodies()
-                .OfType<Node>()
-                .Any(n => n is Player);
+            EmitSignal(nameof(Interacted));
         }
     }
 }

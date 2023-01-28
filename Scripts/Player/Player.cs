@@ -11,6 +11,8 @@ namespace RandomDungeons
 
         [Signal] public delegate void DeathAnimationFinished();
 
+        public InteractableZone HighlightedObject => _interactor.HighlightedObject;
+
         public float FacingAngleRadians
         {
             get => _visuals.Rotation;
@@ -25,6 +27,7 @@ namespace RandomDungeons
         private Node2D _visuals => GetNode<Node2D>("%Visuals");
         private PlayerSword _sword => GetNode<PlayerSword>("%Sword");
         private ObjectHolder _objectHolder => GetNode<ObjectHolder>("%ObjectHolder");
+        private PlayerInteractor _interactor => GetNode<PlayerInteractor>("%Interactor");
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
         private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
 
@@ -141,16 +144,14 @@ namespace RandomDungeons
             return velocity.Length() / KnockbackFriction;
         }
 
-        private void TryPickUpHoldable()
+        public void PickUp(IHoldable holdable)
         {
-            var holdable = GetNode<Area2D>("%HoldableDetector")
-                .GetOverlappingAreas()
-                .Cast<Area2D>()
-                .OfType<IHoldable>()
-                .FirstOrDefault();
-
-            if (holdable == null)
+            if (_sm.CurrentState != Walking)
+            {
+                string stateName = _sm.CurrentState.GetType().Name;
+                GD.Print($"Tried to pick up {holdable.Node.Name} while outside the walking state ({stateName})");
                 return;
+            }
 
             _objectHolder.PickUp(holdable);
         }
@@ -196,7 +197,7 @@ namespace RandomDungeons
                 }
 
                 if (InputService.ActivatePressed)
-                    Owner.TryPickUpHoldable();
+                    Owner._interactor.TryInteract();
 
                 if (InputService.AttackPressed)
                     ChangeState(Owner.SwingingSword);

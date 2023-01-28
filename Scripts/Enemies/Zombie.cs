@@ -7,7 +7,7 @@ namespace RandomDungeons
         [Export] public float MinIdleTime = 1f;
         [Export] public float MaxIdleTime = 2f;
         [Export] public float WanderTime = 1f;
-        [Export] public float WanderSpeed = 32 * 2;
+        [Export] public float WanderSpeed = 32 * 3;
 
         private EnemyBody _body => this.FindAncestor<EnemyBody>();
         private Node2D _visuals => GetNode<Node2D>("%Visuals");

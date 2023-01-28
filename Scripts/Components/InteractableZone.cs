@@ -9,6 +9,8 @@ namespace RandomDungeons
     {
         [Signal] public delegate void Interacted();
 
+        [Export] public string PromptText = "";
+
         public override void _PhysicsProcess(float delta)
         {
             if (IsHighlighted() && InputService.ActivatePressed)

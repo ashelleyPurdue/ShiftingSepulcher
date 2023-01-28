@@ -3,7 +3,7 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class HoldableParent : Area2D, IHoldable
+    public class HoldableParent : InteractableZone, IHoldable
     {
         [Signal] public delegate void PickedUp();
         [Signal] public delegate void Released();
@@ -14,6 +14,20 @@ namespace RandomDungeons
         [Export] public bool RotatesWhileHeld {get; set;} = false;
 
         public bool IsBeingHeld {get; private set;} = false;
+
+        public override void _Ready()
+        {
+            Connect(
+                signal: nameof(Interacted),
+                target: this,
+                method: nameof(OnInteracted)
+            );
+        }
+
+        public void OnInteracted()
+        {
+            GetTree().FindPlayer().PickUp(this);
+        }
 
         public void PickUp()
         {

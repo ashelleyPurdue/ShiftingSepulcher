@@ -144,16 +144,14 @@ namespace RandomDungeons
             return velocity.Length() / KnockbackFriction;
         }
 
-        private void TryPickUpHoldable()
+        public void PickUp(IHoldable holdable)
         {
-            var holdable = GetNode<Area2D>("%HoldableDetector")
-                .GetOverlappingAreas()
-                .Cast<Area2D>()
-                .OfType<IHoldable>()
-                .FirstOrDefault();
-
-            if (holdable == null)
+            if (_sm.CurrentState != Walking)
+            {
+                string stateName = _sm.CurrentState.GetType().Name;
+                GD.Print($"Tried to pick up {holdable.Node.Name} while outside the walking state ({stateName})");
                 return;
+            }
 
             _objectHolder.PickUp(holdable);
         }
@@ -199,12 +197,7 @@ namespace RandomDungeons
                 }
 
                 if (InputService.ActivatePressed)
-                {
-                    Owner.TryPickUpHoldable();
-
-                    if (!Owner._objectHolder.IsHoldingSomething)
-                        Owner._interactor.TryInteract();
-                }
+                    Owner._interactor.TryInteract();
 
                 if (InputService.AttackPressed)
                     ChangeState(Owner.SwingingSword);

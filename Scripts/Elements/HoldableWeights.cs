@@ -2,7 +2,7 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class HoldableWeights : Node2D
+    public class HoldableWeights : KinematicBody2D
     {
         [Export] public int NumWeights = 1;
         [Export] public float WeightVerticalSeparation = 12;

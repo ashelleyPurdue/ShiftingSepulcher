@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Fonts/OFLFonts/OpenSans-VariableFont_wdth,wght.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://Sprites/ControllerGlyphs/KeyboardAndMouse/Space_Key_Light.png" type="Texture" id=2]
-[ext_resource path="res://Sprites/ControllerGlyphs/KeyboardAndMouse/Mouse_Left_Key_Light.png" type="Texture" id=3]
+[ext_resource path="res://addons/controller_icons/assets/key/space.png" type="Texture" id=2]
+[ext_resource path="res://addons/controller_icons/assets/mouse/left.png" type="Texture" id=3]
 [ext_resource path="res://Scripts/UI/Widgets/ThrowOrDropPrompt.cs" type="Script" id=4]
+[ext_resource path="res://addons/controller_icons/objects/Sprite.gd" type="Script" id=5]
 
 [sub_resource type="Animation" id=2]
 resource_name = "Appear"
@@ -55,12 +56,14 @@ anims/RESET = SubResource( 3 )
 [node name="DropPrompt" type="Node2D" parent="Visuals"]
 position = Vector2( -96, 0 )
 
-[node name="SpaceKeyLight" type="Sprite" parent="Visuals/DropPrompt"]
+[node name="InteractButton" type="Sprite" parent="Visuals/DropPrompt"]
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 2 )
+script = ExtResource( 5 )
 __meta__ = {
 "_edit_lock_": true
 }
+path = "ui_accept"
 
 [node name="DropLabel" type="Label" parent="Visuals/DropPrompt"]
 anchor_left = 0.5
@@ -85,12 +88,14 @@ __meta__ = {
 [node name="ThrowPrompt" type="Node2D" parent="Visuals"]
 position = Vector2( 96, 0 )
 
-[node name="MouseLeftKeyLight" type="Sprite" parent="Visuals/ThrowPrompt"]
+[node name="AttackButton" type="Sprite" parent="Visuals/ThrowPrompt"]
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 3 )
+script = ExtResource( 5 )
 __meta__ = {
 "_edit_lock_": true
 }
+path = "Attack"
 
 [node name="ThrowLabel" type="Label" parent="Visuals/ThrowPrompt"]
 anchor_left = 0.5

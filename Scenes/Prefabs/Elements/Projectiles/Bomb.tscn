@@ -305,9 +305,14 @@ shape = SubResource( 12 )
 
 [node name="HoldableParent" type="Area2D" parent="."]
 script = ExtResource( 3 )
+PromptText = "Pick up"
+PromptPositionPath = NodePath("PromptPos")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HoldableParent"]
 shape = SubResource( 3 )
+
+[node name="PromptPos" type="Position2D" parent="HoldableParent"]
+position = Vector2( -33, -43 )
 
 [node name="ThrowableParentKinematic" type="Node" parent="."]
 script = ExtResource( 4 )

@@ -22,6 +22,8 @@ namespace RandomDungeons
                 target: this,
                 method: nameof(OnInteracted)
             );
+
+            PromptText = "Pick up";
         }
 
         public void OnInteracted()

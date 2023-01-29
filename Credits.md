@@ -50,3 +50,7 @@ Wink sound effect:
 Fireball sound effect:
     https://opengameart.org/content/fireball-1
     Author: Julien Matthey
+
+Controller button icons:
+    https://thoseawesomeguys.com/prompts/
+    Author: Nicolae (XELU) Berbece

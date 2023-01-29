@@ -15,7 +15,7 @@ namespace RandomDungeons
         public void SetLayout(DungeonLayout layout)
         {
             // Clear out old rooms
-            foreach (var child in _rooms.GetChildren())
+            foreach (var child in _rooms.EnumerateChildren())
             {
                 ((Node)child).QueueFree();
             }

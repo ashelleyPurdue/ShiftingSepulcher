@@ -97,7 +97,7 @@ namespace RandomDungeons
             void SpawnRealWeights(List<int> weights, Node2D spawnPointsParent)
             {
                 var spawnPoints = spawnPointsParent
-                    .GetChildren()
+                    .EnumerateChildren()
                     .Cast<Node2D>();
 
                 Node2D[] shuffledSpawnPoints = rng.Shuffle(spawnPoints);

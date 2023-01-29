@@ -135,7 +135,9 @@ namespace RandomDungeons
 
         private IEnumerable<DungeonTreeTemplateRoom> ChildRoomNodes(DungeonTreeTemplateRoom roomNode)
         {
-            return roomNode.GetChildren().Cast<DungeonTreeTemplateRoom>();
+            return roomNode
+                .EnumerateChildren()
+                .Cast<DungeonTreeTemplateRoom>();
         }
     }
 }

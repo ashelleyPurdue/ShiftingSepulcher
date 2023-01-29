@@ -5,6 +5,7 @@ namespace RandomDungeons
     public class PlayerInteractor : Node2D
     {
         public InteractableZone HighlightedObject {get; private set;} = null;
+        public bool IsObjectHighlighted => IsInstanceValid(HighlightedObject);
 
         private Area2D _interactableDetector => GetNode<Area2D>("%InteractableDetector");
 

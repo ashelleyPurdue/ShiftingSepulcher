@@ -16,7 +16,7 @@ namespace RandomDungeons
             var player = GetTree().FindPlayer();
             var highlightedObject = player.HighlightedObject;
 
-            Visible = (highlightedObject != null) && !player.IsHoldingSomething;
+            Visible = player.IsObjectHighlighted && !player.IsHoldingSomething;
 
             if (Visible)
             {

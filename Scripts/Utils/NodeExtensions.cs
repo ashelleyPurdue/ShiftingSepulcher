@@ -73,7 +73,7 @@ namespace RandomDungeons
 
             void Recursive(Node n)
             {
-                foreach (var child in n.GetChildren())
+                foreach (var child in n.EnumerateChildren())
                 {
                     var childNode = (Node)child;
                     list.Add(childNode);
@@ -96,7 +96,7 @@ namespace RandomDungeons
 
             void Recursive(Node n)
             {
-                foreach (var child in n.GetChildren())
+                foreach (var child in n.EnumerateChildren())
                 {
                     if (child is T childAsT)
                         list.Add(childAsT);
@@ -116,7 +116,7 @@ namespace RandomDungeons
         /// <returns></returns>
         public static T SingleChildOfType<T>(this Node n)
         {
-            return n.GetChildren()
+            return n.EnumerateChildren()
                 .OfType<T>()
                 .Single();
         }
@@ -152,7 +152,7 @@ namespace RandomDungeons
             node.SetProcessUnhandledInput(!paused);
             node.SetProcessUnhandledKeyInput(!paused);
 
-            foreach (var child in node.GetChildren())
+            foreach (var child in node.EnumerateChildren())
             {
                 ((Node)child).SetPaused(paused);
             }

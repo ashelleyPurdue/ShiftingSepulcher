@@ -60,7 +60,7 @@ namespace RandomDungeons
             _templateSelector.Items.Clear();
             _templateSelector.AddItem("None (build a tree randomly)");
 
-            foreach (var templateNode in _templates.GetChildren())
+            foreach (var templateNode in _templates.EnumerateChildren())
             {
                 string name = ((Node)templateNode).Name;
                 _templateSelector.AddItem(name);

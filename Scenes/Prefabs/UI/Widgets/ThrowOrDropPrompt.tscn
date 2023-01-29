@@ -54,18 +54,16 @@ anims/RESET = SubResource( 3 )
 [node name="Visuals" type="Node2D" parent="."]
 
 [node name="DropPrompt" type="Node2D" parent="Visuals"]
-position = Vector2( -96, 0 )
+position = Vector2( -64, 0 )
 
-[node name="InteractButton" type="Sprite" parent="Visuals/DropPrompt"]
-scale = Vector2( 0.5, 0.5 )
+[node name="Button" type="Sprite" parent="Visuals/DropPrompt"]
+position = Vector2( 0, 16 )
+scale = Vector2( 0.48, 0.48 )
 texture = ExtResource( 2 )
 script = ExtResource( 5 )
-__meta__ = {
-"_edit_lock_": true
-}
 path = "ui_accept"
 
-[node name="DropLabel" type="Label" parent="Visuals/DropPrompt"]
+[node name="Label" type="Label" parent="Visuals/DropPrompt"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -73,7 +71,6 @@ anchor_bottom = 0.5
 margin_left = -32.0
 margin_top = -32.0
 margin_right = 32.0
-margin_bottom = -6.0
 grow_horizontal = 2
 grow_vertical = 2
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
@@ -81,31 +78,25 @@ custom_fonts/font = SubResource( 1 )
 text = "Drop"
 align = 1
 valign = 1
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="ThrowPrompt" type="Node2D" parent="Visuals"]
-position = Vector2( 96, 0 )
+position = Vector2( 64, 0 )
 
-[node name="AttackButton" type="Sprite" parent="Visuals/ThrowPrompt"]
-scale = Vector2( 0.5, 0.5 )
+[node name="Button" type="Sprite" parent="Visuals/ThrowPrompt"]
+position = Vector2( 0, 16 )
+scale = Vector2( 0.48, 0.48 )
 texture = ExtResource( 3 )
 script = ExtResource( 5 )
-__meta__ = {
-"_edit_lock_": true
-}
 path = "Attack"
 
-[node name="ThrowLabel" type="Label" parent="Visuals/ThrowPrompt"]
+[node name="Label" type="Label" parent="Visuals/ThrowPrompt"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -32.0
-margin_top = -13.0
+margin_top = -32.0
 margin_right = 32.0
-margin_bottom = 13.0
 grow_horizontal = 2
 grow_vertical = 2
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
@@ -113,6 +104,3 @@ custom_fonts/font = SubResource( 1 )
 text = "Throw"
 align = 1
 valign = 1
-__meta__ = {
-"_edit_lock_": true
-}

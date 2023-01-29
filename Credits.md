@@ -54,3 +54,6 @@ Fireball sound effect:
 Controller button icons:
     https://thoseawesomeguys.com/prompts/
     Author: Nicolae (XELU) Berbece
+
+Automatic controller button icon swapping library:
+    https://github.com/rsubtil/controller_icons/tree/3.x

@@ -19,7 +19,7 @@ namespace RandomDungeons
 
             Visible = true;
             _promptTextLabel.Text = highlightedObject.PromptText;
-            GlobalPosition = highlightedObject.GlobalPosition;
+            GlobalPosition = highlightedObject.PromptGlobalPosition;
         }
     }
 }

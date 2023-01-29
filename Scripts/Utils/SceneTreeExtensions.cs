@@ -10,7 +10,7 @@ namespace RandomDungeons
 
             Player FindPlayerRecursive(Node n)
             {
-                foreach (var c in n.GetChildren())
+                foreach (var c in n.EnumerateChildren())
                 {
                     if (c is Player player)
                         return player;

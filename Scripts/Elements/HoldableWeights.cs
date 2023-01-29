@@ -2,7 +2,7 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class HoldableWeights : Node2D
+    public class HoldableWeights : KinematicBody2D
     {
         [Export] public int NumWeights = 1;
         [Export] public float WeightVerticalSeparation = 12;
@@ -10,6 +10,10 @@ namespace RandomDungeons
         public bool IsBeingHeld => this
             .SingleChildOfType<IHoldable>()
             .IsBeingHeld;
+
+        public bool IsFlying => this
+            .SingleChildOfType<ThrowableParentKinematic>()
+            .IsFlying;
 
         private Node2D _weightVisualTemplate => GetNode<Node2D>("%WeightVisualTemplate");
         private Node2D _weightStack => GetNode<Node2D>("%WeightStack");

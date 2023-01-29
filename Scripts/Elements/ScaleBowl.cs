@@ -19,39 +19,35 @@ namespace RandomDungeons
         private Node2D _moveablePart => GetNode<Node2D>("%MoveablePart");
         private Node2D _attachedWeightContainer => GetNode<Node2D>("%AttachedWeightContainer");
 
+        private Vector2? _prevPos;
+
         public override void _PhysicsProcess(float delta)
         {
+            // Update the total weight
             var overlappingWeights = _zone
                 .GetOverlappingAreas()
                 .Cast<Area2D>()
                 .Select(a => a.FindAncestor<HoldableWeights>())
                 .Where(w => w != null)
                 .Where(w => !w.IsBeingHeld)
+                .Where(w => !w.IsFlying)
                 .ToArray();
 
-            // Update the total weight
             TotalWeight = overlappingWeights.Sum(w => w.NumWeights);
 
-            // Attach all overlapping weights to the bowl, so they move as the
-            // bowl moves.
-            while (_attachedWeightContainer.GetChildCount() > 0)
+            // Push all overlapping weights with the bowl, as if they were
+            // resting inside it.
+            if (!_prevPos.HasValue)
             {
-                var weight = _attachedWeightContainer.GetChild<Node2D>(0);
-                var pos = weight.GlobalPosition;
-
-                _attachedWeightContainer.RemoveChild(weight);
-                this.GetRoom().AddChild(weight);
-                weight.GlobalPosition = pos;
+                _prevPos = _moveablePart.Position;
+                return;
             }
+            Vector2 deltaPos = _moveablePart.Position - _prevPos.Value;
+            _prevPos = _moveablePart.Position;
 
             foreach (var weight in overlappingWeights)
             {
-                var pos = weight.GlobalPosition;
-
-                weight.GetParent().RemoveChild(weight);
-                _attachedWeightContainer.AddChild(weight);
-
-                weight.GlobalPosition = pos;
+                weight.Position += deltaPos;
             }
         }
 

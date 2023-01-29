@@ -11,6 +11,10 @@ namespace RandomDungeons
             .SingleChildOfType<IHoldable>()
             .IsBeingHeld;
 
+        public bool IsFlying => this
+            .SingleChildOfType<ThrowableParentKinematic>()
+            .IsFlying;
+
         private Node2D _weightVisualTemplate => GetNode<Node2D>("%WeightVisualTemplate");
         private Node2D _weightStack => GetNode<Node2D>("%WeightStack");
 

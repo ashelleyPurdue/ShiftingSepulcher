@@ -27,6 +27,7 @@ namespace RandomDungeons
                 .Select(a => a.FindAncestor<HoldableWeights>())
                 .Where(w => w != null)
                 .Where(w => !w.IsBeingHeld)
+                .Where(w => !w.IsFlying)
                 .ToArray();
 
             // Update the total weight

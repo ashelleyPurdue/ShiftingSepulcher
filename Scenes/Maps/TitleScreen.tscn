@@ -333,24 +333,27 @@ focus_neighbour_top = NodePath("../BackButton")
 focus_previous = NodePath("../BackButton")
 
 [node name="Title" type="Control" parent="."]
-margin_top = 128.0
-margin_right = 40.0
-margin_bottom = 168.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 
 [node name="Shifting" type="Label" parent="Title"]
-margin_top = 32.0
-margin_right = 1024.0
-margin_bottom = 46.0
+margin_left = -512.0
+margin_top = -108.0
+margin_right = 512.0
+margin_bottom = -62.1
 custom_fonts/font = SubResource( 4 )
 text = "Shifting"
 align = 1
 valign = 1
 
 [node name="Sepulcher" type="Label" parent="Title"]
-margin_top = 64.0
-margin_right = 1024.0
-margin_bottom = 82.0
-rect_pivot_offset = Vector2( 512, 54.75 )
+margin_left = -256.0
+margin_top = -76.0
+margin_right = 256.0
+margin_bottom = 34.0
+rect_pivot_offset = Vector2( 256, 55 )
 custom_fonts/font = SubResource( 2 )
 text = "Sepulcher"
 align = 1
@@ -358,11 +361,12 @@ uppercase = true
 
 [node name="SepulcherGhostlyClone" type="Label" parent="Title"]
 visible = false
-margin_top = 64.0
-margin_right = 1024.0
-margin_bottom = 82.0
+margin_left = -256.0
+margin_top = -76.0
+margin_right = 256.0
+margin_bottom = 34.0
 rect_scale = Vector2( 2, 2 )
-rect_pivot_offset = Vector2( 512, 54.75 )
+rect_pivot_offset = Vector2( 256, 55 )
 custom_fonts/font = SubResource( 2 )
 text = "Sepulcher"
 align = 1

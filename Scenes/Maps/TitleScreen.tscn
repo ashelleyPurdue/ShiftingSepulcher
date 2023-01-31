@@ -1,47 +1,449 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=16 format=2]
 
+[ext_resource path="res://Fonts/The Wild Breath of Zelda.otf" type="DynamicFontData" id=1]
+[ext_resource path="res://Audio/SFX/BossDeathShudder.wav" type="AudioStream" id=2]
 [ext_resource path="res://Scenes/Maps/DungeonMode.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/UI/TitleScreen.cs" type="Script" id=4]
 [ext_resource path="res://Scenes/Prefabs/UI/Widgets/SeedInput.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Prefabs/UI/SettingsMenu.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Audio/SFX/BossDeathExplosion.ogg" type="AudioStream" id=7]
+
+[sub_resource type="Animation" id=6]
+resource_name = "Intro"
+length = 6.0
+tracks/0/type = "animation"
+tracks/0/path = NodePath("SubAnimator")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"clips": PoolStringArray( "Shifting", "Sepulcher" ),
+"times": PoolRealArray( 0, 1.3 )
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Options:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("Options/OpenPlayMenuButton")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "grab_focus"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:AllowSkipIntro")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=8]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Options:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:AllowSkipIntro")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "SkippedIntro"
+length = 6.0
+tracks/0/type = "animation"
+tracks/0/path = NodePath("SubAnimator")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"clips": PoolStringArray( "Sepulcher" ),
+"times": PoolRealArray( 0 )
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Options:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("Options/OpenPlayMenuButton")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "grab_focus"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:AllowSkipIntro")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Title/Shifting:percent_visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Title/Sepulcher:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Title/SepulcherGhostlyClone:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Title/SepulcherGhostlyClone:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Title/Sepulcher:rect_scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "Sepulcher"
+length = 6.0
+tracks/0/type = "audio"
+tracks/0/path = NodePath("IntroSoundPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 7 )
+} ],
+"times": PoolRealArray( 0 )
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Title/Sepulcher:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Title/Sepulcher:rect_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1.19209e-06, 1.19209e-06 ), Vector2( 1, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Title/SepulcherGhostlyClone:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Title/SepulcherGhostlyClone:rect_scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.1, 1.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 2, 2 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Title/SepulcherGhostlyClone:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.1, 1.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Title/Shifting:percent_visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1.0 ]
+}
+
+[sub_resource type="Animation" id=1]
+resource_name = "Shifting"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Title/Sepulcher:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Title/Shifting:percent_visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Title/SepulcherGhostlyClone:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Title/SepulcherGhostlyClone:rect_scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"update": 0,
+"values": [  ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Title/SepulcherGhostlyClone:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"update": 0,
+"values": [  ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Title/Sepulcher:rect_scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"update": 0,
+"values": [  ]
+}
+tracks/6/type = "audio"
+tracks/6/path = NodePath("IntroSoundPlayer")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 2 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 2 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 2 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 2 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 2 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 2 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 2 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 2 )
+} ],
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 )
+}
+
+[sub_resource type="DynamicFont" id=4]
+size = 44
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 105
+font_data = ExtResource( 1 )
 
 [node name="TitleScreen" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 4 )
-DefaultFocusedOption = NodePath("VBoxContainer/OpenPlayMenuButton")
 DungeonModeScene = ExtResource( 3 )
 
-[node name="Title" type="Label" parent="."]
-margin_left = 128.0
-margin_top = 64.0
-margin_right = 283.0
-margin_bottom = 78.0
-rect_scale = Vector2( 5, 5 )
-text = "Random Dungeon Game"
-align = 1
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+autoplay = "Intro"
+anims/Intro = SubResource( 6 )
+anims/RESET = SubResource( 8 )
+anims/SkippedIntro = SubResource( 7 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -80.0
-margin_top = -22.0
-margin_right = 80.0
-margin_bottom = 22.0
-custom_constants/separation = 16
+[node name="SubAnimator" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 3 )
+anims/Sepulcher = SubResource( 5 )
+anims/Shifting = SubResource( 1 )
 
-[node name="OpenPlayMenuButton" type="Button" parent="VBoxContainer"]
-margin_right = 160.0
-margin_bottom = 20.0
-text = "Play"
+[node name="IntroSoundPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+bus = "Sound"
 
-[node name="OpenSettingsMenuButton" type="Button" parent="VBoxContainer"]
-margin_top = 36.0
-margin_right = 160.0
-margin_bottom = 56.0
-text = "Settings"
+[node name="Background" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
 
 [node name="PlayMenu" type="Popup" parent="."]
 anchor_left = 0.5
@@ -127,8 +529,71 @@ margin_bottom = -64.0
 focus_neighbour_top = NodePath("../BackButton")
 focus_previous = NodePath("../BackButton")
 
-[connection signal="pressed" from="VBoxContainer/OpenPlayMenuButton" to="PlayMenu" method="popup"]
-[connection signal="pressed" from="VBoxContainer/OpenSettingsMenuButton" to="SettingsMenu" method="popup"]
+[node name="Title" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+
+[node name="Shifting" type="Label" parent="Title"]
+margin_left = -512.0
+margin_top = -108.0
+margin_right = 512.0
+margin_bottom = -62.1
+custom_fonts/font = SubResource( 4 )
+text = "Shifting"
+align = 1
+valign = 1
+
+[node name="Sepulcher" type="Label" parent="Title"]
+margin_left = -256.0
+margin_top = -76.0
+margin_right = 256.0
+margin_bottom = 34.0
+rect_pivot_offset = Vector2( 256, 55 )
+custom_fonts/font = SubResource( 2 )
+text = "Sepulcher"
+align = 1
+uppercase = true
+
+[node name="SepulcherGhostlyClone" type="Label" parent="Title"]
+visible = false
+margin_left = -256.0
+margin_top = -76.0
+margin_right = 256.0
+margin_bottom = 34.0
+rect_scale = Vector2( 2, 2 )
+rect_pivot_offset = Vector2( 256, 55 )
+custom_fonts/font = SubResource( 2 )
+text = "Sepulcher"
+align = 1
+uppercase = true
+
+[node name="Options" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.0
+margin_top = 78.0
+margin_right = 80.0
+margin_bottom = 134.0
+custom_constants/separation = 16
+
+[node name="OpenPlayMenuButton" type="Button" parent="Options"]
+margin_right = 160.0
+margin_bottom = 20.0
+text = "Play"
+
+[node name="OpenSettingsMenuButton" type="Button" parent="Options"]
+margin_top = 36.0
+margin_right = 160.0
+margin_bottom = 56.0
+text = "Settings"
+
 [connection signal="pressed" from="PlayMenu/PlayButton" to="." method="PlayDungeonMode"]
 [connection signal="pressed" from="PlayMenu/BackButton" to="PlayMenu" method="set_visible" binds= [ false ]]
 [connection signal="pressed" from="SettingsMenu/BackButton" to="SettingsMenu" method="set_visible" binds= [ false ]]
+[connection signal="pressed" from="Options/OpenPlayMenuButton" to="PlayMenu" method="popup"]
+[connection signal="pressed" from="Options/OpenSettingsMenuButton" to="SettingsMenu" method="popup"]

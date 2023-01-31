@@ -6,17 +6,27 @@ namespace RandomDungeons
     {
         public static int ChosenSeed;
 
-        [Export] public NodePath DefaultFocusedOption;
-
         [Export] public PackedScene DungeonModeScene;
 
-        private Control _defaultFocusedOption => GetNode<Control>(DefaultFocusedOption);
+        [Export] public bool AllowSkipIntro = true;
+
+        private AnimationPlayer _animationPlayer => GetNode<AnimationPlayer>("%AnimationPlayer");
         private SeedInput _seedInput => GetNode<SeedInput>("%SeedInput");
 
         public override void _Ready()
         {
-            _defaultFocusedOption.GrabFocus();
             MusicService.Instance.StopSong();
+        }
+
+        public override void _Input(InputEvent ev)
+        {
+            if (ev.IsPressed() && AllowSkipIntro)
+                SkipIntro();
+        }
+
+        public void SkipIntro()
+        {
+            _animationPlayer.ResetAndPlay("SkippedIntro");
         }
 
         private void PlayDungeonMode()

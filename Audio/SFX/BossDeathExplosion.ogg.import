@@ -11,5 +11,5 @@ dest_files=[ "res://.import/BossDeathExplosion.ogg-cb022119fea46938afcb946897701
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

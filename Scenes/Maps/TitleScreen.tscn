@@ -422,7 +422,6 @@ font_data = ExtResource( 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 4 )
-DefaultFocusedOption = NodePath("Options/OpenPlayMenuButton")
 DungeonModeScene = ExtResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -439,10 +438,6 @@ anims/Shifting = SubResource( 1 )
 
 [node name="IntroSoundPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
-bus = "Sound"
-
-[node name="TypewriterSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 2 )
 bus = "Sound"
 
 [node name="Background" type="ColorRect" parent="."]

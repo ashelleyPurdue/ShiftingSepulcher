@@ -6,14 +6,9 @@ namespace RandomDungeons
     {
         public static int ChosenSeed;
 
-        [Export] public NodePath DefaultFocusedOption;
-
         [Export] public PackedScene DungeonModeScene;
 
         [Export] public bool AllowSkipIntro = true;
-
-        private Control _options => GetNode<Control>("%Options");
-        private Control _defaultFocusedOption => GetNode<Control>(DefaultFocusedOption);
 
         private AnimationPlayer _animationPlayer => GetNode<AnimationPlayer>("%AnimationPlayer");
         private SeedInput _seedInput => GetNode<SeedInput>("%SeedInput");

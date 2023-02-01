@@ -12,6 +12,7 @@ namespace RandomDungeons
             _backToTitleButton.GrabFocus();
 
             Label("%ClearTimeDisplay").Text = FormatTime(PlayerInventory.ClearTime);
+            Label("%GoldCount").Text = PlayerInventory.Gold.ToString();
         }
 
         private void BackToTitleButtonPressed()

@@ -212,6 +212,7 @@ tracks/7/keys = {
 }
 
 [node name="BreakablePot" type="KinematicBody2D"]
+z_index = 2
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

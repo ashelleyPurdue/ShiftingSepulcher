@@ -13,6 +13,7 @@ namespace RandomDungeons
 
             Label("%ClearTimeDisplay").Text = FormatTime(PlayerInventory.ClearTime);
             Label("%GoldCount").Text = PlayerInventory.Gold.ToString();
+            Label("%DeathCount").Text = PlayerInventory.DeathCount.ToString();
         }
 
         private void BackToTitleButtonPressed()

@@ -99,7 +99,7 @@ margin_bottom = 73.5
 size_flags_horizontal = 3
 text = "Deaths:"
 
-[node name="DeathsCount" type="Label" parent="GridContainer"]
+[node name="DeathCount" type="Label" parent="GridContainer"]
 unique_name_in_owner = true
 margin_left = 97.0
 margin_top = 51.0

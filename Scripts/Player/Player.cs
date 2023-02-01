@@ -273,6 +273,7 @@ namespace RandomDungeons
                 Owner.GetNode<AudioStreamPlayer>("%DeathSound").Play();
 
                 MusicService.Instance.StopSong();
+                PlayerInventory.DeathCount++;
             }
         }
 

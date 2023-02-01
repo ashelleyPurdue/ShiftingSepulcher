@@ -20,6 +20,7 @@ namespace RandomDungeons
             public int Gold;
 
             public float ClearTime;
+            public int DeathCount;
         }
 
         public static int MaxHealth
@@ -44,6 +45,12 @@ namespace RandomDungeons
         {
             get => _content.ClearTime;
             set => _content.ClearTime = value;
+        }
+
+        public static int DeathCount
+        {
+            get => _content.DeathCount;
+            set => _content.DeathCount = value;
         }
 
         public static void Reset()

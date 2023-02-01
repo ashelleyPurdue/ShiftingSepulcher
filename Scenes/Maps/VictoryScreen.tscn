@@ -1,11 +1,20 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/UI/VictoryScreen.cs" type="Script" id=1]
 [ext_resource path="res://Fonts/The Wild Breath of Zelda.otf" type="DynamicFontData" id=2]
+[ext_resource path="res://Fonts/OFLFonts/OpenSans-VariableFont_wdth,wght.ttf" type="DynamicFontData" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 size = 54
+use_filter = true
 font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+use_filter = true
+font_data = ExtResource( 3 )
+
+[sub_resource type="Theme" id=3]
+default_font = SubResource( 2 )
 
 [node name="VictoryScreen" type="Control"]
 anchor_right = 1.0
@@ -40,5 +49,62 @@ margin_top = -88.0
 margin_right = 64.0
 margin_bottom = -68.0
 text = "Back to title"
+
+[node name="GridContainer" type="GridContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -64.0
+margin_top = -48.0
+margin_right = 64.0
+margin_bottom = 48.0
+theme = SubResource( 3 )
+columns = 2
+
+[node name="ClearTimeLabel" type="Label" parent="GridContainer"]
+margin_top = -1.0
+margin_right = 93.0
+margin_bottom = 21.5
+size_flags_horizontal = 3
+text = "Clear time:"
+
+[node name="ClearTimeDisplay" type="Label" parent="GridContainer"]
+unique_name_in_owner = true
+margin_left = 97.0
+margin_top = -1.0
+margin_right = 128.0
+margin_bottom = 21.5
+text = "0:00"
+
+[node name="GoldLabel" type="Label" parent="GridContainer"]
+margin_top = 25.0
+margin_right = 93.0
+margin_bottom = 47.5
+size_flags_horizontal = 3
+text = "Gold:"
+
+[node name="GoldCount" type="Label" parent="GridContainer"]
+unique_name_in_owner = true
+margin_left = 97.0
+margin_top = 25.0
+margin_right = 128.0
+margin_bottom = 47.5
+text = "0"
+
+[node name="DeathsLabel" type="Label" parent="GridContainer"]
+margin_top = 51.0
+margin_right = 93.0
+margin_bottom = 73.5
+size_flags_horizontal = 3
+text = "Deaths:"
+
+[node name="DeathsCount" type="Label" parent="GridContainer"]
+unique_name_in_owner = true
+margin_left = 97.0
+margin_top = 51.0
+margin_right = 128.0
+margin_bottom = 73.5
+text = "0"
 
 [connection signal="pressed" from="BackToTitleButton" to="." method="BackToTitleButtonPressed"]

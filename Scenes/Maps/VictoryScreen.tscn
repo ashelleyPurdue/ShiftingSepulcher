@@ -13,6 +13,7 @@ margin_bottom = 222.0
 text = "you win."
 
 [node name="BackToTitleButton" type="Button" parent="."]
+unique_name_in_owner = true
 margin_left = 416.0
 margin_top = 240.0
 margin_right = 552.0

@@ -10,11 +10,23 @@ namespace RandomDungeons
         {
             MusicService.Instance.StopSong();
             _backToTitleButton.GrabFocus();
+
+            Label("%ClearTimeDisplay").Text = FormatTime(PlayerInventory.ClearTime);
         }
 
         private void BackToTitleButtonPressed()
         {
             GetTree().ChangeScene("res://Scenes/Maps/TitleScreen.tscn");
+        }
+
+        private Label Label(string nodePath) => GetNode<Label>(nodePath);
+
+        private string FormatTime(float totalSeconds)
+        {
+            int minutes = (int)(totalSeconds / 60);
+            int seconds = (int)(totalSeconds - (minutes * 60));
+
+            return $"{minutes}:{seconds.ToString("D2")}";
         }
     }
 }

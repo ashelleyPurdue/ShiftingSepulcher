@@ -18,6 +18,8 @@ namespace RandomDungeons
 
             public HashSet<int> HeldKeys = new HashSet<int>();
             public int Gold;
+
+            public float ClearTime;
         }
 
         public static int MaxHealth
@@ -36,6 +38,12 @@ namespace RandomDungeons
         {
             get => _content.Gold;
             set => _content.Gold = value;
+        }
+
+        public static float ClearTime
+        {
+            get => _content.ClearTime;
+            set => _content.ClearTime = value;
         }
 
         public static void Reset()

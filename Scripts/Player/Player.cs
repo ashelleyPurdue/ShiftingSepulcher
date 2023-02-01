@@ -54,7 +54,6 @@ namespace RandomDungeons
 
         public override void _PhysicsProcess(float delta)
         {
-            base._PhysicsProcess(delta);
             _knockbackTimer -= delta;
 
             // Move
@@ -65,6 +64,12 @@ namespace RandomDungeons
             {
                 _sm.ChangeState(Dead);
             }
+
+            // HACK: Count up the clear timer, so it can be displayed on the
+            // victory screen.
+            // It doesn't really belong in the Player class, but...YOLO, I guess?
+            // It probably doesn't belong in the player's inventory, either.
+            PlayerInventory.ClearTime += delta;
         }
 
         public void EmitDeathAnimationFinished()

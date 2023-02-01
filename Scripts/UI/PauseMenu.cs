@@ -34,6 +34,8 @@ namespace RandomDungeons
         {
             _isOpen = false;
             GetTree().Paused = false;
+
+            GetNode<Popup>("%SettingsMenu").Visible = false;
         }
 
         public void ReturnToTitleScreen()

@@ -87,6 +87,7 @@ position = Vector2( 0, -6 )
 [node name="WeightVisualTemplate" type="Node2D" parent="."]
 unique_name_in_owner = true
 position = Vector2( 0, -6 )
+z_index = 2
 
 [node name="Node2D" type="Node2D" parent="WeightVisualTemplate"]
 modulate = Color( 0.670588, 0.670588, 0.670588, 1 )

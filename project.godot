@@ -50,9 +50,11 @@ _global_script_class_icons={
 
 [application]
 
-config/name="RandomDungeons"
+config/name="Shifting Sepulcher"
 run/main_scene="res://Scenes/Maps/TitleScreen.tscn"
 config/icon="res://icon.png"
+config/macos_native_icon="res://icon.icns"
+config/windows_native_icon="res://icon.ico"
 
 [autoload]
 

@@ -1,9 +1,8 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=23 format=2]
 
-[ext_resource path="res://Scripts/Components/HurtBox.cs" type="Script" id=1]
-[ext_resource path="res://Scripts/Enemies/EnemyBody.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/ECS/Components/Area2DComponent.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/ECS/Entities/KinematicBodyEntity2D.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/Components/HitBox.cs" type="Script" id=3]
-[ext_resource path="res://Scripts/Components/HurtFlasher.cs" type="Script" id=4]
 [ext_resource path="res://Scripts/Enemies/Zombie.cs" type="Script" id=5]
 [ext_resource path="res://Scenes/Components/LootDroppers/RecoveryHeartDropper.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/Components/LootDroppers/GoldLootDropper.tscn" type="PackedScene" id=7]
@@ -11,6 +10,13 @@
 [ext_resource path="res://Scripts/Components/LingeringAudioStreamPlayer.cs" type="Script" id=9]
 [ext_resource path="res://Audio/SFX/EnemyDeath.wav" type="AudioStream" id=10]
 [ext_resource path="res://Scenes/Models/ZombieModel.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scripts/ECS/Components/KnockbackableVelocityComponent.cs" type="Script" id=12]
+[ext_resource path="res://Scripts/ECS/Components/EnemyComponent.cs" type="Script" id=13]
+[ext_resource path="res://Scripts/ECS/Components/HealthPointsComponent.cs" type="Script" id=14]
+[ext_resource path="res://Scripts/ECS/Components/HurtFlasherComponent.cs" type="Script" id=15]
+
+[sub_resource type="CircleShape2D" id=9]
+radius = 14.0
 
 [sub_resource type="Animation" id=5]
 resource_name = "Death"
@@ -275,9 +281,6 @@ radius = 14.0
 [sub_resource type="CircleShape2D" id=7]
 radius = 256.0
 
-[sub_resource type="CircleShape2D" id=9]
-radius = 14.0
-
 [sub_resource type="CircleShape2D" id=10]
 radius = 14.0
 
@@ -285,14 +288,32 @@ radius = 14.0
 collision_layer = 0
 collision_mask = 3
 script = ExtResource( 2 )
+
+[node name="AI" type="Node" parent="."]
+script = ExtResource( 5 )
+
+[node name="EnemyComponent" type="Node" parent="."]
+script = ExtResource( 13 )
+
+[node name="HealthPointsComponent" type="Node" parent="."]
+script = ExtResource( 14 )
 MaxHealth = 2
+
+[node name="HurtFlasherComponent" type="Node" parent="."]
+script = ExtResource( 15 )
+
+[node name="KnockbackableVelocityComponent" type="Node" parent="."]
+script = ExtResource( 12 )
+
+[node name="HurtBox" type="Area2D" parent="."]
+script = ExtResource( 1 )
+
+[node name="HurtBoxShape" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource( 9 )
 
 [node name="RecoveryHeartDropper" parent="." instance=ExtResource( 6 )]
 
 [node name="GoldLootDropper" parent="." instance=ExtResource( 7 )]
-
-[node name="AI" type="Node" parent="."]
-script = ExtResource( 5 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
@@ -310,15 +331,9 @@ visible = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VisionCircle"]
 shape = SubResource( 7 )
 
-[node name="HurtBox" type="Area2D" parent="."]
-script = ExtResource( 1 )
-
-[node name="HurtBoxShape" type="CollisionShape2D" parent="HurtBox"]
-shape = SubResource( 9 )
-
 [node name="HitBox" type="Area2D" parent="."]
 script = ExtResource( 3 )
-IgnoredHurtBoxes = [ NodePath("../HurtBox") ]
+IgnoredHealthPoints = [ NodePath("../HealthPointsComponent") ]
 
 [node name="HitBoxShape" type="CollisionShape2D" parent="HitBox"]
 shape = SubResource( 10 )
@@ -327,11 +342,6 @@ shape = SubResource( 10 )
 unique_name_in_owner = true
 
 [node name="ZombieModel" parent="Visuals" instance=ExtResource( 11 )]
-
-[node name="HurtFlasher" type="Node" parent="."]
-unique_name_in_owner = true
-script = ExtResource( 4 )
-VisualsPath = NodePath("../Visuals")
 
 [node name="TookDamageSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
@@ -343,12 +353,9 @@ script = ExtResource( 9 )
 Sound = ExtResource( 10 )
 VolumeLinear = 2.0
 
-[connection signal="Dead" from="." to="RecoveryHeartDropper" method="DropLoot"]
-[connection signal="Dead" from="." to="GoldLootDropper" method="DropLoot"]
-[connection signal="Dead" from="." to="AI" method="OnDead"]
-[connection signal="Respawning" from="." to="AI" method="OnRespawning"]
+[connection signal="Dead" from="EnemyComponent" to="RecoveryHeartDropper" method="DropLoot"]
+[connection signal="Dead" from="EnemyComponent" to="GoldLootDropper" method="DropLoot"]
+[connection signal="TookDamageNoParams" from="HealthPointsComponent" to="TookDamageSound" method="play"]
 [connection signal="body_entered" from="VisionCircle" to="AI" method="OnVisionCircleBodyEntered" flags=3]
-[connection signal="TookDamage" from="HurtBox" to="." method="OnTookDamage"]
-[connection signal="TookDamageNoParams" from="HurtBox" to="TookDamageSound" method="play"]
 
 [editable path="Visuals/ZombieModel"]

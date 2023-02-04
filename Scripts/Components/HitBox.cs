@@ -9,6 +9,7 @@ namespace RandomDungeons
     {
         [Signal] public delegate void DealtDamage(HurtBox hurtBox);
         [Signal] public delegate void DealtDamageNoParams();
+        [Signal] public delegate void DealtDamageTo(HealthPointsComponent hp);
 
         [Export] public int Damage = 1;
         [Export] public float InvlunerabilityTime = 1.5f;
@@ -87,6 +88,7 @@ namespace RandomDungeons
                     return;
 
                 hp.OnTookDamageFromHitBox(this);
+                EmitSignal(nameof(DealtDamageTo), hp);
                 EmitSignal(nameof(DealtDamageNoParams));
             }
         }

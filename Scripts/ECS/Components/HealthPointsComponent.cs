@@ -3,7 +3,7 @@ using Godot;
 namespace RandomDungeons
 {
     [CustomNode]
-    public class HealthPointsComponent : BaseComponent<Node>
+    public class HealthPointsComponent : BaseComponent<Node2D>
     {
         [Signal] public delegate void TookDamage(int damage);
         [Signal] public delegate void TookDamageFromHitBox(HitBox hitBox);
@@ -11,6 +11,8 @@ namespace RandomDungeons
 
         [Export] public int MaxHealth = 1;
         [Export] public float InvulnerabilityTime = 0;
+        [Export] public float RecoilDistance = 32;
+
         public int Health;
 
         public bool IsInvulnerable => _cooldownTimer > 0;
@@ -40,6 +42,16 @@ namespace RandomDungeons
         {
             TakeDamage(hitBox.Damage);
             EmitSignal(nameof(TookDamageFromHitBox), hitBox);
+        }
+
+        public Vector2 GetRecoilVelocity(Vector2 attackerGlobalPosition, float friction)
+        {
+            Vector2 dir = (attackerGlobalPosition - Entity.GlobalPosition).Normalized();
+
+            return dir * AccelMath.SpeedNeededForDistance(
+                RecoilDistance,
+                friction
+            );
         }
     }
 }

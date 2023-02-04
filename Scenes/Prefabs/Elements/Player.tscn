@@ -442,3 +442,4 @@ HurtBoxPath = NodePath("../ShadowAndCollisionShape/HurtBox")
 
 [connection signal="TookDamage" from="ShadowAndCollisionShape/HurtBox" to="." method="OnTookDamage"]
 [connection signal="DealtDamage" from="Sword/HitBox" to="." method="OnSwordDealtDamage"]
+[connection signal="DealtDamageTo" from="Sword/HitBox" to="." method="OnSwordDealtDamageTo"]

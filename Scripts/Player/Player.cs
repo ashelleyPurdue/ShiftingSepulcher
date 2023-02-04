@@ -147,6 +147,12 @@ namespace RandomDungeons
             _knockbackTimer = KnockbackDuration(_velocity);
         }
 
+        public void OnSwordDealtDamageTo(HealthPointsComponent hp)
+        {
+            _velocity = hp.GetRecoilVelocity(GlobalPosition, KnockbackFriction);
+            _knockbackTimer = KnockbackDuration(_velocity);
+        }
+
         private float KnockbackDuration(Vector2 velocity)
         {
             return velocity.Length() / KnockbackFriction;

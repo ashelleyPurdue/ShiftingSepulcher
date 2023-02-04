@@ -1,10 +1,10 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/TilemancerTile.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Bosses/Tilemancer.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/Components/HitBox.cs" type="Script" id=3]
-[ext_resource path="res://Scripts/Components/HurtBox.cs" type="Script" id=4]
-[ext_resource path="res://Scripts/Components/HurtFlasher.cs" type="Script" id=5]
+[ext_resource path="res://Scripts/ECS/Components/HurtFlasherComponent.cs" type="Script" id=4]
+[ext_resource path="res://Scripts/ECS/Components/Area2DComponent.cs" type="Script" id=5]
 [ext_resource path="res://Scenes/Prefabs/Elements/VictoryChest.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Fonts/The Wild Breath of Zelda.otf" type="DynamicFontData" id=7]
 [ext_resource path="res://Audio/Music/BossIntro.tres" type="Resource" id=8]
@@ -15,6 +15,12 @@
 [ext_resource path="res://Audio/SFX/BossDeathExplosion.ogg" type="AudioStream" id=13]
 [ext_resource path="res://Scenes/Prefabs/UI/Widgets/BossHealthBar.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Audio/SFX/SwordDamageOwWithSlime.wav" type="AudioStream" id=15]
+[ext_resource path="res://Scripts/ECS/Entities/NodeEntity2D.cs" type="Script" id=16]
+[ext_resource path="res://Scripts/ECS/Components/EnemyComponent.cs" type="Script" id=17]
+[ext_resource path="res://Scripts/ECS/Components/HealthPointsComponent.cs" type="Script" id=18]
+
+[sub_resource type="CircleShape2D" id=13]
+radius = 64.0
 
 [sub_resource type="Animation" id=11]
 resource_name = "AttackLoop"
@@ -33,7 +39,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=16]
 resource_name = "Death"
-length = 6.0
+length = 4.2
 tracks/0/type = "animation"
 tracks/0/path = NodePath("MainAnimationPlayer/IndividualAnimations")
 tracks/0/interp = 1
@@ -45,20 +51,17 @@ tracks/0/keys = {
 "times": PoolRealArray( 1, 1.1, 2, 2.5 )
 }
 tracks/1/type = "method"
-tracks/1/path = NodePath(".")
+tracks/1/path = NodePath("AI")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 4.2, 6 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 4.2 ),
+"transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
 "method": "OnDeathAnimationFinished"
-}, {
-"args": [  ],
-"method": "queue_free"
 } ]
 }
 tracks/2/type = "value"
@@ -74,7 +77,7 @@ tracks/2/keys = {
 "values": [ false ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Body/HurtBox:monitorable")
+tracks/3/path = NodePath("HurtBox:monitorable")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -186,7 +189,7 @@ tracks/4/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 tracks/5/type = "method"
-tracks/5/path = NodePath(".")
+tracks/5/path = NodePath("AI")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -225,7 +228,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Body/HurtBox:monitorable")
+tracks/2/path = NodePath("HurtBox:monitorable")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -437,7 +440,7 @@ tracks/2/keys = {
 "values": [ true, false, true ]
 }
 tracks/3/type = "method"
-tracks/3/path = NodePath(".")
+tracks/3/path = NodePath("AI")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -451,7 +454,7 @@ tracks/3/keys = {
 } ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath(".:JumpProgress")
+tracks/4/path = NodePath("AI:JumpProgress")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -463,7 +466,7 @@ tracks/4/keys = {
 "values": [ 0.0, 1.0 ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Body/HurtBox:monitorable")
+tracks/5/path = NodePath("HurtBox:monitorable")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -514,7 +517,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath(".:JumpProgress")
+tracks/3/path = NodePath("AI:JumpProgress")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -538,7 +541,7 @@ tracks/4/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Body/HurtBox:monitorable")
+tracks/5/path = NodePath("HurtBox:monitorable")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -554,7 +557,7 @@ tracks/5/keys = {
 resource_name = "SummoningTiles"
 length = 3.3
 tracks/0/type = "method"
-tracks/0/path = NodePath(".")
+tracks/0/path = NodePath("AI")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -604,18 +607,36 @@ fill_from = Vector2( 0.5, 0.5 )
 [sub_resource type="CircleShape2D" id=12]
 radius = 64.0
 
-[sub_resource type="CircleShape2D" id=13]
-radius = 64.0
-
 [sub_resource type="DynamicFont" id=19]
 size = 100
 font_data = ExtResource( 7 )
 
 [node name="Tilemancer" type="Node2D"]
+script = ExtResource( 16 )
+
+[node name="AI" type="Node" parent="."]
 script = ExtResource( 2 )
 VictoryChestPrefab = ExtResource( 6 )
 TilePrefab = ExtResource( 1 )
 JumpProgress = 2.0
+
+[node name="EnemyComponent" type="Node" parent="."]
+script = ExtResource( 17 )
+DiesPermanently = true
+
+[node name="HealthPointsComponent" type="Node" parent="."]
+script = ExtResource( 18 )
+MaxHealth = 9
+RecoilDistance = 92.5
+
+[node name="HurtFlasherComponent" type="Node" parent="."]
+script = ExtResource( 4 )
+
+[node name="HurtBox" type="Area2D" parent="."]
+script = ExtResource( 5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource( 13 )
 
 [node name="Sounds" type="Node" parent="."]
 
@@ -648,11 +669,6 @@ anims/Jumping = SubResource( 9 )
 anims/RESET = SubResource( 10 )
 anims/SummoningTiles = SubResource( 1 )
 
-[node name="HurtFlasher" type="Node" parent="."]
-unique_name_in_owner = true
-script = ExtResource( 5 )
-VisualsPath = NodePath("../Body/Visuals")
-
 [node name="Body" type="Node2D" parent="."]
 
 [node name="Visuals" type="Node2D" parent="Body"]
@@ -679,17 +695,10 @@ polygon = PoolVector2Array( -64, -128, -32, -160, 32, -160, 64, -128, 32, -96, -
 
 [node name="HitBox" type="Area2D" parent="Body"]
 script = ExtResource( 3 )
-IgnoredHurtBoxes = [ NodePath("../HurtBox") ]
+IgnoredHealthPoints = [ NodePath("../../HealthPointsComponent") ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Body/HitBox"]
 shape = SubResource( 12 )
-
-[node name="HurtBox" type="Area2D" parent="Body"]
-script = ExtResource( 4 )
-RecoilDistance = 92.5
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body/HurtBox"]
-shape = SubResource( 13 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -712,7 +721,8 @@ text = "Tilemancer"
 align = 1
 
 [node name="BossHealthBar" parent="CanvasLayer" instance=ExtResource( 14 )]
-thing_with_health = NodePath("../..")
+thing_with_health = NodePath("../../HealthPointsComponent")
 
-[connection signal="TookDamage" from="Body/HurtBox" to="." method="OnTookDamage"]
-[connection signal="TookDamageNoParams" from="Body/HurtBox" to="Sounds/TookDamageSound" method="play"]
+[connection signal="Dead" from="EnemyComponent" to="AI" method="Die"]
+[connection signal="Respawning" from="EnemyComponent" to="AI" method="Respawn"]
+[connection signal="TookDamageNoParams" from="HealthPointsComponent" to="Sounds/TookDamageSound" method="play"]

@@ -100,7 +100,7 @@ namespace RandomDungeons
 
         public void OnTookDamage(HitBox hitBox)
         {
-            Health--;
+            Health -= hitBox.Damage;
             _hurtFlasher.Flash();
         }
 

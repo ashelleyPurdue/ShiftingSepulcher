@@ -1,23 +1,29 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Scripts/Components/HitBox.cs" type="Script" id=1]
-[ext_resource path="res://Scripts/Components/HurtBox.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/ECS/Components/Area2DComponent.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/Enemies/MiniTilemancer.cs" type="Script" id=3]
-[ext_resource path="res://Scripts/Components/HurtFlasher.cs" type="Script" id=4]
+[ext_resource path="res://Scripts/ECS/Entities/KinematicBodyEntity2D.cs" type="Script" id=4]
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/TilemancerTile.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Scripts/Enemies/EnemyBody.cs" type="Script" id=6]
 [ext_resource path="res://Scenes/Components/LootDroppers/RecoveryHeartDropper.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/Components/LootDroppers/GoldLootDropper.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Audio/SFX/SwordDamageOwWithSlime.wav" type="AudioStream" id=9]
 [ext_resource path="res://Scripts/Components/LingeringAudioStreamPlayer.cs" type="Script" id=10]
 [ext_resource path="res://Audio/SFX/EnemyDeath.wav" type="AudioStream" id=11]
+[ext_resource path="res://Scripts/ECS/Components/HealthPointsComponent.cs" type="Script" id=12]
+[ext_resource path="res://Scripts/ECS/Components/EnemyComponent.cs" type="Script" id=13]
+[ext_resource path="res://Scripts/ECS/Components/HurtFlasherComponent.cs" type="Script" id=14]
+[ext_resource path="res://Scripts/ECS/Components/KnockbackableVelocityComponent.cs" type="Script" id=15]
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 16.0
 
 [sub_resource type="Animation" id=4]
 resource_name = "Cycle"
 length = 3.0
 loop = true
 tracks/0/type = "method"
-tracks/0/path = NodePath("./AI")
+tracks/0/path = NodePath("AI")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -34,7 +40,7 @@ tracks/0/keys = {
 } ]
 }
 tracks/1/type = "method"
-tracks/1/path = NodePath("./AI")
+tracks/1/path = NodePath("AI")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -198,21 +204,36 @@ radius = 16.0
 [sub_resource type="CircleShape2D" id=2]
 radius = 16.0
 
-[sub_resource type="CircleShape2D" id=3]
-radius = 16.0
-
 [node name="MiniTilemancer" type="KinematicBody2D"]
 collision_layer = 0
-script = ExtResource( 6 )
-MaxHealth = 2
-
-[node name="RecoveryHeartDropper" parent="." instance=ExtResource( 7 )]
-
-[node name="GoldLootDropper" parent="." instance=ExtResource( 8 )]
+script = ExtResource( 4 )
 
 [node name="AI" type="Node" parent="."]
 script = ExtResource( 3 )
 TilePrefab = ExtResource( 5 )
+
+[node name="EnemyComponent" type="Node" parent="."]
+script = ExtResource( 13 )
+
+[node name="HealthPointsComponent" type="Node" parent="."]
+script = ExtResource( 12 )
+MaxHealth = 2
+
+[node name="HurtFlasherComponent" type="Node" parent="."]
+script = ExtResource( 14 )
+
+[node name="KnockbackableVelocityComponent" type="Node" parent="."]
+script = ExtResource( 15 )
+
+[node name="HurtBox" type="Area2D" parent="."]
+script = ExtResource( 2 )
+
+[node name="HurtBoxShape" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource( 3 )
+
+[node name="RecoveryHeartDropper" parent="." instance=ExtResource( 7 )]
+
+[node name="GoldLootDropper" parent="." instance=ExtResource( 8 )]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
@@ -226,16 +247,10 @@ shape = SubResource( 1 )
 
 [node name="HitBox" type="Area2D" parent="."]
 script = ExtResource( 1 )
-IgnoredHurtBoxes = [ NodePath("../HurtBox") ]
+IgnoredHealthPoints = [ NodePath("../HealthPointsComponent") ]
 
 [node name="HitBoxShape" type="CollisionShape2D" parent="HitBox"]
 shape = SubResource( 2 )
-
-[node name="HurtBox" type="Area2D" parent="."]
-script = ExtResource( 2 )
-
-[node name="HurtBoxShape" type="CollisionShape2D" parent="HurtBox"]
-shape = SubResource( 3 )
 
 [node name="Visuals" type="Node2D" parent="."]
 
@@ -277,11 +292,6 @@ polygon = PoolVector2Array( -5, -13, 7, -16, 14, -10, 9, -1, -2, -2 )
 color = Color( 0.788235, 0.619608, 0.262745, 1 )
 polygon = PoolVector2Array( -3, -7, -2, -3, 9, -1, 14, -10, 12, 0, 6, 4, -1, 11, -1, 5 )
 
-[node name="HurtFlasher" type="Node" parent="."]
-unique_name_in_owner = true
-script = ExtResource( 4 )
-VisualsPath = NodePath("../Visuals")
-
 [node name="TookDamageSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 9 )
 pitch_scale = 0.89
@@ -292,9 +302,8 @@ script = ExtResource( 10 )
 Sound = ExtResource( 11 )
 VolumeLinear = 2.0
 
-[connection signal="Dead" from="." to="RecoveryHeartDropper" method="DropLoot"]
-[connection signal="Dead" from="." to="GoldLootDropper" method="DropLoot"]
-[connection signal="Dead" from="." to="AI" method="OnDead"]
-[connection signal="Respawning" from="." to="AI" method="OnRespawning"]
-[connection signal="TookDamage" from="HurtBox" to="." method="OnTookDamage"]
-[connection signal="TookDamageNoParams" from="HurtBox" to="TookDamageSound" method="play"]
+[connection signal="Dead" from="EnemyComponent" to="RecoveryHeartDropper" method="DropLoot"]
+[connection signal="Dead" from="EnemyComponent" to="GoldLootDropper" method="DropLoot"]
+[connection signal="Dead" from="EnemyComponent" to="AI" method="OnDead"]
+[connection signal="Respawning" from="EnemyComponent" to="AI" method="OnRespawning"]
+[connection signal="TookDamageNoParams" from="HealthPointsComponent" to="TookDamageSound" method="play"]

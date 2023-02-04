@@ -42,6 +42,11 @@ namespace RandomDungeons
             _ignoredHurtBoxes.Add(hurtBox);
         }
 
+        public void Ignore(HealthPointsComponent hp)
+        {
+            _ignoredHealthPoints.Add(hp);
+        }
+
         public override void _PhysicsProcess(float delta)
         {
             if (Monitoring)

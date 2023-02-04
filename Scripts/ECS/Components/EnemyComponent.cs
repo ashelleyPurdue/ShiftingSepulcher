@@ -2,6 +2,7 @@ using Godot;
 
 namespace RandomDungeons
 {
+    [CustomNode]
     public class EnemyComponent : BaseComponent<Node2D>, IRespawnable, IEnemy, IOnRoomEnter
     {
         [Signal] public delegate void Dead();

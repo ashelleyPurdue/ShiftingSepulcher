@@ -2,6 +2,7 @@ using Godot;
 
 namespace RandomDungeons
 {
+    [CustomNode]
     public class HealthPointsComponent : BaseComponent<Node>
     {
         [Signal] public delegate void TookDamage(int damage);

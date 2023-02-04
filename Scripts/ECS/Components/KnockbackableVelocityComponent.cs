@@ -2,6 +2,7 @@ using Godot;
 
 namespace RandomDungeons
 {
+    [CustomNode]
     public class KnockbackableVelocityComponent : BaseComponent<KinematicBody2D>
     {
         [Signal] public delegate void HitWall();

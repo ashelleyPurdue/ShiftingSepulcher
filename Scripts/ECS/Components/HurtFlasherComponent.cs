@@ -2,6 +2,7 @@ using Godot;
 
 namespace RandomDungeons
 {
+    [CustomNode]
     public class HurtFlasherComponent : BaseComponent<Node2D>
     {
         [Export] public float FlashDuration = 0.25f;

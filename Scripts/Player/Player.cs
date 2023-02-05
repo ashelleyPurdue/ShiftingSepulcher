@@ -3,7 +3,7 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class Player : KinematicBody2D
+    public class Player : KinematicBodyEntity2D
     {
         public const float WalkSpeed = 283;
         public const float WalkAccel = WalkSpeed / 0.0625f;
@@ -27,12 +27,13 @@ namespace RandomDungeons
             Mathf.Sin(FacingAngleRadians)
         );
 
+        public HealthPointsComponent HealthPoints {get; private set;}
+
         private Node2D _visuals => GetNode<Node2D>("%Visuals");
         private PlayerSword _sword => GetNode<PlayerSword>("%Sword");
         private ObjectHolder _objectHolder => GetNode<ObjectHolder>("%ObjectHolder");
         private PlayerInteractor _interactor => GetNode<PlayerInteractor>("%Interactor");
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
-        private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
 
         private Vector2 _velocity;
 
@@ -48,19 +49,25 @@ namespace RandomDungeons
 
         public override void _Ready()
         {
+            base._Ready();
+
             _sm = new StateMachine(this);
+            HealthPoints = this.SingleChildOfType<HealthPointsComponent>();
+
             Resurrect();
         }
 
         public override void _PhysicsProcess(float delta)
         {
+            HealthPoints.MaxHealth = PlayerInventory.MaxHealth;
+
             _knockbackTimer -= delta;
 
             // Move
             _velocity = MoveAndSlide(_velocity);
 
             // Die when out of health
-            if (PlayerInventory.Health <= 0 && !_isDead)
+            if (HealthPoints.Health <= 0 && !_isDead)
             {
                 _sm.ChangeState(Dead);
             }
@@ -117,7 +124,8 @@ namespace RandomDungeons
         public void Resurrect()
         {
             _isDead = false;
-            PlayerInventory.FullHeal();
+            HealthPoints.MaxHealth = PlayerInventory.MaxHealth;
+            HealthPoints.Health = HealthPoints.MaxHealth;
 
             _visuals.Scale = Vector2.One;
             _visuals.Modulate = Colors.White;
@@ -131,13 +139,12 @@ namespace RandomDungeons
             if (_isDead)
                 return;
 
-            PlayerInventory.Health -= hitBox.Damage;
-            _hurtFlasher.Flash();
+            HealthPoints.Health -= hitBox.Damage;
 
             _velocity = hitBox.GetKnockbackVelocity(this, KnockbackFriction);
             _knockbackTimer = KnockbackDuration(_velocity);
 
-            if (PlayerInventory.Health >= 0)
+            if (HealthPoints.Health >= 0)
                 GetNode<AudioStreamPlayer>("%HurtSound").Play();
         }
 
@@ -271,7 +278,6 @@ namespace RandomDungeons
             public override void _StateEntered()
             {
                 Owner._isDead = true;
-                Owner._hurtFlasher.Cancel();
                 Owner._velocity = Vector2.Zero;
 
                 Owner._animator.PlaybackSpeed = 1;

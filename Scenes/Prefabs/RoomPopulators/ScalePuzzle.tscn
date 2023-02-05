@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Scripts/RoomPopulators/ScalePuzzle.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/Prefabs/Elements/ScaleBowl.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scripts/Components/RotateTowardPointComponent.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/ECS/Components/RotateTowardPointComponent.cs" type="Script" id=3]
 [ext_resource path="res://Scripts/Renderers/Circle2D.cs" type="Script" id=4]
 
 [node name="ScalePuzzle" type="Node2D"]

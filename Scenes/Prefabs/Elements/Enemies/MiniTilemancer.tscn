@@ -302,8 +302,8 @@ script = ExtResource( 10 )
 Sound = ExtResource( 11 )
 VolumeLinear = 2.0
 
+[connection signal="Dead" from="EnemyComponent" to="AI" method="OnDead"]
 [connection signal="Dead" from="EnemyComponent" to="RecoveryHeartDropper" method="DropLoot"]
 [connection signal="Dead" from="EnemyComponent" to="GoldLootDropper" method="DropLoot"]
-[connection signal="Dead" from="EnemyComponent" to="AI" method="OnDead"]
 [connection signal="Respawning" from="EnemyComponent" to="AI" method="OnRespawning"]
 [connection signal="TookDamageNoParams" from="HealthPointsComponent" to="TookDamageSound" method="play"]

@@ -12,7 +12,6 @@ namespace RandomDungeons
         [Signal] public delegate void DealtDamageTo(HealthPointsComponent hp);
 
         [Export] public int Damage = 1;
-        [Export] public float InvlunerabilityTime = 1.5f;
         [Export] public float KnockbackDistance = 92.5f;
 
         [Export] public NodePath[] IgnoredHurtBoxes = new NodePath[] {};
@@ -53,21 +52,6 @@ namespace RandomDungeons
             {
                 foreach (var other in GetOverlappingAreas())
                 {
-                    // Legacy: be backwards-compatible with the old hurtbox system
-                    if (other is HurtBox hurtBox)
-                    {
-                        if (IsIgnored(hurtBox))
-                            continue;
-
-                        if (hurtBox.IsInvulnerable)
-                            continue;
-
-                        hurtBox.TakeDamage(this);
-                        EmitSignal(nameof(DealtDamage), hurtBox);
-                        EmitSignal(nameof(DealtDamageNoParams));
-
-                        return;
-                    }
                 }
             }
         }
@@ -95,6 +79,19 @@ namespace RandomDungeons
                 hp.OnTookDamageFromHitBox(this);
                 EmitSignal(nameof(DealtDamageTo), hp);
                 EmitSignal(nameof(DealtDamageNoParams));
+            }
+
+            // Legacy: be backwards-compatible with the old hurtbox system
+            if (other is HurtBox hurtBox)
+            {
+                if (IsIgnored(hurtBox))
+                    return;
+
+                hurtBox.TakeDamage(this);
+                EmitSignal(nameof(DealtDamage), hurtBox);
+                EmitSignal(nameof(DealtDamageNoParams));
+
+                return;
             }
         }
 

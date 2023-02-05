@@ -2,7 +2,7 @@ using Godot;
 
 namespace RandomDungeons
 {
-    [CustomNode]
+    [CustomNode(parent:"Area2D", icon: "Area2D")]
     public class Area2DComponent : Area2D, IComponent<Node2D>
     {
         public Node2D Entity => GetParent<Node2D>();

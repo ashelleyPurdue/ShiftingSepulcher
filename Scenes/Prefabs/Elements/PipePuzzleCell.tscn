@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/Elements/PipePuzzleCell.cs" type="Script" id=1]
-[ext_resource path="res://Scripts/Components/Circle2D.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/Renderers/Circle2D.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/Components/HurtBox.cs" type="Script" id=3]
 [ext_resource path="res://Audio/SFX/PipeRotate.wav" type="AudioStream" id=4]
 [ext_resource path="res://Audio/SFX/PipeRotateStop.wav" type="AudioStream" id=5]

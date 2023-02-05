@@ -1,7 +1,7 @@
 [gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=1]
-[ext_resource path="res://Scenes/Components/Circle2D.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Renderers/Circle2D.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/ECS/Components/Area2DComponent.cs" type="Script" id=3]
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/Explosion.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scripts/Projectiles/Bomb.cs" type="Script" id=6]

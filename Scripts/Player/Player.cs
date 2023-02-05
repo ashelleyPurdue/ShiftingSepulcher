@@ -11,7 +11,7 @@ namespace RandomDungeons
 
         [Signal] public delegate void DeathAnimationFinished();
 
-        public InteractableZone HighlightedObject => _interactor.HighlightedObject;
+        public IInteractable HighlightedObject => _interactor.HighlightedObject;
         public bool IsObjectHighlighted => _interactor.IsObjectHighlighted;
 
         public bool IsHoldingSomething => _objectHolder.IsHoldingSomething;

@@ -4,8 +4,8 @@ namespace RandomDungeons
 {
     public class PlayerInteractor : Node2D
     {
-        public InteractableZone HighlightedObject {get; private set;} = null;
-        public bool IsObjectHighlighted => IsInstanceValid(HighlightedObject);
+        public IInteractable HighlightedObject {get; private set;} = null;
+        public bool IsObjectHighlighted => IsInstanceValid(HighlightedObject as Node);
 
         private Area2D _interactableDetector => GetNode<Area2D>("%InteractableDetector");
 
@@ -16,7 +16,7 @@ namespace RandomDungeons
 
         public void TryInteract()
         {
-            if (!Object.IsInstanceValid(HighlightedObject))
+            if (!IsInstanceValid(HighlightedObject as Node))
                 return;
 
             HighlightedObject.Interact();
@@ -28,14 +28,31 @@ namespace RandomDungeons
 
             foreach (var hit in hits)
             {
-                if (hit is InteractableZone i)
+                if (((Node)hit).HasComponent<InteractableComponent>(out var i))
                 {
                     HighlightedObject = i;
                     return;
+                }
+
+                // Legacy: be compatible with the old InteractableZone system
+                {
+                    if (hit is IInteractable iz)
+                    {
+                        HighlightedObject = iz;
+                        return;
+                    }
                 }
             }
 
             HighlightedObject = null;
         }
+    }
+
+    public interface IInteractable
+    {
+        string PromptText {get;}
+        Vector2 PromptGlobalPosition {get;}
+
+        void Interact();
     }
 }

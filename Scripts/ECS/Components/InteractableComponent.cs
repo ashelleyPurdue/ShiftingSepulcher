@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Godot;
 
 namespace RandomDungeons
 {
-    public class InteractableZone : Area2D, IInteractable
+    [CustomNode]
+    public class InteractableComponent : BaseComponent<Node2D>, IInteractable
     {
         [Signal] public delegate void Interacted();
 
@@ -14,7 +12,7 @@ namespace RandomDungeons
 
         public Vector2 PromptGlobalPosition => PromptPositionPath != null
             ? GetNode<Node2D>(PromptPositionPath).GlobalPosition
-            : GlobalPosition;
+            : Entity.GlobalPosition;
 
         public void Interact()
         {

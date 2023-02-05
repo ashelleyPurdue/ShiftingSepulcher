@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/PhysicalDungeons/RoomTransitionManager.cs" type="Script" id=1]
-[ext_resource path="res://Scripts/Components/ParentVisibleInEditorOnly.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/ECS/Components/VisibleInEditorOnlyComponent.cs" type="Script" id=2]
 [ext_resource path="res://Audio/SFX/StairsUp.wav" type="AudioStream" id=3]
 [ext_resource path="res://Audio/SFX/StairsDown.wav" type="AudioStream" id=4]
 [ext_resource path="res://Audio/SFX/DoorEnter.wav" type="AudioStream" id=5]
@@ -320,7 +320,7 @@ invert_enable = true
 invert_border = 32.0
 polygon = PoolVector2Array( -256, -256, 256, -256, 256, 256, -256, 256 )
 
-[node name="ParentVisibleInEditorOnly" type="Node" parent="PreviousRoomViewport/PreviousRoomHolder/EditorVisuals"]
+[node name="VisibleInEditorOnlyComponent" type="Node" parent="PreviousRoomViewport/PreviousRoomHolder/EditorVisuals"]
 script = ExtResource( 2 )
 
 [node name="Floor" type="Polygon2D" parent="PreviousRoomViewport/PreviousRoomHolder/EditorVisuals"]
@@ -345,7 +345,7 @@ invert_enable = true
 invert_border = 32.0
 polygon = PoolVector2Array( -256, -256, 256, -256, 256, 256, -256, 256 )
 
-[node name="ParentVisibleInEditorOnly" type="Node" parent="NextRoomViewport/NextRoomHolder/EditorVisuals"]
+[node name="VisibleInEditorOnlyComponent" type="Node" parent="NextRoomViewport/NextRoomHolder/EditorVisuals"]
 script = ExtResource( 2 )
 
 [node name="Floor" type="Polygon2D" parent="NextRoomViewport/NextRoomHolder/EditorVisuals"]

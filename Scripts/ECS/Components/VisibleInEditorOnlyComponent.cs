@@ -3,7 +3,7 @@ using Godot;
 namespace RandomDungeons
 {
     [CustomNode]
-    public class ParentVisibleInEditorOnly : Node
+    public class VisibleInEditorOnlyComponent : Node
     {
         public override void _Ready()
         {

@@ -2,25 +2,25 @@
 
 [ext_resource path="res://Scripts/ECS/Components/Area2DComponent.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/ECS/Components/HealthPointsComponent.cs" type="Script" id=2]
-[ext_resource path="res://Scripts/Components/Holdables/HoldableParent.cs" type="Script" id=3]
 [ext_resource path="res://Scripts/Components/HitBox.cs" type="Script" id=4]
 [ext_resource path="res://Scripts/Components/Circle2D.cs" type="Script" id=5]
-[ext_resource path="res://Scripts/Components/Holdables/ThrowableParentKinematic.cs" type="Script" id=6]
 [ext_resource path="res://Audio/SFX/BottleBreak.wav" type="AudioStream" id=7]
 [ext_resource path="res://Scripts/Components/LingeringAudioStreamPlayer.cs" type="Script" id=8]
 [ext_resource path="res://Scripts/ECS/Components/EnemyComponent.cs" type="Script" id=9]
+[ext_resource path="res://Scripts/ECS/Components/HoldableComponent.cs" type="Script" id=11]
+[ext_resource path="res://Scripts/ECS/Components/InteractableComponent.cs" type="Script" id=12]
 
 [sub_resource type="CircleShape2D" id=6]
 radius = 16.0
 
-[sub_resource type="CircleShape2D" id=5]
-radius = 32.0
+[sub_resource type="CircleShape2D" id=10]
+radius = 20.0
 
 [sub_resource type="CircleShape2D" id=7]
 radius = 16.0
 
-[sub_resource type="CircleShape2D" id=10]
-radius = 20.0
+[sub_resource type="CircleShape2D" id=5]
+radius = 32.0
 
 [sub_resource type="Animation" id=3]
 length = 0.001
@@ -61,7 +61,7 @@ tracks/2/keys = {
 "values": [ false ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("CollisionShape2D:disabled")
+tracks/3/path = NodePath("SolidCollider:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -162,7 +162,7 @@ tracks/3/keys = {
 "values": [ true ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("CollisionShape2D:disabled")
+tracks/4/path = NodePath("SolidCollider:disabled")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -215,16 +215,18 @@ tracks/7/keys = {
 [node name="BreakablePot" type="KinematicBody2D"]
 z_index = 2
 
-[node name="ThrowableParentKinematic" type="Node" parent="."]
-script = ExtResource( 6 )
-Visuals = NodePath("../Visuals")
-
 [node name="EnemyComponent" type="Node" parent="."]
 script = ExtResource( 9 )
 DiesPermanently = true
 
 [node name="HealthPointsComponent" type="Node" parent="."]
 script = ExtResource( 2 )
+
+[node name="HoldableComponent" type="Node" parent="."]
+script = ExtResource( 11 )
+RotatesWhileHeld = true
+Visuals = NodePath("../Visuals")
+Shadow = NodePath("../Shadow")
 
 [node name="HurtBox" type="Area2D" parent="."]
 position = Vector2( -16, -16 )
@@ -235,21 +237,6 @@ script = ExtResource( 1 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2( 16, 16 )
 shape = SubResource( 6 )
-
-[node name="HoldableParent" type="Area2D" parent="."]
-script = ExtResource( 3 )
-PromptText = "Pick up"
-PromptPositionPath = NodePath("PromptPos")
-RotatesWhileHeld = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HoldableParent"]
-shape = SubResource( 5 )
-
-[node name="PromptPos" type="Position2D" parent="HoldableParent"]
-position = Vector2( -29, -36 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 7 )
 
 [node name="HitBox" type="Area2D" parent="."]
 position = Vector2( -16, -16 )
@@ -262,6 +249,25 @@ IgnoredHealthPoints = [ NodePath("../HealthPointsComponent") ]
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 position = Vector2( 16, 16 )
 shape = SubResource( 10 )
+
+[node name="SolidCollider" type="CollisionShape2D" parent="."]
+shape = SubResource( 7 )
+
+[node name="Interaction" type="Node2D" parent="."]
+
+[node name="InteractableComponent" type="Node" parent="Interaction"]
+script = ExtResource( 12 )
+PromptText = "Pick up"
+PromptPositionPath = NodePath("../PromptPos")
+
+[node name="Area2DComponent" type="Area2D" parent="Interaction"]
+script = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interaction/Area2DComponent"]
+shape = SubResource( 5 )
+
+[node name="PromptPos" type="Position2D" parent="Interaction"]
+position = Vector2( -29, -36 )
 
 [node name="Shadow" type="Node2D" parent="."]
 script = ExtResource( 5 )
@@ -297,12 +303,8 @@ anims/Shatter = SubResource( 4 )
 script = ExtResource( 8 )
 Sound = ExtResource( 7 )
 
-[connection signal="HitFloor" from="ThrowableParentKinematic" to="HealthPointsComponent" method="TakeDamage" binds= [ 1 ]]
-[connection signal="HitWall" from="ThrowableParentKinematic" to="HealthPointsComponent" method="TakeDamage" binds= [ 1 ]]
 [connection signal="Dead" from="EnemyComponent" to="AnimationPlayer" method="play" binds= [ "Shatter" ]]
-[connection signal="PickedUp" from="HoldableParent" to="CollisionShape2D" method="set_disabled" binds= [ true ]]
-[connection signal="PickedUp" from="HoldableParent" to="Shadow" method="set_visible" binds= [ false ]]
-[connection signal="Released" from="HoldableParent" to="CollisionShape2D" method="set_disabled" binds= [ false ]]
-[connection signal="Released" from="HoldableParent" to="Shadow" method="set_visible" binds= [ true ]]
-[connection signal="Thrown" from="HoldableParent" to="ThrowableParentKinematic" method="OnThrown"]
+[connection signal="HitFloor" from="HoldableComponent" to="HealthPointsComponent" method="TakeDamage" binds= [ 1 ]]
+[connection signal="HitWall" from="HoldableComponent" to="HealthPointsComponent" method="TakeDamage" binds= [ 1 ]]
 [connection signal="DealtDamageNoParams" from="HitBox" to="HealthPointsComponent" method="TakeDamage" binds= [ 1 ]]
+[connection signal="Interacted" from="Interaction/InteractableComponent" to="HoldableComponent" method="OnInteracted"]

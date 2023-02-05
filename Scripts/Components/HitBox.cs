@@ -68,7 +68,7 @@ namespace RandomDungeons
 
         private void OnAreaEntered(Area2D other)
         {
-            if (other is IComponent c && c.HasComponent<HealthPointsComponent>(out var hp))
+            if (other.HasComponent<HealthPointsComponent>(out var hp))
             {
                 if (IsIgnored(hp))
                     return;

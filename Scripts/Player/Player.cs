@@ -3,7 +3,7 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class Player : KinematicBodyEntity2D
+    public class Player : KinematicBody2D
     {
         public const float WalkSpeed = 283;
         public const float WalkAccel = WalkSpeed / 0.0625f;

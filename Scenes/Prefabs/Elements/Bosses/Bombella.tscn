@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=2]
+[gd_scene load_steps=58 format=2]
 
 [ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=1]
 [ext_resource path="res://Sprites/OutlinedCircle.svg" type="Texture" id=2]
@@ -13,7 +13,6 @@
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/SpawningSpell.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Scripts/Components/LineTrail2D.cs" type="Script" id=12]
 [ext_resource path="res://Scripts/Bosses/Bombella.cs" type="Script" id=13]
-[ext_resource path="res://Scripts/ECS/Entities/KinematicBodyEntity2D.cs" type="Script" id=14]
 [ext_resource path="res://Scripts/Components/MusicServiceAccessor.cs" type="Script" id=15]
 [ext_resource path="res://Audio/SFX/BossPaperTear.ogg" type="AudioStream" id=16]
 [ext_resource path="res://Audio/Music/BossVictory.tres" type="Resource" id=17]
@@ -2364,7 +2363,6 @@ color_ramp = SubResource( 27 )
 
 [node name="Bombella" type="KinematicBody2D"]
 scale = Vector2( 1.75, 1.75 )
-script = ExtResource( 14 )
 
 [node name="AI" type="Node" parent="."]
 script = ExtResource( 13 )

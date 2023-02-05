@@ -1,7 +1,6 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Scripts/ECS/Components/Area2DComponent.cs" type="Script" id=1]
-[ext_resource path="res://Scripts/ECS/Entities/KinematicBodyEntity2D.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/Components/HitBox.cs" type="Script" id=3]
 [ext_resource path="res://Scripts/Enemies/Zombie.cs" type="Script" id=5]
 [ext_resource path="res://Scenes/Components/LootDroppers/RecoveryHeartDropper.tscn" type="PackedScene" id=6]
@@ -287,7 +286,6 @@ radius = 14.0
 [node name="Zombie" type="KinematicBody2D"]
 collision_layer = 0
 collision_mask = 3
-script = ExtResource( 2 )
 
 [node name="AI" type="Node" parent="."]
 script = ExtResource( 5 )

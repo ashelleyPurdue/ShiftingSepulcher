@@ -8,6 +8,16 @@ namespace RandomDungeons
         public TEntityNode Entity => GetParent<TEntityNode>();
         Node IComponent.Entity => GetParent();
 
+        public override sealed void _Ready()
+        {
+            Entity.Connect(
+                signal: "ready",
+                target: this,
+                method: nameof(_EntityReady),
+                flags: (uint)(ConnectFlags.Oneshot)
+            );
+        }
+
         public virtual void _EntityReady() {}
     }
 }

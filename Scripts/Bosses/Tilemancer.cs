@@ -29,7 +29,7 @@ namespace RandomDungeons
 
         bool IChallenge.IsSolved() => _deathAnimationFinished;
 
-        public override void _Ready()
+        public override void _EntityReady()
         {
             _player = GetTree().FindPlayer();
             Respawn();

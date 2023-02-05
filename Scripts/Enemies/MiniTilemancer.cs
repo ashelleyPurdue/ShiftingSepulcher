@@ -20,7 +20,7 @@ namespace RandomDungeons
 
         private TilemancerTile _currentTile = null;
 
-        public override void _Ready()
+        public override void _EnterTree()
         {
             _target = GetTree().FindPlayer();
         }

@@ -18,7 +18,7 @@ namespace RandomDungeons
         public bool IsInvulnerable => _cooldownTimer > 0;
         private float _cooldownTimer = 0;
 
-        public override void _Ready()
+        public override void _EntityReady()
         {
             Health = MaxHealth;
         }

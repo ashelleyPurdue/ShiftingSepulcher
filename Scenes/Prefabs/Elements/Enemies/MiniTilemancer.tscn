@@ -1,9 +1,8 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Scripts/Components/HitBox.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/ECS/Components/Area2DComponent.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/Enemies/MiniTilemancer.cs" type="Script" id=3]
-[ext_resource path="res://Scripts/ECS/Entities/KinematicBodyEntity2D.cs" type="Script" id=4]
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/TilemancerTile.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Components/LootDroppers/RecoveryHeartDropper.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/Components/LootDroppers/GoldLootDropper.tscn" type="PackedScene" id=8]
@@ -206,7 +205,6 @@ radius = 16.0
 
 [node name="MiniTilemancer" type="KinematicBody2D"]
 collision_layer = 0
-script = ExtResource( 4 )
 
 [node name="AI" type="Node" parent="."]
 script = ExtResource( 3 )

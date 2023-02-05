@@ -22,14 +22,6 @@ namespace RandomDungeons
         private bool _spawnPosKnown = false;
         private Vector2 _spawnPos;
 
-        public override void _Ready()
-        {
-            _spawnPos = Entity.Position;
-            _spawnPosKnown = true;
-
-            Respawn();
-        }
-
         public override void _EntityReady()
         {
             _healthPoints.Connect(
@@ -53,6 +45,11 @@ namespace RandomDungeons
                     method: nameof(kb.ApplyKnockback)
                 );
             }
+
+            _spawnPos = Entity.Position;
+            _spawnPosKnown = true;
+
+            Respawn();
         }
 
         public void OnRoomEnter()

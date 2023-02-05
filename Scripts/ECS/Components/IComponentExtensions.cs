@@ -5,15 +5,21 @@ namespace RandomDungeons
     public static class IComponentExtensions
     {
         /// <summary>
-        /// Returns the first sibling component of the given type, or null
-        /// if no sibling of that type exists.
+        /// Returns the first component of the given type, or null
+        /// if no of that type exists.
+        ///
+        /// If this node is an <see cref="IComponent"/>, it will instead search
+        /// for _sibling_ components.
         /// </summary>
         /// <typeparam name="TComponent"></typeparam>
         /// <returns></returns>
-        public static TComponent GetComponent<TComponent>(this IComponent me)
+        public static TComponent GetComponent<TComponent>(this Node entity)
             where TComponent : class, IComponent
         {
-            foreach (var child in me.Entity.EnumerateChildren())
+            if (entity is IComponent component)
+                return component.Entity.GetComponent<TComponent>();
+
+            foreach (var child in entity.EnumerateChildren())
             {
                 if (child is TComponent c)
                     return c;
@@ -24,27 +30,39 @@ namespace RandomDungeons
 
         /// <summary>
         /// Returns true if a sibling component of the given type exists
+        ///
+        /// If this node is an <see cref="IComponent"/>, it will instead search
+        /// for _sibling_ components.
         /// </summary>
         /// <typeparam name="TComponent"></typeparam>
         /// <returns></returns>
-        public static bool HasComponent<TComponent>(this IComponent me)
+        public static bool HasComponent<TComponent>(this Node entity)
             where TComponent : class, IComponent
         {
-            return me.GetComponent<TComponent>() != null;
+            if (entity is IComponent component)
+                return component.Entity.HasComponent<TComponent>();
+
+            return entity.GetComponent<TComponent>() != null;
         }
 
         /// <summary>
         /// Returns true if a sibling component of the given type exists.
         /// If so, "c" will be set to that component.  Otherwise, "c" will be
         /// set to null.
+        ///
+        /// If this node is an <see cref="IComponent"/>, it will instead search
+        /// for _sibling_ components.
         /// </summary>
         /// <param name="c"></param>
         /// <typeparam name="TComponent"></typeparam>
         /// <returns></returns>
-        public static bool HasComponent<TComponent>(this IComponent me, out TComponent c)
+        public static bool HasComponent<TComponent>(this Node entity, out TComponent c)
             where TComponent : class, IComponent
         {
-            c = me.GetComponent<TComponent>();
+            if (entity is IComponent component)
+                return component.Entity.HasComponent<TComponent>(out c);
+
+            c = entity.GetComponent<TComponent>();
             return c != null;
         }
     }

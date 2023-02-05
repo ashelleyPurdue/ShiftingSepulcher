@@ -4,10 +4,8 @@ using Godot;
 namespace RandomDungeons
 {
     [CustomNode]
-    public class HoldableComponent : BaseComponent<KinematicBody2D>, IHoldable
+    public class HoldableComponent : BaseComponent<KinematicBody2D>
     {
-        Node2D IHoldable.Node => Entity;
-
         [Signal] public delegate void PickedUp();
         [Signal] public delegate void Released();
         [Signal] public delegate void HitWall();

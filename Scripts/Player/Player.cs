@@ -165,12 +165,12 @@ namespace RandomDungeons
             return velocity.Length() / KnockbackFriction;
         }
 
-        public void PickUp(IHoldable holdable)
+        public void PickUp(HoldableComponent holdable)
         {
             if (_sm.CurrentState != Walking)
             {
                 string stateName = _sm.CurrentState.GetType().Name;
-                GD.Print($"Tried to pick up {holdable.Node.Name} while outside the walking state ({stateName})");
+                GD.Print($"Tried to pick up {holdable.Entity.Name} while outside the walking state ({stateName})");
                 return;
             }
 

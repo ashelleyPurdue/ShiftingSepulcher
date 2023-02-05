@@ -16,7 +16,7 @@ namespace RandomDungeons
         private Node2D _holdPos => GetNode<Node2D>(HoldPos);
         private Node2D _releasePos => GetNode<Node2D>(ReleasePos);
 
-        private IHoldable _heldObject;
+        private HoldableComponent _heldObject;
         private float _originalGlobalRotation;
 
         public override void _PhysicsProcess(float delta)
@@ -24,19 +24,19 @@ namespace RandomDungeons
             if (!IsHoldingSomething)
                 return;
 
-            _heldObject.Node.GlobalPosition = _holdPos.GlobalPosition;
+            _heldObject.Entity.GlobalPosition = _holdPos.GlobalPosition;
 
             if (_heldObject.RotatesWhileHeld)
-                _heldObject.Node.GlobalRotation = _holdPos.GlobalRotation;
+                _heldObject.Entity.GlobalRotation = _holdPos.GlobalRotation;
         }
 
-        public void PickUp(IHoldable holdable)
+        public void PickUp(HoldableComponent holdable)
         {
             if (IsHoldingSomething)
                 throw new Exception("Already holding something");
 
             _heldObject = holdable;
-            _originalGlobalRotation = holdable.Node.GlobalRotation;
+            _originalGlobalRotation = holdable.Entity.GlobalRotation;
 
             holdable.PickUp();
         }
@@ -46,8 +46,8 @@ namespace RandomDungeons
             if (!IsHoldingSomething)
                 return;
 
-            _heldObject.Node.GlobalPosition = _releasePos.GlobalPosition;
-            _heldObject.Node.GlobalRotation = _originalGlobalRotation;
+            _heldObject.Entity.GlobalPosition = _releasePos.GlobalPosition;
+            _heldObject.Entity.GlobalRotation = _originalGlobalRotation;
 
             _heldObject.Release();
             _heldObject = null;
@@ -58,8 +58,8 @@ namespace RandomDungeons
             if (!IsHoldingSomething)
                 return;
 
-            _heldObject.Node.GlobalPosition = _releasePos.GlobalPosition;
-            _heldObject.Node.GlobalRotation = _originalGlobalRotation;
+            _heldObject.Entity.GlobalPosition = _releasePos.GlobalPosition;
+            _heldObject.Entity.GlobalRotation = _originalGlobalRotation;
 
             _heldObject.Throw(direction);
             _heldObject = null;

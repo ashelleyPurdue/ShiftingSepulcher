@@ -77,8 +77,10 @@ namespace RandomDungeons
                     return;
 
                 hp.OnTookDamageFromHitBox(this);
-                EmitSignal(nameof(DealtDamageTo), hp);
-                EmitSignal(nameof(DealtDamageNoParams));
+                CallDeferred("emit_signal", nameof(DealtDamageTo), hp);
+                CallDeferred("emit_signal", nameof(DealtDamageNoParams));
+
+                return;
             }
 
             // Legacy: be backwards-compatible with the old hurtbox system
@@ -88,8 +90,8 @@ namespace RandomDungeons
                     return;
 
                 hurtBox.TakeDamage(this);
-                EmitSignal(nameof(DealtDamage), hurtBox);
-                EmitSignal(nameof(DealtDamageNoParams));
+                CallDeferred("emit_signal", nameof(DealtDamage), hurtBox);
+                CallDeferred("emit_signal", nameof(DealtDamageNoParams));
 
                 return;
             }

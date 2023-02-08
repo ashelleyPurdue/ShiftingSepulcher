@@ -1,9 +1,9 @@
 [gd_scene load_steps=17 format=2]
 
-[ext_resource path="res://Scenes/Components/Circle2D.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Renderers/Circle2D.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Projectiles/Fireball.cs" type="Script" id=2]
-[ext_resource path="res://Scripts/Components/HitBox.cs" type="Script" id=3]
-[ext_resource path="res://Scripts/Components/LingeringAudioStreamPlayer.cs" type="Script" id=4]
+[ext_resource path="res://Scripts/MiscNodes/HitBox.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/MiscNodes/LingeringAudioStreamPlayer.cs" type="Script" id=4]
 [ext_resource path="res://Audio/SFX/FireballSpawn.wav" type="AudioStream" id=5]
 [ext_resource path="res://Audio/SFX/FireBurning.wav" type="AudioStream" id=6]
 [ext_resource path="res://Audio/SFX/Poof.wav" type="AudioStream" id=7]

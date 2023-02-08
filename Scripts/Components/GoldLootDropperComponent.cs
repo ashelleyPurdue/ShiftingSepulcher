@@ -3,7 +3,7 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class GoldLootDropper : Node2D
+    public class GoldLootDropperComponent : BaseComponent<Node2D>, ILootDropperComponent
     {
         [Export] public PackedScene CoinPrefab;
         [Export] public int MinGold = 1;
@@ -31,7 +31,7 @@ namespace RandomDungeons
                 this.GetRoom().AddChild(coin);
 
                 var offset = rng.PointInUnitCircle() * 16;
-                coin.GlobalPosition = GlobalPosition + offset;
+                coin.GlobalPosition = Entity.GlobalPosition + offset;
             }
         }
     }

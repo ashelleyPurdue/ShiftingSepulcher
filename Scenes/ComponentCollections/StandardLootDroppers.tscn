@@ -1,0 +1,19 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scenes/Prefabs/Elements/ItemPickups/RecoveryHeart.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/Components/ComponentCollection.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/Components/SingleLootDropperComponent.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/Components/GoldLootDropperComponent.cs" type="Script" id=4]
+[ext_resource path="res://Scenes/Prefabs/Elements/ItemPickups/GoldCoinPickup.tscn" type="PackedScene" id=5]
+
+[node name="StandardLootDroppers" type="Node"]
+script = ExtResource( 2 )
+
+[node name="RecoveryHeartLootDropperComponent" type="Node" parent="."]
+script = ExtResource( 3 )
+LootPrefab = ExtResource( 1 )
+ActivationChance = 0.25
+
+[node name="GoldLootDropperComponent" type="Node" parent="."]
+script = ExtResource( 4 )
+CoinPrefab = ExtResource( 5 )

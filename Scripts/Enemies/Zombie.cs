@@ -2,24 +2,41 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class Zombie : Node
+    public class Zombie : BaseComponent<Node2D>
     {
         [Export] public float MinIdleTime = 1f;
         [Export] public float MaxIdleTime = 2f;
         [Export] public float WanderTime = 1f;
         [Export] public float WanderSpeed = 32 * 3;
 
-        private EnemyBody _body => this.FindAncestor<EnemyBody>();
         private Node2D _visuals => GetNode<Node2D>("%Visuals");
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
 
         private Player _targetPlayer;
+        private KnockbackableVelocityComponent _body;
 
         private StateMachine _sm;
 
         public Zombie()
         {
             _sm = new StateMachine(this);
+        }
+
+        public override void _EntityReady()
+        {
+            _body = this.GetComponent<KnockbackableVelocityComponent>();
+
+            var enemy = this.GetComponent<EnemyComponent>();
+            enemy.Connect(
+                signal: nameof(EnemyComponent.Respawning),
+                target: this,
+                nameof(OnRespawning)
+            );
+            enemy.Connect(
+                signal: nameof(EnemyComponent.Dead),
+                target: this,
+                nameof(OnDead)
+            );
         }
 
         public override void _Process(float delta)
@@ -114,7 +131,7 @@ namespace RandomDungeons
             public override void _PhysicsProcess(float delta)
             {
                 var dir = Owner
-                    ._body
+                    .Entity
                     .GlobalPosition
                     .DirectionTo(Owner._targetPlayer.GlobalPosition);
 

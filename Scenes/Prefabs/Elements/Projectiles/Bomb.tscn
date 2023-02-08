@@ -1,14 +1,24 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=1]
-[ext_resource path="res://Scenes/Components/Circle2D.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scripts/Components/Holdables/HoldableParent.cs" type="Script" id=3]
-[ext_resource path="res://Scripts/Components/Holdables/ThrowableParentKinematic.cs" type="Script" id=4]
+[ext_resource path="res://Scenes/Renderers/Circle2D.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scripts/Components/Area2DComponent.cs" type="Script" id=3]
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/Explosion.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scripts/Projectiles/Bomb.cs" type="Script" id=6]
 [ext_resource path="res://Audio/SFX/SingleBombTick.wav" type="AudioStream" id=7]
 [ext_resource path="res://Audio/SFX/BombFuseHiss.ogg" type="AudioStream" id=8]
-[ext_resource path="res://Scripts/Components/GroupDetectorArea2D.cs" type="Script" id=9]
+[ext_resource path="res://Scripts/MiscNodes/GroupDetectorArea2D.cs" type="Script" id=9]
+[ext_resource path="res://Scripts/Components/InteractableComponent.cs" type="Script" id=10]
+[ext_resource path="res://Scripts/Components/HoldableComponent.cs" type="Script" id=11]
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 32.0
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id=12]
+radius = 16.0
 
 [sub_resource type="Animation" id=4]
 resource_name = "FuseRunning"
@@ -229,6 +239,13 @@ tracks/2/keys = {
 "values": [ Color( 0, 0.180392, 0.658824, 1 ), Color( 1, 0, 0, 1 ), Color( 0, 0.180392, 0.658824, 1 ) ]
 }
 
+[sub_resource type="GradientTexture2D" id=2]
+gradient = ExtResource( 1 )
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2( 0.5, 0.5 )
+
 [sub_resource type="CanvasItemMaterial" id=10]
 
 [sub_resource type="ParticlesMaterial" id=11]
@@ -244,26 +261,37 @@ orbit_velocity_random = 0.0
 scale = 2.0
 color = Color( 0.952941, 0.760784, 0, 1 )
 
-[sub_resource type="CircleShape2D" id=1]
-radius = 16.0
-
-[sub_resource type="CircleShape2D" id=12]
-radius = 16.0
-
-[sub_resource type="CircleShape2D" id=3]
-radius = 32.0
-
-[sub_resource type="GradientTexture2D" id=2]
-gradient = ExtResource( 1 )
-width = 32
-height = 32
-fill = 1
-fill_from = Vector2( 0.5, 0.5 )
-
 [node name="Bomb" type="KinematicBody2D"]
 z_index = 2
 script = ExtResource( 6 )
 ExplosionPrefab = ExtResource( 5 )
+
+[node name="HoldableComponent" type="Node" parent="."]
+script = ExtResource( 11 )
+Visuals = NodePath("../Visuals")
+Shadow = NodePath("../Shadow")
+
+[node name="InteractableComponent" type="Node" parent="."]
+script = ExtResource( 10 )
+
+[node name="Area2DComponent" type="Area2D" parent="."]
+script = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2DComponent"]
+shape = SubResource( 3 )
+
+[node name="PromptPos" type="Position2D" parent="."]
+position = Vector2( -33, -43 )
+
+[node name="SolidCollider" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="InstantDetonateDetector" type="Area2D" parent="."]
+script = ExtResource( 9 )
+GroupsToDetect = PoolStringArray( "DetonatesBombs" )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InstantDetonateDetector"]
+shape = SubResource( 12 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
@@ -276,48 +304,6 @@ anims/BigShortPulse = SubResource( 7 )
 anims/RESET = SubResource( 6 )
 anims/SmallLongPulse = SubResource( 5 )
 anims/SmallShortPulse = SubResource( 8 )
-
-[node name="TickSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 7 )
-pitch_scale = 2.0
-bus = "Sound"
-
-[node name="FuseHissSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 8 )
-bus = "Sound"
-
-[node name="FuseParticles" type="Particles2D" parent="."]
-material = SubResource( 10 )
-position = Vector2( 0, -32 )
-emitting = false
-amount = 20
-local_coords = false
-process_material = SubResource( 11 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
-
-[node name="InstantDetonateDetector" type="Area2D" parent="."]
-script = ExtResource( 9 )
-GroupsToDetect = PoolStringArray( "DetonatesBombs" )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InstantDetonateDetector"]
-shape = SubResource( 12 )
-
-[node name="HoldableParent" type="Area2D" parent="."]
-script = ExtResource( 3 )
-PromptText = "Pick up"
-PromptPositionPath = NodePath("PromptPos")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HoldableParent"]
-shape = SubResource( 3 )
-
-[node name="PromptPos" type="Position2D" parent="HoldableParent"]
-position = Vector2( -33, -43 )
-
-[node name="ThrowableParentKinematic" type="Node" parent="."]
-script = ExtResource( 4 )
-Visuals = NodePath("../Visuals")
 
 [node name="Shadow" type="Sprite" parent="."]
 texture = SubResource( 2 )
@@ -335,9 +321,23 @@ scale = Vector2( 0.159999, 0.0799972 )
 color = Color( 0.521569, 0.521569, 0.521569, 1 )
 polygon = PoolVector2Array( -32, -32, 32, -32, 32, 32, -32, 32 )
 
+[node name="FuseParticles" type="Particles2D" parent="."]
+material = SubResource( 10 )
+position = Vector2( 0, -32 )
+emitting = false
+amount = 20
+local_coords = false
+process_material = SubResource( 11 )
+
+[node name="TickSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+pitch_scale = 2.0
+bus = "Sound"
+
+[node name="FuseHissSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+bus = "Sound"
+
+[connection signal="HitWall" from="HoldableComponent" to="." method="Detonate"]
+[connection signal="PickedUp" from="HoldableComponent" to="." method="LightFuse"]
 [connection signal="GroupAreaEnteredNoParams" from="InstantDetonateDetector" to="." method="OnHitInstantDetonateTrigger" flags=3]
-[connection signal="PickedUp" from="HoldableParent" to="." method="LightFuse"]
-[connection signal="PickedUp" from="HoldableParent" to="CollisionShape2D" method="set_disabled" binds= [ true ]]
-[connection signal="Released" from="HoldableParent" to="CollisionShape2D" method="set_disabled" binds= [ false ]]
-[connection signal="Thrown" from="HoldableParent" to="ThrowableParentKinematic" method="OnThrown"]
-[connection signal="HitWall" from="ThrowableParentKinematic" to="." method="Detonate"]

@@ -2,7 +2,8 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class RotateParentTowardPoint : Node
+    [CustomNode]
+    public class RotateTowardPointComponent : BaseComponent<Node2D>
     {
         [Export] public NodePath TargetPoint;
         [Export] public float OffsetDegrees;
@@ -10,12 +11,11 @@ namespace RandomDungeons
         public override void _Process(float delta)
         {
             var targetNode = GetNode<Node2D>(TargetPoint);
-            var parent = GetParent<Node2D>();
 
-            var angle = parent.GlobalPosition.AngleToPoint(targetNode.GlobalPosition);
+            var angle = Entity.GlobalPosition.AngleToPoint(targetNode.GlobalPosition);
             angle += Mathf.Deg2Rad(OffsetDegrees);
 
-            parent.GlobalRotation = angle;
+            Entity.GlobalRotation = angle;
         }
     }
 }

@@ -3,7 +3,7 @@
 [ext_resource path="res://Scripts/DungeonRooms/SimpleDungeonRoom.cs" type="Script" id=1]
 [ext_resource path="res://DoorPrefabs.tres" type="Resource" id=2]
 [ext_resource path="res://Scripts/Elements/RoomEntrance.cs" type="Script" id=3]
-[ext_resource path="res://Scripts/Components/LingeringAudioStreamPlayer.cs" type="Script" id=4]
+[ext_resource path="res://Scripts/MiscNodes/LingeringAudioStreamPlayer.cs" type="Script" id=4]
 [ext_resource path="res://Audio/SFX/ChallengeComplete.ogg" type="AudioStream" id=5]
 
 [node name="EmptyRoom" type="Node2D"]

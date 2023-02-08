@@ -1,20 +1,19 @@
-[gd_scene load_steps=55 format=2]
+[gd_scene load_steps=58 format=2]
 
 [ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=1]
 [ext_resource path="res://Sprites/OutlinedCircle.svg" type="Texture" id=2]
-[ext_resource path="res://Scripts/Components/LingeringAudioStreamPlayer.cs" type="Script" id=3]
-[ext_resource path="res://Scripts/Components/HurtBox.cs" type="Script" id=4]
-[ext_resource path="res://Scripts/Components/HurtFlasher.cs" type="Script" id=5]
+[ext_resource path="res://Scripts/MiscNodes/LingeringAudioStreamPlayer.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/MiscNodes/HurtBox.cs" type="Script" id=4]
+[ext_resource path="res://Scripts/Components/HurtFlasherComponent.cs" type="Script" id=5]
 [ext_resource path="res://Scenes/Prefabs/Elements/VictoryChest.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/Bomb.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/Prefabs/UI/Widgets/BossHealthBar.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/Fireball.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Scenes/Components/Circle2D.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/Renderers/Circle2D.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/SpawningSpell.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Scripts/Components/LineTrail2D.cs" type="Script" id=12]
+[ext_resource path="res://Scripts/Renderers/LineTrail2D.cs" type="Script" id=12]
 [ext_resource path="res://Scripts/Bosses/Bombella.cs" type="Script" id=13]
-[ext_resource path="res://Scripts/Enemies/EnemyBody.cs" type="Script" id=14]
-[ext_resource path="res://Scripts/Components/MusicServiceAccessor.cs" type="Script" id=15]
+[ext_resource path="res://Scripts/MiscNodes/MusicServiceAccessor.cs" type="Script" id=15]
 [ext_resource path="res://Audio/SFX/BossPaperTear.ogg" type="AudioStream" id=16]
 [ext_resource path="res://Audio/Music/BossVictory.tres" type="Resource" id=17]
 [ext_resource path="res://Audio/Music/BossIntro.tres" type="Resource" id=18]
@@ -26,6 +25,13 @@
 [ext_resource path="res://Audio/SFX/SwordDamageOwWithSlime.wav" type="AudioStream" id=24]
 [ext_resource path="res://Audio/SFX/FireBurning.wav" type="AudioStream" id=25]
 [ext_resource path="res://Fonts/The Wild Breath of Zelda.otf" type="DynamicFontData" id=26]
+[ext_resource path="res://Scripts/Components/HealthPointsComponent.cs" type="Script" id=27]
+[ext_resource path="res://Scripts/Components/EnemyComponent.cs" type="Script" id=28]
+[ext_resource path="res://Scripts/Components/KnockbackableVelocityComponent.cs" type="Script" id=29]
+[ext_resource path="res://Scripts/Components/Area2DComponent.cs" type="Script" id=30]
+
+[sub_resource type="CircleShape2D" id=11]
+radius = 32.0
 
 [sub_resource type="DynamicFont" id=33]
 size = 100
@@ -2310,9 +2316,6 @@ radius = 39.63
 [sub_resource type="CircleShape2D" id=10]
 radius = 32.0
 
-[sub_resource type="CircleShape2D" id=11]
-radius = 32.0
-
 [sub_resource type="GradientTexture2D" id=2]
 gradient = ExtResource( 1 )
 fill = 1
@@ -2360,9 +2363,6 @@ color_ramp = SubResource( 27 )
 
 [node name="Bombella" type="KinematicBody2D"]
 scale = Vector2( 1.75, 1.75 )
-script = ExtResource( 14 )
-MaxHealth = 5
-DiesPermanently = true
 
 [node name="AI" type="Node" parent="."]
 script = ExtResource( 13 )
@@ -2371,10 +2371,28 @@ SpawningSpellPrefab = ExtResource( 11 )
 BombPrefab = ExtResource( 7 )
 FireballPrefab = ExtResource( 9 )
 
-[node name="HurtFlasher" type="Node" parent="."]
-unique_name_in_owner = true
+[node name="EnemyComponent" type="Node" parent="."]
+script = ExtResource( 28 )
+DiesPermanently = true
+
+[node name="HealthPointsComponent" type="Node" parent="."]
+script = ExtResource( 27 )
+MaxHealth = 5
+
+[node name="HurtFlasherComponent" type="Node" parent="."]
 script = ExtResource( 5 )
-VisualsPath = NodePath("../Visuals")
+
+[node name="KnockbackableVelocityComponent" type="Node" parent="."]
+script = ExtResource( 29 )
+
+[node name="HurtBox" type="Area2D" parent="."]
+unique_name_in_owner = true
+visible = false
+script = ExtResource( 30 )
+
+[node name="HurtBoxShape" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource( 11 )
+disabled = true
 
 [node name="MusicServiceAccessor" type="Node" parent="."]
 script = ExtResource( 15 )
@@ -2417,7 +2435,7 @@ text = "Bombella"
 align = 1
 
 [node name="BossHealthBar" parent="CanvasLayer" instance=ExtResource( 8 )]
-thing_with_health = NodePath("../..")
+thing_with_health = NodePath("../../HealthPointsComponent")
 
 [node name="AttackPatterns" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
@@ -2460,15 +2478,6 @@ shape = SubResource( 18 )
 [node name="KinematicBodyCollider" type="CollisionShape2D" parent="."]
 visible = false
 shape = SubResource( 10 )
-disabled = true
-
-[node name="HurtBox" type="Area2D" parent="."]
-unique_name_in_owner = true
-visible = false
-script = ExtResource( 4 )
-
-[node name="HurtBoxShape" type="CollisionShape2D" parent="HurtBox"]
-shape = SubResource( 11 )
 disabled = true
 
 [node name="Visuals" type="Node2D" parent="."]
@@ -2701,9 +2710,8 @@ amount = 20
 local_coords = false
 process_material = SubResource( 30 )
 
-[connection signal="Dead" from="." to="AI" method="OnDead"]
-[connection signal="Respawning" from="." to="AI" method="OnRespawning"]
-[connection signal="TookDamage" from="ShieldHurtBox" to="AI" method="OnShieldTookDamage"]
-[connection signal="TookDamage" from="HurtBox" to="." method="OnTookDamage"]
-[connection signal="TookDamage" from="HurtBox" to="AI" method="OnTookDamage" flags=3]
-[connection signal="TookDamageNoParams" from="HurtBox" to="TookDamageSound" method="play"]
+[connection signal="Dead" from="EnemyComponent" to="AI" method="OnDead"]
+[connection signal="Respawning" from="EnemyComponent" to="AI" method="OnRespawning"]
+[connection signal="TookDamageNoParams" from="HealthPointsComponent" to="AI" method="OnTookDamage" flags=3]
+[connection signal="TookDamageNoParams" from="HealthPointsComponent" to="TookDamageSound" method="play"]
+[connection signal="TookDamage" from="ShieldHurtBox" to="AI" method="OnShieldTookDamage" flags=3]

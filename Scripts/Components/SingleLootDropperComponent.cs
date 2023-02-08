@@ -3,7 +3,8 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class SingleLootDropper : Node2D, ILootDropper
+    [CustomNode]
+    public class SingleLootDropperComponent : BaseComponent<Node2D>, ILootDropperComponent
     {
         [Export] public PackedScene LootPrefab;
 
@@ -23,7 +24,7 @@ namespace RandomDungeons
 
             var lootItem = LootPrefab.Instance<Node2D>();
             this.GetRoom().AddChild(lootItem);
-            lootItem.GlobalPosition = GlobalPosition;
+            lootItem.GlobalPosition = Entity.GlobalPosition;
         }
     }
 }

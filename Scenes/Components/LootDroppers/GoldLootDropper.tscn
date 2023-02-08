@@ -1,8 +1,0 @@
-[gd_scene load_steps=3 format=2]
-
-[ext_resource path="res://Scripts/Components/LootDroppers/GoldLootDropper.cs" type="Script" id=1]
-[ext_resource path="res://Scenes/Prefabs/Elements/ItemPickups/GoldCoinPickup.tscn" type="PackedScene" id=2]
-
-[node name="GoldLootDropper" type="Position2D"]
-script = ExtResource( 1 )
-CoinPrefab = ExtResource( 2 )

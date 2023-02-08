@@ -4,28 +4,24 @@ using Godot;
 
 namespace RandomDungeons
 {
-    public class Tilemancer : Node2D, IOnRoomTransitionFinished, IRespawnable, IChallenge
+    public class Tilemancer : BaseComponent<Node2D>, IOnRoomTransitionFinished, IChallenge
     {
         [Export] public PackedScene VictoryChestPrefab;
         [Export] public PackedScene TilePrefab;
-        [Export] public int MaxHealth = 9;
         [Export] public float ArenaHeight = 32 * 16;
         [Export] public float ArenaWidth = 32 * 16;
         [Export] public float TileThrowSpeed = 32 * 19;
         [Export] public float JumpProgress;
 
-        [Export] public int Health;
-
         private Player _player;
         private Vector2 _jumpStartPos;
-        private HurtFlasher _hurtFlasher => GetNode<HurtFlasher>("%HurtFlasher");
         private AnimationPlayer _mainAnimationPlayer => GetNode<AnimationPlayer>("%MainAnimationPlayer");
         private AnimationPlayer _individualAnimations => GetNode<AnimationPlayer>("%IndividualAnimations");
 
-        private bool _spawnPosKnown = false;
-        private Vector2 _spawnPos;
+        private EnemyComponent _enemy => this.GetComponent<EnemyComponent>();
+        private HealthPointsComponent _hp => this.GetComponent<HealthPointsComponent>();
+
         private Queue<TilemancerTile> _tilesToThrow = new Queue<TilemancerTile>();
-        private bool _isDead = false;
         private bool _deathAnimationFinished = false;
 
         [Signal] private delegate void ShatterAllTilesSignal();
@@ -33,27 +29,15 @@ namespace RandomDungeons
 
         bool IChallenge.IsSolved() => _deathAnimationFinished;
 
-        public override void _Ready()
+        public override void _EntityReady()
         {
-            _spawnPos = Position;
-            _spawnPosKnown = true;
-
             _player = GetTree().FindPlayer();
-
             Respawn();
         }
 
         public void Respawn()
         {
-            if (_isDead)
-                return;
-
-            Health = MaxHealth;
-
-            if (_spawnPosKnown)
-                Position = _spawnPos;
-
-            _jumpStartPos = GlobalPosition;
+            _jumpStartPos = Entity.GlobalPosition;
 
             _mainAnimationPlayer.Reset();
             _individualAnimations.Reset();
@@ -68,7 +52,7 @@ namespace RandomDungeons
 
         public void OnRoomTransitionFinished()
         {
-            if (!_isDead)
+            if (!_enemy.IsDead)
             {
                 _mainAnimationPlayer.PlaybackSpeed = 1;
                 _mainAnimationPlayer.ResetAndPlay("Intro");
@@ -87,21 +71,11 @@ namespace RandomDungeons
             // Home in on the player during the jump animation
             if (JumpProgress < 1)
             {
-                GlobalPosition = _jumpStartPos.LinearInterpolate(
+                Entity.GlobalPosition = _jumpStartPos.LinearInterpolate(
                     _player.GlobalPosition,
                     Mathf.SmoothStep(0, 1, JumpProgress)
                 );
             }
-
-            // Die when out of health
-            if (Health <= 0 && !_isDead)
-                Die();
-        }
-
-        public void OnTookDamage(HitBox hitBox)
-        {
-            Health -= hitBox.Damage;
-            _hurtFlasher.Flash();
         }
 
         public void SummonTile()
@@ -131,6 +105,12 @@ namespace RandomDungeons
                 method: "queue_free",
                 flags: (int)(ConnectFlags.ReferenceCounted | ConnectFlags.Oneshot)
             );
+
+            // Make sure we can't be hurt by our own tiles
+            foreach (var hitbox in tile.AllDescendantsOfType<HitBox>())
+            {
+                hitbox.Ignore(_hp);
+            }
         }
 
         public void ThrowTile()
@@ -150,7 +130,7 @@ namespace RandomDungeons
 
         public void TargetPlayerForJump()
         {
-            _jumpStartPos = GlobalPosition;
+            _jumpStartPos = Entity.GlobalPosition;
         }
 
         private void DestoryAllTiles()
@@ -176,9 +156,7 @@ namespace RandomDungeons
 
         private void Die()
         {
-            _isDead = true;
             _mainAnimationPlayer.ResetAndPlay("Death");
-
             ShatterAllTiles();
         }
     }

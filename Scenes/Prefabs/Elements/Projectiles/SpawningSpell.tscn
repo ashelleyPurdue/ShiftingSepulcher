@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Scripts/Projectiles/SpawningSpell.cs" type="Script" id=1]
 [ext_resource path="res://Audio/SFX/BombellaProjectileSpawn.wav" type="AudioStream" id=2]
-[ext_resource path="res://Scripts/Components/LingeringAudioStreamPlayer.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/MiscNodes/LingeringAudioStreamPlayer.cs" type="Script" id=3]
 [ext_resource path="res://Audio/SFX/Poof.wav" type="AudioStream" id=4]
 
 [sub_resource type="Gradient" id=1]

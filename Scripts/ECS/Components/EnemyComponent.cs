@@ -78,6 +78,10 @@ namespace RandomDungeons
             if (_healthPoints.Health <= 0 && !IsDead)
             {
                 IsDead = true;
+
+                foreach (var lootDropper in this.GetComponents<ILootDropperComponent>())
+                    lootDropper.DropLoot();
+
                 EmitSignal(nameof(Dead));
             }
         }

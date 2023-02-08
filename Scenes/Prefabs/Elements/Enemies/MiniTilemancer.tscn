@@ -1,11 +1,11 @@
 [gd_scene load_steps=15 format=2]
 
-[ext_resource path="res://Scripts/Components/HitBox.cs" type="Script" id=1]
-[ext_resource path="res://Scripts/ECS/Components/Area2DComponent.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/MiscNodes/HitBox.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Components/Area2DComponent.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/Enemies/MiniTilemancer.cs" type="Script" id=3]
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/TilemancerTile.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Audio/SFX/SwordDamageOwWithSlime.wav" type="AudioStream" id=9]
-[ext_resource path="res://Scripts/Components/LingeringAudioStreamPlayer.cs" type="Script" id=10]
+[ext_resource path="res://Scripts/MiscNodes/LingeringAudioStreamPlayer.cs" type="Script" id=10]
 [ext_resource path="res://Audio/SFX/EnemyDeath.wav" type="AudioStream" id=11]
 [ext_resource path="res://Scenes/ComponentCollections/StandardEnemyComponents.tscn" type="PackedScene" id=16]
 

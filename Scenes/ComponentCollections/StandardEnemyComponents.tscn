@@ -1,12 +1,12 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://Scripts/ECS/Components/HealthPointsComponent.cs" type="Script" id=1]
-[ext_resource path="res://Scripts/ECS/Components/HurtFlasherComponent.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/Components/HealthPointsComponent.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Components/HurtFlasherComponent.cs" type="Script" id=2]
 [ext_resource path="res://Audio/SFX/SwordDamageOwWithSlime.wav" type="AudioStream" id=3]
 [ext_resource path="res://Scenes/ComponentCollections/StandardLootDroppers.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scripts/ECS/Components/EnemyComponent.cs" type="Script" id=5]
-[ext_resource path="res://Scripts/ECS/Components/KnockbackableVelocityComponent.cs" type="Script" id=6]
-[ext_resource path="res://Scripts/ECS/Components/ComponentCollection.cs" type="Script" id=7]
+[ext_resource path="res://Scripts/Components/EnemyComponent.cs" type="Script" id=5]
+[ext_resource path="res://Scripts/Components/KnockbackableVelocityComponent.cs" type="Script" id=6]
+[ext_resource path="res://Scripts/Components/ComponentCollection.cs" type="Script" id=7]
 
 [node name="StandardEnemyComponents" type="Node"]
 script = ExtResource( 7 )

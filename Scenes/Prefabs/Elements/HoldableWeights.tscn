@@ -1,9 +1,9 @@
 [gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://Scripts/ECS/Components/InteractableComponent.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Components/InteractableComponent.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Elements/HoldableWeights.cs" type="Script" id=2]
-[ext_resource path="res://Scripts/ECS/Components/HoldableComponent.cs" type="Script" id=3]
-[ext_resource path="res://Scripts/ECS/Components/Area2DComponent.cs" type="Script" id=4]
+[ext_resource path="res://Scripts/Components/HoldableComponent.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/Components/Area2DComponent.cs" type="Script" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 32.0

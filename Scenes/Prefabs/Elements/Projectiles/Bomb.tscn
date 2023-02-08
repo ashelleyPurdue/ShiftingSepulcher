@@ -2,14 +2,14 @@
 
 [ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=1]
 [ext_resource path="res://Scenes/Renderers/Circle2D.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scripts/ECS/Components/Area2DComponent.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/Components/Area2DComponent.cs" type="Script" id=3]
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/Explosion.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scripts/Projectiles/Bomb.cs" type="Script" id=6]
 [ext_resource path="res://Audio/SFX/SingleBombTick.wav" type="AudioStream" id=7]
 [ext_resource path="res://Audio/SFX/BombFuseHiss.ogg" type="AudioStream" id=8]
-[ext_resource path="res://Scripts/Components/GroupDetectorArea2D.cs" type="Script" id=9]
-[ext_resource path="res://Scripts/ECS/Components/InteractableComponent.cs" type="Script" id=10]
-[ext_resource path="res://Scripts/ECS/Components/HoldableComponent.cs" type="Script" id=11]
+[ext_resource path="res://Scripts/MiscNodes/GroupDetectorArea2D.cs" type="Script" id=9]
+[ext_resource path="res://Scripts/Components/InteractableComponent.cs" type="Script" id=10]
+[ext_resource path="res://Scripts/Components/HoldableComponent.cs" type="Script" id=11]
 
 [sub_resource type="CircleShape2D" id=3]
 radius = 32.0

@@ -1,14 +1,14 @@
 [gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://Scripts/ECS/Components/Area2DComponent.cs" type="Script" id=1]
-[ext_resource path="res://Scripts/ECS/Components/HealthPointsComponent.cs" type="Script" id=2]
-[ext_resource path="res://Scripts/Components/HitBox.cs" type="Script" id=4]
+[ext_resource path="res://Scripts/Components/Area2DComponent.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Components/HealthPointsComponent.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/MiscNodes/HitBox.cs" type="Script" id=4]
 [ext_resource path="res://Scripts/Renderers/Circle2D.cs" type="Script" id=5]
 [ext_resource path="res://Audio/SFX/BottleBreak.wav" type="AudioStream" id=7]
-[ext_resource path="res://Scripts/Components/LingeringAudioStreamPlayer.cs" type="Script" id=8]
-[ext_resource path="res://Scripts/ECS/Components/EnemyComponent.cs" type="Script" id=9]
-[ext_resource path="res://Scripts/ECS/Components/HoldableComponent.cs" type="Script" id=11]
-[ext_resource path="res://Scripts/ECS/Components/InteractableComponent.cs" type="Script" id=12]
+[ext_resource path="res://Scripts/MiscNodes/LingeringAudioStreamPlayer.cs" type="Script" id=8]
+[ext_resource path="res://Scripts/Components/EnemyComponent.cs" type="Script" id=9]
+[ext_resource path="res://Scripts/Components/HoldableComponent.cs" type="Script" id=11]
+[ext_resource path="res://Scripts/Components/InteractableComponent.cs" type="Script" id=12]
 
 [sub_resource type="CircleShape2D" id=6]
 radius = 16.0

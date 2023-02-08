@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Scripts/Elements/DoorLock.cs" type="Script" id=1]
 [ext_resource path="res://Audio/SFX/DoorUnlock.wav" type="AudioStream" id=2]
-[ext_resource path="res://Scripts/Components/LingeringAudioStreamPlayer.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/MiscNodes/LingeringAudioStreamPlayer.cs" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 64, 16 )

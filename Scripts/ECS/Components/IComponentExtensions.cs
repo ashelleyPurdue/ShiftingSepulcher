@@ -1,9 +1,30 @@
+using System.Collections.Generic;
 using Godot;
 
 namespace RandomDungeons
 {
     public static class IComponentExtensions
     {
+        /// <summary>
+        /// Yields all components on the given entity.
+        /// If called on an <see cref="IComponent"/> instead of an entity, it
+        /// will yield all _sibling_ components, including itself.
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public static IEnumerable<IComponent> EnumerateComponents(this Node entity)
+        {
+            // If this node is a component, search for siblings
+            if (entity is IComponent nonEntity)
+                entity = nonEntity.Entity;
+
+            foreach (var child in entity.EnumerateChildren())
+            {
+                if (child is IComponent c)
+                    yield return c;
+            }
+        }
+
         /// <summary>
         /// Returns the first component of the given type, or null
         /// if no of that type exists.
@@ -19,7 +40,7 @@ namespace RandomDungeons
             if (entity is IComponent component)
                 return component.Entity.GetComponent<TComponent>();
 
-            foreach (var child in entity.EnumerateChildren())
+            foreach (var child in entity.EnumerateComponents())
             {
                 if (child is TComponent c)
                     return c;

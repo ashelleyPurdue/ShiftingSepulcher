@@ -1,20 +1,12 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scripts/ECS/Components/Area2DComponent.cs" type="Script" id=1]
-[ext_resource path="res://Scenes/Prefabs/Elements/ItemPickups/RecoveryHeart.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/ComponentCollections/StandardEnemyComponents.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/Components/HitBox.cs" type="Script" id=3]
-[ext_resource path="res://Scripts/ECS/Components/SingleLootDropperComponent.cs" type="Script" id=4]
 [ext_resource path="res://Scripts/Enemies/Zombie.cs" type="Script" id=5]
-[ext_resource path="res://Scripts/ECS/Components/GoldLootDropperComponent.cs" type="Script" id=6]
-[ext_resource path="res://Audio/SFX/SwordDamageOwWithSlime.wav" type="AudioStream" id=8]
 [ext_resource path="res://Scripts/Components/LingeringAudioStreamPlayer.cs" type="Script" id=9]
 [ext_resource path="res://Audio/SFX/EnemyDeath.wav" type="AudioStream" id=10]
 [ext_resource path="res://Scenes/Models/ZombieModel.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Scripts/ECS/Components/KnockbackableVelocityComponent.cs" type="Script" id=12]
-[ext_resource path="res://Scripts/ECS/Components/EnemyComponent.cs" type="Script" id=13]
-[ext_resource path="res://Scripts/ECS/Components/HealthPointsComponent.cs" type="Script" id=14]
-[ext_resource path="res://Scripts/ECS/Components/HurtFlasherComponent.cs" type="Script" id=15]
-[ext_resource path="res://Scenes/Prefabs/Elements/ItemPickups/GoldCoinPickup.tscn" type="PackedScene" id=16]
 
 [sub_resource type="CircleShape2D" id=9]
 radius = 14.0
@@ -292,27 +284,10 @@ collision_mask = 3
 [node name="AI" type="Node" parent="."]
 script = ExtResource( 5 )
 
-[node name="EnemyComponent" type="Node" parent="."]
-script = ExtResource( 13 )
+[node name="StandardEnemyComponents" parent="." instance=ExtResource( 2 )]
 
-[node name="HealthPointsComponent" type="Node" parent="."]
-script = ExtResource( 14 )
+[node name="HealthPointsComponent" parent="StandardEnemyComponents" index="1"]
 MaxHealth = 2
-
-[node name="HurtFlasherComponent" type="Node" parent="."]
-script = ExtResource( 15 )
-
-[node name="KnockbackableVelocityComponent" type="Node" parent="."]
-script = ExtResource( 12 )
-
-[node name="RecoveryHeartLootDropperComponent" type="Node" parent="."]
-script = ExtResource( 4 )
-LootPrefab = ExtResource( 2 )
-ActivationChance = 0.25
-
-[node name="GoldLootDropperComponent" type="Node" parent="."]
-script = ExtResource( 6 )
-CoinPrefab = ExtResource( 16 )
 
 [node name="HurtBox" type="Area2D" parent="."]
 script = ExtResource( 1 )
@@ -338,7 +313,7 @@ shape = SubResource( 7 )
 
 [node name="HitBox" type="Area2D" parent="."]
 script = ExtResource( 3 )
-IgnoredHealthPoints = [ NodePath("../HealthPointsComponent") ]
+IgnoredHealthPoints = [ NodePath("../StandardEnemyComponents/HealthPointsComponent") ]
 
 [node name="HitBoxShape" type="CollisionShape2D" parent="HitBox"]
 shape = SubResource( 10 )
@@ -348,17 +323,12 @@ unique_name_in_owner = true
 
 [node name="ZombieModel" parent="Visuals" instance=ExtResource( 11 )]
 
-[node name="TookDamageSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 8 )
-pitch_scale = 0.89
-bus = "Sound"
-
 [node name="DeathSound" type="Node" parent="."]
 script = ExtResource( 9 )
 Sound = ExtResource( 10 )
 VolumeLinear = 2.0
 
-[connection signal="TookDamageNoParams" from="HealthPointsComponent" to="TookDamageSound" method="play"]
 [connection signal="body_entered" from="VisionCircle" to="AI" method="OnVisionCircleBodyEntered" flags=3]
 
+[editable path="StandardEnemyComponents"]
 [editable path="Visuals/ZombieModel"]

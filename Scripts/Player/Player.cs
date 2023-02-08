@@ -139,8 +139,6 @@ namespace RandomDungeons
             if (_isDead)
                 return;
 
-            HealthPoints.Health -= hitBox.Damage;
-
             _velocity = hitBox.GetKnockbackVelocity(this, KnockbackFriction);
             _knockbackTimer = KnockbackDuration(_velocity);
 

@@ -27,7 +27,7 @@ namespace RandomDungeons
 
         /// <summary>
         /// Returns the first component of the given type, or null
-        /// if no of that type exists.
+        /// if none of that type exists.
         ///
         /// If this node is an <see cref="IComponent"/>, it will instead search
         /// for _sibling_ components.
@@ -47,6 +47,30 @@ namespace RandomDungeons
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Yields all components of the given type, or null
+        /// if none of that type exists.
+        ///
+        /// If this node is an <see cref="IComponent"/>, it will instead search
+        /// for _sibling_ components.
+        ///
+        /// Use this instead of LINQ's ".Where()" method to avoid allocations.
+        /// </summary>
+        /// <typeparam name="TComponent"></typeparam>
+        /// <returns></returns>
+        public static IEnumerable<TComponent> GetComponents<TComponent>(this Node entity)
+            where TComponent : class, IComponent
+        {
+            if (entity is IComponent nonEntity)
+                entity = nonEntity.Entity;
+
+            foreach (var child in entity.EnumerateComponents())
+            {
+                if (child is TComponent c)
+                    yield return c;
+            }
         }
 
         /// <summary>

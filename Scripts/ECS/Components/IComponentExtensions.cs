@@ -14,14 +14,33 @@ namespace RandomDungeons
         /// <returns></returns>
         public static IEnumerable<IComponent> EnumerateComponents(this Node entity)
         {
-            // If this node is a component, search for siblings
-            if (entity is IComponent nonEntity)
-                entity = nonEntity.Entity;
+            // If this node isn't _actually_ an entity(IE: it's a component
+            // or a collection of components), traverse the tree upwards until
+            // we find the _actual_ entity.
+            if (entity is IComponent c)
+                entity = c.Entity;
 
-            foreach (var child in entity.EnumerateChildren())
+            while (entity is ComponentCollection)
+                entity = entity.GetParent();
+
+            // Search all children for components.
+            // If we encounter a ComponentCollections, recurse down into it.
+            return Recursive(entity);
+
+            IEnumerable<IComponent> Recursive(Node parent)
             {
-                if (child is IComponent c)
-                    yield return c;
+                foreach (Node child in parent.EnumerateChildren())
+                {
+                    if (child is ComponentCollection collection)
+                    {
+                        foreach (var grandchild in Recursive(collection))
+                            yield return grandchild;
+                    }
+                    else if (child is IComponent component)
+                    {
+                        yield return component;
+                    }
+                }
             }
         }
 
@@ -109,6 +128,17 @@ namespace RandomDungeons
 
             c = entity.GetComponent<TComponent>();
             return c != null;
+        }
+
+        public static TEntity GetEntity<TEntity>(this IComponent<TEntity> component)
+            where TEntity : Node
+        {
+            Node parent = component.Node.GetParent();
+
+            while (parent is ComponentCollection)
+                parent = parent.GetParent();
+
+            return (TEntity)parent;
         }
     }
 }

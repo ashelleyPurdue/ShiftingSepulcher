@@ -5,6 +5,7 @@ namespace RandomDungeons
     public interface IComponent
     {
         Node Entity {get;}
+        Node Node {get;}
 
         /// <summary>
         /// Called when this component's entity has received the <see cref="Node._Ready"/>

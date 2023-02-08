@@ -5,8 +5,10 @@ namespace RandomDungeons
     public abstract class BaseComponent<TEntityNode> : Node, IComponent<TEntityNode>
         where TEntityNode : Node
     {
-        public TEntityNode Entity => GetParent<TEntityNode>();
-        Node IComponent.Entity => GetParent();
+        public TEntityNode Entity => this.GetEntity();
+        Node IComponent.Entity => this.GetEntity();
+
+        Node IComponent.Node => this;
 
         public override sealed void _Ready()
         {

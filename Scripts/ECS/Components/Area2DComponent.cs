@@ -5,8 +5,10 @@ namespace RandomDungeons
     [CustomNode(parent:"Area2D", icon: "Area2D")]
     public class Area2DComponent : Area2D, IComponent<Node2D>
     {
-        public Node2D Entity => GetParent<Node2D>();
-        Node IComponent.Entity => GetParent();
+        public Node2D Entity => this.GetEntity();
+        Node IComponent.Entity => this.GetEntity();
+
+        Node IComponent.Node => this;
 
         public override sealed void _Ready()
         {

@@ -1,11 +1,13 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Scripts/Components/HitBox.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/ECS/Components/Area2DComponent.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/Enemies/MiniTilemancer.cs" type="Script" id=3]
+[ext_resource path="res://Scenes/Prefabs/Elements/ItemPickups/RecoveryHeart.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/TilemancerTile.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Scenes/Components/LootDroppers/RecoveryHeartDropper.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Scenes/Components/LootDroppers/GoldLootDropper.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scripts/ECS/Components/SingleLootDropperComponent.cs" type="Script" id=6]
+[ext_resource path="res://Scripts/ECS/Components/GoldLootDropperComponent.cs" type="Script" id=7]
+[ext_resource path="res://Scenes/Prefabs/Elements/ItemPickups/GoldCoinPickup.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Audio/SFX/SwordDamageOwWithSlime.wav" type="AudioStream" id=9]
 [ext_resource path="res://Scripts/Components/LingeringAudioStreamPlayer.cs" type="Script" id=10]
 [ext_resource path="res://Audio/SFX/EnemyDeath.wav" type="AudioStream" id=11]
@@ -223,15 +225,20 @@ script = ExtResource( 14 )
 [node name="KnockbackableVelocityComponent" type="Node" parent="."]
 script = ExtResource( 15 )
 
+[node name="RecoveryHeartLootDropperComponent" type="Node" parent="."]
+script = ExtResource( 6 )
+LootPrefab = ExtResource( 4 )
+ActivationChance = 0.25
+
+[node name="GoldLootDropperComponent" type="Node" parent="."]
+script = ExtResource( 7 )
+CoinPrefab = ExtResource( 8 )
+
 [node name="HurtBox" type="Area2D" parent="."]
 script = ExtResource( 2 )
 
 [node name="HurtBoxShape" type="CollisionShape2D" parent="HurtBox"]
 shape = SubResource( 3 )
-
-[node name="RecoveryHeartDropper" parent="." instance=ExtResource( 7 )]
-
-[node name="GoldLootDropper" parent="." instance=ExtResource( 8 )]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
@@ -301,7 +308,5 @@ Sound = ExtResource( 11 )
 VolumeLinear = 2.0
 
 [connection signal="Dead" from="EnemyComponent" to="AI" method="OnDead"]
-[connection signal="Dead" from="EnemyComponent" to="RecoveryHeartDropper" method="DropLoot"]
-[connection signal="Dead" from="EnemyComponent" to="GoldLootDropper" method="DropLoot"]
 [connection signal="Respawning" from="EnemyComponent" to="AI" method="OnRespawning"]
 [connection signal="TookDamageNoParams" from="HealthPointsComponent" to="TookDamageSound" method="play"]

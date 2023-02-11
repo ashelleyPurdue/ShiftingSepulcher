@@ -73,6 +73,10 @@ namespace ShiftingSepulcher
 
             void GenerateOptionalPaths()
             {
+                DungeonTreeRoom[] criticalPathRooms = root
+                    .AllDescendants()
+                    .ToArray();
+
                 DungeonTreeRoom prevRunRoot = root;
                 for (int runNumber = 0; runNumber < genParams.OptionalRuns; runNumber++)
                 {
@@ -83,8 +87,9 @@ namespace ShiftingSepulcher
                     // TODO: Hide treasure in the final room of the run.
 
                     // Pick a random room to start this run in.
-                    var availableRooms = root
-                        .AllDescendants()
+                    // Only choose rooms from the critical path, to prevent
+                    // long chains of optional rooms that don't lead to a key
+                    var availableRooms = criticalPathRooms
                         .Where(r => r.ChildDoors.Count < 3);
                     var runStartRoom = rng.PickFrom(availableRooms);
 

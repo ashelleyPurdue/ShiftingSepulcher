@@ -84,7 +84,8 @@ namespace ShiftingSepulcher
             }
 
             // Scramble the puzzle to hide the solution
-            foreach (var cellPos in puzzle.AllCellsReachableFrom(source))
+            var allCells = puzzle.AllCellsReachableFrom(source).ToArray();
+            foreach (var cellPos in allCells)
             {
                 var cell = puzzle.GetCell(cellPos);
 

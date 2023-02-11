@@ -27,8 +27,17 @@ namespace ShiftingSepulcher
                 DungeonTreeRoom prevRunRoot = root;
                 for (int runNumber = 0; runNumber < genParams.NumRuns; runNumber++)
                 {
+                    // Generate a run
                     int runLength = rng.Next(genParams.MinRunLength, genParams.MaxRunLength);
-                    var runRoot = GenerateRun(runNumber, runLength);
+                    var runRoot = GenerateRun(runLength);
+
+                    // Hide a key in the last room of the run
+                    var runEndRoom = runRoot
+                        .AllDescendants()
+                        .Last();
+
+                    runEndRoom.KeyId = runNumber + 1;
+                    runEndRoom.ChallengeType = ChallengeType.Key;
 
                     // Pick a random room to start this run in.
                     // Don't pick the room where we hid this run's key, because that
@@ -61,7 +70,7 @@ namespace ShiftingSepulcher
                 bossRoom.KeyId = 0;
             }
 
-            DungeonTreeRoom GenerateRun(int runNumber, int runLength)
+            DungeonTreeRoom GenerateRun(int runLength)
             {
                 DungeonTreeRoom runRoot = null;
                 DungeonTreeRoom prevRoom = null;
@@ -87,10 +96,6 @@ namespace ShiftingSepulcher
 
                     prevRoom = room;
                 }
-
-                // Place a key in the last room of the run
-                prevRoom.KeyId = runNumber + 1;
-                prevRoom.ChallengeType = ChallengeType.Key;
 
                 return runRoot;
             }

@@ -10,10 +10,7 @@ namespace ShiftingSepulcher
         public void Regenerate()
         {
             var tree = DungeonTreeGenerator.GenerateUsingRuns(
-                seed: _seedInput.ParseSeedTextbox(),
-                minRunLength: 3,
-                maxRunLength: 5,
-                numRuns: 6
+                _seedInput.ParseSeedTextbox()
             );
             var layout = DungeonLayoutBuilder.LayoutFromTree(tree);
 

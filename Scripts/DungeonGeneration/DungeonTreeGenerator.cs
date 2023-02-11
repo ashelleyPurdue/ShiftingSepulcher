@@ -7,19 +7,21 @@ namespace ShiftingSepulcher
     {
         public static DungeonTreeRoom GenerateUsingRuns(
             int seed,
-            int numRuns = 5,
-            int minRunLength = 1,
-            int maxRunLength = 3
+            DungeonGeneratorParams genParams = null
         )
         {
+            if (genParams == null)
+                genParams = new DungeonGeneratorParams();
+
             var rng = new Random(seed);
+
             DungeonTreeRoom root = new DungeonTreeRoom();
             root.ChallengeType = ChallengeType.None;
 
             DungeonTreeRoom prevRunRoot = root;
-            for (int runNumber = 0; runNumber < numRuns; runNumber++)
+            for (int runNumber = 0; runNumber < genParams.NumRuns; runNumber++)
             {
-                int runLength = rng.Next(minRunLength, maxRunLength);
+                int runLength = rng.Next(genParams.MinRunLength, genParams.MaxRunLength);
                 var runRoot = GenerateRun(runNumber, runLength);
 
                 // Pick a random room to start this run in.
@@ -64,9 +66,9 @@ namespace ShiftingSepulcher
                     var room = new DungeonTreeRoom();
                     room.RoomSeed = rng.Next();
                     room.ChallengeType = rng.PickFromWeighted(
-                        (ChallengeType.None, 1),
-                        (ChallengeType.Combat, 3),
-                        (ChallengeType.Puzzle, 2)
+                        (ChallengeType.None, genParams.FillerRoomWeight),
+                        (ChallengeType.Combat, genParams.CombatRoomWeight),
+                        (ChallengeType.Puzzle, genParams.PuzzleRoomWeight)
                     );
 
                     if (prevRoom == null)

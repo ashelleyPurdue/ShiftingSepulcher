@@ -79,12 +79,7 @@ namespace ShiftingSepulcher
         private DungeonTreeRoom GenerateTreeWithoutTemplate(int seed)
         {
             GD.Print("Generating a tree without using a template");
-            return DungeonTreeGenerator.GenerateUsingRuns(
-                seed: seed,
-                minRunLength: 3,
-                maxRunLength: 5,
-                numRuns: 6
-            );
+            return DungeonTreeGenerator.GenerateUsingRuns(seed);
         }
 
         private DungeonTreeRoom GenerateTreeUsingTemplate(Random rng)

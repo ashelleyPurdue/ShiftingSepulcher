@@ -28,9 +28,12 @@ namespace ShiftingSepulcher
             {
                 tree = DungeonTreeGenerator.GenerateUsingRuns(
                     seed,
-                    numRuns: 5,
-                    minRunLength: 5,
-                    maxRunLength: 5
+                    new DungeonGeneratorParams
+                    {
+                        NumRuns = 5,
+                        MinRunLength = 5,
+                        MaxRunLength = 5
+                    }
                 );
             }
             else

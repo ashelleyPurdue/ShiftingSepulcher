@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public class WarpTrigger : Area2D, IRoomEntrance
     {

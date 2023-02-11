@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     [CustomNode]
     public class HoldableComponent : BaseComponent<KinematicBody2D>

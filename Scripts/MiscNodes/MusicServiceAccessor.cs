@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     /// <summary>
     /// A wrapper around <see cref="MusicService"/> that can be accessed from

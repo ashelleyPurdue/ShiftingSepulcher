@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     /// <summary>
     /// Use this to play sound effects that continue playing (or "linger") even

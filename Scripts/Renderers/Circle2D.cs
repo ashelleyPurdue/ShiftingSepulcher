@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     [Tool]
     [CustomNode(parent: "Node2D", icon: "CircleShape2D")]

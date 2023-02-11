@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public static class IComponentExtensions
     {

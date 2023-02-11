@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     [CustomNode(parent: "Area2D", icon: "Area2D")]
     public class GroupDetectorArea2D : Area2D

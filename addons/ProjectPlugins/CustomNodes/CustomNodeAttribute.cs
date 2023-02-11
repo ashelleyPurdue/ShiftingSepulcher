@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public class CustomNodeAttribute : Attribute
     {

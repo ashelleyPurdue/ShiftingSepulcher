@@ -1,7 +1,7 @@
 using System.Linq;
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public class Player : KinematicBody2D
     {

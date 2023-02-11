@@ -1,6 +1,6 @@
 using System;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public class DungeonGenerationException : Exception
     {

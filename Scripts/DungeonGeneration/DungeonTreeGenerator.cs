@@ -19,13 +19,14 @@ namespace ShiftingSepulcher
             root.ChallengeType = ChallengeType.None;
 
             GenerateCriticalPath();
+            GenerateOptionalPaths();
 
             return root;
 
             void GenerateCriticalPath()
             {
                 DungeonTreeRoom prevRunRoot = root;
-                for (int runNumber = 0; runNumber < genParams.NumRuns; runNumber++)
+                for (int runNumber = 0; runNumber < genParams.CriticalPathRuns; runNumber++)
                 {
                     // Generate a run
                     int runLength = rng.Next(genParams.MinRunLength, genParams.MaxRunLength);
@@ -68,6 +69,28 @@ namespace ShiftingSepulcher
 
                 bossRoom.ChallengeType = ChallengeType.Boss;
                 bossRoom.KeyId = 0;
+            }
+
+            void GenerateOptionalPaths()
+            {
+                DungeonTreeRoom prevRunRoot = root;
+                for (int runNumber = 0; runNumber < genParams.OptionalRuns; runNumber++)
+                {
+                    // Generate a run
+                    int runLength = rng.Next(genParams.MinRunLength, genParams.MaxRunLength);
+                    var runRoot = GenerateRun(runLength);
+
+                    // TODO: Hide treasure in the final room of the run.
+
+                    // Pick a random room to start this run in.
+                    var availableRooms = root
+                        .AllDescendants()
+                        .Where(r => r.ChildDoors.Count < 3);
+                    var runStartRoom = rng.PickFrom(availableRooms);
+
+                    runStartRoom.AddChallengeDoor(runRoot);
+                    prevRunRoot = runRoot;
+                }
             }
 
             DungeonTreeRoom GenerateRun(int runLength)

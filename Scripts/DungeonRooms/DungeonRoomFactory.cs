@@ -10,26 +10,17 @@ namespace ShiftingSepulcher
         [Export] public PackedScene EmptyRoom;
         [Export] public PackedScene KeyRoom;
 
-        [Export] public SceneSpawnTable FillerRoomTable;
-        [Export] public SceneSpawnTable CombatRoomTable;
-        [Export] public SceneSpawnTable PuzzleRoomTable;
-        [Export] public SceneSpawnTable BossRoomTable;
-
         public IDungeonRoom BuildRoom(DungeonLayoutRoom layoutRoom)
         {
-            switch (layoutRoom.TreeRoom.ChallengeType)
-            {
-                case ChallengeType.None: return SpawnFromTable(FillerRoomTable, layoutRoom);
-                case ChallengeType.Loot: return UseTemplate(KeyRoom, layoutRoom);
-                case ChallengeType.Combat: return SpawnFromTable(CombatRoomTable, layoutRoom);
-                case ChallengeType.Puzzle: return SpawnFromTable(PuzzleRoomTable, layoutRoom);
-                case ChallengeType.Boss: return SpawnFromTable(BossRoomTable, layoutRoom);
+            var spawnTable = GetChallengeSpawnTable(layoutRoom.TreeRoom.ChallengeType);
 
-                default: return UseTemplate(EmptyRoom, layoutRoom);
-            }
+            if (spawnTable == null)
+                return UseTemplate(EmptyRoom, layoutRoom);
+
+            return SpawnFromTable(spawnTable, layoutRoom);
         }
 
-        private IDungeonRoom SpawnFromTable(SceneSpawnTable table, DungeonLayoutRoom layoutRoom)
+        private IDungeonRoom SpawnFromTable(SpawnTable table, DungeonLayoutRoom layoutRoom)
         {
             var rng = new Random(layoutRoom.TreeRoom.RoomSeed);
             var realRoom = table.Spawn<IDungeonRoom>(rng);
@@ -43,6 +34,11 @@ namespace ShiftingSepulcher
             var realRoom = template.Instance<IDungeonRoom>();
             realRoom.Populate(layoutRoom);
             return realRoom;
+        }
+
+        private SpawnTable GetChallengeSpawnTable(ChallengeType challengeType)
+        {
+            return GetNode<SpawnTable>($"%ChallengeTypeSpawnTables/{challengeType}");
         }
     }
 }

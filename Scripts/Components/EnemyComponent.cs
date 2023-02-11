@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     [CustomNode]
     public class EnemyComponent : BaseComponent<Node2D>, IRespawnable, IEnemy, IOnRoomEnter

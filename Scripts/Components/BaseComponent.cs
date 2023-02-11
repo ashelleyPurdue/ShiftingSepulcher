@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public abstract class BaseComponent<TEntityNode> : Node, IComponent<TEntityNode>
         where TEntityNode : Node

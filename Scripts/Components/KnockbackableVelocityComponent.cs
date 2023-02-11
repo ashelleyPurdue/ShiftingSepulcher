@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     [CustomNode]
     public class KnockbackableVelocityComponent : BaseComponent<KinematicBody2D>

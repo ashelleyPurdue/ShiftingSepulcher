@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     [CustomNode]
     public class SingleLootDropperComponent : BaseComponent<Node2D>, ILootDropperComponent

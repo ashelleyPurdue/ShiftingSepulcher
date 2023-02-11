@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     [CustomNode(parent:"Area2D", icon: "Area2D")]
     public class Area2DComponent : Area2D, IComponent<Node2D>

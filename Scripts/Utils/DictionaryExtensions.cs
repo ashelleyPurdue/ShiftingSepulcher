@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public static class DictionaryExtensions
     {

@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     [Tool]
     public class CustomNodes : EditorPlugin

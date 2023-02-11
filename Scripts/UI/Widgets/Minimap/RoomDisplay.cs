@@ -1,5 +1,5 @@
 using Godot;
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     [Tool]
     public class RoomDisplay : Node2D

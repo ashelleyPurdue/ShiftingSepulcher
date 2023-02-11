@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public class SlidingIcePuzzle : Node2D, IChallenge, IRoomPopulator, IOnRoomEnter
     {

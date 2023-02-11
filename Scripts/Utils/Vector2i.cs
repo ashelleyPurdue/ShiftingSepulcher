@@ -1,6 +1,6 @@
 using System;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public struct Vector2i
     {

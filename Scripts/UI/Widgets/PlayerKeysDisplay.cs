@@ -1,7 +1,7 @@
 using System.Linq;
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     [Tool]
     public class PlayerKeysDisplay : Control

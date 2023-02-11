@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     [CustomNode(parent: "Node2D", icon:"Room")]
     public class Room2D : Node2D

@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public class HandCraftedDungeonInstantiator : Node2D
     {

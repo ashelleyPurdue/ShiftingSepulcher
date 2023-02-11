@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public static class DungeonTreeGenerator
     {

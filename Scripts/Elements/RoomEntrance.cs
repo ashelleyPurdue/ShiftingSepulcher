@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     [CustomNode(parent: "Position2D", icon: "Position2D")]
     public class RoomEntrance : Position2D, IRoomEntrance

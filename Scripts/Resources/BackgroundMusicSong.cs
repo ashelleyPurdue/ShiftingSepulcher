@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     [CustomNode("Resource", icon: "AudioStreamPlayer")]
     public class BackgroundMusicSong : Resource

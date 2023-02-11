@@ -83,7 +83,7 @@ namespace ShiftingSepulcher
 
                 // Place a key in the last room of the run
                 prevRoom.KeyId = runNumber + 1;
-                prevRoom.ChallengeType = ChallengeType.Loot;
+                prevRoom.ChallengeType = ChallengeType.Key;
 
                 return runRoot;
             }

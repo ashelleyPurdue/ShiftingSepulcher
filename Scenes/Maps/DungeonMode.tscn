@@ -11,7 +11,7 @@
 [ext_resource path="res://Scenes/SpawnTables/RoomTemplates/FillerRoomSpawnTable.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/Prefabs/RoomTransitionManager.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/SpawnTables/RoomTemplates/PuzzleRoomSpawnTable.tscn" type="PackedScene" id=15]
-[ext_resource path="res://Scenes/SpawnTables/RoomTemplates/LootRoomSpawnTable.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Scenes/SpawnTables/RoomTemplates/KeyRoomSpawnTable.tscn" type="PackedScene" id=16]
 
 [node name="Node2D" type="Node2D"]
 
@@ -34,7 +34,7 @@ unique_name_in_owner = true
 
 [node name="Puzzle" parent="DungeonInstantiator/ChallengeTypeSpawnTables" instance=ExtResource( 15 )]
 
-[node name="Loot" parent="DungeonInstantiator/ChallengeTypeSpawnTables" instance=ExtResource( 16 )]
+[node name="Key" parent="DungeonInstantiator/ChallengeTypeSpawnTables" instance=ExtResource( 16 )]
 
 [node name="RoomFactory" type="Node" parent="DungeonInstantiator"]
 unique_name_in_owner = true

@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/UI/Widgets/InteractPrompt.cs" type="Script" id=1]
-[ext_resource path="res://Fonts/OFLFonts/OpenSans-VariableFont_wdth,wght.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Fonts/OpenSans/OpenSans-VariableFont_wdth,wght.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://addons/controller_icons/objects/Sprite.gd" type="Script" id=3]
 [ext_resource path="res://addons/controller_icons/assets/key/space.png" type="Texture" id=4]
 

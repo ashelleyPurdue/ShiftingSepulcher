@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Scripts/UI/VictoryScreen.cs" type="Script" id=1]
 [ext_resource path="res://Fonts/The Wild Breath of Zelda.otf" type="DynamicFontData" id=2]
-[ext_resource path="res://Fonts/OFLFonts/OpenSans-VariableFont_wdth,wght.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Fonts/OpenSans/OpenSans-VariableFont_wdth,wght.ttf" type="DynamicFontData" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 size = 54

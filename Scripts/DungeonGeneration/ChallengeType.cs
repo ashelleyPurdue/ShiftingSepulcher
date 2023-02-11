@@ -5,7 +5,7 @@ namespace ShiftingSepulcher
         None,
         Puzzle,
         Combat,
-        Loot,
+        Key,
         Boss
     }
 }

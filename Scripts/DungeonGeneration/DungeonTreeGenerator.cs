@@ -29,7 +29,10 @@ namespace ShiftingSepulcher
                 for (int runNumber = 0; runNumber < genParams.CriticalPathRuns; runNumber++)
                 {
                     // Generate a run
-                    int runLength = rng.Next(genParams.MinRunLength, genParams.MaxRunLength);
+                    int runLength = rng.Next(
+                        genParams.MinCriticalPathRunLength,
+                        genParams.MaxCriticalPathRunLength
+                    );
                     var runRoot = GenerateRun(runLength);
 
                     // Hide a key in the last room of the run
@@ -81,7 +84,10 @@ namespace ShiftingSepulcher
                 for (int runNumber = 0; runNumber < genParams.OptionalRuns; runNumber++)
                 {
                     // Generate a run
-                    int runLength = rng.Next(genParams.MinRunLength, genParams.MaxRunLength);
+                    int runLength = rng.Next(
+                        genParams.MinOptionalRunLength,
+                        genParams.MaxOptionalRunLength
+                    );
                     var runRoot = GenerateRun(runLength);
 
                     // TODO: Hide treasure in the final room of the run.

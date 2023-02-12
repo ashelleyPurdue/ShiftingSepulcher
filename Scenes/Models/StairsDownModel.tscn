@@ -1,0 +1,42 @@
+[gd_scene format=2]
+
+[node name="StairsDownModel" type="Node2D"]
+position = Vector2( 32, 0 )
+rotation = 1.5708
+
+[node name="Void" type="Polygon2D" parent="."]
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[node name="Stairs" type="Node2D" parent="."]
+position = Vector2( 32, 0 )
+scale = Vector2( 1.28, 1 )
+
+[node name="Bottom" type="Polygon2D" parent="Stairs"]
+modulate = Color( 0.5, 0.5, 0.5, 1 )
+position = Vector2( -46, 0 )
+color = Color( 0.509804, 0.509804, 0.509804, 1 )
+polygon = PoolVector2Array( 24, 5, 32, 5, 32, 27, 24, 27 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Stairs/Bottom"]
+color = Color( 0.24, 0.24, 0.24, 1 )
+polygon = PoolVector2Array( 24, 27, 23, 26, 23, 6, 24, 5 )
+
+[node name="Middle" type="Polygon2D" parent="Stairs"]
+modulate = Color( 0.75, 0.75, 0.75, 1 )
+position = Vector2( -40, 0 )
+color = Color( 0.509804, 0.509804, 0.509804, 1 )
+polygon = PoolVector2Array( 24, 3, 32, 3, 32, 29, 24, 29 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Stairs/Middle"]
+color = Color( 0.27, 0.27, 0.27, 1 )
+polygon = PoolVector2Array( 24, 29, 22, 27, 22, 5, 24, 3 )
+
+[node name="Top" type="Polygon2D" parent="Stairs"]
+position = Vector2( -32, 0 )
+color = Color( 0.611765, 0.611765, 0.611765, 1 )
+polygon = PoolVector2Array( 24, 0, 32, 0, 32, 32, 24, 32 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Stairs/Top"]
+color = Color( 0.317647, 0.317647, 0.317647, 1 )
+polygon = PoolVector2Array( 24, 32, 21, 29, 21, 3, 24, 0 )

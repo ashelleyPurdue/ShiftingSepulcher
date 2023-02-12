@@ -7,15 +7,7 @@ namespace ShiftingSepulcher
     {
         public static Vector2i Adjacent(this Vector2i v, CardinalDirection dir)
         {
-            switch (dir)
-            {
-                case CardinalDirection.North: v.y += 1; break;
-                case CardinalDirection.South: v.y -= 1; break;
-                case CardinalDirection.East: v.x += 1; break;
-                case CardinalDirection.West: v.x -= 1; break;
-            }
-
-            return v;
+            return v + dir.ToVector2i();
         }
 
         public static bool IsAdjacentTo(this Vector2i v, Vector2i other)

@@ -207,6 +207,9 @@ TilePrefab = ExtResource( 5 )
 
 [node name="StandardEnemyComponents" parent="." instance=ExtResource( 16 )]
 
+[node name="HealthPointsComponent" parent="StandardEnemyComponents" index="1"]
+MaxHealth = 2
+
 [node name="HurtBox" type="Area2D" parent="."]
 script = ExtResource( 2 )
 

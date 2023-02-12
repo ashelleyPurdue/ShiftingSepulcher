@@ -43,5 +43,15 @@ namespace ShiftingSepulcher
         {
             return new Vector2((float)v.x, (float)v.y);
         }
+
+        public static Vector3i ToVector3i(this Vector2i v)
+        {
+            return new Vector3i(v.x, v.y, 0);
+        }
+
+        public static Vector3 ToVector3(this Vector2i v)
+        {
+            return new Vector3((float)v.x, (float)v.y, 0);
+        }
     }
 }

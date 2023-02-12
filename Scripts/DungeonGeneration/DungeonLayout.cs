@@ -16,6 +16,20 @@ namespace ShiftingSepulcher
         public Vector3i CoordsOf(DungeonTreeRoom room) => _roomToCoords[room];
         public bool IsPlaced(DungeonTreeRoom room) => _roomToCoords.ContainsKey(room);
 
+        /// <summary>
+        /// Gets the layout room for the given tree room.
+        /// Throws an exception if the room hasn't been placed yet
+        /// </summary>
+        /// <param name="treeRoom"></param>
+        /// <returns></returns>
+        public DungeonLayoutRoom GetLayoutRoom(DungeonTreeRoom treeRoom)
+        {
+            if (!IsPlaced(treeRoom))
+                throw new Exception("Tried to get the layout of a tree room that hasn't been placed");
+
+            return RoomAt(CoordsOf(treeRoom));
+        }
+
         public DungeonLayoutRoom RoomAt(Vector3i coords)
         {
             return new DungeonLayoutRoom(this, coords, _coordsToRoom[coords]);

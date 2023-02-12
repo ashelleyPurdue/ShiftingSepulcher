@@ -21,6 +21,11 @@ namespace ShiftingSepulcher
             TreeRoom = treeRoom;
         }
 
+        public bool HasDoorAtDirection(CardinalDirection dir)
+        {
+            return DoorAtDirection(dir) != null;
+        }
+
         /// <summary>
         /// Returns the door that goes in the given direction, or null if it's
         /// a wall
@@ -28,16 +33,24 @@ namespace ShiftingSepulcher
         /// <returns></returns>
         public IDungeonTreeDoor DoorAtDirection(CardinalDirection dir)
         {
-            var destPos = Position + dir.ToVector2i().ToVector3i();
+            foreach (var door in TreeRoom.AllDoors())
+            {
+                if (!Layout.IsPlaced(door.Destination))
+                    continue;
 
-            if (!Layout.HasRoomAt(destPos))
-                return null;
+                var neighborPos = Layout
+                    .CoordsOf(door.Destination)
+                    .FlattenToVector2i();
 
-            var dest = Layout.RoomAt(destPos);
+                var adjacentDir = Position
+                    .FlattenToVector2i()
+                    .AdjacentDirection(neighborPos);
 
-            return TreeRoom
-                .AllDoors()
-                .FirstOrDefault(d => d.Destination == dest.TreeRoom);
+                if (adjacentDir == dir)
+                    return door;
+            }
+
+            return null;
         }
     }
 }

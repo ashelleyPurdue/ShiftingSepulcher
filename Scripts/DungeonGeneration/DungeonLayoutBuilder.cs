@@ -65,41 +65,50 @@ namespace ShiftingSepulcher
 
                 var childRoom = parentRoom.ChildDoors[childIndex].Destination;
 
+                var parentLayoutRoom = prevLayout.GetLayoutRoom(parentRoom);
+                var dirsToTry = CardinalDirectionUtils.All()
+                    .Where(dir => !parentLayoutRoom.HasDoorAtDirection(dir));
+
                 // Try all the directions in a random order
+                // If there's no room on the 0th floor, keep trying other floors
+                // until one of them has room
                 var rng = new Random(childRoom.RoomSeed);
-                var dirsToTry = rng.Shuffle(CardinalDirectionUtils.All());
-
-                foreach (CardinalDirection childDir in dirsToTry)
+                var shuffledDirs = rng.Shuffle(dirsToTry);
+                for (int floor = 0; floor < int.MaxValue; floor++)
                 {
-                    var childPos = pos
-                        .FlattenToVector2i()
-                        .Adjacent(childDir)
-                        .ToVector3i();
-
-                    var layoutWithThisChild = TryAddRoom(childRoom, childPos, prevLayout);
-
-                    bool thisChildFits = layoutWithThisChild != null;
-                    if (!thisChildFits)
-                        continue;
-
-                    // This child and its descendants fit in this direction,
-                    // but we're not done.  Does the same apply to all its
-                    // _siblings_?
-                    var layoutWithSiblings = TryAddRoomChild(
-                        parentRoom,
-                        pos,
-                        childIndex + 1,
-                        layoutWithThisChild
-                    );
-
-                    bool siblingsFit = layoutWithSiblings != null;
-                    if (!siblingsFit)
+                    foreach (CardinalDirection childDir in shuffledDirs)
                     {
-                        continue;
-                    }
+                        var childPos = pos
+                            .FlattenToVector2i()
+                            .Adjacent(childDir)
+                            .ToVector3i();
+                        childPos.z = floor;
 
-                    // Well I'll be!  This direction worked!
-                    return layoutWithSiblings;
+                        var layoutWithThisChild = TryAddRoom(childRoom, childPos, prevLayout);
+
+                        bool thisChildFits = layoutWithThisChild != null;
+                        if (!thisChildFits)
+                            continue;
+
+                        // This child and its descendants fit in this direction,
+                        // but we're not done.  Does the same apply to all its
+                        // _siblings_?
+                        var layoutWithSiblings = TryAddRoomChild(
+                            parentRoom,
+                            pos,
+                            childIndex + 1,
+                            layoutWithThisChild
+                        );
+
+                        bool siblingsFit = layoutWithSiblings != null;
+                        if (!siblingsFit)
+                        {
+                            continue;
+                        }
+
+                        // Well I'll be!  This direction worked!
+                        return layoutWithSiblings;
+                    }
                 }
 
                 // We found no directions that could accommodate both this child

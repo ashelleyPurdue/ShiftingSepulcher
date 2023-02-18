@@ -70,11 +70,11 @@ namespace ShiftingSepulcher
                     .Where(dir => !parentLayoutRoom.HasDoorAtDirection(dir));
 
                 // Try all the directions in a random order
-                // If there's no room on the 0th floor, keep trying other floors
+                // If there's no room on the current floor, keep trying other floors
                 // until one of them has room
                 var rng = new Random(childRoom.RoomSeed);
                 var shuffledDirs = rng.Shuffle(dirsToTry);
-                for (int floor = 0; floor < int.MaxValue; floor++)
+                foreach(int floor in FloorsToCheck(pos.z))
                 {
                     foreach (CardinalDirection childDir in shuffledDirs)
                     {
@@ -112,6 +112,26 @@ namespace ShiftingSepulcher
                 // _and_ its siblings, so go back to the previous child and have
                 // him choose a different direction
                 return null;
+            }
+
+            IEnumerable<int> FloorsToCheck(int startingFloor)
+            {
+                // First, try to stay on the current floor if possible
+                yield return startingFloor;
+
+                // Failing that, check neighboring floors in a breadth-first
+                // manner
+                for (int i = 1; i < int.MaxValue; i++)
+                {
+                    int lower = startingFloor - i;
+                    int upper = startingFloor + i;
+
+                    if (lower >= 0)
+                        yield return lower;
+
+                    if (upper < int.MaxValue)
+                        yield return upper;
+                }
             }
         }
 

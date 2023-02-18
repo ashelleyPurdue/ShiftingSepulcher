@@ -11,5 +11,8 @@ namespace ShiftingSepulcher
 
         [Export] public PackedScene OneWayOpenSide;
         [Export] public PackedScene OneWayClosedSide;
+
+        [Export] public PackedScene StairsUpModel;
+        [Export] public PackedScene StairsDownModel;
     }
 }

@@ -1,0 +1,59 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="Gradient" id=1]
+interpolation_mode = 2
+offsets = PoolRealArray( 0.859016, 1 )
+colors = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 0 )
+
+[sub_resource type="GradientTexture2D" id=2]
+gradient = SubResource( 1 )
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2( 0.5, 0.8 )
+fill_to = Vector2( 0.466667, 0.2625 )
+
+[node name="StairsDownDoorModel" type="Node2D"]
+
+[node name="BottomDarknessRound" type="Sprite" parent="."]
+position = Vector2( 0, -22.5 )
+scale = Vector2( 1, 0.851563 )
+z_index = -1
+z_as_relative = false
+texture = SubResource( 2 )
+
+[node name="BottomDarkness" type="Polygon2D" parent="."]
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( -64, 32, -64, 0, 64, 0, 64, 32 )
+
+[node name="Top" type="Polygon2D" parent="."]
+color = Color( 0.611765, 0.611765, 0.611765, 1 )
+polygon = PoolVector2Array( -64, 20, -64, 32, 64, 32, 64, 20 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Top"]
+color = Color( 0.317647, 0.317647, 0.317647, 1 )
+polygon = PoolVector2Array( -64, 20, -60, 16, 60, 16, 64, 20 )
+
+[node name="Middle" type="Polygon2D" parent="."]
+modulate = Color( 0.74902, 0.74902, 0.74902, 1 )
+color = Color( 0.611765, 0.611765, 0.611765, 1 )
+polygon = PoolVector2Array( -60, 8, -60, 16, 60, 16, 60, 8 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Middle"]
+color = Color( 0.317647, 0.317647, 0.317647, 1 )
+polygon = PoolVector2Array( -60, 8, -56, 4, 56, 4, 60, 8 )
+
+[node name="Bottom" type="Polygon2D" parent="."]
+modulate = Color( 0.501961, 0.501961, 0.501961, 1 )
+color = Color( 0.611765, 0.611765, 0.611765, 1 )
+polygon = PoolVector2Array( -56, -4, -56, 4, 56, 4, 56, -4 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Bottom"]
+color = Color( 0.317647, 0.317647, 0.317647, 1 )
+polygon = PoolVector2Array( -56, -4, -52, -8, 52, -8, 56, -4 )
+
+[node name="TopShadow" type="Polygon2D" parent="."]
+visible = false
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( -64, -8, -64, 32, 64, 32, 64, -8 )
+vertex_colors = PoolColorArray( 0, 0, 0, 0.180392, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.180392 )

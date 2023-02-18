@@ -101,10 +101,12 @@ namespace ShiftingSepulcher
             if (LayoutRoom.Position.z > targetLayoutRoom.Position.z)
             {
                 warp.TransitionAnimation = RoomTransitionAnimation.StairsDown;
+                Create<Node2D>(spawn, DoorPrefabs.StairsDownModel);
             }
             else if (LayoutRoom.Position.z < targetLayoutRoom.Position.z)
             {
                 warp.TransitionAnimation = RoomTransitionAnimation.StairsUp;
+                Create<Node2D>(spawn, DoorPrefabs.StairsUpModel);
             }
 
             // Spawn the correct kind of door

@@ -78,10 +78,7 @@ namespace ShiftingSepulcher
                 {
                     foreach (CardinalDirection childDir in shuffledDirs)
                     {
-                        var childPos = pos
-                            .FlattenToVector2i()
-                            .Adjacent(childDir)
-                            .ToVector3i();
+                        var childPos = pos + childDir.ToVector3i();
                         childPos.z = floor;
 
                         var layoutWithThisChild = TryAddRoom(childRoom, childPos, prevLayout);

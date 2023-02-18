@@ -31,8 +31,8 @@ namespace ShiftingSepulcher
             var treeRoom = new DungeonTreeRoom();
             treeRoom.RoomSeed = _seedInput.ParseSeedTextbox();
 
-            var layout = new DungeonLayout().WithRoomAt(Vector2i.Zero, treeRoom);
-            var layoutRoom = layout.RoomAt(Vector2i.Zero);
+            var layout = new DungeonLayout().WithRoomAt(Vector3i.Zero, treeRoom);
+            var layoutRoom = layout.RoomAt(Vector3i.Zero);
 
             _roomInstance.Populate(layoutRoom);
         }

@@ -19,7 +19,7 @@ namespace ShiftingSepulcher
                 var graphDoor = layoutRoom.DoorAtDirection(dir);
                 var display = GetDoorDisplay(dir);
 
-                display.SetDoor(graphDoor);
+                display.SetDoor(layoutRoom, graphDoor);
             }
         }
 

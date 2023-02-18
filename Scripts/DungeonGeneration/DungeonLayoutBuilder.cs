@@ -10,7 +10,7 @@ namespace ShiftingSepulcher
         {
             var layout = TryAddRoom(
                 root,
-                Vector2i.Zero,
+                Vector3i.Zero,
                 new DungeonLayout()
             );
 
@@ -22,7 +22,7 @@ namespace ShiftingSepulcher
 
             DungeonLayout TryAddRoom(
                 DungeonTreeRoom room,
-                Vector2i pos,
+                Vector3i pos,
                 DungeonLayout prevLayout
             )
             {
@@ -55,7 +55,7 @@ namespace ShiftingSepulcher
 
             DungeonLayout TryAddRoomChild(
                 DungeonTreeRoom parentRoom,
-                Vector2i pos,
+                Vector3i pos,
                 int childIndex,
                 DungeonLayout prevLayout
             )
@@ -65,43 +65,73 @@ namespace ShiftingSepulcher
 
                 var childRoom = parentRoom.ChildDoors[childIndex].Destination;
 
+                var parentLayoutRoom = prevLayout.GetLayoutRoom(parentRoom);
+                var dirsToTry = CardinalDirectionUtils.All()
+                    .Where(dir => !parentLayoutRoom.HasDoorAtDirection(dir));
+
                 // Try all the directions in a random order
+                // If there's no room on the current floor, keep trying other floors
+                // until one of them has room
                 var rng = new Random(childRoom.RoomSeed);
-                var dirsToTry = rng.Shuffle(CardinalDirectionUtils.All());
-
-                foreach (CardinalDirection childDir in dirsToTry)
+                var shuffledDirs = rng.Shuffle(dirsToTry);
+                foreach(int floor in FloorsToCheck(pos.z))
                 {
-                    var childPos = pos.Adjacent(childDir);
-                    var layoutWithThisChild = TryAddRoom(childRoom, childPos, prevLayout);
-
-                    bool thisChildFits = layoutWithThisChild != null;
-                    if (!thisChildFits)
-                        continue;
-
-                    // This child and its descendants fit in this direction,
-                    // but we're not done.  Does the same apply to all its
-                    // _siblings_?
-                    var layoutWithSiblings = TryAddRoomChild(
-                        parentRoom,
-                        pos,
-                        childIndex + 1,
-                        layoutWithThisChild
-                    );
-
-                    bool siblingsFit = layoutWithSiblings != null;
-                    if (!siblingsFit)
+                    foreach (CardinalDirection childDir in shuffledDirs)
                     {
-                        continue;
-                    }
+                        var childPos = pos + childDir.ToVector3i();
+                        childPos.z = floor;
 
-                    // Well I'll be!  This direction worked!
-                    return layoutWithSiblings;
+                        var layoutWithThisChild = TryAddRoom(childRoom, childPos, prevLayout);
+
+                        bool thisChildFits = layoutWithThisChild != null;
+                        if (!thisChildFits)
+                            continue;
+
+                        // This child and its descendants fit in this direction,
+                        // but we're not done.  Does the same apply to all its
+                        // _siblings_?
+                        var layoutWithSiblings = TryAddRoomChild(
+                            parentRoom,
+                            pos,
+                            childIndex + 1,
+                            layoutWithThisChild
+                        );
+
+                        bool siblingsFit = layoutWithSiblings != null;
+                        if (!siblingsFit)
+                        {
+                            continue;
+                        }
+
+                        // Well I'll be!  This direction worked!
+                        return layoutWithSiblings;
+                    }
                 }
 
                 // We found no directions that could accommodate both this child
                 // _and_ its siblings, so go back to the previous child and have
                 // him choose a different direction
                 return null;
+            }
+
+            IEnumerable<int> FloorsToCheck(int startingFloor)
+            {
+                // First, try to stay on the current floor if possible
+                yield return startingFloor;
+
+                // Failing that, check neighboring floors in a breadth-first
+                // manner
+                for (int i = 1; i < int.MaxValue; i++)
+                {
+                    int lower = startingFloor - i;
+                    int upper = startingFloor + i;
+
+                    if (lower >= 0)
+                        yield return lower;
+
+                    if (upper < int.MaxValue)
+                        yield return upper;
+                }
             }
         }
 
@@ -118,7 +148,15 @@ namespace ShiftingSepulcher
 
             return shortcuts
                 .Where(shortcut => layout.IsPlaced(shortcut))
-                .All(shortcut => layout.CoordsOf(shortcut).IsAdjacentTo(coords));
+                .All(shortcut => IsAdjacentIgnoringZ(coords, layout.CoordsOf(shortcut)));
+        }
+
+        private static bool IsAdjacentIgnoringZ(Vector3i a, Vector3i b)
+        {
+            var aFlat = a.FlattenToVector2i();
+            var bFlat = b.FlattenToVector2i();
+
+            return aFlat.IsAdjacentTo(bFlat);
         }
     }
 }

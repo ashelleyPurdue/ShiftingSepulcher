@@ -1,0 +1,65 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="Gradient" id=1]
+interpolation_mode = 2
+offsets = PoolRealArray( 0, 0.729508, 1 )
+colors = PoolColorArray( 0, 0, 0, 0.145098, 0, 0, 0, 0.00166506, 0, 0, 0, 0 )
+
+[sub_resource type="GradientTexture2D" id=2]
+gradient = SubResource( 1 )
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2( 0.5, 0.5 )
+
+[node name="StairsUpDoorModel" type="Node2D"]
+
+[node name="Shadow" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Shadow"]
+position = Vector2( 4.54747e-13, 12 )
+scale = Vector2( 5, 2.75 )
+texture = SubResource( 2 )
+
+[node name="Bottom" type="Polygon2D" parent="."]
+modulate = Color( 0.74902, 0.74902, 0.74902, 1 )
+color = Color( 0.509804, 0.509804, 0.509804, 1 )
+polygon = PoolVector2Array( -68, 20, -68, 12, 68, 12, 68, 20 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="Bottom"]
+color = Color( 0.317647, 0.317647, 0.317647, 1 )
+polygon = PoolVector2Array( 68, 20, -68, 20, -64, 24, 64, 24 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Middle" type="Polygon2D" parent="."]
+color = Color( 0.509804, 0.509804, 0.509804, 1 )
+polygon = PoolVector2Array( -72, 8, -72, 0, 72, 0, 72, 8 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="Middle"]
+color = Color( 0.317647, 0.317647, 0.317647, 1 )
+polygon = PoolVector2Array( -72, 8, 72, 8, 68, 12, -68, 12 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Top" type="Polygon2D" parent="."]
+color = Color( 0.66, 0.66, 0.66, 1 )
+polygon = PoolVector2Array( -76, -4, -76, -16, 76, -16, 76, -4 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D2" type="Polygon2D" parent="Top"]
+color = Color( 0.42, 0.42, 0.42, 1 )
+polygon = PoolVector2Array( -76, -4, -72, 0, 72, 0, 76, -4 )
+__meta__ = {
+"_edit_lock_": true
+}

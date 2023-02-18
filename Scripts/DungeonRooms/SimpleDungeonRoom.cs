@@ -89,10 +89,23 @@ namespace ShiftingSepulcher
                 return;
             }
 
+            var targetTreeRoom = treeDoor?.Destination;
+            var targetLayoutRoom = LayoutRoom.Layout.GetLayoutRoom(targetTreeRoom);
+            var targetRoom2D = treeRoomToRealRoom[targetTreeRoom];
+
             // Set up the warp
             var warp = Create<WarpTrigger>(spawn, DoorPrefabs.Warp);
-            var targetRoom = treeRoomToRealRoom[treeDoor.Destination];
-            warp.TargetEntrance = targetRoom.GetEntrance(dir.Opposite().ToString());
+            warp.TargetEntrance = targetRoom2D.GetEntrance(dir.Opposite().ToString());
+
+            // Use a stairs transition if the rooms are on different floors
+            if (LayoutRoom.Position.z > targetLayoutRoom.Position.z)
+            {
+                warp.TransitionAnimation = RoomTransitionAnimation.StairsDown;
+            }
+            else if (LayoutRoom.Position.z < targetLayoutRoom.Position.z)
+            {
+                warp.TransitionAnimation = RoomTransitionAnimation.StairsUp;
+            }
 
             // Spawn the correct kind of door
             if (treeDoor is LockedDoor lockedDoor)

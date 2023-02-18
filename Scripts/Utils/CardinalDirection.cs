@@ -53,6 +53,11 @@ namespace ShiftingSepulcher
 
             throw new Exception("There are only four cardinal directions, dude.");
         }
+
+        public static Vector3i ToVector3i(this CardinalDirection dir)
+        {
+            return dir.ToVector2i().ToVector3i();
+        }
     }
 
     public static class CardinalDirectionUtils

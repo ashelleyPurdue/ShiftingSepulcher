@@ -52,7 +52,7 @@ namespace ShiftingSepulcher
                 incomingReal.OpenSide = outgoingReal;
             }
 
-            var startRoom = layout.RoomAt(Vector2i.Zero).TreeRoom;
+            var startRoom = layout.RoomAt(Vector3i.Zero).TreeRoom;
             _transitionManager.StartDungeon(
                 startRoom: treeRoomToRoom2D[startRoom],
                 roomsToRespawn: treeRoomToRoom2D.Values

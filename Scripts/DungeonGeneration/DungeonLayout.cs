@@ -6,17 +6,17 @@ namespace ShiftingSepulcher
 {
     public class DungeonLayout
     {
-        private Dictionary<Vector2i, DungeonTreeRoom> _coordsToRoom =
-            new Dictionary<Vector2i, DungeonTreeRoom>();
-        private Dictionary<DungeonTreeRoom, Vector2i> _roomToCoords =
-            new Dictionary<DungeonTreeRoom, Vector2i>();
+        private Dictionary<Vector3i, DungeonTreeRoom> _coordsToRoom =
+            new Dictionary<Vector3i, DungeonTreeRoom>();
+        private Dictionary<DungeonTreeRoom, Vector3i> _roomToCoords =
+            new Dictionary<DungeonTreeRoom, Vector3i>();
 
-        public bool HasRoomAt(Vector2i coords) => _coordsToRoom.ContainsKey(coords);
+        public bool HasRoomAt(Vector3i coords) => _coordsToRoom.ContainsKey(coords);
 
-        public Vector2i CoordsOf(DungeonTreeRoom room) => _roomToCoords[room];
+        public Vector3i CoordsOf(DungeonTreeRoom room) => _roomToCoords[room];
         public bool IsPlaced(DungeonTreeRoom room) => _roomToCoords.ContainsKey(room);
 
-        public DungeonLayoutRoom RoomAt(Vector2i coords)
+        public DungeonLayoutRoom RoomAt(Vector3i coords)
         {
             return new DungeonLayoutRoom(this, coords, _coordsToRoom[coords]);
         }
@@ -26,7 +26,7 @@ namespace ShiftingSepulcher
             return _coordsToRoom.Select(p => new DungeonLayoutRoom(this, p.Key, p.Value));
         }
 
-        public DungeonLayout WithRoomAt(Vector2i coords, DungeonTreeRoom room)
+        public DungeonLayout WithRoomAt(Vector3i coords, DungeonTreeRoom room)
         {
             if (HasRoomAt(coords))
                 throw new DungeonLayoutException($"The coordinates {coords} already have a room");

@@ -7,12 +7,12 @@ namespace ShiftingSepulcher
     public readonly struct DungeonLayoutRoom
     {
         public readonly DungeonLayout Layout;
-        public readonly Vector2i Position;
+        public readonly Vector3i Position;
         public readonly DungeonTreeRoom TreeRoom;
 
         public DungeonLayoutRoom(
             DungeonLayout layout,
-            Vector2i position,
+            Vector3i position,
             DungeonTreeRoom treeRoom
         )
         {
@@ -28,7 +28,7 @@ namespace ShiftingSepulcher
         /// <returns></returns>
         public IDungeonTreeDoor DoorAtDirection(CardinalDirection dir)
         {
-            var destPos = Position.Adjacent(dir);
+            var destPos = Position + dir.ToVector2i().ToVector3i();
 
             if (!Layout.HasRoomAt(destPos))
                 return null;

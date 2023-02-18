@@ -10,7 +10,7 @@ namespace ShiftingSepulcher
         {
             var layout = TryAddRoom(
                 root,
-                Vector2i.Zero,
+                Vector3i.Zero,
                 new DungeonLayout()
             );
 
@@ -22,7 +22,7 @@ namespace ShiftingSepulcher
 
             DungeonLayout TryAddRoom(
                 DungeonTreeRoom room,
-                Vector2i pos,
+                Vector3i pos,
                 DungeonLayout prevLayout
             )
             {
@@ -55,7 +55,7 @@ namespace ShiftingSepulcher
 
             DungeonLayout TryAddRoomChild(
                 DungeonTreeRoom parentRoom,
-                Vector2i pos,
+                Vector3i pos,
                 int childIndex,
                 DungeonLayout prevLayout
             )
@@ -71,7 +71,11 @@ namespace ShiftingSepulcher
 
                 foreach (CardinalDirection childDir in dirsToTry)
                 {
-                    var childPos = pos.Adjacent(childDir);
+                    var childPos = pos
+                        .FlattenToVector2i()
+                        .Adjacent(childDir)
+                        .ToVector3i();
+
                     var layoutWithThisChild = TryAddRoom(childRoom, childPos, prevLayout);
 
                     bool thisChildFits = layoutWithThisChild != null;
@@ -118,7 +122,15 @@ namespace ShiftingSepulcher
 
             return shortcuts
                 .Where(shortcut => layout.IsPlaced(shortcut))
-                .All(shortcut => layout.CoordsOf(shortcut).IsAdjacentTo(coords));
+                .All(shortcut => IsAdjacentIgnoringZ(coords, layout.CoordsOf(shortcut)));
+        }
+
+        private static bool IsAdjacentIgnoringZ(Vector3i a, Vector3i b)
+        {
+            var aFlat = a.FlattenToVector2i();
+            var bFlat = b.FlattenToVector2i();
+
+            return aFlat.IsAdjacentTo(bFlat);
         }
     }
 }

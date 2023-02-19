@@ -586,17 +586,17 @@ theme = ExtResource( 8 )
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 150.0
-margin_bottom = 60.0
+margin_bottom = 64.0
 
 [node name="OpenPlayMenuButton" type="Button" parent="Options/VBoxContainer"]
 margin_right = 140.0
-margin_bottom = 23.0
+margin_bottom = 25.0
 text = "Play"
 
 [node name="OpenSettingsMenuButton" type="Button" parent="Options/VBoxContainer"]
-margin_top = 27.0
+margin_top = 29.0
 margin_right = 140.0
-margin_bottom = 50.0
+margin_bottom = 54.0
 text = "Settings"
 
 [connection signal="pressed" from="PlayMenu/PlayButton" to="." method="PlayDungeonMode"]

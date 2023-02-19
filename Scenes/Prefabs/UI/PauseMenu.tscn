@@ -35,7 +35,7 @@ theme = ExtResource( 4 )
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 134.0
-margin_bottom = 144.0
+margin_bottom = 150.0
 grow_horizontal = 2
 
 [node name="PausedLabel" type="Label" parent="CenterContainer/VBoxContainer"]
@@ -48,19 +48,19 @@ align = 1
 [node name="Unpause" type="Button" parent="CenterContainer/VBoxContainer"]
 margin_top = 57.0
 margin_right = 124.0
-margin_bottom = 80.0
+margin_bottom = 82.0
 text = "Resume"
 
 [node name="Settings" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_top = 84.0
+margin_top = 86.0
 margin_right = 124.0
-margin_bottom = 107.0
+margin_bottom = 111.0
 text = "Settings"
 
 [node name="ReturnToTitle" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_top = 111.0
+margin_top = 115.0
 margin_right = 124.0
-margin_bottom = 134.0
+margin_bottom = 140.0
 text = "Return to title"
 
 [node name="SeedDisplay" type="VBoxContainer" parent="."]

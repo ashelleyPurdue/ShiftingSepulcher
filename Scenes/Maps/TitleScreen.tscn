@@ -7,7 +7,7 @@
 [ext_resource path="res://Scenes/Prefabs/UI/Widgets/SeedInput.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Prefabs/UI/SettingsMenu.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Audio/SFX/BossDeathExplosion.ogg" type="AudioStream" id=7]
-[ext_resource path="res://Themes/ShiftingSepulcherTheme.tres" type="Theme" id=8]
+[ext_resource path="res://Themes/ConsoleMenuTheme.tres" type="Theme" id=8]
 
 [sub_resource type="Animation" id=6]
 resource_name = "Intro"

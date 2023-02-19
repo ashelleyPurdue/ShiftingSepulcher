@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Fonts/The Wild Breath of Zelda.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://Audio/SFX/BossDeathShudder.wav" type="AudioStream" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Scenes/Prefabs/UI/Widgets/SeedInput.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Prefabs/UI/SettingsMenu.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Audio/SFX/BossDeathExplosion.ogg" type="AudioStream" id=7]
+[ext_resource path="res://Themes/ShiftingSepulcherTheme.tres" type="Theme" id=8]
 
 [sub_resource type="Animation" id=6]
 resource_name = "Intro"
@@ -579,17 +580,18 @@ margin_left = -80.0
 margin_top = 78.0
 margin_right = 80.0
 margin_bottom = 134.0
+theme = ExtResource( 8 )
 custom_constants/separation = 16
 
 [node name="OpenPlayMenuButton" type="Button" parent="Options"]
 margin_right = 160.0
-margin_bottom = 20.0
+margin_bottom = 23.0
 text = "Play"
 
 [node name="OpenSettingsMenuButton" type="Button" parent="Options"]
-margin_top = 36.0
+margin_top = 39.0
 margin_right = 160.0
-margin_bottom = 56.0
+margin_bottom = 62.0
 text = "Settings"
 
 [connection signal="pressed" from="PlayMenu/PlayButton" to="." method="PlayDungeonMode"]

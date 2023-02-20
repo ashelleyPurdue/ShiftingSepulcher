@@ -606,27 +606,27 @@ anchor_bottom = 1.0
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 322.0
-margin_bottom = 201.0
+margin_bottom = 203.0
 
 [node name="BackButton" type="Button" parent="SeedOptionsMenu/PanelContainer/VBoxContainer"]
 margin_right = 312.0
-margin_bottom = 29.0
+margin_bottom = 31.0
 text = "Back"
 
 [node name="Label" type="Label" parent="SeedOptionsMenu/PanelContainer/VBoxContainer"]
-margin_top = 33.0
+margin_top = 35.0
 margin_right = 312.0
-margin_bottom = 56.0
+margin_bottom = 58.0
 
 [node name="Label2" type="Label" parent="SeedOptionsMenu/PanelContainer/VBoxContainer"]
-margin_top = 60.0
+margin_top = 62.0
 margin_right = 312.0
-margin_bottom = 83.0
+margin_bottom = 85.0
 
 [node name="PanelContainer" type="PanelContainer" parent="SeedOptionsMenu/PanelContainer/VBoxContainer"]
-margin_top = 87.0
+margin_top = 89.0
 margin_right = 312.0
-margin_bottom = 191.0
+margin_bottom = 193.0
 
 [node name="SeedInput" parent="SeedOptionsMenu/PanelContainer/VBoxContainer/PanelContainer" instance=ExtResource( 5 )]
 unique_name_in_owner = true

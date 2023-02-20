@@ -2,3 +2,4 @@
 
 [resource]
 content_margin_bottom = 2.0
+bg_color = Color( 1, 1, 1, 0.266667 )

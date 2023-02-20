@@ -62,7 +62,7 @@ border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color( 0.44, 0.73, 0.98, 1 )
+border_color = Color( 0.439216, 0.729412, 0.980392, 1 )
 
 [sub_resource type="Image" id=101]
 data = {
@@ -508,6 +508,7 @@ ConsoleMenuButton/styles/disabled = SubResource( 5 )
 ConsoleMenuButton/styles/focus = ExtResource( 3 )
 ConsoleMenuButton/styles/hover = ExtResource( 3 )
 ConsoleMenuButton/styles/normal = ExtResource( 4 )
+ConsoleMenuButton/styles/pressed = ExtResource( 3 )
 HSlider/styles/grabber_area = SubResource( 90 )
 HSlider/styles/grabber_area_highlight = SubResource( 91 )
 HSlider/styles/slider = SubResource( 92 )

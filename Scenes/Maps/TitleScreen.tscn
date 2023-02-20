@@ -542,11 +542,6 @@ alignment = 1
 margin_top = 73.0
 margin_right = 434.0
 margin_bottom = 93.0
-focus_neighbour_left = NodePath("../BackButton")
-focus_neighbour_top = NodePath("../BackButton")
-focus_neighbour_right = NodePath("../BackButton")
-focus_neighbour_bottom = NodePath("../../../../SeedOptionsMenu/PanelContainer/VBoxContainer/PanelContainer/SeedInput")
-focus_next = NodePath("../../../../SeedOptionsMenu/PanelContainer/VBoxContainer/PanelContainer/SeedInput")
 theme_type_variation = "ConsoleMenuButton"
 text = "Play"
 
@@ -561,9 +556,6 @@ text = "Advanced Options"
 margin_top = 121.0
 margin_right = 434.0
 margin_bottom = 141.0
-focus_neighbour_left = NodePath("../PlayButton")
-focus_neighbour_right = NodePath("../PlayButton")
-focus_neighbour_bottom = NodePath("../PlayButton")
 theme_type_variation = "ConsoleMenuButton"
 text = "Back"
 

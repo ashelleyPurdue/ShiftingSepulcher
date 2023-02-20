@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Fonts/The Wild Breath of Zelda.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://Audio/SFX/BossDeathShudder.wav" type="AudioStream" id=2]
@@ -7,7 +7,6 @@
 [ext_resource path="res://Scenes/Prefabs/UI/Widgets/SeedInput.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Prefabs/UI/SettingsMenu.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Audio/SFX/BossDeathExplosion.ogg" type="AudioStream" id=7]
-[ext_resource path="res://Themes/ConsoleMenuTheme.tres" type="Theme" id=8]
 
 [sub_resource type="Animation" id=6]
 resource_name = "Intro"
@@ -496,7 +495,6 @@ margin_left = -80.0
 margin_top = 78.0
 margin_right = 80.0
 margin_bottom = 134.0
-theme = ExtResource( 8 )
 theme_type_variation = "TransparentPanelContainer"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Options"]
@@ -527,7 +525,6 @@ margin_left = -224.0
 margin_top = -114.0
 margin_right = 224.0
 margin_bottom = 114.0
-theme = ExtResource( 8 )
 popup_exclusive = true
 
 [node name="PanelContainer" type="PanelContainer" parent="PlayMenu"]
@@ -535,16 +532,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PlayMenu/PanelContainer"]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 438.0
-margin_bottom = 218.0
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 441.0
+margin_bottom = 221.0
 alignment = 1
 
 [node name="PlayButton" type="Button" parent="PlayMenu/PanelContainer/VBoxContainer"]
-margin_top = 62.0
-margin_right = 428.0
-margin_bottom = 87.0
+margin_top = 73.0
+margin_right = 434.0
+margin_bottom = 93.0
 focus_neighbour_left = NodePath("../BackButton")
 focus_neighbour_top = NodePath("../BackButton")
 focus_neighbour_right = NodePath("../BackButton")
@@ -554,16 +551,16 @@ theme_type_variation = "ConsoleMenuButton"
 text = "Play"
 
 [node name="AdvancedPlayOptionsButton" type="Button" parent="PlayMenu/PanelContainer/VBoxContainer"]
-margin_top = 91.0
-margin_right = 428.0
-margin_bottom = 116.0
+margin_top = 97.0
+margin_right = 434.0
+margin_bottom = 117.0
 theme_type_variation = "ConsoleMenuButton"
 text = "Advanced Options"
 
 [node name="BackButton" type="Button" parent="PlayMenu/PanelContainer/VBoxContainer"]
-margin_top = 120.0
-margin_right = 428.0
-margin_bottom = 145.0
+margin_top = 121.0
+margin_right = 434.0
+margin_bottom = 141.0
 focus_neighbour_left = NodePath("../PlayButton")
 focus_neighbour_right = NodePath("../PlayButton")
 focus_neighbour_bottom = NodePath("../PlayButton")
@@ -595,7 +592,6 @@ margin_left = -166.0
 margin_top = -102.5
 margin_right = 166.0
 margin_bottom = 102.5
-theme = ExtResource( 8 )
 popup_exclusive = true
 
 [node name="PanelContainer" type="PanelContainer" parent="SeedOptionsMenu"]
@@ -603,39 +599,39 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SeedOptionsMenu/PanelContainer"]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 322.0
-margin_bottom = 203.0
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 325.0
+margin_bottom = 198.0
 
 [node name="BackButton" type="Button" parent="SeedOptionsMenu/PanelContainer/VBoxContainer"]
-margin_right = 312.0
-margin_bottom = 31.0
+margin_right = 318.0
+margin_bottom = 20.0
 text = "Back"
 
 [node name="Label" type="Label" parent="SeedOptionsMenu/PanelContainer/VBoxContainer"]
-margin_top = 35.0
-margin_right = 312.0
-margin_bottom = 58.0
+margin_top = 24.0
+margin_right = 318.0
+margin_bottom = 38.0
 
 [node name="Label2" type="Label" parent="SeedOptionsMenu/PanelContainer/VBoxContainer"]
-margin_top = 62.0
-margin_right = 312.0
-margin_bottom = 85.0
+margin_top = 42.0
+margin_right = 318.0
+margin_bottom = 56.0
 
 [node name="PanelContainer" type="PanelContainer" parent="SeedOptionsMenu/PanelContainer/VBoxContainer"]
-margin_top = 89.0
-margin_right = 312.0
-margin_bottom = 193.0
+margin_top = 60.0
+margin_right = 318.0
+margin_bottom = 140.0
 
 [node name="SeedInput" parent="SeedOptionsMenu/PanelContainer/VBoxContainer/PanelContainer" instance=ExtResource( 5 )]
 unique_name_in_owner = true
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 302.0
-margin_bottom = 94.0
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 311.0
+margin_bottom = 73.0
 
 [connection signal="pressed" from="Options/VBoxContainer/OpenPlayMenuButton" to="PlayMenu" method="popup"]
 [connection signal="pressed" from="Options/VBoxContainer/OpenSettingsMenuButton" to="SettingsMenu" method="popup"]

@@ -69,6 +69,7 @@ enabled=PoolStringArray( "res://addons/ProjectPlugins/CustomNodes/plugin.cfg", "
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
+theme/custom="res://Themes/ConsoleMenuTheme.tres"
 
 [input]
 

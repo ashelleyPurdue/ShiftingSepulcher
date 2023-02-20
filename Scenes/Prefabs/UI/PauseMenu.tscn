@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scripts/UI/PauseMenu.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/Prefabs/UI/SettingsMenu.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/UI/Widgets/CurrentSeedDisplay.cs" type="Script" id=3]
-[ext_resource path="res://Themes/ConsoleMenuTheme.tres" type="Theme" id=4]
 [ext_resource path="res://Fonts/The Wild Breath of Zelda.otf" type="DynamicFontData" id=5]
 
 [sub_resource type="DynamicFont" id=1]
@@ -29,7 +28,6 @@ margin_right = 50.5
 margin_bottom = 42.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource( 4 )
 theme_type_variation = "TransparentPanelContainer"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
@@ -77,7 +75,7 @@ margin_bottom = 138.0
 
 [node name="Label" type="Label" parent="SeedDisplay"]
 margin_right = 256.0
-margin_bottom = 14.0
+margin_bottom = 23.0
 text = "Current Seed:"
 align = 1
 __meta__ = {
@@ -85,9 +83,9 @@ __meta__ = {
 }
 
 [node name="CurrentSeedDisplay" type="LineEdit" parent="SeedDisplay"]
-margin_top = 18.0
+margin_top = 27.0
 margin_right = 256.0
-margin_bottom = 42.0
+margin_bottom = 49.0
 focus_mode = 0
 align = 1
 editable = false

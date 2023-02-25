@@ -41,6 +41,7 @@ script = ExtResource( 2 )
 
 [node name="OpenAnim" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
+autoplay = "Open"
 playback_process_mode = 2
 anims/Open = SubResource( 2 )
 anims/RESET = SubResource( 3 )

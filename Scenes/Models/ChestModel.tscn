@@ -6,36 +6,21 @@
 
 [node name="Inside" type="Polygon2D" parent="Node2D"]
 color = Color( 0, 0, 0, 1 )
-polygon = PoolVector2Array( 3, -8, 3, -18, 29, -18, 29, -8 )
+polygon = PoolVector2Array( 3, -8, 3, -30, 29, -30, 29, -8 )
 
 [node name="FrontLower" type="Polygon2D" parent="Node2D"]
 color = Color( 0.490196, 0.388235, 0.156863, 1 )
 polygon = PoolVector2Array( 8, 0, 3, -8, 29, -8, 24, 0 )
 
 [node name="LidOpen" type="Node2D" parent="Node2D"]
-modulate = Color( 0.431373, 0.32549, 0.0862745, 1 )
 
 [node name="Polygon2D" type="Polygon2D" parent="Node2D/LidOpen"]
-visible = false
-color = Color( 0.431373, 0.32549, 0.0862745, 1 )
-polygon = PoolVector2Array( 3, -20, 3, -23, 29, -23, 29, -20 )
+color = Color( 0.380392, 0.286275, 0.0705882, 1 )
+polygon = PoolVector2Array( 3, -21, 0, -32, 32, -32, 29, -21 )
 
 [node name="Polygon2D2" type="Polygon2D" parent="Node2D/LidOpen"]
-visible = false
-color = Color( 0.380392, 0.286275, 0.0705882, 1 )
-polygon = PoolVector2Array( 3, -23, 0, -27, 32, -27, 29, -23 )
-
-[node name="Polygon2D3" type="Polygon2D" parent="Node2D/LidOpen"]
-visible = false
-polygon = PoolVector2Array( 0, -27, 0, -30, 3, -32, 29, -32, 32, -30, 32, -27 )
-
-[node name="Polygon2D4" type="Polygon2D" parent="Node2D/LidOpen"]
-polygon = PoolVector2Array( 3, -18, 2, -21, 0, -24, 32, -24, 30, -21, 29, -18 )
-vertex_colors = PoolColorArray( 0.321569, 0.321569, 0.321569, 1, 0.439216, 0.439216, 0.439216, 1, 0.67, 0.67, 0.67, 1, 0.67, 0.67, 0.67, 1, 0.439216, 0.439216, 0.439216, 1, 0.321569, 0.321569, 0.321569, 1 )
-
-[node name="Polygon2D" type="Polygon2D" parent="Node2D/LidOpen/Polygon2D4"]
-polygon = PoolVector2Array( 0, -24, 3, -28, 10, -30, 21, -30, 29, -28, 32, -24 )
-vertex_colors = PoolColorArray( 1, 1, 1, 1, 0.77, 0.77, 0.77, 1, 0.77, 0.77, 0.77, 1, 1, 1, 1, 1 )
+color = Color( 0.431373, 0.32549, 0.0862745, 1 )
+polygon = PoolVector2Array( 0, -32, -2, -28, 34, -28, 32, -32 )
 
 [node name="LidClosed" type="Node2D" parent="Node2D"]
 visible = false
@@ -43,7 +28,7 @@ position = Vector2( 0, -30 )
 
 [node name="FrontUpper" type="Polygon2D" parent="Node2D/LidClosed"]
 position = Vector2( 0, 30 )
-color = Color( 0.43, 0.3268, 0.086, 1 )
+color = Color( 0.431373, 0.32549, 0.0862745, 1 )
 polygon = PoolVector2Array( 3, -8, 0.486494, -12.1892, 0, -13, 32, -13, 29, -8 )
 
 [node name="Top" type="Polygon2D" parent="Node2D/LidClosed"]

@@ -2,7 +2,7 @@ using Godot;
 
 namespace ShiftingSepulcher
 {
-    public class Key : Node2D
+    public class KeyChest : Node2D
     {
         [Export] public int KeyId;
 

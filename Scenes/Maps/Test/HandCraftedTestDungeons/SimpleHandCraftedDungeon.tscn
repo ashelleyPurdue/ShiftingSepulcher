@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scenes/Maps/Test/HandCraftedTestDungeons/HandCraftedTestDungeonBase.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Room2D.cs" type="Script" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Scenes/Prefabs/Enemies/Zombie.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/Prefabs/Doors/StairsDownTile.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/Prefabs/Doors/StairsUpTile.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/Prefabs/Elements/KeyChest.tscn" type="PackedScene" id=10]
 
 [node name="SimpleHandCraftedDungeon" instance=ExtResource( 1 )]
 
@@ -35,6 +36,10 @@ TargetEntrancePath = NodePath("../../LeftRoom/EastDoor")
 [node name="StairsDownTile" parent="HandCraftedDungeonInstantiator/StartRoom" index="2" instance=ExtResource( 8 )]
 position = Vector2( -32, -192 )
 TargetEntrancePath = NodePath("../../Basement/StairsUpTile")
+
+[node name="KeyChest" parent="HandCraftedDungeonInstantiator/StartRoom" index="3" instance=ExtResource( 10 )]
+position = Vector2( -128, 64 )
+KeyId = 1
 
 [node name="LeftRoom" type="Node2D" parent="HandCraftedDungeonInstantiator" index="1"]
 position = Vector2( -576, 0 )

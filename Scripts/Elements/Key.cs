@@ -18,13 +18,10 @@ namespace ShiftingSepulcher
         {
             if (_opened)
                 return;
-
-            // TODO: Play the opening animation
-            GetNode<ChestModel>("%ChestModel").OpenPercent = 1;
-
             _opened = true;
+
             PlayerInventory.CollectKey(KeyId);
-            GetNode<LingeringAudioStreamPlayer>("%CollectSound").Play();
+            GetNode<AnimationPlayer>("%AnimationPlayer").ResetAndPlay("Open");
         }
     }
 }

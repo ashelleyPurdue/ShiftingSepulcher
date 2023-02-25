@@ -34,7 +34,7 @@ polygon = PoolVector2Array( 3, -18, 2, -21, 0, -24, 32, -24, 30, -21, 29, -18 )
 vertex_colors = PoolColorArray( 0.321569, 0.321569, 0.321569, 1, 0.439216, 0.439216, 0.439216, 1, 0.67, 0.67, 0.67, 1, 0.67, 0.67, 0.67, 1, 0.439216, 0.439216, 0.439216, 1, 0.321569, 0.321569, 0.321569, 1 )
 
 [node name="Polygon2D" type="Polygon2D" parent="Node2D/LidOpen/Polygon2D4"]
-polygon = PoolVector2Array( 0, -24, 2, -26, 30, -26, 32, -24 )
+polygon = PoolVector2Array( 0, -24, 3, -28, 10, -30, 21, -30, 29, -28, 32, -24 )
 vertex_colors = PoolColorArray( 1, 1, 1, 1, 0.77, 0.77, 0.77, 1, 0.77, 0.77, 0.77, 1, 1, 1, 1, 1 )
 
 [node name="LidClosed" type="Node2D" parent="Node2D"]

@@ -1,0 +1,20 @@
+[gd_scene format=2]
+
+[node name="ChestModel" type="Node2D"]
+
+[node name="FrontLower" type="Polygon2D" parent="."]
+color = Color( 0.490196, 0.388235, 0.156863, 1 )
+polygon = PoolVector2Array( 8, 0, 4, -4, 28, -4, 24, 0 )
+
+[node name="FrontUpper" type="Polygon2D" parent="."]
+color = Color( 0.43, 0.3268, 0.086, 1 )
+polygon = PoolVector2Array( 4, -4, 0, -8, 32, -8, 28, -4 )
+
+[node name="Top" type="Polygon2D" parent="."]
+color = Color( 0.3, 0.228, 0.06, 1 )
+polygon = PoolVector2Array( 0, -8, 0, -24, 32, -24, 32, -8 )
+
+[node name="Latch" type="Polygon2D" parent="."]
+position = Vector2( 16, -4 )
+scale = Vector2( 0.25, 0.25 )
+polygon = PoolVector2Array( -4, 4, -12, -4, 12, -4, 4, 4 )

@@ -4,19 +4,23 @@
 
 [node name="Node2D" type="Node2D" parent="."]
 
+[node name="Inside" type="Polygon2D" parent="Node2D"]
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 3, -8, 3, -24, 29, -24, 29, -8 )
+
 [node name="FrontLower" type="Polygon2D" parent="Node2D"]
 color = Color( 0.490196, 0.388235, 0.156863, 1 )
-polygon = PoolVector2Array( 8, 0, 4, -6, 28, -6, 24, 0 )
+polygon = PoolVector2Array( 8, 0, 3, -8, 29, -8, 24, 0 )
 
 [node name="FrontUpper" type="Polygon2D" parent="Node2D"]
 color = Color( 0.43, 0.3268, 0.086, 1 )
-polygon = PoolVector2Array( 4, -6, 0, -13, 32, -13, 28, -6 )
+polygon = PoolVector2Array( 3, -8, 0.486494, -12.1892, 0, -13, 32, -13, 29, -8 )
 
 [node name="Top" type="Polygon2D" parent="Node2D"]
 color = Color( 0.38, 0.28766, 0.0722, 1 )
 polygon = PoolVector2Array( 0, -13, 0, -30, 32, -30, 32, -13 )
 
 [node name="Latch" type="Polygon2D" parent="Node2D"]
-position = Vector2( 16, -6 )
+position = Vector2( 16, -8 )
 color = Color( 0.71, 0.665625, 0.1775, 1 )
 polygon = PoolVector2Array( -2, 3, -4, -2, 4, -2, 2, 3 )

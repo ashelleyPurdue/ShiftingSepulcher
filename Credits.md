@@ -51,6 +51,10 @@ Fireball sound effect:
     https://opengameart.org/content/fireball-1
     Author: Julien Matthey
 
+100 CC0 SFX:
+    https://opengameart.org/content/100-cc0-sfx
+    Author: rubberdeck
+
 Controller button icons:
     https://thoseawesomeguys.com/prompts/
     Author: Nicolae (XELU) Berbece

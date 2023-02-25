@@ -2,19 +2,21 @@
 
 [node name="ChestModel" type="Node2D"]
 
-[node name="FrontLower" type="Polygon2D" parent="."]
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="FrontLower" type="Polygon2D" parent="Node2D"]
 color = Color( 0.490196, 0.388235, 0.156863, 1 )
-polygon = PoolVector2Array( 8, 0, 4, -4, 28, -4, 24, 0 )
+polygon = PoolVector2Array( 8, 0, 4, -6, 28, -6, 24, 0 )
 
-[node name="FrontUpper" type="Polygon2D" parent="."]
+[node name="FrontUpper" type="Polygon2D" parent="Node2D"]
 color = Color( 0.43, 0.3268, 0.086, 1 )
-polygon = PoolVector2Array( 4, -4, 0, -8, 32, -8, 28, -4 )
+polygon = PoolVector2Array( 4, -6, 0, -13, 32, -13, 28, -6 )
 
-[node name="Top" type="Polygon2D" parent="."]
-color = Color( 0.3, 0.228, 0.06, 1 )
-polygon = PoolVector2Array( 0, -8, 0, -24, 32, -24, 32, -8 )
+[node name="Top" type="Polygon2D" parent="Node2D"]
+color = Color( 0.38, 0.28766, 0.0722, 1 )
+polygon = PoolVector2Array( 0, -13, 0, -30, 32, -30, 32, -13 )
 
-[node name="Latch" type="Polygon2D" parent="."]
-position = Vector2( 16, -4 )
-scale = Vector2( 0.25, 0.25 )
-polygon = PoolVector2Array( -4, 4, -12, -4, 12, -4, 4, 4 )
+[node name="Latch" type="Polygon2D" parent="Node2D"]
+position = Vector2( 16, -6 )
+color = Color( 0.71, 0.665625, 0.1775, 1 )
+polygon = PoolVector2Array( -2, 3, -4, -2, 4, -2, 2, 3 )

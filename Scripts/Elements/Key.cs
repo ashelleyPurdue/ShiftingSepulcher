@@ -6,20 +6,24 @@ namespace ShiftingSepulcher
     {
         [Export] public int KeyId;
 
+        private bool _opened = false;
+
         public override void _Ready()
         {
-            // Color the key according to its id
-            Modulate = KeyColors.ForId(KeyId);
+            // // Color the key according to its id
+            // Modulate = KeyColors.ForId(KeyId);
         }
 
-        private void BodyEntered(object body)
+        public void OnInteracted()
         {
-            if (body is Player)
-            {
-                PlayerInventory.CollectKey(KeyId);
-                GetNode<LingeringAudioStreamPlayer>("%CollectSound").Play();
-                QueueFree();
-            }
+            if (_opened)
+                return;
+
+            // TODO: Play the opening animation
+
+            _opened = true;
+            PlayerInventory.CollectKey(KeyId);
+            GetNode<LingeringAudioStreamPlayer>("%CollectSound").Play();
         }
     }
 }

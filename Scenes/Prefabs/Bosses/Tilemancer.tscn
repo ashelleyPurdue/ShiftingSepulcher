@@ -1,6 +1,6 @@
 [gd_scene load_steps=32 format=2]
 
-[ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/TilemancerTile.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Prefabs/Projectiles/TilemancerTile.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Bosses/Tilemancer.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/MiscNodes/HitBox.cs" type="Script" id=3]
 [ext_resource path="res://Scripts/Components/HurtFlasherComponent.cs" type="Script" id=4]

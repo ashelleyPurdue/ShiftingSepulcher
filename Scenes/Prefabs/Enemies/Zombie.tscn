@@ -1,12 +1,12 @@
 [gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://Scripts/Components/Area2DComponent.cs" type="Script" id=1]
-[ext_resource path="res://Scenes/ComponentCollections/StandardEnemyComponents.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scripts/MiscNodes/HitBox.cs" type="Script" id=3]
-[ext_resource path="res://Scripts/Enemies/Zombie.cs" type="Script" id=5]
-[ext_resource path="res://Scripts/MiscNodes/LingeringAudioStreamPlayer.cs" type="Script" id=9]
-[ext_resource path="res://Audio/SFX/EnemyDeath.wav" type="AudioStream" id=10]
-[ext_resource path="res://Scenes/Models/ZombieModel.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Audio/SFX/EnemyDeath.wav" type="AudioStream" id=1]
+[ext_resource path="res://Scripts/Enemies/Zombie.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/MiscNodes/LingeringAudioStreamPlayer.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/MiscNodes/HitBox.cs" type="Script" id=4]
+[ext_resource path="res://Scenes/ComponentCollections/StandardEnemyComponents.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Models/ZombieModel.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scripts/Components/Area2DComponent.cs" type="Script" id=7]
 
 [sub_resource type="CircleShape2D" id=9]
 radius = 14.0
@@ -282,15 +282,15 @@ collision_layer = 0
 collision_mask = 3
 
 [node name="AI" type="Node" parent="."]
-script = ExtResource( 5 )
+script = ExtResource( 2 )
 
-[node name="StandardEnemyComponents" parent="." instance=ExtResource( 2 )]
+[node name="StandardEnemyComponents" parent="." instance=ExtResource( 5 )]
 
 [node name="HealthPointsComponent" parent="StandardEnemyComponents" index="1"]
 MaxHealth = 2
 
 [node name="HurtBox" type="Area2D" parent="."]
-script = ExtResource( 1 )
+script = ExtResource( 7 )
 
 [node name="HurtBoxShape" type="CollisionShape2D" parent="HurtBox"]
 shape = SubResource( 9 )
@@ -312,7 +312,7 @@ visible = false
 shape = SubResource( 7 )
 
 [node name="HitBox" type="Area2D" parent="."]
-script = ExtResource( 3 )
+script = ExtResource( 4 )
 IgnoredHealthPoints = [ NodePath("../StandardEnemyComponents/HealthPointsComponent") ]
 
 [node name="HitBoxShape" type="CollisionShape2D" parent="HitBox"]
@@ -321,11 +321,11 @@ shape = SubResource( 10 )
 [node name="Visuals" type="Node2D" parent="."]
 unique_name_in_owner = true
 
-[node name="ZombieModel" parent="Visuals" instance=ExtResource( 11 )]
+[node name="ZombieModel" parent="Visuals" instance=ExtResource( 6 )]
 
 [node name="DeathSound" type="Node" parent="."]
-script = ExtResource( 9 )
-Sound = ExtResource( 10 )
+script = ExtResource( 3 )
+Sound = ExtResource( 1 )
 VolumeLinear = 2.0
 
 [connection signal="body_entered" from="VisionCircle" to="AI" method="OnVisionCircleBodyEntered" flags=3]

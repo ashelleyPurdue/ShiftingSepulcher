@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scenes/Prefabs/Elements/Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Scenes/Prefabs/Elements/Enemies/Zombie.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scenes/Prefabs/Elements/ItemPickups/RecoveryHeart.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scenes/Prefabs/Elements/Enemies/MiniTilemancer.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Prefabs/Enemies/Zombie.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Prefabs/ItemPickups/RecoveryHeart.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Prefabs/Enemies/MiniTilemancer.tscn" type="PackedScene" id=4]
 
 [node name="Node2D" type="Node2D"]
 

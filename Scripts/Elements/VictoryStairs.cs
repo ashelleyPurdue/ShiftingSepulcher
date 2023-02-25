@@ -2,9 +2,9 @@ using Godot;
 
 namespace ShiftingSepulcher
 {
-    public class VictoryChest : Node2D
+    public class VictoryStairs : Node2D
     {
-        private void OpenChestTriggerBodyEntered(object body)
+        private void TriggerBodyEntered(object body)
         {
             if (body is Player)
             {

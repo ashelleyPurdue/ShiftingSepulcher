@@ -5,7 +5,7 @@
 [ext_resource path="res://Scripts/MiscNodes/HitBox.cs" type="Script" id=3]
 [ext_resource path="res://Scripts/Components/HurtFlasherComponent.cs" type="Script" id=4]
 [ext_resource path="res://Scripts/Components/Area2DComponent.cs" type="Script" id=5]
-[ext_resource path="res://Scenes/Prefabs/Elements/VictoryChest.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/Prefabs/Elements/VictoryStairs.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Fonts/The Wild Breath of Zelda.otf" type="DynamicFontData" id=7]
 [ext_resource path="res://Audio/Music/BossIntro.tres" type="Resource" id=8]
 [ext_resource path="res://Audio/Music/BossMusic.tres" type="Resource" id=9]

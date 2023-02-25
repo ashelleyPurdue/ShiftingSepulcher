@@ -6,8 +6,6 @@ namespace ShiftingSepulcher
     {
         [Export] public int KeyId;
 
-        private bool _opened = false;
-
         public override void _Ready()
         {
             // // Color the key according to its id
@@ -16,11 +14,9 @@ namespace ShiftingSepulcher
 
         public void OnInteracted()
         {
-            if (_opened)
-                return;
-            _opened = true;
-
+            this.GetComponent<InteractableComponent>().InteractEnabled = false;
             PlayerInventory.CollectKey(KeyId);
+
             GetNode<AnimationPlayer>("%AnimationPlayer").ResetAndPlay("Open");
         }
     }

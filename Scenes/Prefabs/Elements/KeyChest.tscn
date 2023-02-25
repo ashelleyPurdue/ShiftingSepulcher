@@ -19,7 +19,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.4 ),
+"times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ 0.0, 1.0 ]
@@ -36,7 +36,7 @@ tracks/1/keys = {
 "start_offset": 0.0,
 "stream": ExtResource( 2 )
 } ],
-"times": PoolRealArray( 0 )
+"times": PoolRealArray( 0.2 )
 }
 
 [sub_resource type="Animation" id=5]

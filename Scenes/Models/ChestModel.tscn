@@ -64,8 +64,8 @@ transform = Transform( 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0, 1, 0, 0.623248
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.28482, 5.96046e-08, 0 )
 
 [node name="RenderTexture" type="Polygon2D" parent="."]
-position = Vector2( 0, 11 )
-scale = Vector2( 2.3125, 3.2 )
+position = Vector2( 0, 16 )
+scale = Vector2( 2.60156, 3.2 )
 texture = SubResource( 1 )
 texture_offset = Vector2( 15.6, 23 )
 texture_scale = Vector2( 32, 32 )

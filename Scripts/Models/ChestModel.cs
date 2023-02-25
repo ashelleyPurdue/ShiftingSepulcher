@@ -8,7 +8,18 @@ namespace ShiftingSepulcher
         public override void _Process(float delta)
         {
             var animator = GetNode<AnimationPlayer>("%OpenAnim");
-            animator.Advance(OpenPercent);
+
+            float pos = animator.CurrentAnimationPosition;
+            if (pos > OpenPercent)
+            {
+                animator.Stop(true);
+                animator.Advance(OpenPercent);
+            }
+            else
+            {
+                float diff = OpenPercent - pos;
+                animator.Advance(diff);
+            }
         }
     }
 }

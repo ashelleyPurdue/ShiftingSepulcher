@@ -30,6 +30,9 @@ namespace ShiftingSepulcher
             {
                 if (((Node)hit).HasComponent<InteractableComponent>(out var i))
                 {
+                    if (!i.InteractEnabled)
+                        continue;
+
                     HighlightedObject = i;
                     return;
                 }

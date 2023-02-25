@@ -1,9 +1,9 @@
 [gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://Scripts/Projectiles/SpawningSpell.cs" type="Script" id=1]
-[ext_resource path="res://Audio/SFX/BombellaProjectileSpawn.wav" type="AudioStream" id=2]
-[ext_resource path="res://Scripts/MiscNodes/LingeringAudioStreamPlayer.cs" type="Script" id=3]
-[ext_resource path="res://Audio/SFX/Poof.wav" type="AudioStream" id=4]
+[ext_resource path="res://Audio/SFX/BombellaProjectileSpawn.wav" type="AudioStream" id=1]
+[ext_resource path="res://Audio/SFX/Poof.wav" type="AudioStream" id=2]
+[ext_resource path="res://Scripts/Projectiles/SpawningSpell.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/MiscNodes/LingeringAudioStreamPlayer.cs" type="Script" id=4]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.53202, 0.997537 )
@@ -37,17 +37,17 @@ hue_variation = 0.68
 hue_variation_random = 1.0
 
 [node name="SpawningSpell" type="Node2D"]
-script = ExtResource( 1 )
+script = ExtResource( 3 )
 
 [node name="AppearSound" type="Node" parent="."]
-script = ExtResource( 3 )
-Sound = ExtResource( 2 )
+script = ExtResource( 4 )
+Sound = ExtResource( 1 )
 Autoplay = true
 
 [node name="PoofSound" type="Node" parent="."]
 unique_name_in_owner = true
-script = ExtResource( 3 )
-Sound = ExtResource( 4 )
+script = ExtResource( 4 )
+Sound = ExtResource( 2 )
 VolumeLinear = 2.0
 
 [node name="Particles2D" type="Particles2D" parent="."]

@@ -1,15 +1,15 @@
 [gd_scene load_steps=23 format=2]
 
-[ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=1]
-[ext_resource path="res://Scenes/Renderers/Circle2D.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scripts/Components/Area2DComponent.cs" type="Script" id=3]
-[ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/Explosion.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Scripts/Projectiles/Bomb.cs" type="Script" id=6]
-[ext_resource path="res://Audio/SFX/SingleBombTick.wav" type="AudioStream" id=7]
-[ext_resource path="res://Audio/SFX/BombFuseHiss.ogg" type="AudioStream" id=8]
-[ext_resource path="res://Scripts/MiscNodes/GroupDetectorArea2D.cs" type="Script" id=9]
-[ext_resource path="res://Scripts/Components/InteractableComponent.cs" type="Script" id=10]
-[ext_resource path="res://Scripts/Components/HoldableComponent.cs" type="Script" id=11]
+[ext_resource path="res://Scripts/Projectiles/Bomb.cs" type="Script" id=1]
+[ext_resource path="res://Audio/SFX/SingleBombTick.wav" type="AudioStream" id=2]
+[ext_resource path="res://Audio/SFX/BombFuseHiss.ogg" type="AudioStream" id=3]
+[ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=4]
+[ext_resource path="res://Scripts/MiscNodes/GroupDetectorArea2D.cs" type="Script" id=5]
+[ext_resource path="res://Scenes/Renderers/Circle2D.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/Prefabs/Projectiles/Explosion.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scripts/Components/InteractableComponent.cs" type="Script" id=8]
+[ext_resource path="res://Scripts/Components/HoldableComponent.cs" type="Script" id=9]
+[ext_resource path="res://Scripts/Components/Area2DComponent.cs" type="Script" id=10]
 
 [sub_resource type="CircleShape2D" id=3]
 radius = 32.0
@@ -57,7 +57,7 @@ tracks/2/keys = {
 "clips": [ {
 "end_offset": 0.0,
 "start_offset": 0.0,
-"stream": ExtResource( 8 )
+"stream": ExtResource( 3 )
 } ],
 "times": PoolRealArray( 0 )
 }
@@ -113,7 +113,7 @@ tracks/1/keys = {
 "clips": [ {
 "end_offset": 0.0,
 "start_offset": 0.0,
-"stream": ExtResource( 7 )
+"stream": ExtResource( 2 )
 } ],
 "times": PoolRealArray( 0 )
 }
@@ -181,7 +181,7 @@ tracks/1/keys = {
 "clips": [ {
 "end_offset": 0.0,
 "start_offset": 0.0,
-"stream": ExtResource( 7 )
+"stream": ExtResource( 2 )
 } ],
 "times": PoolRealArray( 0 )
 }
@@ -222,7 +222,7 @@ tracks/1/keys = {
 "clips": [ {
 "end_offset": 0.0,
 "start_offset": 0.0,
-"stream": ExtResource( 7 )
+"stream": ExtResource( 2 )
 } ],
 "times": PoolRealArray( 0 )
 }
@@ -240,7 +240,7 @@ tracks/2/keys = {
 }
 
 [sub_resource type="GradientTexture2D" id=2]
-gradient = ExtResource( 1 )
+gradient = ExtResource( 4 )
 width = 32
 height = 32
 fill = 1
@@ -263,19 +263,19 @@ color = Color( 0.952941, 0.760784, 0, 1 )
 
 [node name="Bomb" type="KinematicBody2D"]
 z_index = 2
-script = ExtResource( 6 )
-ExplosionPrefab = ExtResource( 5 )
+script = ExtResource( 1 )
+ExplosionPrefab = ExtResource( 7 )
 
 [node name="HoldableComponent" type="Node" parent="."]
-script = ExtResource( 11 )
+script = ExtResource( 9 )
 Visuals = NodePath("../Visuals")
 Shadow = NodePath("../Shadow")
 
 [node name="InteractableComponent" type="Node" parent="."]
-script = ExtResource( 10 )
+script = ExtResource( 8 )
 
 [node name="Area2DComponent" type="Area2D" parent="."]
-script = ExtResource( 3 )
+script = ExtResource( 10 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2DComponent"]
 shape = SubResource( 3 )
@@ -287,7 +287,7 @@ position = Vector2( -33, -43 )
 shape = SubResource( 1 )
 
 [node name="InstantDetonateDetector" type="Area2D" parent="."]
-script = ExtResource( 9 )
+script = ExtResource( 5 )
 GroupsToDetect = PoolStringArray( "DetonatesBombs" )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InstantDetonateDetector"]
@@ -310,7 +310,7 @@ texture = SubResource( 2 )
 
 [node name="Visuals" type="Node2D" parent="."]
 
-[node name="Circle2D" parent="Visuals" instance=ExtResource( 2 )]
+[node name="Circle2D" parent="Visuals" instance=ExtResource( 6 )]
 position = Vector2( 0, -8 )
 Radius = 14.0
 Color = Color( 0, 0.180392, 0.658824, 1 )
@@ -330,12 +330,12 @@ local_coords = false
 process_material = SubResource( 11 )
 
 [node name="TickSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 7 )
+stream = ExtResource( 2 )
 pitch_scale = 2.0
 bus = "Sound"
 
 [node name="FuseHissSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 8 )
+stream = ExtResource( 3 )
 bus = "Sound"
 
 [connection signal="HitWall" from="HoldableComponent" to="." method="Detonate"]

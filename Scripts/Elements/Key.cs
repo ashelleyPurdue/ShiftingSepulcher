@@ -20,6 +20,7 @@ namespace ShiftingSepulcher
                 return;
 
             // TODO: Play the opening animation
+            GetNode<ChestModel>("%ChestModel").OpenPercent = 1;
 
             _opened = true;
             PlayerInventory.CollectKey(KeyId);

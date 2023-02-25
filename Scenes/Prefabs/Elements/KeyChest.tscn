@@ -38,5 +38,6 @@ VolumeLinear = 0.4
 shape = SubResource( 2 )
 
 [node name="ChestModel" parent="." instance=ExtResource( 5 )]
+unique_name_in_owner = true
 
 [connection signal="Interacted" from="InteractableComponent" to="." method="OnInteracted"]

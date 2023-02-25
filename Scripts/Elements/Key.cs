@@ -8,8 +8,8 @@ namespace ShiftingSepulcher
 
         public override void _Ready()
         {
-            // // Color the key according to its id
-            // Modulate = KeyColors.ForId(KeyId);
+            // Color the key according to its id
+            GetNode<Node2D>("%KeySprite").Modulate = KeyColors.ForId(KeyId);
         }
 
         public void OnInteracted()

@@ -37,7 +37,6 @@ namespace ShiftingSepulcher
                         .Last();
 
                     runEndRoom.KeyId = runNumber + 1;
-                    runEndRoom.ChallengeType = ChallengeType.Key;
 
                     // Pick a random room to start this run in.
                     // Don't pick the room where we hid this run's key, because that

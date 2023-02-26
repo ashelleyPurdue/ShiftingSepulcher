@@ -73,6 +73,11 @@ position = Vector2( -288, 0 )
 rotation = -1.5708
 script = ExtResource( 3 )
 
+[node name="ChestSpawns" type="Node2D" parent="BaseEmptyRoom"]
+unique_name_in_owner = true
+
+[node name="Center" type="Position2D" parent="BaseEmptyRoom/ChestSpawns"]
+
 [node name="EnemyContainmentBarrier" type="StaticBody2D" parent="BaseEmptyRoom"]
 collision_layer = 2
 collision_mask = 0

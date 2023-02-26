@@ -22,6 +22,8 @@ namespace ShiftingSepulcher
         private IChallenge[] _challenges;
         private bool _sentChallengeSolvedSignal = false;
 
+        private KeyChest _keyChest = null;
+
         public virtual Node2D GetDoorSpawn(CardinalDirection dir)
         {
             return GetNode<Node2D>($"%DoorSpawns/{dir}");
@@ -29,7 +31,7 @@ namespace ShiftingSepulcher
 
         public override void _PhysicsProcess(float deltaTime)
         {
-            // Open all door bars if the the challenge has been solved
+            // Detect when the challenge is solved
             if (!_sentChallengeSolvedSignal && IsChallengeSolved())
             {
                 _sentChallengeSolvedSignal = true;
@@ -39,10 +41,7 @@ namespace ShiftingSepulcher
                     EmitSignal(nameof(ChallengeSolved));
                 }
 
-                foreach (var bars in this.AllDescendantsOfType<DoorBars>())
-                {
-                    bars.IsOpened = true;
-                }
+                OnChallengeSolved();
             }
         }
 
@@ -59,6 +58,24 @@ namespace ShiftingSepulcher
             // Gather up all IChallenge nodes, so we don't need to do a full
             // traversal every frame
             _challenges = this.AllDescendantsOfType<IChallenge>().ToArray();
+
+            // Create (but do not reveal) a key chest, if there is a key in
+            // this room.  The chest will be revealed when the room's challenge
+            // is solved.
+            if (layoutRoom.TreeRoom.KeyId > 0)
+            {
+                _keyChest = DoorPrefabs.KeyChest.Instance<KeyChest>();
+                _keyChest.KeyId = layoutRoom.TreeRoom.KeyId;
+
+                // Choose a random location for the chest, from a set of
+                // potential spawn points
+                var spawnPoints = GetNode("%ChestSpawns")
+                    .EnumerateChildren()
+                    .Cast<Node2D>()
+                    .Select(n => n.Position);
+
+                _keyChest.Position = rng.PickFrom(spawnPoints);
+            }
         }
 
         public void ConnectDoors(
@@ -151,6 +168,21 @@ namespace ShiftingSepulcher
                 return true;
 
             return _challenges.All(c => c.IsSolved());
+        }
+
+        private void OnChallengeSolved()
+        {
+            // Open all barred doors
+            foreach (var bars in this.AllDescendantsOfType<DoorBars>())
+            {
+                bars.IsOpened = true;
+            }
+
+            // Reveal the key chest, if there is a chest in this room
+            if (_keyChest != null)
+            {
+                AddChild(_keyChest);
+            }
         }
     }
 }

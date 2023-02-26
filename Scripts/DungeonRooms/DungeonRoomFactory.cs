@@ -8,7 +8,6 @@ namespace ShiftingSepulcher
     public class DungeonRoomFactory : Node
     {
         [Export] public PackedScene EmptyRoom;
-        [Export] public PackedScene KeyRoom;
 
         public IDungeonRoom BuildRoom(DungeonLayoutRoom layoutRoom)
         {

@@ -11,16 +11,16 @@ DoorPrefabs = null
 [node name="KillAllEnemiesChallenge" type="Node" parent="." index="0"]
 script = ExtResource( 3 )
 
-[node name="TrashMobSpawn" parent="." index="5" instance=ExtResource( 2 )]
+[node name="TrashMobSpawn" parent="." index="2" instance=ExtResource( 2 )]
 position = Vector2( -192, -192 )
 
-[node name="TrashMobSpawn2" parent="." index="6" instance=ExtResource( 2 )]
+[node name="TrashMobSpawn2" parent="." index="3" instance=ExtResource( 2 )]
 position = Vector2( 192, -192 )
 
-[node name="TrashMobSpawn3" parent="." index="7" instance=ExtResource( 2 )]
+[node name="TrashMobSpawn3" parent="." index="4" instance=ExtResource( 2 )]
 position = Vector2( -192, 192 )
 
-[node name="TrashMobSpawn4" parent="." index="8" instance=ExtResource( 2 )]
+[node name="TrashMobSpawn4" parent="." index="5" instance=ExtResource( 2 )]
 position = Vector2( 192, 192 )
 
-[node name="RandomWallsPopulator" parent="." index="9" instance=ExtResource( 4 )]
+[node name="RandomWallsPopulator" parent="." index="6" instance=ExtResource( 4 )]

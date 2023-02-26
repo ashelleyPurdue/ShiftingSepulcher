@@ -89,6 +89,11 @@ polygon = PoolVector2Array( -96, -96, -64, -96, -64, -64, -96, -64 )
 position = Vector2( -80, -80 )
 shape = SubResource( 1 )
 
+[node name="ChestSpawns" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Center" type="Position2D" parent="ChestSpawns"]
+
 [node name="EnemyContainmentBarrier" type="StaticBody2D" parent="."]
 visible = false
 collision_layer = 2

@@ -1,17 +1,15 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/PhysicalDungeons/RandomDungeonInstantiator.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/DungeonRooms/DungeonRoomFactory.cs" type="Script" id=2]
 [ext_resource path="res://Scenes/Prefabs/Elements/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Audio/Music/JRPG_labyrinth_loop.tres" type="Resource" id=4]
-[ext_resource path="res://Scenes/Prefabs/DungeonRoomTemplates/KeyRoom.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Prefabs/DungeonRoomTemplates/EmptyRoom.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/SpawnTables/RoomTemplates/BossRoomSpawnTable.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/SpawnTables/RoomTemplates/CombatRoomSpawnTable.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/SpawnTables/RoomTemplates/FillerRoomSpawnTable.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/Prefabs/RoomTransitionManager.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/SpawnTables/RoomTemplates/PuzzleRoomSpawnTable.tscn" type="PackedScene" id=15]
-[ext_resource path="res://Scenes/SpawnTables/RoomTemplates/KeyRoomSpawnTable.tscn" type="PackedScene" id=16]
 
 [node name="Node2D" type="Node2D"]
 
@@ -34,13 +32,10 @@ unique_name_in_owner = true
 
 [node name="Puzzle" parent="DungeonInstantiator/ChallengeTypeSpawnTables" instance=ExtResource( 15 )]
 
-[node name="Key" parent="DungeonInstantiator/ChallengeTypeSpawnTables" instance=ExtResource( 16 )]
-
 [node name="RoomFactory" type="Node" parent="DungeonInstantiator"]
 unique_name_in_owner = true
 script = ExtResource( 2 )
 EmptyRoom = ExtResource( 6 )
-KeyRoom = ExtResource( 5 )
 
 [node name="TreeTemplates" type="Node" parent="DungeonInstantiator"]
 unique_name_in_owner = true

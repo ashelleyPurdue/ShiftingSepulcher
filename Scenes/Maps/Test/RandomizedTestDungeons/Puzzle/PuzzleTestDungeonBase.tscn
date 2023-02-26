@@ -28,7 +28,9 @@ script = ExtResource( 3 )
 [node name="Puzzle" type="Node" parent="DungeonInstantiator/TreeTemplates/JustThePuzzle/Root" index="0"]
 script = ExtResource( 3 )
 ChallengeType = 1
+KeyId = 1
 
-[node name="Victory" type="Node" parent="DungeonInstantiator/TreeTemplates/JustThePuzzle/Root/Puzzle" index="0"]
+[node name="Victory" type="Node" parent="DungeonInstantiator/TreeTemplates/JustThePuzzle/Root" index="1"]
 script = ExtResource( 3 )
 ChallengeType = 4
+LockId = 1

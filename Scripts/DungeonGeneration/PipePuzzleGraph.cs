@@ -241,6 +241,20 @@ namespace ShiftingSepulcher
             return _cells.Select(kvp => kvp.Key);
         }
 
+        public IEnumerable<Vector2i> AllEmptyCells()
+        {
+            for (int x = 0; x < Width; x++)
+            {
+                for (int y = 0; y < Height; y++)
+                {
+                    var pos = new Vector2i(x, y);
+
+                    if (IsCellEmpty(pos))
+                        yield return pos;
+                }
+            }
+        }
+
         public IEnumerable<Vector2i> AllPipes()
         {
             return _cells

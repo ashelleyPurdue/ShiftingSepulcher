@@ -9,12 +9,6 @@ namespace ShiftingSepulcher
 
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
 
-        public override void _Ready()
-        {
-            // Color the key according to its id
-            GetNode<Node2D>("%KeySprite").Modulate = KeyColors.ForId(KeyId);
-        }
-
         public override void _ExitTree()
         {
             // Skip to the end of the opening animation if the player leaves the
@@ -31,6 +25,9 @@ namespace ShiftingSepulcher
             PlayerInventory.CollectKey(KeyId);
 
            _animator.ResetAndPlay("Open");
+
+            // Color the key according to its id
+            GetNode<Node2D>("%KeySprite").Modulate = KeyColors.ForId(KeyId);
         }
     }
 }

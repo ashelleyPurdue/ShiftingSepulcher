@@ -444,7 +444,6 @@ anims/Sepulcher = SubResource( 5 )
 anims/Shifting = SubResource( 1 )
 
 [node name="IntroSoundPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 7 )
 bus = "Sound"
 
 [node name="Background" type="ColorRect" parent="."]

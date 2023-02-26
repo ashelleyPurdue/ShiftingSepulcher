@@ -5,4 +5,4 @@
 
 [node name="EmptyRoom" instance=ExtResource( 1 )]
 
-[node name="Bombella" parent="." index="4" instance=ExtResource( 2 )]
+[node name="Bombella" parent="." index="1" instance=ExtResource( 2 )]

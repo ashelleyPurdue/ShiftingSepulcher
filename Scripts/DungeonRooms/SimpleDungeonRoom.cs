@@ -29,7 +29,7 @@ namespace ShiftingSepulcher
 
         public override void _PhysicsProcess(float deltaTime)
         {
-            // Open all door bars if the the challenge has been solved
+            // Detect when the challenge is solved
             if (!_sentChallengeSolvedSignal && IsChallengeSolved())
             {
                 _sentChallengeSolvedSignal = true;
@@ -39,10 +39,7 @@ namespace ShiftingSepulcher
                     EmitSignal(nameof(ChallengeSolved));
                 }
 
-                foreach (var bars in this.AllDescendantsOfType<DoorBars>())
-                {
-                    bars.IsOpened = true;
-                }
+                OnChallengeSolved();
             }
         }
 
@@ -151,6 +148,23 @@ namespace ShiftingSepulcher
                 return true;
 
             return _challenges.All(c => c.IsSolved());
+        }
+
+        private void OnChallengeSolved()
+        {
+            // Open all barred doors
+            foreach (var bars in this.AllDescendantsOfType<DoorBars>())
+            {
+                bars.IsOpened = true;
+            }
+
+            // Spawn the key chest, if there is a key in this room
+            // TODO: Choose one of many locations to spawn it
+            if (LayoutRoom.TreeRoom.KeyId > 0)
+            {
+                var chest = Create<KeyChest>(this, DoorPrefabs.KeyChest);
+                chest.KeyId = LayoutRoom.TreeRoom.KeyId;
+            }
         }
     }
 }

@@ -826,7 +826,7 @@ tracks/14/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 tracks/15/type = "value"
-tracks/15/path = NodePath("CanvasLayer/BossHealthBar:visible")
+tracks/15/path = NodePath("BossHealthBar:visible")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/imported = false
@@ -1580,7 +1580,7 @@ tracks/46/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 tracks/47/type = "value"
-tracks/47/path = NodePath("CanvasLayer/BossHealthBar:visible")
+tracks/47/path = NodePath("BossHealthBar:visible")
 tracks/47/interp = 1
 tracks/47/loop_wrap = true
 tracks/47/imported = false
@@ -2414,6 +2414,9 @@ Sound = ExtResource( 7 )
 script = ExtResource( 14 )
 Sound = ExtResource( 6 )
 
+[node name="BossHealthBar" parent="." instance=ExtResource( 19 )]
+thing_with_health = NodePath("../HealthPointsComponent")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="BossNameText" type="Label" parent="CanvasLayer"]
@@ -2433,9 +2436,6 @@ custom_constants/shadow_offset_y = 5
 custom_fonts/font = SubResource( 33 )
 text = "Bombella"
 align = 1
-
-[node name="BossHealthBar" parent="CanvasLayer" instance=ExtResource( 19 )]
-thing_with_health = NodePath("../../HealthPointsComponent")
 
 [node name="AttackPatterns" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true

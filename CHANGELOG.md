@@ -5,7 +5,7 @@
 * You can now throw the weighted stones in the scale puzzle.
 * Fixed the "electric circuit" puzzle not being properly scrambled.
 * Fixed a rare crash upon generating a dungeon, caused by the game trying to
-    create a dungeon that can't be laid out with rooms overlapping each other.
+    create a dungeon that can't be laid out without rooms overlapping each other.
     Now the game will place rooms on multiple floors in this scenario.
 
 # 1.0.0: 2023-02-01

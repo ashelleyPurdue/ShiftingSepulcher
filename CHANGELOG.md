@@ -1,4 +1,4 @@
-# 1.1.0: 2023-03-05
+# 1.1.0: Unreleased
 * Spruced up the UI with a custom theme.  No more default Godot controls!
 * Keys are now found inside chests, which appear when you clear the room they're in.
 * A set of stairs now appears when you defeat the boss, instead of a chest.

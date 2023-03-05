@@ -9,3 +9,6 @@
 [node name="BombellaRoom" type="Node" parent="DungeonInstantiator/ChallengeTypeSpawnTables/Boss" index="0"]
 script = ExtResource( 4 )
 Scene = ExtResource( 6 )
+
+[node name="Boss" parent="DungeonInstantiator/TreeTemplates/SpawnAndBoss/Root" index="0"]
+ChallengeType = 3

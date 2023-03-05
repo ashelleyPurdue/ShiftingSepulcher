@@ -175,31 +175,31 @@ tracks/3/keys = {
 "method": "PlaySong"
 } ]
 }
-tracks/4/type = "value"
-tracks/4/path = NodePath("CanvasLayer/BossHealthBar:modulate")
+tracks/4/type = "method"
+tracks/4/path = NodePath("AI")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 4, 4.1 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
-}
-tracks/5/type = "method"
-tracks/5/path = NodePath("AI")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
 "times": PoolRealArray( 4 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
 "method": "OnIntroAnimationFinished"
 } ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("BossHealthBar:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
 }
 
 [sub_resource type="Animation" id=17]
@@ -299,7 +299,7 @@ tracks/7/keys = {
 "values": [ false ]
 }
 tracks/8/type = "value"
-tracks/8/path = NodePath("CanvasLayer/BossHealthBar:modulate")
+tracks/8/path = NodePath("BossHealthBar:visible")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
@@ -308,7 +308,7 @@ tracks/8/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ) ]
+"values": [ true ]
 }
 
 [sub_resource type="Animation" id=15]
@@ -698,6 +698,9 @@ IgnoredHealthPoints = [ NodePath("../../HealthPointsComponent") ]
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Body/HitBox"]
 shape = SubResource( 12 )
 
+[node name="BossHealthBar" parent="." instance=ExtResource( 14 )]
+thing_with_health = NodePath("../HealthPointsComponent")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="BossNameText" type="Label" parent="CanvasLayer"]
@@ -717,9 +720,6 @@ custom_constants/shadow_offset_y = 5
 custom_fonts/font = SubResource( 19 )
 text = "Tilemancer"
 align = 1
-
-[node name="BossHealthBar" parent="CanvasLayer" instance=ExtResource( 14 )]
-thing_with_health = NodePath("../../HealthPointsComponent")
 
 [connection signal="Dead" from="EnemyComponent" to="AI" method="Die"]
 [connection signal="Respawning" from="EnemyComponent" to="AI" method="Respawn"]

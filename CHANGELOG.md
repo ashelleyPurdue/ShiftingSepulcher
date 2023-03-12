@@ -1,3 +1,6 @@
+# 1.1.1: Unreleased
+* Updated to Godot 3.5.2.
+
 # 1.1.0: 2023-03-05
 * Spruced up the UI with a custom theme.  No more default Godot controls!
 * Keys are now found inside chests, which appear when you clear the room they're in.

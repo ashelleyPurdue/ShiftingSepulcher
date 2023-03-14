@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/MiscNodes/HurtBox.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/Renderers/Circle2D.tscn" type="PackedScene" id=2]
@@ -6,6 +6,9 @@
 [ext_resource path="res://Scripts/Components/HealthPointsComponent.cs" type="Script" id=4]
 [ext_resource path="res://Scripts/Components/EnemyComponent.cs" type="Script" id=5]
 [ext_resource path="res://Scripts/Enemies/Chompweed.cs" type="Script" id=6]
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 256.0
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.0
@@ -19,6 +22,12 @@ script = ExtResource( 5 )
 [node name="HealthPointsComponent" type="Node" parent="."]
 script = ExtResource( 4 )
 MaxHealth = 3
+
+[node name="AggroCircle" type="Area2D" parent="."]
+unique_name_in_owner = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AggroCircle"]
+shape = SubResource( 2 )
 
 [node name="Flower" type="Node2D" parent="."]
 modulate = Color( 0.0627451, 0.376471, 0.0941176, 1 )
@@ -40,6 +49,7 @@ rotation = 4.71239
 polygon = PoolVector2Array( -16, -23, -18, -37, 0, -54, 16, -37, 15, -21, 2, 0, -2, 0 )
 
 [node name="Head" type="Node2D" parent="."]
+unique_name_in_owner = true
 position = Vector2( 0, -32 )
 
 [node name="Circle2D" parent="Head" instance=ExtResource( 2 )]

@@ -12,6 +12,8 @@ namespace ShiftingSepulcher
         [Export] public float LungeDistance = 4 * 32;
 
         private Area2D _aggroCircle => GetNode<Area2D>("%AggroCircle");
+        private Area2D _hurtBox => GetNode<Area2D>("%HurtBox");
+        private Area2D _hitBox => GetNode<Area2D>("%HitBox");
         private Node2D _head => GetNode<Node2D>("%Head");
 
         private StateMachine _sm;
@@ -25,6 +27,11 @@ namespace ShiftingSepulcher
         public void OnRespawning()
         {
             _sm.ChangeState(Idle);
+        }
+
+        public void OnDead()
+        {
+            _sm.ChangeState(Dead);
         }
 
         private Node2D SearchForAggroTarget()
@@ -42,6 +49,11 @@ namespace ShiftingSepulcher
         private readonly IState Idle = new IdleState();
         private class IdleState : State<Chompweed>
         {
+            public override void _StateEntered()
+            {
+                Owner._head.Position = Vector2.Zero;
+            }
+
             public override void _PhysicsProcess(float delta)
             {
                 Owner._aggroTarget = Owner.SearchForAggroTarget();
@@ -149,6 +161,32 @@ namespace ShiftingSepulcher
                     Owner._head.Position = endPos;
                     ChangeState(Owner.Idle);
                 }
+            }
+        }
+
+        private readonly IState Dead = new DeadState();
+        private class DeadState : State<Chompweed>
+        {
+            public override void _StateEntered()
+            {
+                // TODO: Play a death animation
+                SetEnabled(false);
+            }
+
+            public override void _StateExited()
+            {
+                SetEnabled(true);
+            }
+
+            private void SetEnabled(bool enabled)
+            {
+                Owner._hurtBox.Monitoring = enabled;
+                Owner._hurtBox.Monitorable = enabled;
+
+                Owner._hitBox.Monitoring = enabled;
+                Owner._hitBox.Monitorable = enabled;
+
+                Owner._head.Visible = enabled;
             }
         }
     }

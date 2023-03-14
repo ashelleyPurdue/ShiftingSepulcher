@@ -62,6 +62,7 @@ Radius = 16.0
 [node name="HurtBox" type="Area2D" parent="Head"]
 unique_name_in_owner = true
 script = ExtResource( 1 )
+RecoilDistance = 64.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Head/HurtBox"]
 shape = SubResource( 1 )

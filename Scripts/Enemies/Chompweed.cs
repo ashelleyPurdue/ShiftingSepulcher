@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Godot;
 
 namespace ShiftingSepulcher
@@ -36,11 +37,22 @@ namespace ShiftingSepulcher
 
         private Node2D SearchForAggroTarget()
         {
-            // TODO: Find enemies, too, not just the player
+            // Prefer attacking the player
             foreach (var body in _aggroCircle.GetOverlappingBodies())
             {
                 if (body is Player p)
                     return p;
+            }
+
+            // If the player isn't there, search for another enemy.
+            // Don't attack other chompweeds.
+            foreach (var other in _aggroCircle.GetOverlappingAreas())
+            {
+                if (!(other is HurtBox otherHurtBox))
+                    continue;
+
+                if (otherHurtBox.FindAncestor<Chompweed>() == null)
+                    return otherHurtBox;
             }
 
             return null;

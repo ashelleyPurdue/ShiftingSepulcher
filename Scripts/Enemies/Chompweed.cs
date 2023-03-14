@@ -20,15 +20,9 @@ namespace ShiftingSepulcher
         public override void _Ready()
         {
             _sm = new StateMachine(this);
-
-            this.GetComponent<EnemyComponent>().Connect(
-                nameof(EnemyComponent.Respawning),
-                this,
-                nameof(OnRespawning)
-            );
         }
 
-        private void OnRespawning()
+        public void OnRespawning()
         {
             _sm.ChangeState(Idle);
         }

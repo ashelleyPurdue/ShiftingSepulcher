@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/MiscNodes/HurtBox.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/Renderers/Circle2D.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Scripts/Components/HealthPointsComponent.cs" type="Script" id=4]
 [ext_resource path="res://Scripts/Components/EnemyComponent.cs" type="Script" id=5]
 [ext_resource path="res://Scripts/Enemies/Chompweed.cs" type="Script" id=6]
+[ext_resource path="res://Scripts/Components/HurtFlasherComponent.cs" type="Script" id=7]
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 256.0
@@ -22,6 +23,9 @@ script = ExtResource( 5 )
 [node name="HealthPointsComponent" type="Node" parent="."]
 script = ExtResource( 4 )
 MaxHealth = 3
+
+[node name="HurtFlasherComponent" type="Node" parent="."]
+script = ExtResource( 7 )
 
 [node name="AggroCircle" type="Area2D" parent="."]
 unique_name_in_owner = true
@@ -68,4 +72,5 @@ IgnoredHurtBoxes = [ NodePath("../HurtBox") ]
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Head/HitBox"]
 shape = SubResource( 1 )
 
+[connection signal="Respawning" from="EnemyComponent" to="." method="OnRespawning"]
 [connection signal="TookDamage" from="Head/HurtBox" to="HealthPointsComponent" method="OnTookDamageFromHitBox"]

@@ -12,8 +12,15 @@ namespace ShiftingSepulcher
 
         [Export] public float LungeDistance = 4 * 32;
 
+        [Export] public float StemCutDamageMult = 2;
+        [Export] public float FreeHeadIdleDuration = 0.5f;
+        [Export] public float FreeHeadLungeDuration = 0.2f;
+        [Export] public float FreeHeadLungeDistance = 3 * 32;
+
         private Area2D _aggroCircle => GetNode<Area2D>("%AggroCircle");
-        private Area2D _hurtBox => GetNode<Area2D>("%HurtBox");
+        private Area2D _freeHeadAggroCircle => GetNode<Area2D>("%FreeHeadAggroCircle");
+        private Area2D _headHurtBox => GetNode<Area2D>("%HeadHurtBox");
+        private Area2D _stemCutHurtBox => GetNode<Area2D>("%StemCutHurtBox");
         private Area2D _hitBox => GetNode<Area2D>("%HitBox");
         private Node2D _head => GetNode<Node2D>("%Head");
 
@@ -35,10 +42,22 @@ namespace ShiftingSepulcher
             _sm.ChangeState(Dead);
         }
 
-        private Node2D SearchForAggroTarget()
+        public void OnStemCutTookDamage(HitBox hitbox)
+        {
+            var healthPoints = this.GetComponent<HealthPointsComponent>();
+
+            // Receive extra damage when the stem is cut
+            int damage = Mathf.RoundToInt(StemCutDamageMult * hitbox.Damage);
+            healthPoints.TakeDamage(damage);
+
+            // Let the head start roaming free
+            _sm.ChangeState(FreeHeadIdling);
+        }
+
+        private Node2D SearchForAggroTarget(Area2D aggroCircle)
         {
             // Prefer attacking the player
-            foreach (var body in _aggroCircle.GetOverlappingBodies())
+            foreach (var body in aggroCircle.GetOverlappingBodies())
             {
                 if (body is Player p)
                     return p;
@@ -46,7 +65,7 @@ namespace ShiftingSepulcher
 
             // If the player isn't there, search for another enemy.
             // Don't attack other chompweeds.
-            foreach (var other in _aggroCircle.GetOverlappingAreas())
+            foreach (var other in aggroCircle.GetOverlappingAreas())
             {
                 if (!(other is HurtBox otherHurtBox))
                     continue;
@@ -68,7 +87,7 @@ namespace ShiftingSepulcher
 
             public override void _PhysicsProcess(float delta)
             {
-                Owner._aggroTarget = Owner.SearchForAggroTarget();
+                Owner._aggroTarget = Owner.SearchForAggroTarget(Owner._aggroCircle);
 
                 if (IsInstanceValid(Owner._aggroTarget))
                 {
@@ -176,6 +195,72 @@ namespace ShiftingSepulcher
             }
         }
 
+        private readonly IState FreeHeadIdling = new FreeHeadIdlingState();
+        private class FreeHeadIdlingState : State<Chompweed>
+        {
+            private float _timer;
+
+            public override void _StateEntered()
+            {
+                _timer = Owner.FreeHeadIdleDuration;
+            }
+
+            public override void _PhysicsProcess(float delta)
+            {
+                _timer -= delta;
+
+                if (_timer <= 0)
+                    ChangeState(Owner.FreeHeadLunging);
+            }
+        }
+
+        private readonly IState FreeHeadLunging = new FreeHeadLungingState();
+        private class FreeHeadLungingState : State<Chompweed>
+        {
+            private float _timer;
+            private Vector2 _velocity;
+
+            public override void _StateEntered()
+            {
+                _timer = Owner.FreeHeadLungeDuration;
+                _velocity = ChooseLungeVelocity();
+            }
+
+            public override void _PhysicsProcess(float delta)
+            {
+                Owner._head.Position += _velocity * delta;
+                _timer -= delta;
+
+                if (_timer <= 0)
+                    ChangeState(Owner.FreeHeadIdling);
+            }
+
+            private Vector2 ChooseLungeVelocity()
+            {
+                float speed = Owner.FreeHeadLungeDistance / Owner.FreeHeadLungeDuration;
+
+                // Find a target to lunge at
+                var aggroTarget = Owner.SearchForAggroTarget(Owner._freeHeadAggroCircle);
+
+                // Choose a random direction if there is nobody around to lunge
+                // at
+                if (!IsInstanceValid(aggroTarget))
+                {
+                    float angle = GD.Randf() * Mathf.Deg2Rad(360);
+                    return new Vector2(
+                        speed * Mathf.Cos(angle),
+                        speed * Mathf.Sin(angle)
+                    );
+                }
+
+                // Move directly at the target if there is one
+                var dir = aggroTarget.GlobalPosition - Owner._head.GlobalPosition;
+                dir = dir.Normalized();
+
+                return speed * dir;
+            }
+        }
+
         private readonly IState Dead = new DeadState();
         private class DeadState : State<Chompweed>
         {
@@ -192,8 +277,11 @@ namespace ShiftingSepulcher
 
             private void SetEnabled(bool enabled)
             {
-                Owner._hurtBox.Monitoring = enabled;
-                Owner._hurtBox.Monitorable = enabled;
+                Owner._headHurtBox.Monitoring = enabled;
+                Owner._headHurtBox.Monitorable = enabled;
+
+                Owner._stemCutHurtBox.Monitoring = enabled;
+                Owner._stemCutHurtBox.Monitorable = enabled;
 
                 Owner._hitBox.Monitoring = enabled;
                 Owner._hitBox.Monitorable = enabled;

@@ -257,7 +257,7 @@ namespace ShiftingSepulcher
         {
             public override void _StateEntered()
             {
-                Owner._animator.Play("FreeHeadLunge");
+                Owner._animator.Play("FreeHeadChase");
             }
 
             public override void _PhysicsProcess(float delta)
@@ -271,7 +271,7 @@ namespace ShiftingSepulcher
                 }
 
                 // Rotate towards the target
-                Owner._head.Rotation = Mathf.MoveToward(
+                Owner._head.Rotation = AngleMath.MoveToward(
                     Owner._head.Rotation,
                     Owner.AngleToTargetRad(),
                     Mathf.Deg2Rad(Owner.FreeHeadRotSpeedDeg) * delta

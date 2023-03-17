@@ -213,6 +213,11 @@ namespace ShiftingSepulcher
             {
                 _timer = 0;
                 _startPos = Owner._head.Position;
+
+                Owner._animator.Play(
+                    name: "Recover",
+                    customSpeed: 1 / Owner.RecoverDuration
+                );
             }
 
             public override void _PhysicsProcess(float delta)

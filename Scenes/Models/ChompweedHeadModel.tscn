@@ -1,0 +1,76 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scripts/Renderers/Circle2D.cs" type="Script" id=1]
+
+[sub_resource type="Animation" id=3]
+resource_name = "MouthOpen"
+tracks/0/type = "value"
+tracks/0/path = NodePath("BackBufferCopy/MouthBottom:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -3 ), Vector2( 0, 11 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("BackBufferCopy/MouthBottom:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -3 ) ]
+}
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+void fragment()
+{
+    COLOR = texture(SCREEN_TEXTURE, SCREEN_UV);
+    COLOR.a = texture(TEXTURE, UV).a;
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+
+[node name="ChompweedHeadModel" type="Node2D"]
+
+[node name="MouthOpenSlider" type="AnimationPlayer" parent="."]
+anims/MouthOpen = SubResource( 3 )
+anims/RESET = SubResource( 4 )
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="."]
+copy_mode = 2
+
+[node name="MouthBottom" type="Node2D" parent="BackBufferCopy"]
+position = Vector2( 0, -3 )
+script = ExtResource( 1 )
+Radius = 16.0
+Color = Color( 0.0874, 0.38, 0.126413, 1 )
+
+[node name="Circle2D" type="Node2D" parent="BackBufferCopy/MouthBottom"]
+scale = Vector2( 0.991207, 1 )
+script = ExtResource( 1 )
+Radius = 14.0
+Color = Color( 0.780392, 0.560784, 0.47451, 1 )
+
+[node name="Mask" type="Polygon2D" parent="BackBufferCopy"]
+material = SubResource( 2 )
+polygon = PoolVector2Array( -32, 0, -32, -32, 32, -32, 32, 0 )
+
+[node name="MouthTop" type="Node2D" parent="BackBufferCopy"]
+scale = Vector2( 1, 0.8 )
+script = ExtResource( 1 )
+Radius = 16.0
+Color = Color( 0.1035, 0.45, 0.1497, 1 )

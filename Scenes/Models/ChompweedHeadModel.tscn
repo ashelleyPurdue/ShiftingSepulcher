@@ -8,9 +8,9 @@ script/source = "tool
 extends Node2D
 
 export var MouthOpen: float setget set_mouth_open, get_mouth_open
-var _mouthOpen = 0.0
+var _mouthOpen: float = 0.0
 
-func set_mouth_open(value):
+func set_mouth_open(value: float):
     _mouthOpen = value
     $\"%MouthOpenSlider\".stop(true)
     $\"%MouthOpenSlider\".play(\"MouthOpen\")
@@ -19,12 +19,22 @@ func set_mouth_open(value):
 
 func get_mouth_open():
     return _mouthOpen
+
+export var HeightAboveGround: float setget set_height_above_ground, get_height_above_ground
+var _heightAboveGround: float = 0.0
+
+func set_height_above_ground(value: float):
+    _heightAboveGround = value
+    $\"%Head\".position.y = -_heightAboveGround
+
+func get_height_above_ground():
+    return _heightAboveGround
 "
 
 [sub_resource type="Animation" id=3]
 resource_name = "MouthOpen"
 tracks/0/type = "value"
-tracks/0/path = NodePath("BackBufferCopy/MouthBottom:position")
+tracks/0/path = NodePath("Head/BackBufferCopy/MouthBottom:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -39,7 +49,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id=4]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("BackBufferCopy/MouthBottom:position")
+tracks/0/path = NodePath("Head/BackBufferCopy/MouthBottom:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -72,49 +82,57 @@ playback_process_mode = 2
 anims/MouthOpen = SubResource( 3 )
 anims/RESET = SubResource( 4 )
 
-[node name="BackBufferCopy" type="BackBufferCopy" parent="."]
+[node name="Shadow" type="Node2D" parent="."]
+script = ExtResource( 1 )
+Radius = 16.0
+Color = Color( 0, 0, 0, 0.258824 )
+
+[node name="Head" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="Head"]
 copy_mode = 2
 
-[node name="MouthBottom" type="Node2D" parent="BackBufferCopy"]
+[node name="MouthBottom" type="Node2D" parent="Head/BackBufferCopy"]
 position = Vector2( 0, -3 )
 script = ExtResource( 1 )
 Radius = 16.0
 Color = Color( 0.0874, 0.38, 0.126413, 1 )
 
-[node name="Circle2D" type="Node2D" parent="BackBufferCopy/MouthBottom"]
+[node name="Circle2D" type="Node2D" parent="Head/BackBufferCopy/MouthBottom"]
 scale = Vector2( 0.991207, 1 )
 script = ExtResource( 1 )
 Radius = 14.0
 Color = Color( 0.780392, 0.560784, 0.47451, 1 )
 
-[node name="Mask" type="Polygon2D" parent="BackBufferCopy"]
+[node name="Mask" type="Polygon2D" parent="Head/BackBufferCopy"]
 material = SubResource( 2 )
 polygon = PoolVector2Array( -32, 0, -32, -32, 32, -32, 32, 0 )
 
-[node name="MouthTop" type="Node2D" parent="."]
+[node name="MouthTop" type="Node2D" parent="Head"]
 scale = Vector2( 1, 0.8 )
 script = ExtResource( 1 )
 Radius = 16.0
 Color = Color( 0.1035, 0.45, 0.1497, 1 )
 
-[node name="Eyes" type="BackBufferCopy" parent="MouthTop"]
+[node name="Eyes" type="BackBufferCopy" parent="Head/MouthTop"]
 scale = Vector2( 1, 1.25 )
 copy_mode = 2
 
-[node name="RightEye" type="Node2D" parent="MouthTop/Eyes"]
+[node name="RightEye" type="Node2D" parent="Head/MouthTop/Eyes"]
 position = Vector2( -9, -11 )
 scale = Vector2( 1, 2 )
 script = ExtResource( 1 )
 Radius = 3.0
 Color = Color( 0, 0, 0, 1 )
 
-[node name="LeftEye" type="Node2D" parent="MouthTop/Eyes"]
+[node name="LeftEye" type="Node2D" parent="Head/MouthTop/Eyes"]
 position = Vector2( 9, -11 )
 scale = Vector2( 1, 2 )
 script = ExtResource( 1 )
 Radius = 3.0
 Color = Color( 0, 0, 0, 1 )
 
-[node name="Mask" type="Polygon2D" parent="MouthTop/Eyes"]
+[node name="Mask" type="Polygon2D" parent="Head/MouthTop/Eyes"]
 material = SubResource( 2 )
 polygon = PoolVector2Array( 0, -8, -24, -24, 24, -24 )

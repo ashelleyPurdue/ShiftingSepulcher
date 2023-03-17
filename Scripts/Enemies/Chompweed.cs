@@ -100,19 +100,42 @@ namespace ShiftingSepulcher
         private class TrackingTargetState : State<Chompweed>
         {
             private float _timer;
+            private float _headStartAngle;
 
             public override void _StateEntered()
             {
                 _timer = 0;
+                _headStartAngle = Owner._head.Rotation;
             }
 
             public override void _PhysicsProcess(float delta)
             {
-                // TODO: Rotate towards the target
                 _timer += delta;
 
+                // Rotate towards the target
+                float t = _timer / Owner.TrackingTargetDuration;
+
+                Owner._head.Rotation = Mathf.LerpAngle(
+                    _headStartAngle,
+                    AngleToTargetRad(),
+                    Mathf.Sqrt(t) // Rotate fast at the start, and slow at the end
+                );
+
+                // Lunge when the timer is done
                 if (_timer >= Owner.TrackingTargetDuration)
+                {
+                    Owner._head.Rotation = AngleToTargetRad();
                     ChangeState(Owner.Lunging);
+                }
+            }
+
+            private float AngleToTargetRad()
+            {
+                float raw = Owner._head.GlobalPosition.AngleToPoint(
+                    Owner._aggroTarget.GlobalPosition
+                );
+
+                return raw + Mathf.Deg2Rad(90);
             }
         }
 
@@ -224,6 +247,7 @@ namespace ShiftingSepulcher
             {
                 _timer = Owner.FreeHeadLungeDuration;
                 _velocity = ChooseLungeVelocity();
+                Owner._head.Rotation = _velocity.Angle() - Mathf.Deg2Rad(90);
             }
 
             public override void _PhysicsProcess(float delta)

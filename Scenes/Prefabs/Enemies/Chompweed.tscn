@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scripts/MiscNodes/HurtBox.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/MiscNodes/HitBox.cs" type="Script" id=3]
@@ -8,35 +8,12 @@
 [ext_resource path="res://Scripts/Components/HurtFlasherComponent.cs" type="Script" id=7]
 [ext_resource path="res://Scenes/Models/ChompweedHeadModel.tscn" type="PackedScene" id=8]
 
-[sub_resource type="CircleShape2D" id=2]
-radius = 256.0
-
-[sub_resource type="CircleShape2D" id=3]
-
-[sub_resource type="CircleShape2D" id=1]
-radius = 16.0
-
 [sub_resource type="Animation" id=4]
-resource_name = "Foo"
-length = 0.2
+resource_name = "Idle"
+length = 2.0
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:MouthOpen")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ 0.0, 1.0, 0.0 ]
-}
-
-[sub_resource type="Animation" id=5]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:MouthOpen")
+tracks/0/path = NodePath("Head/ChompweedHeadModel:HeightAboveGround")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -45,8 +22,97 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 0.0 ]
+"values": [ 32.0 ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Head/ChompweedHeadModel:MouthOpen")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.25, 0.0 ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "Lunge"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Head/ChompweedHeadModel:HeightAboveGround")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 9.6, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Head/ChompweedHeadModel:MouthOpen")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=5]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Head/ChompweedHeadModel:HeightAboveGround")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 32.0 ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "WindingUp"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Head/ChompweedHeadModel:HeightAboveGround")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 32.0, 9.6 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Head/ChompweedHeadModel:MouthOpen")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.5, 0.0 ]
+}
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 256.0
+
+[sub_resource type="CircleShape2D" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 16.0
 
 [node name="Chompweed" type="Node2D"]
 script = ExtResource( 6 )
@@ -60,6 +126,14 @@ MaxHealth = 3
 
 [node name="HurtFlasherComponent" type="Node" parent="."]
 script = ExtResource( 7 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+autoplay = "Idle"
+anims/Idle = SubResource( 4 )
+anims/Lunge = SubResource( 7 )
+anims/RESET = SubResource( 5 )
+anims/WindingUp = SubResource( 6 )
 
 [node name="AggroCircle" type="Area2D" parent="."]
 unique_name_in_owner = true
@@ -95,7 +169,6 @@ polygon = PoolVector2Array( -16, -23, -18, -37, 0, -54, 16, -37, 15, -21, 2, 0, 
 
 [node name="Head" type="Node2D" parent="."]
 unique_name_in_owner = true
-position = Vector2( 0, -32 )
 
 [node name="FreeHeadAggroCircle" type="Area2D" parent="Head"]
 unique_name_in_owner = true
@@ -120,11 +193,7 @@ IgnoredHurtBoxes = [ NodePath("../HeadHurtBox"), NodePath("../../StemCutHurtBox"
 shape = SubResource( 1 )
 
 [node name="ChompweedHeadModel" parent="Head" instance=ExtResource( 8 )]
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Head/ChompweedHeadModel"]
-autoplay = "Foo"
-anims/Foo = SubResource( 4 )
-anims/RESET = SubResource( 5 )
+HeightAboveGround = 32.0
 
 [connection signal="Dead" from="EnemyComponent" to="." method="OnDead"]
 [connection signal="Respawning" from="EnemyComponent" to="." method="OnRespawning"]

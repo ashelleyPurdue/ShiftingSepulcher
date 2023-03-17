@@ -24,6 +24,8 @@ namespace ShiftingSepulcher
         private Area2D _hitBox => GetNode<Area2D>("%HitBox");
         private Node2D _head => GetNode<Node2D>("%Head");
 
+        private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
+
         private StateMachine _sm;
         private Node2D _aggroTarget;
 
@@ -83,6 +85,7 @@ namespace ShiftingSepulcher
             public override void _StateEntered()
             {
                 Owner._head.Position = Vector2.Zero;
+                Owner._animator.Play("Idle");
             }
 
             public override void _PhysicsProcess(float delta)
@@ -106,6 +109,11 @@ namespace ShiftingSepulcher
             {
                 _timer = 0;
                 _headStartAngle = Owner._head.Rotation;
+
+                Owner._animator.Play(
+                    name: "WindingUp",
+                    customSpeed: 1 / Owner.TrackingTargetDuration
+                );
             }
 
             public override void _PhysicsProcess(float delta)
@@ -151,6 +159,11 @@ namespace ShiftingSepulcher
 
                 Vector2 targetPos = Owner._aggroTarget.GlobalPosition;
                 _lungeDir = Owner.ToLocal(targetPos).Normalized();
+
+                Owner._animator.Play(
+                    name: "Lunge",
+                    customSpeed: 1 / Owner.LungeDuration
+                );
             }
 
             public override void _PhysicsProcess(float delta)

@@ -1,12 +1,12 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scripts/MiscNodes/HurtBox.cs" type="Script" id=1]
-[ext_resource path="res://Scenes/Renderers/Circle2D.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/MiscNodes/HitBox.cs" type="Script" id=3]
 [ext_resource path="res://Scripts/Components/HealthPointsComponent.cs" type="Script" id=4]
 [ext_resource path="res://Scripts/Components/EnemyComponent.cs" type="Script" id=5]
 [ext_resource path="res://Scripts/Enemies/Chompweed.cs" type="Script" id=6]
 [ext_resource path="res://Scripts/Components/HurtFlasherComponent.cs" type="Script" id=7]
+[ext_resource path="res://Scenes/Models/ChompweedHeadModel.tscn" type="PackedScene" id=8]
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 256.0
@@ -15,6 +15,38 @@ radius = 256.0
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.0
+
+[sub_resource type="Animation" id=4]
+resource_name = "Foo"
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:MouthOpen")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=5]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:MouthOpen")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
 
 [node name="Chompweed" type="Node2D"]
 script = ExtResource( 6 )
@@ -65,9 +97,6 @@ polygon = PoolVector2Array( -16, -23, -18, -37, 0, -54, 16, -37, 15, -21, 2, 0, 
 unique_name_in_owner = true
 position = Vector2( 0, -32 )
 
-[node name="Circle2D" parent="Head" instance=ExtResource( 2 )]
-Radius = 16.0
-
 [node name="FreeHeadAggroCircle" type="Area2D" parent="Head"]
 unique_name_in_owner = true
 
@@ -89,6 +118,13 @@ IgnoredHurtBoxes = [ NodePath("../HeadHurtBox"), NodePath("../../StemCutHurtBox"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Head/HitBox"]
 shape = SubResource( 1 )
+
+[node name="ChompweedHeadModel" parent="Head" instance=ExtResource( 8 )]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Head/ChompweedHeadModel"]
+autoplay = "Foo"
+anims/Foo = SubResource( 4 )
+anims/RESET = SubResource( 5 )
 
 [connection signal="Dead" from="EnemyComponent" to="." method="OnDead"]
 [connection signal="Respawning" from="EnemyComponent" to="." method="OnRespawning"]

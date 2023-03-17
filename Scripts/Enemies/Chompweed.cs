@@ -244,6 +244,9 @@ namespace ShiftingSepulcher
             public override void _StateEntered()
             {
                 _timer = Owner.FreeHeadIdleDuration;
+                Owner._animator.Play(
+                    name: "FreeHeadIdle",
+                    customSpeed: 1 / Owner.FreeHeadIdleDuration);
             }
 
             public override void _PhysicsProcess(float delta)
@@ -266,6 +269,11 @@ namespace ShiftingSepulcher
                 _timer = Owner.FreeHeadLungeDuration;
                 _velocity = ChooseLungeVelocity();
                 Owner._head.Rotation = _velocity.Angle() - Mathf.Deg2Rad(90);
+
+                Owner._animator.Play(
+                    name: "FreeHeadLunge",
+                    customSpeed: 1f / Owner.FreeHeadLungeDuration
+                );
             }
 
             public override void _PhysicsProcess(float delta)

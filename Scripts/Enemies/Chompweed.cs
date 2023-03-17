@@ -13,9 +13,8 @@ namespace ShiftingSepulcher
         [Export] public float LungeDistance = 4 * 32;
 
         [Export] public float StemCutDamageMult = 2;
-        [Export] public float FreeHeadIdleDuration = 0.5f;
-        [Export] public float FreeHeadLungeDuration = 0.2f;
-        [Export] public float FreeHeadLungeDistance = 3 * 32;
+        [Export] public float FreeHeadSpeed = 4 * 32;
+        [Export] public float FreeHeadRotSpeedDeg = 360;
 
         private Area2D _aggroCircle => GetNode<Area2D>("%AggroCircle");
         private Area2D _freeHeadAggroCircle => GetNode<Area2D>("%FreeHeadAggroCircle");
@@ -79,6 +78,15 @@ namespace ShiftingSepulcher
             return null;
         }
 
+        private float AngleToTargetRad()
+        {
+            float raw = _head.GlobalPosition.AngleToPoint(
+                _aggroTarget.GlobalPosition
+            );
+
+            return raw + Mathf.Deg2Rad(90);
+        }
+
         private readonly IState Idle = new IdleState();
         private class IdleState : State<Chompweed>
         {
@@ -125,25 +133,16 @@ namespace ShiftingSepulcher
 
                 Owner._head.Rotation = Mathf.LerpAngle(
                     _headStartAngle,
-                    AngleToTargetRad(),
+                    Owner.AngleToTargetRad(),
                     Mathf.Sqrt(t) // Rotate fast at the start, and slow at the end
                 );
 
                 // Lunge when the timer is done
                 if (_timer >= Owner.TrackingTargetDuration)
                 {
-                    Owner._head.Rotation = AngleToTargetRad();
+                    Owner._head.Rotation = Owner.AngleToTargetRad();
                     ChangeState(Owner.Lunging);
                 }
-            }
-
-            private float AngleToTargetRad()
-            {
-                float raw = Owner._head.GlobalPosition.AngleToPoint(
-                    Owner._aggroTarget.GlobalPosition
-                );
-
-                return raw + Mathf.Deg2Rad(90);
             }
         }
 
@@ -239,75 +238,48 @@ namespace ShiftingSepulcher
         private readonly IState FreeHeadIdling = new FreeHeadIdlingState();
         private class FreeHeadIdlingState : State<Chompweed>
         {
-            private float _timer;
-
             public override void _StateEntered()
             {
-                _timer = Owner.FreeHeadIdleDuration;
-                Owner._animator.Play(
-                    name: "FreeHeadIdle",
-                    customSpeed: 1 / Owner.FreeHeadIdleDuration);
+                Owner._animator.Play("FreeHeadIdle");
             }
 
             public override void _PhysicsProcess(float delta)
             {
-                _timer -= delta;
+                Owner._aggroTarget = Owner.SearchForAggroTarget(Owner._freeHeadAggroCircle);
 
-                if (_timer <= 0)
-                    ChangeState(Owner.FreeHeadLunging);
+                if (IsInstanceValid(Owner._aggroTarget))
+                    ChangeState(Owner.FreeHeadAggro);
             }
         }
 
-        private readonly IState FreeHeadLunging = new FreeHeadLungingState();
-        private class FreeHeadLungingState : State<Chompweed>
+        private readonly IState FreeHeadAggro = new FreeHeadAggroState();
+        private class FreeHeadAggroState : State<Chompweed>
         {
-            private float _timer;
-            private Vector2 _velocity;
-
             public override void _StateEntered()
             {
-                _timer = Owner.FreeHeadLungeDuration;
-                _velocity = ChooseLungeVelocity();
-                Owner._head.Rotation = _velocity.Angle() - Mathf.Deg2Rad(90);
-
-                Owner._animator.Play(
-                    name: "FreeHeadLunge",
-                    customSpeed: 1f / Owner.FreeHeadLungeDuration
-                );
+                Owner._animator.Play("FreeHeadLunge");
             }
 
             public override void _PhysicsProcess(float delta)
             {
-                Owner._head.Position += _velocity * delta;
-                _timer -= delta;
+                Owner._aggroTarget = Owner.SearchForAggroTarget(Owner._freeHeadAggroCircle);
 
-                if (_timer <= 0)
-                    ChangeState(Owner.FreeHeadIdling);
-            }
-
-            private Vector2 ChooseLungeVelocity()
-            {
-                float speed = Owner.FreeHeadLungeDistance / Owner.FreeHeadLungeDuration;
-
-                // Find a target to lunge at
-                var aggroTarget = Owner.SearchForAggroTarget(Owner._freeHeadAggroCircle);
-
-                // Choose a random direction if there is nobody around to lunge
-                // at
-                if (!IsInstanceValid(aggroTarget))
+                if (!IsInstanceValid(Owner._aggroTarget))
                 {
-                    float angle = GD.Randf() * Mathf.Deg2Rad(360);
-                    return new Vector2(
-                        speed * Mathf.Cos(angle),
-                        speed * Mathf.Sin(angle)
-                    );
+                    ChangeState(Owner.FreeHeadIdling);
+                    return;
                 }
 
-                // Move directly at the target if there is one
-                var dir = aggroTarget.GlobalPosition - Owner._head.GlobalPosition;
-                dir = dir.Normalized();
+                // Rotate towards the target
+                Owner._head.Rotation = Mathf.MoveToward(
+                    Owner._head.Rotation,
+                    Owner.AngleToTargetRad(),
+                    Mathf.Deg2Rad(Owner.FreeHeadRotSpeedDeg) * delta
+                );
 
-                return speed * dir;
+                // Move in the direction we're facing
+                Vector2 dir = Vector2.Down.Rotated(Owner._head.Rotation);
+                Owner._head.GlobalPosition += dir * Owner.FreeHeadSpeed * delta;
             }
         }
 

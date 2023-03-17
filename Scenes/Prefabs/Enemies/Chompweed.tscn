@@ -281,6 +281,7 @@ IgnoredHurtBoxes = [ NodePath("../HeadHurtBox"), NodePath("../../StemCutHurtBox"
 shape = SubResource( 1 )
 
 [node name="ChompweedHeadModel" parent="Head" instance=ExtResource( 8 )]
+MouthOpen = 0.336552
 HeightAboveGround = 32.0
 
 [connection signal="Dead" from="EnemyComponent" to="." method="OnDead"]

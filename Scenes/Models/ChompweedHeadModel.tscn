@@ -7,27 +7,18 @@ resource_name = "ChompweedHeadModel"
 script/source = "tool
 extends Node2D
 
-#export var MouthOpen = 0 setget set_mouth_open, get_mouth_open
-#
-#func set_mouth_open(value):
-#    print(\"Setting it to \" + str(value))
-#    $\"%MouthOpenSlider\".play(\"RESET\")
-#    $\"%MouthOpenSlider\".advance(0)
-#    $\"%MouthOpenSlider\".play(\"MouthOpen\")
-#    $\"%MouthOpenSlider\".advance(value)
-#
-#func get_mouth_open():
-#    return $\"%MouthOpenSlider\".current_animation_position
+export var MouthOpen: float setget set_mouth_open, get_mouth_open
+var _mouthOpen = 0.0
 
-export var MouthOpen = 0
+func set_mouth_open(value):
+    _mouthOpen = value
+    $\"%MouthOpenSlider\".stop(true)
+    $\"%MouthOpenSlider\".play(\"MouthOpen\")
+    $\"%MouthOpenSlider\".advance(_mouthOpen)
+    $\"%MouthOpenSlider\".stop(false) # Allow the animation to be played with in the editor
 
-func _process(delta):
-    print(\"wtf\")
-    var slider = $\"%MouthOpenSlider\"
-    slider.play(\"RESET\")
-    slider.advance(0)
-    slider.play(\"MouthOpen\")
-    slider.advance(MouthOpen)
+func get_mouth_open():
+    return _mouthOpen
 "
 
 [sub_resource type="Animation" id=3]

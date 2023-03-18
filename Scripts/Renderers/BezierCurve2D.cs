@@ -73,6 +73,11 @@ namespace ShiftingSepulcher
             if (!Engine.EditorHint)
                 return;
 
+            // Only allow editing when this node is directly inside the scene
+            // being edited.
+            if (GetEditorInterface().GetEditedSceneRoot() != Owner)
+                return;
+
             // Ensure the handle exists
             if (!IsInstanceValid(handle))
             {
@@ -84,7 +89,7 @@ namespace ShiftingSepulcher
             // Select this handle when it's clicked on
             bool lmbJustPressed = _lmbPressed && !_wasLmbPressed;
             if (lmbJustPressed && DistanceToMouse(handle) < HandleRadius)
-                SelectNodeInEditor(handle);
+                GetEditorInterface().EditNode(handle);
 
             // Transfer the handle's position to the point being edited
             point = handle.Position;
@@ -95,13 +100,9 @@ namespace ShiftingSepulcher
             return handle.GlobalPosition.DistanceTo(GetGlobalMousePosition());
         }
 
-        private void SelectNodeInEditor(Node node)
+        private EditorInterface GetEditorInterface()
         {
-            if (!Engine.EditorHint)
-                return;
-
-            var editorInterface = GetTree().Root.FirstDescendantOfType<EditorInterface>();
-            editorInterface.EditNode(node);
+            return GetTree().Root.FirstDescendantOfType<EditorInterface>();
         }
 
         private static Vector2 SampleBezier(

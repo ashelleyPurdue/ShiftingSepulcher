@@ -5,6 +5,9 @@ namespace ShiftingSepulcher
     [Tool]
     public class ChompweedHeadModel : Node2D
     {
+        private AnimationPlayer _mouthSlider => GetNode<AnimationPlayer>("%MouthOpenSlider");
+        private Node2D _head => GetNode<Node2D>("%Head");
+
         [Export] public float MouthOpen
         {
             get => _mouthOpen;
@@ -12,12 +15,11 @@ namespace ShiftingSepulcher
             {
                 _mouthOpen = value;
 
-                var slider = GetNode<AnimationPlayer>("%MouthOpenSlider");
-                slider.Stop(true);
-                slider.Play("MouthOpen");
-                slider.Advance(_mouthOpen);
-                slider.Stop(false); // All the animation to be played with in
-                                    // the editor
+                _mouthSlider.Stop(true);
+                _mouthSlider.Play("MouthOpen");
+                _mouthSlider.Advance(_mouthOpen);
+                _mouthSlider.Stop(false); // Allow the animation to be played
+                                          // with in the editor
             }
         }
         private float _mouthOpen = 0;
@@ -32,7 +34,5 @@ namespace ShiftingSepulcher
             }
         }
         private float _heightAboveGround;
-
-        private Node2D _head => GetNode<Node2D>("%Head");
     }
 }

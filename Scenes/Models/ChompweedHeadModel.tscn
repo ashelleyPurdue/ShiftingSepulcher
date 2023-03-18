@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/Renderers/Circle2D.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Models/ChompweedHeadModel.cs" type="Script" id=2]
@@ -7,7 +7,7 @@
 [sub_resource type="Animation" id=3]
 resource_name = "MouthOpen"
 tracks/0/type = "value"
-tracks/0/path = NodePath("Head/BackBufferCopy/MouthBottom:position")
+tracks/0/path = NodePath("MouthBottomViewport/Node2D/MouthBottom:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -22,7 +22,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id=4]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("Head/BackBufferCopy/MouthBottom:position")
+tracks/0/path = NodePath("MouthBottomViewport/Node2D/MouthBottom:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -34,20 +34,33 @@ tracks/0/keys = {
 "values": [ Vector2( 0, -3 ) ]
 }
 
-[sub_resource type="Shader" id=1]
-code = "shader_type canvas_item;
-
-void fragment()
-{
-    COLOR = texture(SCREEN_TEXTURE, SCREEN_UV);
-    COLOR.a = texture(TEXTURE, UV).a;
-}"
-
-[sub_resource type="ShaderMaterial" id=2]
-shader = SubResource( 1 )
+[sub_resource type="ViewportTexture" id=5]
+viewport_path = NodePath("MouthBottomViewport")
 
 [node name="ChompweedHeadModel" type="Node2D"]
 script = ExtResource( 2 )
+
+[node name="MouthBottomViewport" type="Viewport" parent="."]
+size = Vector2( 100, 100 )
+transparent_bg = true
+hdr = false
+usage = 1
+render_target_v_flip = true
+render_target_update_mode = 3
+
+[node name="Node2D" type="Node2D" parent="MouthBottomViewport"]
+position = Vector2( 16, 16 )
+
+[node name="MouthBottom" type="Node2D" parent="MouthBottomViewport/Node2D"]
+position = Vector2( 0, -3 )
+script = ExtResource( 1 )
+Radius = 16.0
+Color = Color( 0.0874, 0.38, 0.126413, 1 )
+
+[node name="Circle2D" type="Node2D" parent="MouthBottomViewport/Node2D/MouthBottom"]
+script = ExtResource( 1 )
+Radius = 14.0
+Color = Color( 0.780392, 0.560784, 0.47451, 1 )
 
 [node name="MouthOpenSlider" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
@@ -69,24 +82,10 @@ Color = Color( 0.309804, 0.243137, 0.180392, 1 )
 [node name="Head" type="Node2D" parent="."]
 unique_name_in_owner = true
 
-[node name="BackBufferCopy" type="BackBufferCopy" parent="Head"]
-copy_mode = 2
-
-[node name="MouthBottom" type="Node2D" parent="Head/BackBufferCopy"]
-position = Vector2( 0, -3 )
-script = ExtResource( 1 )
-Radius = 16.0
-Color = Color( 0.0874, 0.38, 0.126413, 1 )
-
-[node name="Circle2D" type="Node2D" parent="Head/BackBufferCopy/MouthBottom"]
-scale = Vector2( 0.991207, 1 )
-script = ExtResource( 1 )
-Radius = 14.0
-Color = Color( 0.780392, 0.560784, 0.47451, 1 )
-
-[node name="Mask" type="Polygon2D" parent="Head/BackBufferCopy"]
-material = SubResource( 2 )
-polygon = PoolVector2Array( -32, 0, -32, -32, 32, -32, 32, 0 )
+[node name="MouthBottomTexture" type="Polygon2D" parent="Head"]
+position = Vector2( -16, -16 )
+texture = SubResource( 5 )
+polygon = PoolVector2Array( 0, 16, 32, 16, 32, 48, 0, 48 )
 
 [node name="MouthTop" type="Node2D" parent="Head"]
 scale = Vector2( 1, 0.8 )
@@ -94,9 +93,8 @@ script = ExtResource( 1 )
 Radius = 16.0
 Color = Color( 0.1035, 0.45, 0.1497, 1 )
 
-[node name="Eyes" type="BackBufferCopy" parent="Head/MouthTop"]
+[node name="Eyes" type="Node2D" parent="Head/MouthTop"]
 scale = Vector2( 1, 1.25 )
-copy_mode = 2
 
 [node name="RightEye" type="Node2D" parent="Head/MouthTop/Eyes"]
 position = Vector2( -9, -11 )
@@ -111,7 +109,3 @@ scale = Vector2( 1, 2 )
 script = ExtResource( 1 )
 Radius = 3.0
 Color = Color( 0, 0, 0, 1 )
-
-[node name="Mask" type="Polygon2D" parent="Head/MouthTop/Eyes"]
-material = SubResource( 2 )
-polygon = PoolVector2Array( 0, -8, -24, -24, 24, -24 )

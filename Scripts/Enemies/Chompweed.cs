@@ -320,11 +320,11 @@ namespace ShiftingSepulcher
 
             private void SetEnabled(bool enabled)
             {
-                Owner._headHurtBox.Monitoring = enabled;
-                Owner._headHurtBox.Monitorable = enabled;
+                Owner._headHurtBox.SetDeferred("monitoring", enabled);
+                Owner._headHurtBox.SetDeferred("monitorable", enabled);
 
-                Owner._hitBox.Monitoring = enabled;
-                Owner._hitBox.Monitorable = enabled;
+                Owner._hitBox.SetDeferred("monitoring", enabled);
+                Owner._hitBox.SetDeferred("monitorable", enabled);
 
                 Owner._head.Visible = enabled;
 

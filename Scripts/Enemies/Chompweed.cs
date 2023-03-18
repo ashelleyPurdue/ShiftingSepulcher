@@ -89,6 +89,13 @@ namespace ShiftingSepulcher
             return raw + Mathf.Deg2Rad(90);
         }
 
+        private void SetStemEnabled(bool enabled)
+        {
+            _headModel.StemVisible = enabled;
+            _stemCutHurtBox.SetDeferred("monitoring", enabled);
+            _stemCutHurtBox.SetDeferred("monitorable", enabled);
+        }
+
         private readonly IState Idle = new IdleState();
         private class IdleState : State<Chompweed>
         {
@@ -243,7 +250,7 @@ namespace ShiftingSepulcher
             public override void _StateEntered()
             {
                 Owner._animator.Play("FreeHeadIdle");
-                Owner._headModel.StemVisible = false;
+                Owner.SetStemEnabled(false);
             }
 
             public override void _PhysicsProcess(float delta)
@@ -256,7 +263,7 @@ namespace ShiftingSepulcher
 
             public override void _StateExited()
             {
-                Owner._headModel.StemVisible = true;
+                Owner.SetStemEnabled(true);
             }
         }
 
@@ -266,7 +273,7 @@ namespace ShiftingSepulcher
             public override void _StateEntered()
             {
                 Owner._animator.Play("FreeHeadChase");
-                Owner._headModel.StemVisible = false;
+                Owner.SetStemEnabled(false);
             }
 
             public override void _PhysicsProcess(float delta)
@@ -293,7 +300,7 @@ namespace ShiftingSepulcher
 
             public override void _StateExited()
             {
-                Owner._headModel.StemVisible = false;
+                Owner.SetStemEnabled(true);
             }
         }
 
@@ -316,14 +323,12 @@ namespace ShiftingSepulcher
                 Owner._headHurtBox.Monitoring = enabled;
                 Owner._headHurtBox.Monitorable = enabled;
 
-                Owner._stemCutHurtBox.Monitoring = enabled;
-                Owner._stemCutHurtBox.Monitorable = enabled;
-
                 Owner._hitBox.Monitoring = enabled;
                 Owner._hitBox.Monitorable = enabled;
 
                 Owner._head.Visible = enabled;
-                Owner._headModel.StemVisible = enabled;
+
+                Owner.SetStemEnabled(enabled);
             }
         }
     }

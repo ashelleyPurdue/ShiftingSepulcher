@@ -7,6 +7,8 @@ namespace ShiftingSepulcher
     {
         private AnimationPlayer _mouthSlider => GetNode<AnimationPlayer>("%MouthOpenSlider");
         private Node2D _head => GetNode<Node2D>("%Head");
+        private BezierCurve2D _stem => GetNode<BezierCurve2D>("%Stem");
+        private Node2D _stemAttachPoint => GetNode<Node2D>(StemAttachPoint);
 
         [Export] public float MouthOpen
         {
@@ -34,5 +36,21 @@ namespace ShiftingSepulcher
             }
         }
         private float _heightAboveGround;
+
+        [Export] public NodePath StemAttachPoint = "";
+        [Export] public float StemBend = -32;
+        [Export] public bool StemVisible {get; set;} = true;
+
+        public override void _Process(float delta)
+        {
+            _stem.Visible = StemVisible;
+
+            if (!string.IsNullOrEmpty(StemAttachPoint))
+            {
+                _stem.StartPoint = ToLocal(_stemAttachPoint.GlobalPosition);
+                _stem.ControlPoint = Vector2.Right * StemBend;
+                _stem.EndPoint = _head.Position;
+            }
+        }
     }
 }

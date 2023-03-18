@@ -1,7 +1,6 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Scripts/MiscNodes/HurtBox.cs" type="Script" id=1]
-[ext_resource path="res://Scripts/Renderers/BezierCurve2D.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/MiscNodes/HitBox.cs" type="Script" id=3]
 [ext_resource path="res://Scripts/Components/HealthPointsComponent.cs" type="Script" id=4]
 [ext_resource path="res://Scripts/Components/EnemyComponent.cs" type="Script" id=5]
@@ -199,20 +198,6 @@ radius = 256.0
 
 [sub_resource type="CircleShape2D" id=3]
 
-[sub_resource type="GDScript" id=11]
-resource_name = "Stem"
-script/source = "tool
-extends Node2D
-
-func _process(delta):
-    var head = $\"%Head/ChompweedHeadModel\"
-    var curve = $\"Curve\"
-
-    var end_point_global = head.to_global(Vector2.UP * head.HeightAboveGround)
-    curve.StartPoint = to_local(owner.global_position)
-    curve.EndPoint = to_local(end_point_global)
-"
-
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.0
 
@@ -277,17 +262,6 @@ polygon = PoolVector2Array( -16, -23, -18, -37, 0, -54, 16, -37, 15, -21, 2, 0, 
 [node name="Head" type="Node2D" parent="."]
 unique_name_in_owner = true
 
-[node name="Stem" type="Node2D" parent="Head"]
-unique_name_in_owner = true
-script = SubResource( 11 )
-
-[node name="Curve" type="Node2D" parent="Head/Stem"]
-script = ExtResource( 2 )
-ControlPoint = Vector2( -32, 0 )
-EndPoint = Vector2( 0, -32 )
-Width = 4.0
-Color = Color( 0.31, 0.24273, 0.1798, 1 )
-
 [node name="FreeHeadAggroCircle" type="Area2D" parent="Head"]
 unique_name_in_owner = true
 
@@ -315,6 +289,7 @@ shape = SubResource( 1 )
 
 [node name="ChompweedHeadModel" parent="Head" instance=ExtResource( 8 )]
 HeightAboveGround = 32.0
+StemAttachPoint = NodePath("../../Flower")
 
 [connection signal="Dead" from="EnemyComponent" to="." method="OnDead"]
 [connection signal="Respawning" from="EnemyComponent" to="." method="OnRespawning"]

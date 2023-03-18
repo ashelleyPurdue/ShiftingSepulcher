@@ -23,7 +23,7 @@ namespace ShiftingSepulcher
         private Area2D _hitBox => GetNode<Area2D>("%HitBox");
 
         private Node2D _head => GetNode<Node2D>("%Head");
-        private Node2D _stem => GetNode<Node2D>("%Stem");
+        private ChompweedHeadModel _headModel => GetNode<ChompweedHeadModel>("%Head/ChompweedHeadModel");
 
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
 
@@ -243,7 +243,7 @@ namespace ShiftingSepulcher
             public override void _StateEntered()
             {
                 Owner._animator.Play("FreeHeadIdle");
-                Owner._stem.Visible = false;
+                Owner._headModel.StemVisible = false;
             }
 
             public override void _PhysicsProcess(float delta)
@@ -256,7 +256,7 @@ namespace ShiftingSepulcher
 
             public override void _StateExited()
             {
-                Owner._stem.Visible = true;
+                Owner._headModel.StemVisible = true;
             }
         }
 
@@ -266,7 +266,7 @@ namespace ShiftingSepulcher
             public override void _StateEntered()
             {
                 Owner._animator.Play("FreeHeadChase");
-                Owner._stem.Visible = false;
+                Owner._headModel.StemVisible = false;
             }
 
             public override void _PhysicsProcess(float delta)
@@ -293,7 +293,7 @@ namespace ShiftingSepulcher
 
             public override void _StateExited()
             {
-                Owner._stem.Visible = true;
+                Owner._headModel.StemVisible = false;
             }
         }
 
@@ -323,7 +323,7 @@ namespace ShiftingSepulcher
                 Owner._hitBox.Monitorable = enabled;
 
                 Owner._head.Visible = enabled;
-                Owner._stem.Visible = enabled;
+                Owner._headModel.StemVisible = enabled;
             }
         }
     }

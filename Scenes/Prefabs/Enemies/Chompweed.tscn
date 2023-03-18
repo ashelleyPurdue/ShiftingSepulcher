@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Scripts/MiscNodes/HurtBox.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/MiscNodes/HitBox.cs" type="Script" id=3]
@@ -244,7 +244,18 @@ tracks/1/keys = {
 [sub_resource type="CircleShape2D" id=2]
 radius = 256.0
 
-[sub_resource type="CircleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=11]
+extents = Vector2( 0.5, 2 )
+
+[sub_resource type="GDScript" id=12]
+resource_name = "StemCutHitboxStretcher"
+script/source = "extends CollisionShape2D
+
+func _physics_process(delta):
+    var parent = get_parent()
+    parent.global_scale.x = parent.global_position.distance_to($\"%Head\".global_position)
+    parent.look_at($\"%Head\".global_position)
+"
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.0
@@ -282,11 +293,12 @@ shape = SubResource( 2 )
 
 [node name="StemCutHurtBox" type="Area2D" parent="."]
 unique_name_in_owner = true
-visible = false
 script = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StemCutHurtBox"]
-shape = SubResource( 3 )
+position = Vector2( 0.5, 0 )
+shape = SubResource( 11 )
+script = SubResource( 12 )
 
 [node name="Flower" type="Node2D" parent="."]
 modulate = Color( 0.0627451, 0.376471, 0.0941176, 1 )

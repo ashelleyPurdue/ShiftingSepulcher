@@ -21,7 +21,9 @@ namespace ShiftingSepulcher
         private Area2D _headHurtBox => GetNode<Area2D>("%HeadHurtBox");
         private Area2D _stemCutHurtBox => GetNode<Area2D>("%StemCutHurtBox");
         private Area2D _hitBox => GetNode<Area2D>("%HitBox");
+
         private Node2D _head => GetNode<Node2D>("%Head");
+        private Node2D _stem => GetNode<Node2D>("%Stem");
 
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
 
@@ -241,6 +243,7 @@ namespace ShiftingSepulcher
             public override void _StateEntered()
             {
                 Owner._animator.Play("FreeHeadIdle");
+                Owner._stem.Visible = false;
             }
 
             public override void _PhysicsProcess(float delta)
@@ -250,6 +253,11 @@ namespace ShiftingSepulcher
                 if (IsInstanceValid(Owner._aggroTarget))
                     ChangeState(Owner.FreeHeadAggro);
             }
+
+            public override void _StateExited()
+            {
+                Owner._stem.Visible = true;
+            }
         }
 
         private readonly IState FreeHeadAggro = new FreeHeadAggroState();
@@ -258,6 +266,7 @@ namespace ShiftingSepulcher
             public override void _StateEntered()
             {
                 Owner._animator.Play("FreeHeadChase");
+                Owner._stem.Visible = false;
             }
 
             public override void _PhysicsProcess(float delta)
@@ -280,6 +289,11 @@ namespace ShiftingSepulcher
                 // Move in the direction we're facing
                 Vector2 dir = Vector2.Down.Rotated(Owner._head.Rotation);
                 Owner._head.GlobalPosition += dir * Owner.FreeHeadSpeed * delta;
+            }
+
+            public override void _StateExited()
+            {
+                Owner._stem.Visible = true;
             }
         }
 
@@ -309,6 +323,7 @@ namespace ShiftingSepulcher
                 Owner._hitBox.Monitorable = enabled;
 
                 Owner._head.Visible = enabled;
+                Owner._stem.Visible = enabled;
             }
         }
     }

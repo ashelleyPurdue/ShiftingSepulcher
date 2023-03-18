@@ -1,35 +1,7 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/Renderers/Circle2D.cs" type="Script" id=1]
-
-[sub_resource type="GDScript" id=5]
-resource_name = "ChompweedHeadModel"
-script/source = "tool
-extends Node2D
-
-export var MouthOpen: float setget set_mouth_open, get_mouth_open
-var _mouthOpen: float = 0.0
-
-func set_mouth_open(value: float):
-    _mouthOpen = value
-    $\"%MouthOpenSlider\".stop(true)
-    $\"%MouthOpenSlider\".play(\"MouthOpen\")
-    $\"%MouthOpenSlider\".advance(_mouthOpen)
-    $\"%MouthOpenSlider\".stop(false) # Allow the animation to be played with in the editor
-
-func get_mouth_open():
-    return _mouthOpen
-
-export var HeightAboveGround: float setget set_height_above_ground, get_height_above_ground
-var _heightAboveGround: float = 0.0
-
-func set_height_above_ground(value: float):
-    _heightAboveGround = value
-    $\"%Head\".position.y = -_heightAboveGround
-
-func get_height_above_ground():
-    return _heightAboveGround
-"
+[ext_resource path="res://Scripts/Models/ChompweedHeadModel.cs" type="Script" id=2]
 
 [sub_resource type="Animation" id=3]
 resource_name = "MouthOpen"
@@ -74,7 +46,7 @@ void fragment()
 shader = SubResource( 1 )
 
 [node name="ChompweedHeadModel" type="Node2D"]
-script = SubResource( 5 )
+script = ExtResource( 2 )
 
 [node name="MouthOpenSlider" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true

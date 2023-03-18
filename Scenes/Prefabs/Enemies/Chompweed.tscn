@@ -253,7 +253,7 @@ script/source = "extends CollisionShape2D
 
 func _physics_process(delta):
     var parent = get_parent()
-    parent.global_scale.x = parent.global_position.distance_to($\"%Head\".global_position)
+    parent.global_scale.x = parent.global_position.distance_to($\"%Head\".global_position) - 16
     parent.look_at($\"%Head\".global_position)
 "
 

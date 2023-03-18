@@ -206,8 +206,11 @@ extends Node2D
 
 func _process(delta):
     var head = $\"%Head/ChompweedHeadModel\"
+    var curve = $\"Curve\"
+
     var end_point_global = head.to_global(Vector2.UP * head.HeightAboveGround)
-    $\"Curve\".EndPoint = to_local(end_point_global)
+    curve.StartPoint = to_local(owner.global_position)
+    curve.EndPoint = to_local(end_point_global)
 "
 
 [sub_resource type="CircleShape2D" id=1]
@@ -271,19 +274,19 @@ polygon = PoolVector2Array( -16, -23, -18, -37, 0, -54, 16, -37, 15, -21, 2, 0, 
 rotation = 4.71239
 polygon = PoolVector2Array( -16, -23, -18, -37, 0, -54, 16, -37, 15, -21, 2, 0, -2, 0 )
 
-[node name="Stem" type="Node2D" parent="."]
+[node name="Head" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Stem" type="Node2D" parent="Head"]
 unique_name_in_owner = true
 script = SubResource( 11 )
 
-[node name="Curve" type="Node2D" parent="Stem"]
+[node name="Curve" type="Node2D" parent="Head/Stem"]
 script = ExtResource( 2 )
-ControlPoint = Vector2( 0, -64 )
+ControlPoint = Vector2( -32, 0 )
 EndPoint = Vector2( 0, -32 )
 Width = 4.0
 Color = Color( 0.31, 0.24273, 0.1798, 1 )
-
-[node name="Head" type="Node2D" parent="."]
-unique_name_in_owner = true
 
 [node name="FreeHeadAggroCircle" type="Area2D" parent="Head"]
 unique_name_in_owner = true

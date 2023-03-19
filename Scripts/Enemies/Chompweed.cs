@@ -22,7 +22,7 @@ namespace ShiftingSepulcher
         private Area2D _stemCutHurtBox => GetNode<Area2D>("%StemCutHurtBox");
         private Area2D _hitBox => GetNode<Area2D>("%HitBox");
 
-        private Node2D _head => GetNode<Node2D>("%Head");
+        private KinematicBody2D _head => GetNode<KinematicBody2D>("%Head");
         private ChompweedHeadModel _headModel => GetNode<ChompweedHeadModel>("%Head/ChompweedHeadModel");
 
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");

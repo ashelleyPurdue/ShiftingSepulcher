@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Scripts/MiscNodes/HurtBox.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/MiscNodes/HitBox.cs" type="Script" id=3]
@@ -257,6 +257,9 @@ func _physics_process(delta):
     parent.look_at($\"%Head\".global_position)
 "
 
+[sub_resource type="CircleShape2D" id=13]
+radius = 16.0
+
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.0
 
@@ -320,8 +323,11 @@ polygon = PoolVector2Array( -16, -23, -18, -37, 0, -54, 16, -37, 15, -21, 2, 0, 
 rotation = 4.71239
 polygon = PoolVector2Array( -16, -23, -18, -37, 0, -54, 16, -37, 15, -21, 2, 0, -2, 0 )
 
-[node name="Head" type="Node2D" parent="."]
+[node name="Head" type="KinematicBody2D" parent="."]
 unique_name_in_owner = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Head"]
+shape = SubResource( 13 )
 
 [node name="FreeHeadAggroCircle" type="Area2D" parent="Head"]
 unique_name_in_owner = true

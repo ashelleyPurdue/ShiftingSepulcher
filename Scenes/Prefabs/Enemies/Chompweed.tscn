@@ -269,6 +269,7 @@ script = ExtResource( 5 )
 [node name="HealthPointsComponent" type="Node" parent="."]
 script = ExtResource( 4 )
 MaxHealth = 3
+InvulnerabilityTime = 0.25
 
 [node name="HurtFlasherComponent" type="Node" parent="."]
 script = ExtResource( 7 )

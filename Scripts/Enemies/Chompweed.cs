@@ -49,6 +49,16 @@ namespace ShiftingSepulcher
         {
             var healthPoints = this.GetComponent<HealthPointsComponent>();
 
+            // HACK: Fix a bug that causes the chompweed to become immortal.
+            // If the player manages to damage the stem AND the head in the
+            // exact same frame, AND that attack happens to kill the chompweed,
+            // then there's a chance that this event will run _after_ OnDead().
+            // If that happens, we need to make sure we DON'T switch to the
+            // decapitated state, because that would effectively "resurrect" it
+            // with 0 hp.
+            if (_sm.CurrentState == Dead)
+                return;
+
             // Receive extra damage when the stem is cut
             int damage = Mathf.RoundToInt(StemCutDamageMult * hitbox.Damage);
             healthPoints.TakeDamage(damage);

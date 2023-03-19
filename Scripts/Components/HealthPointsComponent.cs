@@ -31,6 +31,9 @@ namespace ShiftingSepulcher
 
         public void TakeDamage(int damage)
         {
+            if (IsInvulnerable)
+                return;
+
             Health -= damage;
             _cooldownTimer = InvulnerabilityTime;
 
@@ -40,8 +43,15 @@ namespace ShiftingSepulcher
 
         public void OnTookDamageFromHitBox(HitBox hitBox)
         {
+            if (IsInvulnerable)
+                return;
+
             TakeDamage(hitBox.Damage);
+
             EmitSignal(nameof(TookDamageFromHitBox), hitBox);
+
+            hitBox.CallDeferred("emit_signal", nameof(HitBox.DealtDamageTo), this);
+            hitBox.CallDeferred("emit_signal", nameof(HitBox.DealtDamageNoParams));
         }
 
         public Vector2 GetRecoilVelocity(Vector2 attackerGlobalPosition, float friction)

@@ -63,13 +63,7 @@ namespace ShiftingSepulcher
                 if (IsIgnored(hp))
                     return;
 
-                if (hp.IsInvulnerable)
-                    return;
-
                 hp.OnTookDamageFromHitBox(this);
-                CallDeferred("emit_signal", nameof(DealtDamageTo), hp);
-                CallDeferred("emit_signal", nameof(DealtDamageNoParams));
-
                 return;
             }
 

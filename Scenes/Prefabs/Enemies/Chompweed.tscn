@@ -1,12 +1,10 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Scripts/MiscNodes/HurtBox.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Components/KnockbackableVelocityComponent.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/MiscNodes/HitBox.cs" type="Script" id=3]
-[ext_resource path="res://Scripts/Components/HealthPointsComponent.cs" type="Script" id=4]
-[ext_resource path="res://Scripts/Components/EnemyComponent.cs" type="Script" id=5]
+[ext_resource path="res://Scenes/ComponentCollections/StandardEnemyComponents.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scripts/Enemies/Chompweed.cs" type="Script" id=6]
-[ext_resource path="res://Scripts/Components/HurtFlasherComponent.cs" type="Script" id=7]
 [ext_resource path="res://Scenes/Models/ChompweedHeadModel.tscn" type="PackedScene" id=8]
 
 [sub_resource type="Animation" id=10]
@@ -267,16 +265,11 @@ radius = 16.0
 [node name="Chompweed" type="Node2D"]
 script = ExtResource( 6 )
 
-[node name="EnemyComponent" type="Node" parent="."]
-script = ExtResource( 5 )
+[node name="StandardEnemyComponents" parent="." instance=ExtResource( 5 )]
 
-[node name="HealthPointsComponent" type="Node" parent="."]
-script = ExtResource( 4 )
+[node name="HealthPointsComponent" parent="StandardEnemyComponents" index="1"]
 MaxHealth = 3
 InvulnerabilityTime = 0.25
-
-[node name="HurtFlasherComponent" type="Node" parent="."]
-script = ExtResource( 7 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
@@ -364,8 +357,10 @@ shape = SubResource( 1 )
 HeightAboveGround = 32.0
 StemAttachPoint = NodePath("../../Flower")
 
-[connection signal="Dead" from="EnemyComponent" to="." method="OnDead"]
-[connection signal="Respawning" from="EnemyComponent" to="." method="OnRespawning"]
-[connection signal="TookDamageFromHitBox" from="HealthPointsComponent" to="Head/KnockbackableVelocityComponent" method="ApplyKnockback"]
+[connection signal="Dead" from="StandardEnemyComponents/EnemyComponent" to="." method="OnDead"]
+[connection signal="Respawning" from="StandardEnemyComponents/EnemyComponent" to="." method="OnRespawning"]
+[connection signal="TookDamageFromHitBox" from="StandardEnemyComponents/HealthPointsComponent" to="Head/KnockbackableVelocityComponent" method="ApplyKnockback"]
 [connection signal="TookDamage" from="StemCutHurtBox" to="." method="OnStemCutTookDamage"]
-[connection signal="TookDamage" from="Head/HeadHurtBox" to="HealthPointsComponent" method="OnTookDamageFromHitBox"]
+[connection signal="TookDamage" from="Head/HeadHurtBox" to="StandardEnemyComponents/HealthPointsComponent" method="OnTookDamageFromHitBox"]
+
+[editable path="StandardEnemyComponents"]

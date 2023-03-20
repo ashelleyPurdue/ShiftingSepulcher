@@ -1,4 +1,5 @@
-using System.Collections.Generic;
+using System;
+using System.Linq;
 using Godot;
 
 namespace ShiftingSepulcher
@@ -100,9 +101,14 @@ namespace ShiftingSepulcher
             return handle.GlobalPosition.DistanceTo(GetGlobalMousePosition());
         }
 
-        private EditorInterface GetEditorInterface()
+        private EditorInterfaceShim GetEditorInterface()
         {
-            return GetTree().Root.FirstDescendantOfType<EditorInterface>();
+            var editorInterface = GetTree()
+                .Root
+                .AllDescendants()
+                .First(n => n.GetClass() == "EditorInterface");
+
+            return new EditorInterfaceShim(editorInterface);
         }
 
         private static Vector2 SampleBezier(
@@ -115,6 +121,26 @@ namespace ShiftingSepulcher
             var toControl = startPoint.LinearInterpolate(controlPoint, t);
             var toEnd = startPoint.LinearInterpolate(endPoint, t);
             return toControl.LinearInterpolate(toEnd, t);
+        }
+
+        private class EditorInterfaceShim
+        {
+            private readonly Node _editorInterface;
+
+            public EditorInterfaceShim(Node editorInterface)
+            {
+                _editorInterface = editorInterface;
+            }
+
+            public Node GetEditedSceneRoot()
+            {
+                return (Node)_editorInterface.Call("get_edited_scene_root");
+            }
+
+            public void EditNode(Node n)
+            {
+                _editorInterface.Call("edit_node", n);
+            }
         }
     }
 }

@@ -34,6 +34,11 @@ namespace ShiftingSepulcher
             if (IsInvulnerable)
                 return;
 
+            TakeDamageDisregardingInvulnerability(damage);
+        }
+
+        public void TakeDamageDisregardingInvulnerability(int damage)
+        {
             Health -= damage;
             _cooldownTimer = InvulnerabilityTime;
 

@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scripts/SpawnTables/SpawnTable.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/SpawnTables/SpawnTableEntry.cs" type="Script" id=2]
 [ext_resource path="res://Scenes/Prefabs/Enemies/Zombie.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Prefabs/Enemies/MiniTilemancer.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Prefabs/Enemies/Chompweed.tscn" type="PackedScene" id=5]
 
 [node name="TrashMobSpawnTable" type="Node"]
 script = ExtResource( 1 )
@@ -16,3 +17,7 @@ Scene = ExtResource( 3 )
 [node name="MiniTilemancer" type="Node" parent="."]
 script = ExtResource( 2 )
 Scene = ExtResource( 4 )
+
+[node name="Chompweed" type="Node" parent="."]
+script = ExtResource( 2 )
+Scene = ExtResource( 5 )

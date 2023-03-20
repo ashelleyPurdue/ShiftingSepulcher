@@ -1,6 +1,7 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Scripts/MiscNodes/HurtBox.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Components/KnockbackableVelocityComponent.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/MiscNodes/HitBox.cs" type="Script" id=3]
 [ext_resource path="res://Scripts/Components/HealthPointsComponent.cs" type="Script" id=4]
 [ext_resource path="res://Scripts/Components/EnemyComponent.cs" type="Script" id=5]
@@ -326,6 +327,9 @@ polygon = PoolVector2Array( -16, -23, -18, -37, 0, -54, 16, -37, 15, -21, 2, 0, 
 [node name="Head" type="KinematicBody2D" parent="."]
 unique_name_in_owner = true
 
+[node name="KnockbackableVelocityComponent" type="Node" parent="Head"]
+script = ExtResource( 2 )
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Head"]
 shape = SubResource( 13 )
 
@@ -360,5 +364,6 @@ StemAttachPoint = NodePath("../../Flower")
 
 [connection signal="Dead" from="EnemyComponent" to="." method="OnDead"]
 [connection signal="Respawning" from="EnemyComponent" to="." method="OnRespawning"]
+[connection signal="TookDamageFromHitBox" from="HealthPointsComponent" to="Head/KnockbackableVelocityComponent" method="ApplyKnockback"]
 [connection signal="TookDamage" from="StemCutHurtBox" to="." method="OnStemCutTookDamage"]
 [connection signal="TookDamage" from="Head/HeadHurtBox" to="HealthPointsComponent" method="OnTookDamageFromHitBox"]

@@ -280,6 +280,10 @@ namespace ShiftingSepulcher
         private readonly IState FreeHeadAggro = new FreeHeadAggroState();
         private class FreeHeadAggroState : State<Chompweed>
         {
+            private KnockbackableVelocityComponent _headVel => Owner
+                ._head
+                .GetComponent<KnockbackableVelocityComponent>();
+
             public override void _StateEntered()
             {
                 Owner._animator.Play("FreeHeadChase");
@@ -304,13 +308,14 @@ namespace ShiftingSepulcher
                 );
 
                 // Move in the direction we're facing
-                Vector2 dir = Vector2.Down.Rotated(Owner._head.Rotation);
-                Owner._head.GlobalPosition += dir * Owner.FreeHeadSpeed * delta;
+                var dir = Vector2.Down.Rotated(Owner._head.Rotation);
+                _headVel.WalkVelocity = dir * Owner.FreeHeadSpeed;
             }
 
             public override void _StateExited()
             {
                 Owner.SetStemEnabled(true);
+                _headVel.WalkVelocity = Vector2.Zero;
             }
         }
 

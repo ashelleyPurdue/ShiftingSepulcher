@@ -30,7 +30,7 @@ namespace ShiftingSepulcher
         private StateMachine _sm;
         private Node2D _aggroTarget;
 
-        public override void _Ready()
+        public Chompweed()
         {
             _sm = new StateMachine(this);
         }

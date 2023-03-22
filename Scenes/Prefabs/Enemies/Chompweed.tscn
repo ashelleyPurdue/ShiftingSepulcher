@@ -1,11 +1,15 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Scripts/MiscNodes/HurtBox.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Components/KnockbackableVelocityComponent.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/MiscNodes/HitBox.cs" type="Script" id=3]
+[ext_resource path="res://Audio/SFX/ChompweedGrowl0.wav" type="AudioStream" id=4]
 [ext_resource path="res://Scenes/ComponentCollections/StandardEnemyComponents.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scripts/Enemies/Chompweed.cs" type="Script" id=6]
+[ext_resource path="res://Audio/SFX/ChompweedChomp0.wav" type="AudioStream" id=7]
 [ext_resource path="res://Scenes/Models/ChompweedHeadModel.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Audio/SFX/ChompweedBounceLoop0.wav" type="AudioStream" id=9]
+[ext_resource path="res://Scripts/MiscNodes/RapidlyTogglableAudioStreamPlayer.cs" type="Script" id=10]
 
 [sub_resource type="Animation" id=10]
 resource_name = "FreeHeadChase"
@@ -36,6 +40,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [ 0.0, 1.0, 0.0, 0.0 ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("BounceLoopSoundPlayer:PlayingTogglable")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
 [sub_resource type="Animation" id=9]
 resource_name = "FreeHeadIdle"
@@ -65,6 +81,18 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
 "values": [ 0.0, 0.25, 0.0, 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("BounceLoopSoundPlayer:PlayingTogglable")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -146,6 +174,20 @@ tracks/2/keys = {
 "update": 0,
 "values": [ -128.0, 0.0 ]
 }
+tracks/3/type = "audio"
+tracks/3/path = NodePath("AudioStreamPlayer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 7 )
+} ],
+"times": PoolRealArray( 0 )
+}
 
 [sub_resource type="Animation" id=5]
 length = 0.001
@@ -172,6 +214,30 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ -32.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Head/ChompweedHeadModel:MouthOpen")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("BounceLoopSoundPlayer:PlayingTogglable")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
 }
 
 [sub_resource type="Animation" id=8]
@@ -238,6 +304,20 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ 0.5, 0.0 ]
+}
+tracks/2/type = "audio"
+tracks/2/path = NodePath("AudioStreamPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 4 )
+} ],
+"times": PoolRealArray( 0 )
 }
 
 [sub_resource type="CircleShape2D" id=2]
@@ -356,6 +436,13 @@ shape = SubResource( 1 )
 [node name="ChompweedHeadModel" parent="Head" instance=ExtResource( 8 )]
 HeightAboveGround = 32.0
 StemAttachPoint = NodePath("../../Flower")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="BounceLoopSoundPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+script = ExtResource( 10 )
 
 [connection signal="Dead" from="StandardEnemyComponents/EnemyComponent" to="." method="OnDead"]
 [connection signal="Respawning" from="StandardEnemyComponents/EnemyComponent" to="." method="OnRespawning"]

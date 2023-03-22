@@ -112,7 +112,7 @@ namespace ShiftingSepulcher
             public override void _StateEntered()
             {
                 Owner._head.Position = Vector2.Zero;
-                Owner._animator.Play("Idle");
+                Owner._animator.ResetAndPlay("Idle");
             }
 
             public override void _PhysicsProcess(float delta)
@@ -137,7 +137,7 @@ namespace ShiftingSepulcher
                 _timer = 0;
                 _headStartAngle = Owner._head.Rotation;
 
-                Owner._animator.Play(
+                Owner._animator.ResetAndPlay(
                     name: "WindingUp",
                     customSpeed: 1 / Owner.TrackingTargetDuration
                 );
@@ -178,7 +178,7 @@ namespace ShiftingSepulcher
                 Vector2 targetPos = Owner._aggroTarget.GlobalPosition;
                 _lungeDir = Owner.ToLocal(targetPos).Normalized();
 
-                Owner._animator.Play(
+                Owner._animator.ResetAndPlay(
                     name: "Lunge",
                     customSpeed: 1 / Owner.LungeDuration
                 );
@@ -232,7 +232,7 @@ namespace ShiftingSepulcher
                 _timer = 0;
                 _startPos = Owner._head.Position;
 
-                Owner._animator.Play(
+                Owner._animator.ResetAndPlay(
                     name: "Recover",
                     customSpeed: 1 / Owner.RecoverDuration
                 );
@@ -259,7 +259,7 @@ namespace ShiftingSepulcher
         {
             public override void _StateEntered()
             {
-                Owner._animator.Play("FreeHeadIdle");
+                Owner._animator.ResetAndPlay("FreeHeadIdle");
                 Owner.SetStemEnabled(false);
             }
 
@@ -286,7 +286,7 @@ namespace ShiftingSepulcher
 
             public override void _StateEntered()
             {
-                Owner._animator.Play("FreeHeadChase");
+                Owner._animator.ResetAndPlay("FreeHeadChase");
                 Owner.SetStemEnabled(false);
             }
 
@@ -325,6 +325,7 @@ namespace ShiftingSepulcher
             public override void _StateEntered()
             {
                 // TODO: Play a death animation
+                Owner._animator.Reset();
                 SetEnabled(false);
             }
 

@@ -55,6 +55,10 @@ Fireball sound effect:
     https://opengameart.org/content/100-cc0-sfx
     Author: rubberdeck
 
+Rustling leaves sounds:
+    https://opengameart.org/content/20-rustles-dry-leaves
+    Author: qubodup
+
 Controller button icons:
     https://thoseawesomeguys.com/prompts/
     Author: Nicolae (XELU) Berbece

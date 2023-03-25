@@ -20,6 +20,7 @@ namespace ShiftingSepulcher
 
         public override void _PhysicsProcess(float delta)
         {
+            // Gradually tick up to meet the player's gold count
             if (_displayedGold < PlayerInventory.Gold)
             {
                 _displayedGold++;
@@ -30,6 +31,10 @@ namespace ShiftingSepulcher
                 if (!plingSound.Playing || soundPos > PlingSoundMinLength)
                     plingSound.Play();
             }
+
+            // Reset if too high
+            if (_displayedGold > PlayerInventory.Gold)
+                _displayedGold = PlayerInventory.Gold;
         }
     }
 }

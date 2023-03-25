@@ -324,8 +324,7 @@ namespace ShiftingSepulcher
         {
             public override void _StateEntered()
             {
-                // TODO: Play a death animation
-                Owner._animator.Reset();
+                Owner._animator.ResetAndPlay("Death");
                 SetEnabled(false);
             }
 
@@ -341,8 +340,6 @@ namespace ShiftingSepulcher
 
                 Owner._hitBox.SetDeferred("monitoring", enabled);
                 Owner._hitBox.SetDeferred("monitorable", enabled);
-
-                Owner._head.Visible = enabled;
 
                 Owner.SetStemEnabled(enabled);
             }

@@ -2,8 +2,8 @@
 
 [ext_resource path="res://Scripts/Components/Area2DComponent.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Components/HealthPointsComponent.cs" type="Script" id=2]
+[ext_resource path="res://Scenes/Models/ShadowModel.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/MiscNodes/HitBox.cs" type="Script" id=4]
-[ext_resource path="res://Scripts/Renderers/Circle2D.cs" type="Script" id=5]
 [ext_resource path="res://Audio/SFX/BottleBreak.wav" type="AudioStream" id=7]
 [ext_resource path="res://Scripts/MiscNodes/LingeringAudioStreamPlayer.cs" type="Script" id=8]
 [ext_resource path="res://Scripts/Components/EnemyComponent.cs" type="Script" id=9]
@@ -73,7 +73,7 @@ tracks/3/keys = {
 "values": [ false ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Shadow:visible")
+tracks/4/path = NodePath("Visuals:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -81,28 +81,16 @@ tracks/4/enabled = true
 tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
+"update": 0,
+"values": [ Vector2( 0, -9 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Visuals:position")
+tracks/5/path = NodePath("HitBox:monitoring")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 0, -9 ) ]
-}
-tracks/6/type = "value"
-tracks/6/path = NodePath("HitBox:monitoring")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
@@ -174,7 +162,7 @@ tracks/4/keys = {
 "values": [ true ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Shadow:visible")
+tracks/5/path = NodePath("HitBox:monitoring")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -185,25 +173,13 @@ tracks/5/keys = {
 "update": 1,
 "values": [ false ]
 }
-tracks/6/type = "value"
-tracks/6/path = NodePath("HitBox:monitoring")
+tracks/6/type = "method"
+tracks/6/path = NodePath("ShatterSound")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-tracks/7/type = "method"
-tracks/7/path = NodePath("ShatterSound")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
@@ -226,7 +202,7 @@ script = ExtResource( 2 )
 script = ExtResource( 11 )
 RotatesWhileHeld = true
 Visuals = NodePath("../Visuals")
-Shadow = NodePath("../Shadow")
+Shadow = NodePath("")
 
 [node name="HurtBox" type="Area2D" parent="."]
 position = Vector2( -16, -16 )
@@ -269,10 +245,7 @@ shape = SubResource( 5 )
 [node name="PromptPos" type="Position2D" parent="Interaction"]
 position = Vector2( -29, -36 )
 
-[node name="Shadow" type="Node2D" parent="."]
-script = ExtResource( 5 )
-Radius = 16.0
-Color = Color( 0, 0, 0, 1 )
+[node name="ShadowModel" parent="." instance=ExtResource( 3 )]
 
 [node name="Visuals" type="Node2D" parent="."]
 unique_name_in_owner = true

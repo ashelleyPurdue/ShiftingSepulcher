@@ -1,7 +1,15 @@
 # 1.1.1: Unreleased
 * Updated to Godot 3.5.2.
+
 * Added a new plant-based enemy: the Chompweed.  It does exactly what its name
     implies.
+
+* Enemies are no longer restricted to spawning in the corners of rooms
+    * Now they can also spawn in the center, or in any of the four cardinal
+        directions.
+    * They are still guaranteed to never spawn in front of a doorway, so you
+        don't need to worry about walking into them as soon as you enter the
+        room.
 
 # 1.1.0: 2023-03-05
 * Spruced up the UI with a custom theme.  No more default Godot controls!

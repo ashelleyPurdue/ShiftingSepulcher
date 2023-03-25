@@ -55,12 +55,12 @@ namespace ShiftingSepulcher
         /// <param name="node"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T FindAncestor<T>(this Node node) where T : Node
+        public static T FindAncestor<T>(this Node node) where T : class
         {
             var parent = node.GetParent();
 
-            if (parent is T)
-                return (T)parent;
+            if (parent is T match)
+                return match;
 
             return parent?.FindAncestor<T>();
         }

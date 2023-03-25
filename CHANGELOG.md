@@ -11,6 +11,8 @@
         don't need to worry about walking into them as soon as you enter the
         room.
 
+* All circular shadows in the game now have a consistent appearance.
+
 # 1.1.0: 2023-03-05
 * Spruced up the UI with a custom theme.  No more default Godot controls!
 * Keys are now found inside chests, which appear when you clear the room they're in.

@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Scripts/Renderers/Circle2D.cs" type="Script" id=1]
+[ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=2]
 
 [sub_resource type="GDScript" id=1]
 script/source = "tool
@@ -13,22 +13,33 @@ var _is_ready: bool = false
 
 func set_radius(r: float):
     _radius = r
-    if (_is_ready):
-        $\"%Circle2D\".Radius = _radius
+    update_texture_scale()
 
 func get_radius():
     return _radius
 
 func _ready():
     _is_ready = true
-    $\"%Circle2D\".Radius = _radius;"
+    update_texture_scale()
+
+func update_texture_scale():
+    if (_is_ready):
+        $\"%Sprite\".scale.x = _radius / 64
+        $\"%Sprite\".scale.y = _radius / 64
+"
+
+[sub_resource type="GradientTexture2D" id=2]
+gradient = ExtResource( 2 )
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2( 0.5, 0.5 )
 
 [node name="ShadowModel" type="Node2D"]
 script = SubResource( 1 )
 radius = 16.0
 
-[node name="Circle2D" type="Node2D" parent="."]
+[node name="Sprite" type="Sprite" parent="."]
 unique_name_in_owner = true
-script = ExtResource( 1 )
-Radius = 16.0
-Color = Color( 0, 0, 0, 0.258824 )
+scale = Vector2( 0.25, 0.25 )
+texture = SubResource( 2 )

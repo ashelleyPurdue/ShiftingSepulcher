@@ -202,7 +202,7 @@ script = ExtResource( 2 )
 script = ExtResource( 11 )
 RotatesWhileHeld = true
 Visuals = NodePath("../Visuals")
-Shadow = NodePath("")
+Shadow = NodePath("../ShadowModel")
 
 [node name="HurtBox" type="Area2D" parent="."]
 position = Vector2( -16, -16 )

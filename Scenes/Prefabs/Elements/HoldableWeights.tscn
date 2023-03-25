@@ -47,7 +47,7 @@ ThrowDistance = 80.0
 ThrowSpeed = 320.0
 ArcHeight = 16.0
 Visuals = NodePath("../Visuals")
-Shadow = NodePath("")
+Shadow = NodePath("../ShadowModel")
 
 [node name="InteractableComponent" type="Node" parent="."]
 script = ExtResource( 1 )

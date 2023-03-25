@@ -12,6 +12,7 @@
         room.
 
 * All circular shadows in the game now have a consistent appearance.
+* The coin collection sound should now hurt your ears less.
 
 # 1.1.0: 2023-03-05
 * Spruced up the UI with a custom theme.  No more default Godot controls!

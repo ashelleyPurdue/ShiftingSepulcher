@@ -1,26 +1,16 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/Components/InteractableComponent.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Elements/HoldableWeights.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/Components/HoldableComponent.cs" type="Script" id=3]
 [ext_resource path="res://Scripts/Components/Area2DComponent.cs" type="Script" id=4]
+[ext_resource path="res://Scenes/Models/ShadowModel.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 32.0
 
 [sub_resource type="CircleShape2D" id=9]
 radius = 16.0
-
-[sub_resource type="Gradient" id=7]
-interpolation_mode = 1
-colors = PoolColorArray( 0, 0, 0, 1, 1, 1, 1, 0 )
-
-[sub_resource type="GradientTexture2D" id=8]
-flags = 3
-gradient = SubResource( 7 )
-fill = 1
-fill_from = Vector2( 0.5, 0.5 )
-fill_to = Vector2( 0.1, 0.2 )
 
 [sub_resource type="Gradient" id=4]
 interpolation_mode = 1
@@ -57,7 +47,7 @@ ThrowDistance = 80.0
 ThrowSpeed = 320.0
 ArcHeight = 16.0
 Visuals = NodePath("../Visuals")
-Shadow = NodePath("../Shadow")
+Shadow = NodePath("../ShadowModel")
 
 [node name="InteractableComponent" type="Node" parent="."]
 script = ExtResource( 1 )
@@ -85,10 +75,9 @@ shape = SubResource( 9 )
 unique_name_in_owner = true
 position = Vector2( 0, -6 )
 
-[node name="Shadow" type="Sprite" parent="."]
-modulate = Color( 0, 0, 0, 0.662745 )
+[node name="ShadowModel" parent="." instance=ExtResource( 5 )]
 scale = Vector2( 0.5, 0.6 )
-texture = SubResource( 8 )
+radius = 32.0
 
 [node name="WeightVisualTemplate" type="Node2D" parent="."]
 unique_name_in_owner = true

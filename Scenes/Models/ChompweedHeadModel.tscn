@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/Renderers/Circle2D.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Models/ChompweedHeadModel.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/Renderers/BezierCurve2D.cs" type="Script" id=3]
+[ext_resource path="res://Scenes/Models/ShadowModel.tscn" type="PackedScene" id=4]
 
 [sub_resource type="Animation" id=3]
 resource_name = "MouthOpen"
@@ -92,10 +93,7 @@ playback_process_mode = 2
 anims/MouthOpen = SubResource( 3 )
 anims/RESET = SubResource( 4 )
 
-[node name="Shadow" type="Node2D" parent="."]
-script = ExtResource( 1 )
-Radius = 16.0
-Color = Color( 0, 0, 0, 0.258824 )
+[node name="ShadowModel" parent="." instance=ExtResource( 4 )]
 
 [node name="Stem" type="Node2D" parent="."]
 unique_name_in_owner = true

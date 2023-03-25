@@ -1,9 +1,7 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://Audio/SFX/CoinGet.wav" type="AudioStream" id=1]
 [ext_resource path="res://Scripts/ItemPickups/GoldPickup.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/MiscNodes/GroupDetectorArea2D.cs" type="Script" id=3]
-[ext_resource path="res://Scripts/MiscNodes/LingeringAudioStreamPlayer.cs" type="Script" id=4]
 [ext_resource path="res://Scenes/Renderers/Circle2D.tscn" type="PackedScene" id=5]
 
 [sub_resource type="Curve" id=2]
@@ -59,9 +57,4 @@ GroupsToDetect = PoolStringArray( "Player" )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupTrigger"]
 shape = SubResource( 1 )
 
-[node name="LingeringAudioStreamPlayer" type="Node" parent="."]
-script = ExtResource( 4 )
-Sound = ExtResource( 1 )
-
 [connection signal="GroupAreaEnteredNoParams" from="PickupTrigger" to="." method="OnPickedUp"]
-[connection signal="GroupAreaEnteredNoParams" from="PickupTrigger" to="LingeringAudioStreamPlayer" method="Play"]

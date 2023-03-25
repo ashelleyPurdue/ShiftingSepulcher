@@ -19,7 +19,10 @@ namespace ShiftingSepulcher
         public override void _PhysicsProcess(float delta)
         {
             if (_displayedGold < PlayerInventory.Gold)
+            {
                 _displayedGold++;
+                GetNode<AudioStreamPlayer>("%PlingSound").Play();
+            }
         }
     }
 }

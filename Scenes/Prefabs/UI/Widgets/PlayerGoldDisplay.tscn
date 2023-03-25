@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Audio/SFX/CoinGet.wav" type="AudioStream" id=1]
+[ext_resource path="res://Scripts/UI/Widgets/PlayerGoldDisplay.cs" type="Script" id=2]
+
+[node name="PlayerGoldDisplay" type="Label"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "Gold: ??"
+script = ExtResource( 2 )
+
+[node name="PlingSound" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource( 1 )
+volume_db = 6.0
+bus = "Sound"

@@ -8,12 +8,20 @@ extends Node2D
 
 export var radius: float setget set_radius, get_radius
 
+var _radius: float = 16
+var _is_ready: bool = false
+
 func set_radius(r: float):
-    $\"%Circle2D\".Radius = r
+    _radius = r
+    if (_is_ready):
+        $\"%Circle2D\".Radius = _radius
 
 func get_radius():
-    return $\"%Circle2D\".Radius
-"
+    return _radius
+
+func _ready():
+    _is_ready = true
+    $\"%Circle2D\".Radius = _radius;"
 
 [node name="ShadowModel" type="Node2D"]
 script = SubResource( 1 )

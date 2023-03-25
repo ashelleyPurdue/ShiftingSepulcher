@@ -107,6 +107,34 @@ namespace ShiftingSepulcher
         }
 
         /// <summary>
+        /// Returns the first descendant of the given type, using breadth-first
+        /// search.  Returns null if not found.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static T FirstDescendantOfType<T>(this Node node)
+        {
+            var visitQueue = new Queue<Node>();
+            visitQueue.Enqueue(node);
+
+            while (visitQueue.Count > 0)
+            {
+                Node n = visitQueue.Dequeue();
+
+                if (n is T result)
+                    return result;
+
+                foreach (var child in n.EnumerateChildren())
+                {
+                    visitQueue.Enqueue(child);
+                }
+            }
+
+            return default;
+        }
+
+        /// <summary>
         /// Returns the only immediate child of the given type.
         /// If there is no immediate child with that type, or if there is more
         /// than one, throws an error.

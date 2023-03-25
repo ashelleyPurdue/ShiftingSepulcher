@@ -1,5 +1,7 @@
 # 1.1.1: Unreleased
 * Updated to Godot 3.5.2.
+* Added a new plant-based enemy: the Chompweed.  It does exactly what its name
+    implies.
 
 # 1.1.0: 2023-03-05
 * Spruced up the UI with a custom theme.  No more default Godot controls!

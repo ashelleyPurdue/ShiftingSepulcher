@@ -46,16 +46,6 @@ namespace ShiftingSepulcher
             _ignoredHealthPoints.Add(hp);
         }
 
-        public override void _PhysicsProcess(float delta)
-        {
-            if (Monitoring)
-            {
-                foreach (var other in GetOverlappingAreas())
-                {
-                }
-            }
-        }
-
         public Vector2 GetKnockbackVelocity(Node2D victim, float friction)
         {
             Vector2 dir = (victim.GlobalPosition - GlobalPosition).Normalized();
@@ -73,13 +63,7 @@ namespace ShiftingSepulcher
                 if (IsIgnored(hp))
                     return;
 
-                if (hp.IsInvulnerable)
-                    return;
-
                 hp.OnTookDamageFromHitBox(this);
-                CallDeferred("emit_signal", nameof(DealtDamageTo), hp);
-                CallDeferred("emit_signal", nameof(DealtDamageNoParams));
-
                 return;
             }
 

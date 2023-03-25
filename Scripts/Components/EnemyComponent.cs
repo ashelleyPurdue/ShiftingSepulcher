@@ -88,7 +88,7 @@ namespace ShiftingSepulcher
 
         private void OnHitWall()
         {
-            _healthPoints.TakeDamage(1);
+            _healthPoints.TakeDamageDisregardingInvulnerability(1);
         }
     }
 }

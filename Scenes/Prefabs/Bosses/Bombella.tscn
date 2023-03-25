@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=2]
+[gd_scene load_steps=57 format=2]
 
 [ext_resource path="res://Scripts/MiscNodes/HurtBox.cs" type="Script" id=1]
 [ext_resource path="res://Audio/SFX/SwordDamageOwWithSlime.wav" type="AudioStream" id=2]
@@ -11,7 +11,7 @@
 [ext_resource path="res://Scripts/Renderers/LineTrail2D.cs" type="Script" id=9]
 [ext_resource path="res://Scripts/Bosses/Bombella.cs" type="Script" id=10]
 [ext_resource path="res://Scripts/MiscNodes/MusicServiceAccessor.cs" type="Script" id=11]
-[ext_resource path="res://Gradients/ShadowGradient.tres" type="Gradient" id=12]
+[ext_resource path="res://Scenes/Models/ShadowModel.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Fonts/The Wild Breath of Zelda.otf" type="DynamicFontData" id=13]
 [ext_resource path="res://Scripts/MiscNodes/LingeringAudioStreamPlayer.cs" type="Script" id=14]
 [ext_resource path="res://Sprites/OutlinedCircle.svg" type="Texture" id=15]
@@ -2316,11 +2316,6 @@ radius = 39.63
 [sub_resource type="CircleShape2D" id=10]
 radius = 32.0
 
-[sub_resource type="GradientTexture2D" id=2]
-gradient = ExtResource( 12 )
-fill = 1
-fill_from = Vector2( 0.5, 0.5 )
-
 [sub_resource type="Gradient" id=15]
 offsets = PoolRealArray( 0.369767, 0.432558, 0.448837 )
 colors = PoolColorArray( 0, 0.976471, 1, 0, 0, 0.976471, 1, 0.431373, 0, 0.976471, 1, 0 )
@@ -2484,8 +2479,11 @@ disabled = true
 
 [node name="Model" type="Node2D" parent="Visuals"]
 
-[node name="Shadow" type="Sprite" parent="Visuals/Model"]
-texture = SubResource( 2 )
+[node name="Shadow" type="Node2D" parent="Visuals/Model"]
+
+[node name="ShadowModel" parent="Visuals/Model/Shadow" instance=ExtResource( 12 )]
+scale = Vector2( 1, 1 )
+radius = 32.0
 
 [node name="Broom" type="Node2D" parent="Visuals/Model"]
 

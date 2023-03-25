@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/Renderers/Circle2D.cs" type="Script" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "tool
+extends Node2D
+
+export var radius: float setget set_radius, get_radius
+
+func set_radius(r: float):
+    $\"%Circle2D\".Radius = r
+
+func get_radius():
+    return $\"%Circle2D\".Radius
+"
+
+[node name="ShadowModel" type="Node2D"]
+script = SubResource( 1 )
+radius = 16.0
+
+[node name="Circle2D" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource( 1 )
+Radius = 16.0
+Color = Color( 0, 0, 0, 0.258824 )

@@ -76,12 +76,12 @@ __meta__ = {
 
 [node name="FPSLabel" type="Label" parent="CanvasLayer/PerformanceStats/VBoxContainer"]
 margin_right = 140.0
-margin_bottom = 14.0
+margin_bottom = 23.0
 text = "FPS:"
 script = SubResource( 1 )
 
 [node name="GarbageCollectorMeter" type="ProgressBar" parent="CanvasLayer/PerformanceStats/VBoxContainer"]
-margin_top = 18.0
+margin_top = 27.0
 margin_right = 140.0
-margin_bottom = 32.0
+margin_bottom = 41.0
 script = ExtResource( 7 )

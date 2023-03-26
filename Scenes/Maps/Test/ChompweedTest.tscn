@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scenes/Maps/Test/EmptyTestRoom.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Prefabs/Enemies/Chompweed.tscn" type="PackedScene" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 112, 16 )
 
 [node name="ChompweedTest" type="Node2D"]
 
@@ -14,7 +17,16 @@ position = Vector2( -256, -96 )
 position = Vector2( 256, -128 )
 
 [node name="Chompweed3" parent="." instance=ExtResource( 2 )]
-position = Vector2( -256, 128 )
+position = Vector2( -384, 192 )
 
 [node name="Chompweed4" parent="." instance=ExtResource( 2 )]
 position = Vector2( 256, 128 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D"]
+polygon = PoolVector2Array( -352, -64, -128, -64, -128, -32, -352, -32 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( -240, -48 )
+shape = SubResource( 1 )

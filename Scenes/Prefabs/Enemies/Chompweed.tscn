@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Scripts/MiscNodes/HurtBox.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Components/KnockbackableVelocityComponent.cs" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Scenes/Models/ChompweedHeadModel.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Audio/SFX/ChompweedBounceLoop0.wav" type="AudioStream" id=9]
 [ext_resource path="res://Scripts/MiscNodes/RapidlyTogglableAudioStreamPlayer.cs" type="Script" id=10]
+[ext_resource path="res://Scripts/Renderers/Ring2D.cs" type="Script" id=11]
 
 [sub_resource type="Animation" id=14]
 resource_name = "Death"
@@ -423,6 +424,16 @@ func _physics_process(delta):
     parent.look_at($\"%Head\".global_position)
 "
 
+[sub_resource type="GDScript" id=15]
+script/source = "tool
+extends Node
+
+func _process(delta):
+    var rawRadius: float = owner.LungeDistance
+    var hitboxRadius: float = $\"%HitBox/CollisionShape2D\".shape.radius
+    get_parent().Radius = rawRadius + hitboxRadius
+"
+
 [sub_resource type="CircleShape2D" id=13]
 radius = 16.0
 
@@ -465,6 +476,13 @@ script = ExtResource( 1 )
 position = Vector2( 0.5, 0 )
 shape = SubResource( 11 )
 script = SubResource( 12 )
+
+[node name="WarningRing" type="Node2D" parent="."]
+script = ExtResource( 11 )
+Radius = 144.0
+
+[node name="BindRadiusToLungeDistance" type="Node" parent="WarningRing"]
+script = SubResource( 15 )
 
 [node name="Flower" type="Node2D" parent="."]
 modulate = Color( 0.0627451, 0.376471, 0.0941176, 1 )

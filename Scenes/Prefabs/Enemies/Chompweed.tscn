@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Scripts/MiscNodes/HurtBox.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Components/KnockbackableVelocityComponent.cs" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Scenes/Models/ChompweedHeadModel.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Audio/SFX/ChompweedBounceLoop0.wav" type="AudioStream" id=9]
 [ext_resource path="res://Scripts/MiscNodes/RapidlyTogglableAudioStreamPlayer.cs" type="Script" id=10]
+[ext_resource path="res://Scripts/Renderers/Ring2D.cs" type="Script" id=11]
 
 [sub_resource type="Animation" id=14]
 resource_name = "Death"
@@ -239,6 +240,18 @@ tracks/3/keys = {
 } ],
 "times": PoolRealArray( 0 )
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("WarningRing:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.3, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
 
 [sub_resource type="Animation" id=5]
 length = 0.001
@@ -326,6 +339,18 @@ tracks/6/keys = {
 "update": 0,
 "values": [ Color( 0.0627451, 0.376471, 0.0941176, 1 ) ]
 }
+tracks/7/type = "value"
+tracks/7/path = NodePath("WarningRing:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
 
 [sub_resource type="Animation" id=8]
 resource_name = "Recover"
@@ -406,6 +431,18 @@ tracks/2/keys = {
 } ],
 "times": PoolRealArray( 0 )
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("WarningRing:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 256.0
@@ -421,6 +458,16 @@ func _physics_process(delta):
     var parent = get_parent()
     parent.global_scale.x = parent.global_position.distance_to($\"%Head\".global_position) - 16
     parent.look_at($\"%Head\".global_position)
+"
+
+[sub_resource type="GDScript" id=15]
+script/source = "tool
+extends Node
+
+func _process(delta):
+    var rawRadius: float = owner.LungeDistance
+    var hitboxRadius: float = $\"%HitBox/CollisionShape2D\".shape.radius
+    get_parent().Radius = rawRadius + hitboxRadius
 "
 
 [sub_resource type="CircleShape2D" id=13]
@@ -465,6 +512,15 @@ script = ExtResource( 1 )
 position = Vector2( 0.5, 0 )
 shape = SubResource( 11 )
 script = SubResource( 12 )
+
+[node name="WarningRing" type="Node2D" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+script = ExtResource( 11 )
+Radius = 144.0
+Color = Color( 1, 0.435294, 0.435294, 1 )
+
+[node name="BindRadiusToLungeDistance" type="Node" parent="WarningRing"]
+script = SubResource( 15 )
 
 [node name="Flower" type="Node2D" parent="."]
 modulate = Color( 0.0627451, 0.376471, 0.0941176, 1 )

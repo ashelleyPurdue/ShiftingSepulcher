@@ -591,7 +591,7 @@ script = ExtResource( 10 )
 [connection signal="Dead" from="StandardEnemyComponents/EnemyComponent" to="." method="OnDead"]
 [connection signal="Respawning" from="StandardEnemyComponents/EnemyComponent" to="." method="OnRespawning"]
 [connection signal="TookDamageFromHitBox" from="StandardEnemyComponents/HealthPointsComponent" to="Head/KnockbackableVelocityComponent" method="ApplyKnockback"]
-[connection signal="TookDamage" from="StemCutHurtBox" to="." method="OnStemCutTookDamage"]
-[connection signal="TookDamage" from="Head/HeadHurtBox" to="StandardEnemyComponents/HealthPointsComponent" method="OnTookDamageFromHitBox"]
+[connection signal="HitBoxEntered" from="StemCutHurtBox" to="." method="OnStemCutTookDamage"]
+[connection signal="HitBoxEntered" from="Head/HeadHurtBox" to="StandardEnemyComponents/HealthPointsComponent" method="OnTookDamageFromHitBox"]
 
 [editable path="StandardEnemyComponents"]

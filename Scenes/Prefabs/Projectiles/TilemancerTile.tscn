@@ -202,5 +202,5 @@ polygon = PoolVector2Array( -16, -16, 16, -16, 16, 16, -16, 16 )
 [node name="RotateComponent" type="Node" parent="Visuals/Tile"]
 script = ExtResource( 5 )
 
-[connection signal="TookDamage" from="HurtBox" to="." method="OnTookDamage" flags=3]
+[connection signal="HitBoxEntered" from="HurtBox" to="." method="OnTookDamage" flags=3]
 [connection signal="DealtDamage" from="HitBox" to="." method="OnDealtDamage"]

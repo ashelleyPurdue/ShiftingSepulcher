@@ -133,7 +133,7 @@ namespace ShiftingSepulcher
             if (!hurtBox.Enabled)
                 return;
 
-            hurtBox.TakeDamage(this);
+            hurtBox.FireHitBoxEntered(this);
             CallDeferred("emit_signal", nameof(DealtDamage), hurtBox);
             CallDeferred("emit_signal", nameof(DealtDamageNoParams));
         }

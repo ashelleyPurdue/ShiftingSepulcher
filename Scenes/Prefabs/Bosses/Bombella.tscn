@@ -2712,4 +2712,4 @@ process_material = SubResource( 30 )
 [connection signal="Respawning" from="EnemyComponent" to="AI" method="OnRespawning"]
 [connection signal="TookDamageNoParams" from="HealthPointsComponent" to="AI" method="OnTookDamage" flags=3]
 [connection signal="TookDamageNoParams" from="HealthPointsComponent" to="TookDamageSound" method="play"]
-[connection signal="TookDamage" from="ShieldHurtBox" to="AI" method="OnShieldTookDamage" flags=3]
+[connection signal="HitBoxEntered" from="ShieldHurtBox" to="AI" method="OnShieldTookDamage" flags=3]

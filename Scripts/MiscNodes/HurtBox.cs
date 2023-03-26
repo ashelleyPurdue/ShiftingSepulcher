@@ -5,8 +5,7 @@ namespace ShiftingSepulcher
 {
     public class HurtBox : Area2D
     {
-        [Signal] public delegate void TookDamage(HitBox hitBox);
-        [Signal] public delegate void TookDamageNoParams();
+        [Signal] public delegate void HitBoxEntered(HitBox hitBox);
 
         [Export] public NodePath HealthPointsPath;
         [Export] public float RecoilDistance = 32;
@@ -19,10 +18,9 @@ namespace ShiftingSepulcher
 
         private HashSet<HitBox> _ignoredHitboxes = new HashSet<HitBox>();
 
-        public void TakeDamage(HitBox hitBox)
+        public void FireHitBoxEntered(HitBox hitBox)
         {
-            EmitSignal(nameof(TookDamage), hitBox);
-            EmitSignal(nameof(TookDamageNoParams));
+            EmitSignal(nameof(HitBoxEntered), hitBox);
         }
 
         public void IgnoreHitBox(HitBox hitBox)

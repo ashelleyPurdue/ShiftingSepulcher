@@ -130,12 +130,19 @@ namespace ShiftingSepulcher
             if (IsIgnored(hurtBox))
                 return;
 
+            if (IsIgnored(hurtBox.HealthPoints))
+                return;
+
             if (!hurtBox.Enabled)
                 return;
 
             hurtBox.FireHitBoxEntered(this);
             CallDeferred("emit_signal", nameof(DealtDamage), hurtBox);
             CallDeferred("emit_signal", nameof(DealtDamageNoParams));
+
+            // We COULD just tell users to hook the HitBoxEntered signal up to
+            // every HealthPointsComponent, but that would be tedious.
+            hurtBox.HealthPoints?.OnHitBoxEntered(this);
         }
 
         private bool IsIgnored(HurtBox hurtBox)
@@ -145,7 +152,7 @@ namespace ShiftingSepulcher
 
         private bool IsIgnored(HealthPointsComponent hp)
         {
-            return _ignoredHealthPoints.Contains(hp);
+            return hp != null && _ignoredHealthPoints.Contains(hp);
         }
     }
 }

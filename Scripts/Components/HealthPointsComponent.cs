@@ -46,7 +46,7 @@ namespace ShiftingSepulcher
             EmitSignal(nameof(TookDamageNoParams));
         }
 
-        public void OnTookDamageFromHitBox(HitBox hitBox)
+        public void OnHitBoxEntered(HitBox hitBox)
         {
             if (IsInvulnerable)
                 return;
@@ -57,6 +57,11 @@ namespace ShiftingSepulcher
 
             hitBox.CallDeferred("emit_signal", nameof(HitBox.DealtDamageTo), this);
             hitBox.CallDeferred("emit_signal", nameof(HitBox.DealtDamageNoParams));
+        }
+
+        public void OnTookDamageFromHitBox(HitBox hitBox)
+        {
+            OnHitBoxEntered(hitBox);
         }
 
         public Vector2 GetRecoilVelocity(Vector2 attackerGlobalPosition, float friction)

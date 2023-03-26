@@ -18,9 +18,10 @@ namespace ShiftingSepulcher
 
         private Area2D _aggroCircle => GetNode<Area2D>("%AggroCircle");
         private Area2D _freeHeadAggroCircle => GetNode<Area2D>("%FreeHeadAggroCircle");
-        private Area2D _headHurtBox => GetNode<Area2D>("%HeadHurtBox");
-        private Area2D _stemCutHurtBox => GetNode<Area2D>("%StemCutHurtBox");
-        private Area2D _hitBox => GetNode<Area2D>("%HitBox");
+
+        private HurtBox _headHurtBox => GetNode<HurtBox>("%HeadHurtBox");
+        private HurtBox _stemCutHurtBox => GetNode<HurtBox>("%StemCutHurtBox");
+        private HitBox _hitBox => GetNode<HitBox>("%HitBox");
 
         private KinematicBody2D _head => GetNode<KinematicBody2D>("%Head");
         private ChompweedHeadModel _headModel => GetNode<ChompweedHeadModel>("%Head/ChompweedHeadModel");
@@ -102,8 +103,7 @@ namespace ShiftingSepulcher
         private void SetStemEnabled(bool enabled)
         {
             _headModel.StemVisible = enabled;
-            _stemCutHurtBox.SetDeferred("monitoring", enabled);
-            _stemCutHurtBox.SetDeferred("monitorable", enabled);
+            _stemCutHurtBox.Enabled = enabled;
         }
 
         private readonly IState Idle = new IdleState();
@@ -348,11 +348,8 @@ namespace ShiftingSepulcher
 
             private void SetEnabled(bool enabled)
             {
-                Owner._headHurtBox.SetDeferred("monitoring", enabled);
-                Owner._headHurtBox.SetDeferred("monitorable", enabled);
-
-                Owner._hitBox.SetDeferred("monitoring", enabled);
-                Owner._hitBox.SetDeferred("monitorable", enabled);
+                Owner._headHurtBox.Enabled = enabled;
+                Owner._hitBox.Enabled = enabled;
 
                 Owner.SetStemEnabled(enabled);
             }

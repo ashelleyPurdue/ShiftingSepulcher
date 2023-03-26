@@ -85,7 +85,7 @@ tracks/4/keys = {
 "values": [ Vector2( 0, -9 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("HitBox:monitoring")
+tracks/5/path = NodePath("HitBox:Enabled")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -162,7 +162,7 @@ tracks/4/keys = {
 "values": [ true ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("HitBox:monitoring")
+tracks/5/path = NodePath("HitBox:Enabled")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -218,7 +218,7 @@ shape = SubResource( 6 )
 position = Vector2( -16, -16 )
 collision_layer = 2
 collision_mask = 2
-monitoring = false
+Enabled = false
 script = ExtResource( 4 )
 IgnoredHealthPoints = [ NodePath("../HealthPointsComponent") ]
 

@@ -13,6 +13,7 @@ namespace ShiftingSepulcher
 
         [Export] public int Damage = 1;
         [Export] public float KnockbackDistance = 92.5f;
+        [Export] public bool Enabled = true;
 
         [Export] public NodePath[] IgnoredHurtBoxes = new NodePath[] {};
         private HashSet<HurtBox> _ignoredHurtBoxes = new HashSet<HurtBox>();
@@ -58,6 +59,9 @@ namespace ShiftingSepulcher
 
         private void OnAreaEntered(Area2D other)
         {
+            if (!Enabled)
+                return;
+
             if (other.HasComponent<HealthPointsComponent>(out var hp))
             {
                 if (IsIgnored(hp))
@@ -71,6 +75,9 @@ namespace ShiftingSepulcher
             if (other is HurtBox hurtBox)
             {
                 if (IsIgnored(hurtBox))
+                    return;
+
+                if (!hurtBox.Enabled)
                     return;
 
                 hurtBox.TakeDamage(this);

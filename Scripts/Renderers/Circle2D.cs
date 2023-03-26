@@ -11,6 +11,9 @@ namespace ShiftingSepulcher
             get => _radius;
             set
             {
+                if (value == _radius)
+                    return;
+
                 _radius = value;
                 Update();
             }
@@ -21,6 +24,9 @@ namespace ShiftingSepulcher
             get => _color;
             set
             {
+                if (value == _color)
+                    return;
+
                 _color = value;
                 Update();
             }

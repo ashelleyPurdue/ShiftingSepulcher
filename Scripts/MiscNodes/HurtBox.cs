@@ -8,9 +8,14 @@ namespace ShiftingSepulcher
         [Signal] public delegate void TookDamage(HitBox hitBox);
         [Signal] public delegate void TookDamageNoParams();
 
+        [Export] public NodePath HealthPointsPath;
         [Export] public float RecoilDistance = 32;
         [Export] public bool Enabled = true;
 
+        public HealthPointsComponent HealthPoints =>
+            string.IsNullOrEmpty(HealthPointsPath)
+                ? null
+                : GetNode<HealthPointsComponent>(HealthPointsPath);
 
         private HashSet<HitBox> _ignoredHitboxes = new HashSet<HitBox>();
 

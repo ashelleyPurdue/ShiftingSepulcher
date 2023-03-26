@@ -30,6 +30,8 @@ namespace ShiftingSepulcher
         private bool _lmbPressed = false;
         private bool _wasLmbPressed = false;
 
+        private EditorInterfaceShim _editorInterfaceCache = null;
+
         public override void _Draw()
         {
             UpdatePointsArray();
@@ -103,12 +105,16 @@ namespace ShiftingSepulcher
 
         private EditorInterfaceShim GetEditorInterface()
         {
-            var editorInterface = GetTree()
+            if (_editorInterfaceCache != null)
+                return _editorInterfaceCache;
+
+            var editorInterfaceNode = GetTree()
                 .Root
                 .AllDescendants()
                 .First(n => n.GetClass() == "EditorInterface");
 
-            return new EditorInterfaceShim(editorInterface);
+            _editorInterfaceCache = new EditorInterfaceShim(editorInterfaceNode);
+            return _editorInterfaceCache;
         }
 
         private static Vector2 SampleBezier(

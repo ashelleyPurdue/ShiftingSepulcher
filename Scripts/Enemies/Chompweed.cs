@@ -192,13 +192,26 @@ namespace ShiftingSepulcher
                 Vector2 endPos = _lungeDir * Owner.LungeDistance;
 
                 float t = _timer / Owner.LungeDuration;
-                Owner._head.Position = startPos.LinearInterpolate(endPos, t);
+                var pos = startPos.LinearInterpolate(endPos, t);
+                MoveToPosAndCollide(pos);
 
                 if (_timer >= Owner.LungeDuration)
                 {
-                    Owner._head.Position = endPos;
+                    MoveToPosAndCollide(endPos);
                     ChangeState(Owner.PausingAfterLunge);
                 }
+            }
+
+            private void MoveToPosAndCollide(Vector2 localPos)
+            {
+                // Start the collision test from the start point, in case
+                // something gets between the head and the flower
+                Owner._head.Position = Vector2.Zero;
+                Owner._head.ForceUpdateTransform();
+
+                var destPosGlobal = Owner._head.GetParent<Node2D>().ToGlobal(localPos);
+                var deltaPos = destPosGlobal - Owner._head.GlobalPosition;
+                Owner._head.MoveAndCollide(deltaPos);
             }
         }
 

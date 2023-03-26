@@ -563,6 +563,7 @@ shape = SubResource( 2 )
 unique_name_in_owner = true
 visible = false
 script = ExtResource( 1 )
+HealthPointsPath = NodePath("../../StandardEnemyComponents/HealthPointsComponent")
 RecoilDistance = 64.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Head/HeadHurtBox"]
@@ -572,7 +573,8 @@ shape = SubResource( 1 )
 unique_name_in_owner = true
 visible = false
 script = ExtResource( 3 )
-IgnoredHurtBoxes = [ NodePath("../HeadHurtBox"), NodePath("../../StemCutHurtBox") ]
+IgnoredHurtBoxes = [ NodePath("../../StemCutHurtBox") ]
+IgnoredHealthPoints = [ NodePath("../../StandardEnemyComponents/HealthPointsComponent") ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Head/HitBox"]
 shape = SubResource( 1 )
@@ -592,6 +594,5 @@ script = ExtResource( 10 )
 [connection signal="Respawning" from="StandardEnemyComponents/EnemyComponent" to="." method="OnRespawning"]
 [connection signal="TookDamageFromHitBox" from="StandardEnemyComponents/HealthPointsComponent" to="Head/KnockbackableVelocityComponent" method="ApplyKnockback"]
 [connection signal="HitBoxEntered" from="StemCutHurtBox" to="." method="OnStemCutTookDamage"]
-[connection signal="HitBoxEntered" from="Head/HeadHurtBox" to="StandardEnemyComponents/HealthPointsComponent" method="OnTookDamageFromHitBox"]
 
 [editable path="StandardEnemyComponents"]

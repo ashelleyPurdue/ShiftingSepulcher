@@ -183,8 +183,8 @@ shape = SubResource( 6 )
 
 [node name="HitBox" type="Area2D" parent="."]
 unique_name_in_owner = true
-monitoring = false
 script = ExtResource( 8 )
+Enabled = false
 IgnoredHurtBoxes = [ NodePath("../HurtBox") ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]

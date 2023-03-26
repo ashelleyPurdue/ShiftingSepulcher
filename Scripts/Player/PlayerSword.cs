@@ -21,8 +21,7 @@ namespace ShiftingSepulcher
             RotationDegrees += SwingSpeed * delta;
 
             Visible = IsSwinging;
-            _hitBox.Monitoring  = IsSwinging;
-            _hitBox.Monitorable = IsSwinging;
+            _hitBox.Enabled  = IsSwinging;
         }
 
         public void StartSwinging(float angleDeg)

@@ -9,6 +9,7 @@ namespace ShiftingSepulcher
         [Signal] public delegate void TookDamageNoParams();
 
         [Export] public float RecoilDistance = 32;
+        [Export] public bool Enabled = true;
 
 
         private HashSet<HitBox> _ignoredHitboxes = new HashSet<HitBox>();

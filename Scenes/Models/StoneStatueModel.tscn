@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/Models/ShadowModel.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/Renderers/Circle2D.cs" type="Script" id=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "tool
+extends Node2D
+
+export var HeightAboveGround: float = 0
+
+func _process(delta):
+    $\"./Body\".position.y = -HeightAboveGround
+"
+
+[node name="StoneStatueModel" type="Node2D"]
+script = SubResource( 1 )
+
+[node name="ShadowModel" parent="." instance=ExtResource( 1 )]
+
+[node name="Body" type="Node2D" parent="."]
+
+[node name="PlaceholderCylinder" type="Node2D" parent="Body"]
+
+[node name="BottomCircle" type="Node2D" parent="Body/PlaceholderCylinder"]
+script = ExtResource( 2 )
+Radius = 12.0
+
+[node name="Polygon2D" type="Polygon2D" parent="Body/PlaceholderCylinder"]
+polygon = PoolVector2Array( -16, -32, 16, -32, 12, 0, -12, 0 )
+
+[node name="TopCircle" type="Node2D" parent="Body/PlaceholderCylinder"]
+position = Vector2( 0, -32 )
+scale = Vector2( 1, 0.75 )
+script = ExtResource( 2 )
+Radius = 16.0
+Color = Color( 0.439216, 0.439216, 0.439216, 1 )

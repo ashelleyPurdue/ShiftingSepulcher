@@ -21,7 +21,6 @@ namespace ShiftingSepulcher
         [Export] public NodePath[] IgnoredHealthPoints = new NodePath[] {};
         private HashSet<HealthPointsComponent> _ignoredHealthPoints = new HashSet<HealthPointsComponent>();
 
-        private HashSet<HealthPointsComponent> _previouslyOverlappingHealthPoints = new HashSet<HealthPointsComponent>();
         private HashSet<HurtBox> _previouslyOverlappingHurtBoxes = new HashSet<HurtBox>();
 
         public override void _Ready()
@@ -64,36 +63,12 @@ namespace ShiftingSepulcher
             // enabled
             if (!Enabled)
             {
-                _previouslyOverlappingHealthPoints.Clear();
                 _previouslyOverlappingHurtBoxes.Clear();
                 return;
             }
 
             var currentlyOverlappingAreas = GetOverlappingAreas().Cast<Area2D>();
-            DetectNewlyOverlappingHealthPoints(currentlyOverlappingAreas);
             DetectNewlyOverlappingHurtBoxes(currentlyOverlappingAreas);
-        }
-
-        private void DetectNewlyOverlappingHealthPoints(IEnumerable<Area2D> currentlyOverlappingAreas)
-        {
-            var currentlyOverlappingHealthPoints = currentlyOverlappingAreas
-                .Select(a => a.GetComponent<HealthPointsComponent>())
-                .Where(hp => hp != null)
-                .Where(hp => !hp.IsInvulnerable);
-
-            var newlyOverlappingHealthPoints = currentlyOverlappingHealthPoints
-                .Where(hp => !_previouslyOverlappingHealthPoints.Contains(hp));
-
-            foreach (var hp in newlyOverlappingHealthPoints)
-            {
-                OnHealthPointsComponentEntered(hp);
-            }
-
-            _previouslyOverlappingHealthPoints.Clear();
-            foreach (var hp in currentlyOverlappingHealthPoints)
-            {
-                _previouslyOverlappingHealthPoints.Add(hp);
-            }
         }
 
         private void DetectNewlyOverlappingHurtBoxes(IEnumerable<Area2D> currentlyOverlappingAreas)
@@ -117,25 +92,24 @@ namespace ShiftingSepulcher
             }
         }
 
-        private void OnHealthPointsComponentEntered(HealthPointsComponent hp)
-        {
-            if (IsIgnored(hp))
-                return;
-
-            hp.OnTookDamageFromHitBox(this);
-        }
-
         private void OnHurtBoxEntered(HurtBox hurtBox)
         {
             if (IsIgnored(hurtBox))
                 return;
 
+            if (IsIgnored(hurtBox.HealthPoints))
+                return;
+
             if (!hurtBox.Enabled)
                 return;
 
-            hurtBox.TakeDamage(this);
+            hurtBox.FireHitBoxEntered(this);
             CallDeferred("emit_signal", nameof(DealtDamage), hurtBox);
             CallDeferred("emit_signal", nameof(DealtDamageNoParams));
+
+            // We COULD just tell users to hook the HitBoxEntered signal up to
+            // every HealthPointsComponent, but that would be tedious.
+            hurtBox.HealthPoints?.OnHitBoxEntered(this);
         }
 
         private bool IsIgnored(HurtBox hurtBox)
@@ -145,7 +119,7 @@ namespace ShiftingSepulcher
 
         private bool IsIgnored(HealthPointsComponent hp)
         {
-            return _ignoredHealthPoints.Contains(hp);
+            return hp != null && _ignoredHealthPoints.Contains(hp);
         }
     }
 }

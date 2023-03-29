@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=2]
+[gd_scene load_steps=56 format=2]
 
 [ext_resource path="res://Scripts/MiscNodes/HurtBox.cs" type="Script" id=1]
 [ext_resource path="res://Audio/SFX/SwordDamageOwWithSlime.wav" type="AudioStream" id=2]
@@ -24,7 +24,6 @@
 [ext_resource path="res://Scripts/Components/KnockbackableVelocityComponent.cs" type="Script" id=22]
 [ext_resource path="res://Scripts/Components/EnemyComponent.cs" type="Script" id=23]
 [ext_resource path="res://Scripts/Components/HurtFlasherComponent.cs" type="Script" id=24]
-[ext_resource path="res://Scripts/Components/Area2DComponent.cs" type="Script" id=25]
 [ext_resource path="res://Scripts/Components/HealthPointsComponent.cs" type="Script" id=26]
 [ext_resource path="res://Audio/Music/BossIntro.tres" type="Resource" id=27]
 [ext_resource path="res://Audio/Music/BossMusic.tres" type="Resource" id=28]
@@ -2383,7 +2382,8 @@ script = ExtResource( 22 )
 [node name="HurtBox" type="Area2D" parent="."]
 unique_name_in_owner = true
 visible = false
-script = ExtResource( 25 )
+script = ExtResource( 1 )
+HealthPointsPath = NodePath("../HealthPointsComponent")
 
 [node name="HurtBoxShape" type="CollisionShape2D" parent="HurtBox"]
 shape = SubResource( 11 )
@@ -2482,7 +2482,6 @@ disabled = true
 [node name="Shadow" type="Node2D" parent="Visuals/Model"]
 
 [node name="ShadowModel" parent="Visuals/Model/Shadow" instance=ExtResource( 12 )]
-scale = Vector2( 1, 1 )
 radius = 32.0
 
 [node name="Broom" type="Node2D" parent="Visuals/Model"]
@@ -2712,4 +2711,4 @@ process_material = SubResource( 30 )
 [connection signal="Respawning" from="EnemyComponent" to="AI" method="OnRespawning"]
 [connection signal="TookDamageNoParams" from="HealthPointsComponent" to="AI" method="OnTookDamage" flags=3]
 [connection signal="TookDamageNoParams" from="HealthPointsComponent" to="TookDamageSound" method="play"]
-[connection signal="TookDamage" from="ShieldHurtBox" to="AI" method="OnShieldTookDamage" flags=3]
+[connection signal="HitBoxEntered" from="ShieldHurtBox" to="AI" method="OnShieldTookDamage" flags=3]

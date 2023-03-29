@@ -1,9 +1,10 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scripts/Components/Area2DComponent.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Components/HealthPointsComponent.cs" type="Script" id=2]
 [ext_resource path="res://Scenes/Models/ShadowModel.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/MiscNodes/HitBox.cs" type="Script" id=4]
+[ext_resource path="res://Scripts/MiscNodes/HurtBox.cs" type="Script" id=5]
 [ext_resource path="res://Audio/SFX/BottleBreak.wav" type="AudioStream" id=7]
 [ext_resource path="res://Scripts/MiscNodes/LingeringAudioStreamPlayer.cs" type="Script" id=8]
 [ext_resource path="res://Scripts/Components/EnemyComponent.cs" type="Script" id=9]
@@ -208,7 +209,8 @@ Shadow = NodePath("../ShadowModel")
 position = Vector2( -16, -16 )
 collision_layer = 3
 collision_mask = 3
-script = ExtResource( 1 )
+script = ExtResource( 5 )
+HealthPointsPath = NodePath("../HealthPointsComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2( 16, 16 )
@@ -218,8 +220,8 @@ shape = SubResource( 6 )
 position = Vector2( -16, -16 )
 collision_layer = 2
 collision_mask = 2
-Enabled = false
 script = ExtResource( 4 )
+Enabled = false
 IgnoredHealthPoints = [ NodePath("../HealthPointsComponent") ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]

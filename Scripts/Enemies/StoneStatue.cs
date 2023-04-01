@@ -5,7 +5,7 @@ namespace ShiftingSepulcher
     public class StoneStatue : BaseComponent<KinematicBody2D>
     {
         [Export] public float HopDistance = 32;
-        [Export] public float HopDuration = 0.1f;
+        [Export] public float HopDuration = 0.2f;
         [Export] public float TimeBetweenHops = 1;
 
         private readonly StateMachine _sm;
@@ -14,6 +14,8 @@ namespace ShiftingSepulcher
         private HitBox _hitBox => GetNode<HitBox>("%HitBox");
         private HurtBox _hurtBox => GetNode<HurtBox>("%HurtBox");
         private Area2D _aggroCircle => GetNode<Area2D>("%AggroCircle");
+
+        private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
 
         private KnockbackableVelocityComponent _velocity;
         private Node2D _aggroTarget;
@@ -96,6 +98,7 @@ namespace ShiftingSepulcher
             public override void _StateEntered()
             {
                 _timer = Owner.HopDuration;
+                Owner._animator.ResetAndPlay("Hop", customSpeed: 1f / Owner.HopDuration);
 
                 float speed = Owner.HopDistance / Owner.HopDuration;
                 Vector2 targetPos = Owner._aggroTarget.GlobalPosition;

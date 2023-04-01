@@ -30,10 +30,17 @@ namespace ShiftingSepulcher
 
         private StateMachine _sm;
         private Node2D _aggroTarget;
+        private Vector2 _lastAggroTargetPos;
 
         public Chompweed()
         {
             _sm = new StateMachine(this);
+        }
+
+        public override void _PhysicsProcess(float delta)
+        {
+            if (IsInstanceValid(_aggroTarget))
+                _lastAggroTargetPos = _aggroTarget.GlobalPosition;
         }
 
         public void OnRespawning()
@@ -68,35 +75,45 @@ namespace ShiftingSepulcher
             _sm.ChangeState(FreeHeadIdling);
         }
 
-        private Node2D SearchForAggroTarget(Area2D aggroCircle)
+        private bool TryAcquireAggroTarget(Area2D aggroCircle)
         {
-            // Prefer attacking the player
-            foreach (var body in aggroCircle.GetOverlappingBodies())
+            _aggroTarget = SearchForAggroTarget();
+
+            if (IsInstanceValid(_aggroTarget))
             {
-                if (body is Player p)
-                    return p;
+                _lastAggroTargetPos = _aggroTarget.GlobalPosition;
+                return true;
             }
 
-            // If the player isn't there, search for another enemy.
-            // Don't attack other chompweeds.
-            foreach (var other in aggroCircle.GetOverlappingAreas())
+            return false;
+
+            Node2D SearchForAggroTarget()
             {
-                if (!(other is HurtBox otherHurtBox))
-                    continue;
+                // Prefer attacking the player
+                foreach (var body in aggroCircle.GetOverlappingBodies())
+                {
+                    if (body is Player p)
+                        return p;
+                }
 
-                if (otherHurtBox.FindAncestor<Chompweed>() == null)
-                    return otherHurtBox;
+                // If the player isn't there, search for another enemy.
+                // Don't attack other chompweeds.
+                foreach (var other in aggroCircle.GetOverlappingAreas())
+                {
+                    if (!(other is HurtBox otherHurtBox))
+                        continue;
+
+                    if (otherHurtBox.FindAncestor<Chompweed>() == null)
+                        return otherHurtBox;
+                }
+
+                return null;
             }
-
-            return null;
         }
 
         private float AngleToTargetRad()
         {
-            float raw = _head.GlobalPosition.AngleToPoint(
-                _aggroTarget.GlobalPosition
-            );
-
+            float raw = _head.GlobalPosition.AngleToPoint(_lastAggroTargetPos);
             return raw + Mathf.Deg2Rad(90);
         }
 
@@ -117,9 +134,7 @@ namespace ShiftingSepulcher
 
             public override void _PhysicsProcess(float delta)
             {
-                Owner._aggroTarget = Owner.SearchForAggroTarget(Owner._aggroCircle);
-
-                if (IsInstanceValid(Owner._aggroTarget))
+                if (Owner.TryAcquireAggroTarget(Owner._aggroCircle))
                 {
                     ChangeState(Owner.TrackingTarget);
                 }
@@ -175,7 +190,7 @@ namespace ShiftingSepulcher
             {
                 _timer = 0;
 
-                Vector2 targetPos = Owner._aggroTarget.GlobalPosition;
+                Vector2 targetPos = Owner._lastAggroTargetPos;
                 _lungeDir = Owner.ToLocal(targetPos).Normalized();
 
                 Owner._animator.ResetAndPlay(
@@ -278,9 +293,7 @@ namespace ShiftingSepulcher
 
             public override void _PhysicsProcess(float delta)
             {
-                Owner._aggroTarget = Owner.SearchForAggroTarget(Owner._freeHeadAggroCircle);
-
-                if (IsInstanceValid(Owner._aggroTarget))
+                if (Owner.TryAcquireAggroTarget(Owner._freeHeadAggroCircle))
                     ChangeState(Owner.FreeHeadAggro);
             }
 
@@ -305,9 +318,7 @@ namespace ShiftingSepulcher
 
             public override void _PhysicsProcess(float delta)
             {
-                Owner._aggroTarget = Owner.SearchForAggroTarget(Owner._freeHeadAggroCircle);
-
-                if (!IsInstanceValid(Owner._aggroTarget))
+                if (!Owner.TryAcquireAggroTarget(Owner._freeHeadAggroCircle))
                 {
                     ChangeState(Owner.FreeHeadIdling);
                     return;

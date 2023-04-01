@@ -140,14 +140,13 @@ namespace ShiftingSepulcher
             public override void _StateEntered()
             {
                 Owner.EnableCollision(false);
-                Owner.Entity.Visible = false;
                 Owner._aggroTarget = null;
+                Owner._animator.ResetAndPlay("Death");
             }
 
             public override void _StateExited()
             {
                 Owner.EnableCollision(true);
-                Owner.Entity.Visible = true;
             }
         }
     }

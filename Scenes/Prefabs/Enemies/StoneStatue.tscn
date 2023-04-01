@@ -59,6 +59,7 @@ anims/Hop = SubResource( 3 )
 anims/RESET = SubResource( 4 )
 
 [node name="StoneStatueModel" parent="." instance=ExtResource( 1 )]
+unique_name_in_owner = true
 
 [node name="KinematicBodyShape" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true

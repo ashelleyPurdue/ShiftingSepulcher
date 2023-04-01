@@ -16,6 +16,7 @@ namespace ShiftingSepulcher
         private Area2D _aggroCircle => GetNode<Area2D>("%AggroCircle");
 
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
+        private Node2D _visuals => GetNode<Node2D>("%StoneStatueModel");
 
         private KnockbackableVelocityComponent _velocity;
         private Node2D _aggroTarget;
@@ -94,6 +95,14 @@ namespace ShiftingSepulcher
         private class HoppingState : State<StoneStatue>
         {
             private float _timer;
+            private float _endRot;
+            private float _rotSpeed;
+
+            private float _rot
+            {
+                get => Owner._visuals.Rotation;
+                set => Owner._visuals.Rotation = value;
+            }
 
             public override void _StateEntered()
             {
@@ -104,13 +113,15 @@ namespace ShiftingSepulcher
                 Vector2 targetPos = Owner._aggroTarget.GlobalPosition;
                 Vector2 dir = Owner.Entity.GlobalPosition.DirectionTo(targetPos);
                 Owner._velocity.WalkVelocity = speed * dir;
+
+                _endRot = dir.Angle() - Mathf.Deg2Rad(90);
+                _rotSpeed = AngleMath.Difference(_rot, _endRot) / Owner.HopDuration;
             }
 
             public override void _PhysicsProcess(float delta)
             {
                 _timer -= delta;
-
-                // TODO: Visually rotate towards target
+                _rot = AngleMath.MoveToward(_rot, _endRot, _rotSpeed * delta);
 
                 if (_timer <= 0)
                     ChangeState(Owner.PausingBetweenHops);
@@ -119,6 +130,7 @@ namespace ShiftingSepulcher
             public override void _StateExited()
             {
                 Owner._velocity.WalkVelocity = Vector2.Zero;
+                _rot = _endRot;
             }
         }
 

@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scenes/Models/ShadowModel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Renderers/Circle2D.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/Renderers/Cylinder2D.cs" type="Script" id=3]
 
 [sub_resource type="GDScript" id=1]
 script/source = "tool
@@ -22,18 +23,68 @@ script = SubResource( 1 )
 [node name="Body" type="Node2D" parent="."]
 z_index = 1
 
-[node name="PlaceholderCylinder" type="Node2D" parent="Body"]
+[node name="Base" type="Node2D" parent="Body"]
+script = ExtResource( 3 )
+TopColor = Color( 0.717647, 0.717647, 0.717647, 1 )
+Height = 4.0
 
-[node name="BottomCircle" type="Node2D" parent="Body/PlaceholderCylinder"]
+[node name="Legs" type="Node2D" parent="Body"]
+position = Vector2( 0, -4 )
+script = ExtResource( 3 )
+BottomColor = Color( 0.537255, 0.537255, 0.537255, 1 )
+TopRadius = 8.0
+Height = 8.0
+BottomRadius = 8.0
+
+[node name="Torso" type="Node2D" parent="Body"]
+position = Vector2( 0, -16 )
+script = ExtResource( 3 )
+TopColor = Color( 0.429688, 0.429688, 0.429688, 1 )
+BottomColor = Color( 0.623529, 0.623529, 0.623529, 1 )
+TopRadius = 12.0
+Height = 12.0
+BottomRadius = 12.0
+
+[node name="Head" type="Node2D" parent="Body"]
+position = Vector2( 0, -35 )
 script = ExtResource( 2 )
-Radius = 12.0
+Radius = 14.0
+Color = Color( 0.635294, 0.635294, 0.635294, 1 )
 
-[node name="Polygon2D" type="Polygon2D" parent="Body/PlaceholderCylinder"]
-polygon = PoolVector2Array( -16, -32, 16, -32, 12, 0, -12, 0 )
+[node name="Eyes" type="Node2D" parent="Body/Head"]
+position = Vector2( 0, 7 )
 
-[node name="TopCircle" type="Node2D" parent="Body/PlaceholderCylinder"]
-position = Vector2( 0, -32 )
-scale = Vector2( 1, 0.75 )
+[node name="Right" type="Node2D" parent="Body/Head/Eyes"]
+position = Vector2( -4, 0 )
+scale = Vector2( 1, 3 )
 script = ExtResource( 2 )
-Radius = 16.0
-Color = Color( 0.439216, 0.439216, 0.439216, 1 )
+Radius = 1.5
+Color = Color( 0, 0, 0, 1 )
+
+[node name="Left" type="Node2D" parent="Body/Head/Eyes"]
+position = Vector2( 4, 0 )
+scale = Vector2( 1, 3 )
+script = ExtResource( 2 )
+Radius = 1.5
+Color = Color( 0, 0, 0, 1 )
+
+[node name="Shield" type="Polygon2D" parent="Body"]
+position = Vector2( -1, -5 )
+color = Color( 0.843137, 0.843137, 0.843137, 1 )
+polygon = PoolVector2Array( -15, -20, -11, -15, -4, -13, 1, -14, 0, 3, -11, 9, -17, -1, -17, -20 )
+
+[node name="LeftHand" type="Node2D" parent="Body"]
+position = Vector2( 11, -8 )
+scale = Vector2( 2, 2 )
+script = ExtResource( 2 )
+Radius = 2.0
+Color = Color( 0.478431, 0.478431, 0.478431, 1 )
+
+[node name="Sword" type="Polygon2D" parent="Body/LeftHand"]
+position = Vector2( 0, -2 )
+color = Color( 0.913725, 0.913725, 0.913725, 1 )
+polygon = PoolVector2Array( -3, -1, 3, -1, 3, 1, -3, 1 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Body/LeftHand/Sword"]
+color = Color( 0.913725, 0.913725, 0.913725, 1 )
+polygon = PoolVector2Array( -1, -1, -2, -7, 0, -12, 2, -7, 1, -1 )

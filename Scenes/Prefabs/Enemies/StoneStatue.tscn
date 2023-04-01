@@ -1,10 +1,11 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Scenes/Models/StoneStatueModel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/ComponentCollections/StandardKnockbackableEnemyComponents.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/Enemies/StoneStatue.cs" type="Script" id=3]
 [ext_resource path="res://Scripts/MiscNodes/HitBox.cs" type="Script" id=4]
 [ext_resource path="res://Scripts/MiscNodes/HurtBox.cs" type="Script" id=5]
+[ext_resource path="res://Audio/SFX/StoneStatueHopSlam.wav" type="AudioStream" id=6]
 
 [sub_resource type="Animation" id=5]
 resource_name = "Death"
@@ -59,6 +60,20 @@ tracks/1/keys = {
 "values": [ {
 "args": [  ],
 "method": "restart"
+} ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("HopSlamSound")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
 } ]
 }
 
@@ -164,6 +179,12 @@ unique_name_in_owner = true
 anims/Death = SubResource( 5 )
 anims/Hop = SubResource( 3 )
 anims/RESET = SubResource( 4 )
+
+[node name="HopSlamSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -4.479
+pitch_scale = 1.57
+bus = "Sound"
 
 [node name="DustCloud" type="Particles2D" parent="."]
 z_index = 1

@@ -95,8 +95,8 @@ namespace ShiftingSepulcher
         private class HoppingState : State<StoneStatue>
         {
             private float _timer;
+            private float _startRot;
             private float _endRot;
-            private float _rotSpeed;
 
             private float _rot
             {
@@ -114,14 +114,15 @@ namespace ShiftingSepulcher
                 Vector2 dir = Owner.Entity.GlobalPosition.DirectionTo(targetPos);
                 Owner._velocity.WalkVelocity = speed * dir;
 
+                _startRot = _rot;
                 _endRot = dir.Angle() - Mathf.Deg2Rad(90);
-                _rotSpeed = AngleMath.Difference(_rot, _endRot) / Owner.HopDuration;
             }
 
             public override void _PhysicsProcess(float delta)
             {
                 _timer -= delta;
-                _rot = AngleMath.MoveToward(_rot, _endRot, _rotSpeed * delta);
+                float t = 1 - (_timer / Owner.HopDuration);
+                _rot = Mathf.LerpAngle(_startRot, _endRot, t);
 
                 if (_timer <= 0)
                     ChangeState(Owner.PausingBetweenHops);

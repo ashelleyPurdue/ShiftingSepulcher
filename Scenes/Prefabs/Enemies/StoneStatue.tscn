@@ -52,6 +52,7 @@ MaxHealth = 3
 
 [node name="AI" type="Node" parent="."]
 script = ExtResource( 3 )
+TimeBetweenHops = 0.4
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true

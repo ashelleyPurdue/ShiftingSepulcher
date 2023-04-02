@@ -20,6 +20,7 @@ namespace ShiftingSepulcher
 
         private KnockbackableVelocityComponent _velocity;
         private Node2D _aggroTarget;
+        private Vector2 _lastAggroTargetPos;
 
         public StoneStatue()
         {
@@ -30,6 +31,12 @@ namespace ShiftingSepulcher
         {
             _velocity = this.GetComponent<KnockbackableVelocityComponent>();
             _sm.ChangeState(Idle);
+        }
+
+        public override void _PhysicsProcess(float delta)
+        {
+            if (IsInstanceValid(_aggroTarget))
+                _lastAggroTargetPos = _aggroTarget.GlobalPosition;
         }
 
         public void OnRespawning()
@@ -49,15 +56,20 @@ namespace ShiftingSepulcher
             _hurtBox.Enabled = enabled;
         }
 
-        private Node2D SearchForAggroTarget()
+        private bool TryAcquireAggroTarget()
         {
             foreach (var body in _aggroCircle.GetOverlappingBodies())
             {
                 if (body is Player p)
-                    return p;
+                {
+                    _aggroTarget = p;
+                    _lastAggroTargetPos = _aggroTarget.GlobalPosition;
+                    return true;
+                }
             }
 
-            return null;
+            _aggroTarget = null;
+            return false;
         }
 
         private readonly IState Idle = new IdleState();
@@ -65,9 +77,7 @@ namespace ShiftingSepulcher
         {
             public override void _PhysicsProcess(float delta)
             {
-                Owner._aggroTarget = Owner.SearchForAggroTarget();
-
-                if (Owner._aggroTarget != null)
+                if (Owner.TryAcquireAggroTarget())
                     ChangeState(Owner.PausingBetweenHops);
             }
         }
@@ -110,7 +120,7 @@ namespace ShiftingSepulcher
                 Owner._animator.ResetAndPlay("Hop", customSpeed: 1f / Owner.HopDuration);
 
                 float speed = Owner.HopDistance / Owner.HopDuration;
-                Vector2 targetPos = Owner._aggroTarget.GlobalPosition;
+                Vector2 targetPos = Owner._lastAggroTargetPos;
                 Vector2 dir = Owner.Entity.GlobalPosition.DirectionTo(targetPos);
                 Owner._velocity.WalkVelocity = speed * dir;
 

@@ -14,6 +14,9 @@
 * All circular shadows in the game now have a consistent appearance.
 * The coin collection sound should now hurt your ears less.
 
+* Players no longer experience recoil when rotating a node in the "electric circuit"
+    puzzle
+
 # 1.1.0: 2023-03-05
 * Spruced up the UI with a custom theme.  No more default Godot controls!
 * Keys are now found inside chests, which appear when you clear the room they're in.

@@ -23,6 +23,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=4]
 resource_name = "RotateClockwise"
+length = 0.5
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("PipeDisplays:rotation_degrees")
@@ -106,6 +107,7 @@ shape = SubResource( 2 )
 
 [node name="HurtBox" type="Area2D" parent="Knob"]
 script = ExtResource( 3 )
+RecoilDistance = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Knob/HurtBox"]
 shape = SubResource( 1 )

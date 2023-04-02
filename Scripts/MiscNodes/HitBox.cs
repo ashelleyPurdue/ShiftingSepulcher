@@ -21,10 +21,10 @@ namespace ShiftingSepulcher
         [Export] public NodePath[] IgnoredHealthPoints = new NodePath[] {};
         private HashSet<HealthPointsComponent> _ignoredHealthPoints = new HashSet<HealthPointsComponent>();
 
-        private HashSet<HurtBox> _previouslyOverlappingHurtBoxes = new HashSet<HurtBox>();
-
         public override void _Ready()
         {
+            Connect("area_entered", this, nameof(OnAreaEntered));
+
             foreach (var path in IgnoredHurtBoxes)
             {
                 _ignoredHurtBoxes.Add(GetNode<HurtBox>(path));
@@ -58,38 +58,14 @@ namespace ShiftingSepulcher
 
         public override void _PhysicsProcess(float delta)
         {
-            // Detect areas that just started overlapping this frame,
-            // or that are already overlapping on the same frame we became
-            // enabled
-            if (!Enabled)
-            {
-                _previouslyOverlappingHurtBoxes.Clear();
-                return;
-            }
-
-            var currentlyOverlappingAreas = GetOverlappingAreas().Cast<Area2D>();
-            DetectNewlyOverlappingHurtBoxes(currentlyOverlappingAreas);
+            Monitorable = Enabled;
+            Monitoring = Enabled;
         }
 
-        private void DetectNewlyOverlappingHurtBoxes(IEnumerable<Area2D> currentlyOverlappingAreas)
+        private void OnAreaEntered(Area2D other)
         {
-            var currentlyOverlappingHurtBoxes = currentlyOverlappingAreas
-                .OfType<HurtBox>()
-                .Where(hb => hb.Enabled);
-
-            var newlyOverlappingHurtBoxes = currentlyOverlappingHurtBoxes
-                .Where(hb => !_previouslyOverlappingHurtBoxes.Contains(hb));
-
-            foreach (var hurtBox in newlyOverlappingHurtBoxes)
-            {
+            if (other is HurtBox hurtBox)
                 OnHurtBoxEntered(hurtBox);
-            }
-
-            _previouslyOverlappingHurtBoxes.Clear();
-            foreach (var hb in currentlyOverlappingHurtBoxes)
-            {
-                _previouslyOverlappingHurtBoxes.Add(hb);
-            }
         }
 
         private void OnHurtBoxEntered(HurtBox hurtBox)

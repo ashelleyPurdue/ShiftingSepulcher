@@ -7,6 +7,7 @@ namespace ShiftingSepulcher
         [Export] public float HopDistance = 32;
         [Export] public float HopDuration = 0.2f;
         [Export] public float TimeBetweenHops = 1;
+        [Export] public float WakeUpTime = 1;
 
         private readonly StateMachine _sm;
 
@@ -78,7 +79,30 @@ namespace ShiftingSepulcher
             public override void _PhysicsProcess(float delta)
             {
                 if (Owner.TryAcquireAggroTarget())
-                    ChangeState(Owner.PausingBetweenHops);
+                    ChangeState(Owner.WakingUp);
+            }
+        }
+
+        private readonly IState WakingUp = new WakingUpState();
+        private class WakingUpState : State<StoneStatue>
+        {
+            private float _timer;
+
+            public override void _StateEntered()
+            {
+                _timer = Owner.WakeUpTime;
+                Owner._animator.ResetAndPlay(
+                    "WakeUp",
+                    customSpeed: 1f / Owner.WakeUpTime
+                );
+            }
+
+            public override void _PhysicsProcess(float delta)
+            {
+                _timer -= delta;
+
+                if (_timer <= 0)
+                    ChangeState(Owner.Hopping);
             }
         }
 

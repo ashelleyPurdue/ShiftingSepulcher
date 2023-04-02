@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Scenes/Models/StoneStatueModel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/ComponentCollections/StandardKnockbackableEnemyComponents.tscn" type="PackedScene" id=2]
@@ -130,6 +130,58 @@ tracks/2/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ) ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("StoneStatueModel:EyeColor")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("StoneStatueModel:EyeFlareStrength")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=13]
+resource_name = "WakeUp"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("StoneStatueModel:EyeColor")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.35, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 0, 0, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("StoneStatueModel:EyeFlareStrength")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.35, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 1.0, 1.0, 0.0 ]
+}
 
 [sub_resource type="Gradient" id=6]
 offsets = PoolRealArray( 0, 0.232143, 1 )
@@ -194,6 +246,7 @@ unique_name_in_owner = true
 anims/Death = SubResource( 5 )
 anims/Hop = SubResource( 3 )
 anims/RESET = SubResource( 4 )
+anims/WakeUp = SubResource( 13 )
 
 [node name="HopSlamSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
@@ -219,6 +272,7 @@ texture = SubResource( 12 )
 
 [node name="StoneStatueModel" parent="." instance=ExtResource( 1 )]
 unique_name_in_owner = true
+EyeFlareStrength = 0.0
 
 [node name="KinematicBodyShape" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true

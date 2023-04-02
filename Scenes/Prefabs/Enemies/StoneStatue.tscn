@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Scenes/Models/StoneStatueModel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/ComponentCollections/StandardKnockbackableEnemyComponents.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Scripts/MiscNodes/HurtBox.cs" type="Script" id=5]
 [ext_resource path="res://Audio/SFX/StoneStatueHopSlam.wav" type="AudioStream" id=6]
 [ext_resource path="res://Audio/SFX/StoneStatueHopRise.wav" type="AudioStream" id=7]
+[ext_resource path="res://Audio/SFX/StoneStatueEyes.wav" type="AudioStream" id=8]
 
 [sub_resource type="Animation" id=5]
 resource_name = "Death"
@@ -165,7 +166,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.35, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.7, 1 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 0, 0, 0, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 0, 0, 1 ), Color( 0, 0, 0, 1 ) ]
@@ -177,10 +178,24 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.35, 0.7 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.7, 0.9 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ 0.0, 0.0, 1.0, 1.0, 0.0 ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("EyesSound")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
 }
 
 [sub_resource type="Gradient" id=6]
@@ -257,6 +272,10 @@ bus = "Sound"
 [node name="HopeRiseSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
 volume_db = -5.388
+
+[node name="EyesSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+bus = "Sound"
 
 [node name="DustCloud" type="Particles2D" parent="."]
 z_index = 1

@@ -96,6 +96,12 @@ namespace ShiftingSepulcher
             RoomTransitionAnimation anim = RoomTransitionAnimation.Fade
         )
         {
+            // HACK: Log the room seed of every dungeon room entered
+            if (room is IDungeonRoom dr)
+            {
+                GD.Print($"Entered room with seed {dr.LayoutRoom.TreeRoom.RoomSeed}");
+            }
+
             if (_activeRoom == room)
                 return;
 

@@ -59,6 +59,10 @@ Rustling leaves sounds:
     https://opengameart.org/content/20-rustles-dry-leaves
     Author: qubodup
 
+Concrete SMASH 2 sound:
+    https://freesound.org/people/magnuswaker/sounds/522099/
+    Author: magnuswaker
+
 Controller button icons:
     https://thoseawesomeguys.com/prompts/
     Author: Nicolae (XELU) Berbece

@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/Maps/Test/EmptyTestRoom.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Prefabs/Enemies/StoneStatue.tscn" type="PackedScene" id=2]
+
+[node name="StoneStatueTest" type="Node2D"]
+
+[node name="EmptyTestRoom" parent="." instance=ExtResource( 1 )]
+
+[node name="StoneStatue" parent="EmptyTestRoom" instance=ExtResource( 2 )]
+position = Vector2( -192, -96 )
+
+[node name="StoneStatue2" parent="EmptyTestRoom" instance=ExtResource( 2 )]
+position = Vector2( 256, -160 )
+
+[node name="StoneStatue3" parent="EmptyTestRoom" instance=ExtResource( 2 )]
+position = Vector2( -320, 192 )
+
+[node name="StoneStatue4" parent="EmptyTestRoom" instance=ExtResource( 2 )]
+position = Vector2( 288, 128 )

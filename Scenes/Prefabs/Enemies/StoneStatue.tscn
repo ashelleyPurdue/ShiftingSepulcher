@@ -1,0 +1,328 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://Scenes/Models/StoneStatueModel.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/ComponentCollections/StandardKnockbackableEnemyComponents.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scripts/Enemies/StoneStatue.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/MiscNodes/HitBox.cs" type="Script" id=4]
+[ext_resource path="res://Scripts/MiscNodes/HurtBox.cs" type="Script" id=5]
+[ext_resource path="res://Audio/SFX/StoneStatueHopSlam.wav" type="AudioStream" id=6]
+[ext_resource path="res://Audio/SFX/StoneStatueHopRise.wav" type="AudioStream" id=7]
+[ext_resource path="res://Audio/SFX/StoneStatueEyes.wav" type="AudioStream" id=8]
+
+[sub_resource type="Animation" id=5]
+resource_name = "Death"
+tracks/0/type = "value"
+tracks/0/path = NodePath("StoneStatueModel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("StoneStatueModel:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 2, 2 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "Hop"
+tracks/0/type = "value"
+tracks/0/path = NodePath("StoneStatueModel:HeightAboveGround")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 8.0, 0.0 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("DustCloud")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "restart"
+} ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("HopSlamSound")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
+tracks/3/type = "audio"
+tracks/3/path = NodePath("HopeRiseSound")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 7 )
+} ],
+"times": PoolRealArray( 0 )
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("StoneStatueModel:HeightAboveGround")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("StoneStatueModel:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("StoneStatueModel:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("StoneStatueModel:EyeColor")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("StoneStatueModel:EyeFlareStrength")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=13]
+resource_name = "WakeUp"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("StoneStatueModel:EyeColor")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 0, 0, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("StoneStatueModel:EyeFlareStrength")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.7, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 1.0, 1.0, 0.0 ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("EyesSound")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
+
+[sub_resource type="Gradient" id=6]
+offsets = PoolRealArray( 0, 0.232143, 1 )
+colors = PoolColorArray( 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=7]
+gradient = SubResource( 6 )
+
+[sub_resource type="Curve" id=8]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.236769, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=9]
+curve = SubResource( 8 )
+
+[sub_resource type="ParticlesMaterial" id=10]
+emission_shape = 1
+emission_sphere_radius = 3.0
+flag_disable_z = true
+direction = Vector3( 0, 1, 0 )
+spread = 90.0
+gravity = Vector3( 0, -200, 0 )
+initial_velocity = 100.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = -300.0
+scale_curve = SubResource( 9 )
+color_ramp = SubResource( 7 )
+
+[sub_resource type="Gradient" id=11]
+offsets = PoolRealArray( 0, 0.625 )
+colors = PoolColorArray( 0.568627, 0.498039, 0.388235, 1, 0.568627, 0.498039, 0.388235, 0 )
+
+[sub_resource type="GradientTexture2D" id=12]
+gradient = SubResource( 11 )
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2( 0.5, 0.5 )
+
+[sub_resource type="CircleShape2D" id=1]
+resource_name = "BodyShape"
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 64.0
+
+[node name="StoneStatue" type="KinematicBody2D"]
+collision_layer = 0
+collision_mask = 3
+
+[node name="StandardKnockbackableEnemyComponents" parent="." instance=ExtResource( 2 )]
+
+[node name="HealthPointsComponent" parent="StandardKnockbackableEnemyComponents" index="1"]
+MaxHealth = 3
+
+[node name="AI" type="Node" parent="."]
+script = ExtResource( 3 )
+TimeBetweenHops = 0.4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+anims/Death = SubResource( 5 )
+anims/Hop = SubResource( 3 )
+anims/RESET = SubResource( 4 )
+anims/WakeUp = SubResource( 13 )
+
+[node name="HopSlamSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -4.479
+pitch_scale = 1.57
+bus = "Sound"
+
+[node name="HopeRiseSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -5.388
+
+[node name="EyesSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+bus = "Sound"
+
+[node name="DustCloud" type="Particles2D" parent="."]
+z_index = 1
+emitting = false
+amount = 11
+lifetime = 0.75
+one_shot = true
+preprocess = 0.1
+explosiveness = 1.0
+local_coords = false
+process_material = SubResource( 10 )
+texture = SubResource( 12 )
+
+[node name="StoneStatueModel" parent="." instance=ExtResource( 1 )]
+unique_name_in_owner = true
+EyeFlareStrength = 0.0
+
+[node name="KinematicBodyShape" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+visible = false
+shape = SubResource( 1 )
+
+[node name="AggroCircle" type="Area2D" parent="."]
+unique_name_in_owner = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AggroCircle"]
+shape = SubResource( 2 )
+
+[node name="HitBox" type="Area2D" parent="."]
+unique_name_in_owner = true
+visible = false
+script = ExtResource( 4 )
+IgnoredHealthPoints = [ NodePath("../StandardKnockbackableEnemyComponents/HealthPointsComponent") ]
+
+[node name="CircleShape" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource( 1 )
+
+[node name="HurtBox" type="Area2D" parent="."]
+unique_name_in_owner = true
+visible = false
+script = ExtResource( 5 )
+HealthPointsPath = NodePath("../StandardKnockbackableEnemyComponents/HealthPointsComponent")
+
+[node name="CircleShape" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource( 1 )
+
+[connection signal="Dead" from="StandardKnockbackableEnemyComponents/EnemyComponent" to="AI" method="OnDead"]
+[connection signal="Respawning" from="StandardKnockbackableEnemyComponents/EnemyComponent" to="AI" method="OnRespawning"]
+
+[editable path="StandardKnockbackableEnemyComponents"]

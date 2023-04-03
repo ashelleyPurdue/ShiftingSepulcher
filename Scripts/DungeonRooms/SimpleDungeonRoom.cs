@@ -159,8 +159,7 @@ namespace ShiftingSepulcher
         {
             var node = prefab.Instance<T>();
             AddChild(node);
-            node.Position = spawnPoint.Position;
-            node.Rotation = spawnPoint.Rotation;
+            node.Transform = spawnPoint.GetTransformRelativeToAncestor(this);
 
             return node;
         }

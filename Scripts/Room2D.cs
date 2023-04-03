@@ -4,7 +4,7 @@ using Godot;
 
 namespace ShiftingSepulcher
 {
-    [CustomNode(parent: "Node2D", icon:"Room")]
+    [CustomNode(parent: "YSort", icon:"Room")]
     public class Room2D : Node2D
     {
         public IRoomEntrance GetEntrance(string name)

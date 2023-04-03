@@ -4,7 +4,7 @@
 [ext_resource path="res://Scenes/Prefabs/Elements/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/PhysicalDungeons/HandCraftedDungeonInstantiator.cs" type="Script" id=4]
 
-[node name="HandCraftedTestDungeonBase" type="Node2D"]
+[node name="HandCraftedTestDungeonBase" type="YSort"]
 
 [node name="RoomTransitionManager" parent="." instance=ExtResource( 2 )]
 

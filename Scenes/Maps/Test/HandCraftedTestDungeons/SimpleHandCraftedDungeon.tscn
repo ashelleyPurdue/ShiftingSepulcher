@@ -25,7 +25,7 @@ StartRoomPath = NodePath("StartRoom")
 script = ExtResource( 2 )
 
 [node name="TileMap" type="TileMap" parent="HandCraftedDungeonInstantiator/StartRoom" index="0"]
-z_index = -1
+z_index = -2
 tile_set = ExtResource( 5 )
 cell_size = Vector2( 32, 32 )
 format = 1
@@ -57,7 +57,7 @@ position = Vector2( -576, 0 )
 script = ExtResource( 2 )
 
 [node name="TileMap" type="TileMap" parent="HandCraftedDungeonInstantiator/LeftRoom" index="0"]
-z_index = -1
+z_index = -2
 tile_set = ExtResource( 5 )
 cell_size = Vector2( 32, 32 )
 format = 1
@@ -86,7 +86,7 @@ position = Vector2( -640, 640 )
 script = ExtResource( 2 )
 
 [node name="TileMap" type="TileMap" parent="HandCraftedDungeonInstantiator/Basement" index="0"]
-z_index = -1
+z_index = -2
 tile_set = ExtResource( 5 )
 cell_size = Vector2( 32, 32 )
 format = 1

@@ -18,7 +18,7 @@ Sound = ExtResource( 5 )
 VolumeLinear = 4.0
 
 [node name="Floor" type="Polygon2D" parent="BaseEmptyRoom"]
-z_index = -1
+z_index = -2
 color = Color( 0.511719, 0.511719, 0.511719, 1 )
 polygon = PoolVector2Array( -288, -288, 288, -288, 288, 288, -288, 288 )
 

@@ -24,6 +24,8 @@ namespace ShiftingSepulcher
 
         public void Populate(DungeonTreeRoom treeRoom, Random rng)
         {
+            var room2D = this.GetRoom();
+
             var leftSide = new List<int>();
             var rightSide = new List<int>();
             var middleSide = new List<int>();
@@ -106,9 +108,10 @@ namespace ShiftingSepulcher
                 {
                     var weightObj = HoldableWeightPrefab.Instance<HoldableWeights>();
                     weightObj.NumWeights = weights[i];
-                    _weights.Add(weightObj);
+                    weightObj.Position = shuffledSpawnPoints[i].GetPosRelativeToAncestor(room2D);
 
-                    shuffledSpawnPoints[i].AddChild(weightObj);
+                    _weights.Add(weightObj);
+                    room2D.AddChild(weightObj);
                 }
             }
         }

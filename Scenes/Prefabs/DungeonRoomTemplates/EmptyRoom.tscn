@@ -23,6 +23,7 @@ color = Color( 0.511719, 0.511719, 0.511719, 1 )
 polygon = PoolVector2Array( -288, -288, 288, -288, 288, 288, -288, 288 )
 
 [node name="Walls" type="Node2D" parent="BaseEmptyRoom"]
+z_index = -2
 
 [node name="Visuals" type="Node2D" parent="BaseEmptyRoom/Walls"]
 

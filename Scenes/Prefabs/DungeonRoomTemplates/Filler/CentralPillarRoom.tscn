@@ -20,6 +20,7 @@ position = Vector2( 160, 160 )
 position = Vector2( -160, 160 )
 
 [node name="CentralPillar" type="StaticBody2D" parent="." index="1"]
+z_index = -2
 
 [node name="Polygon2D" type="Polygon2D" parent="CentralPillar" index="0"]
 polygon = PoolVector2Array( -96, -96, 96, -96, 96, 96, -96, 96 )

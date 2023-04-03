@@ -13,6 +13,7 @@ script = ExtResource( 1 )
 DoorPrefabs = ExtResource( 2 )
 
 [node name="CenterFloor" type="Polygon2D" parent="."]
+z_index = -2
 color = Color( 0.511719, 0.511719, 0.511719, 1 )
 polygon = PoolVector2Array( -64, 64, -64, -64, 64, -64, 64, 64 )
 
@@ -49,6 +50,7 @@ rotation = 3.14159
 rotation = 4.71239
 
 [node name="Corners" type="Node2D" parent="."]
+z_index = -2
 
 [node name="NorthWest" type="Polygon2D" parent="Corners"]
 polygon = PoolVector2Array( -96, -96, -64, -96, -64, -64, -96, -64 )

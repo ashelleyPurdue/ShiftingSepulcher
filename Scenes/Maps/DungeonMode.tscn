@@ -11,7 +11,7 @@
 [ext_resource path="res://Scenes/Prefabs/RoomTransitionManager.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/SpawnTables/RoomTemplates/PuzzleRoomSpawnTable.tscn" type="PackedScene" id=15]
 
-[node name="Node2D" type="Node2D"]
+[node name="DungeonMode" type="YSort"]
 
 [node name="RoomTransitionManager" parent="." instance=ExtResource( 10 )]
 BackgroundMusic = ExtResource( 4 )

@@ -8,6 +8,7 @@
 [ext_resource path="res://Sprites/IceFloorTile.png" type="Texture" id=7]
 
 [node name="SlidingIcePuzzle" type="Node2D"]
+z_index = -1
 script = ExtResource( 2 )
 IceBlockPrefab = ExtResource( 4 )
 RockPrefab = ExtResource( 5 )

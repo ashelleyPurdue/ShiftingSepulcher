@@ -3,7 +3,7 @@
 [ext_resource path="res://Scenes/Maps/Test/EmptyTestRoom.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Prefabs/Elements/BreakablePot.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Prefabs/Elements/HoldableWeights.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scenes/Prefabs/Elements/Projectiles/Bomb.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Prefabs/Projectiles/Bomb.tscn" type="PackedScene" id=4]
 
 [node name="HoldablesTest" instance=ExtResource( 1 )]
 

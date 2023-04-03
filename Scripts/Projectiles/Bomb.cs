@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public class Bomb : KinematicBody2D
     {
@@ -17,7 +17,7 @@ namespace RandomDungeons
 
         public void OnHitInstantDetonateTrigger()
         {
-            var throwable = this.SingleChildOfType<ThrowableParentKinematic>();
+            var throwable = this.GetComponent<HoldableComponent>();
 
             if (throwable.IsFlying)
                 Detonate();

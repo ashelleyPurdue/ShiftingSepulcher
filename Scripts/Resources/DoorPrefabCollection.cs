@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public class DoorPrefabCollection : Resource
     {
@@ -11,5 +11,11 @@ namespace RandomDungeons
 
         [Export] public PackedScene OneWayOpenSide;
         [Export] public PackedScene OneWayClosedSide;
+
+        // Technically not a door.  Should probably rename this class.
+        [Export] public PackedScene KeyChest;
+
+        [Export] public PackedScene StairsUpModel;
+        [Export] public PackedScene StairsDownModel;
     }
 }

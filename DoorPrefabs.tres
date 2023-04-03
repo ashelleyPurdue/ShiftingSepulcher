@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=8 format=2]
+[gd_resource type="Resource" load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/Resources/DoorPrefabCollection.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/Prefabs/Doors/DoorLock.tscn" type="PackedScene" id=2]
@@ -7,6 +7,9 @@
 [ext_resource path="res://Scenes/Prefabs/Doors/DoorWarp.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Prefabs/Doors/OneWayDoorOpenSide.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/Prefabs/Doors/DoorWall.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Models/StairsUpDoorModel.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/Models/StairsDownDoorModel.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/Prefabs/Elements/KeyChest.tscn" type="PackedScene" id=10]
 
 [resource]
 script = ExtResource( 1 )
@@ -16,3 +19,6 @@ Warp = ExtResource( 5 )
 Bars = ExtResource( 3 )
 OneWayOpenSide = ExtResource( 6 )
 OneWayClosedSide = ExtResource( 4 )
+KeyChest = ExtResource( 10 )
+StairsUpModel = ExtResource( 8 )
+StairsDownModel = ExtResource( 9 )

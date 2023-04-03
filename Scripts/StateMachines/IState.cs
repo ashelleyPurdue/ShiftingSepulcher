@@ -1,4 +1,4 @@
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public interface IState
     {

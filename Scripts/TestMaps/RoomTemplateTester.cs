@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public class RoomTemplateTester : Node2D
     {
@@ -28,8 +28,12 @@ namespace RandomDungeons
             _roomLocation.AddChild(_roomInstance.Node);
 
             // Populate it
-            var layout = new DungeonLayout().WithRoomAt(Vector2i.Zero, new DungeonTreeRoom());
-            var layoutRoom = layout.RoomAt(Vector2i.Zero);
+            var treeRoom = new DungeonTreeRoom();
+            treeRoom.RoomSeed = _seedInput.ParseSeedTextbox();
+
+            var layout = new DungeonLayout().WithRoomAt(Vector3i.Zero, treeRoom);
+            var layoutRoom = layout.RoomAt(Vector3i.Zero);
+
             _roomInstance.Populate(layoutRoom);
         }
     }

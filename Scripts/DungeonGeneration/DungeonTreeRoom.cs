@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public class DungeonTreeRoom
     {
@@ -67,7 +67,10 @@ namespace RandomDungeons
 
         public IEnumerable<IDungeonTreeDoor> AllDoors()
         {
-            yield return new PlainDoor { Destination = Parent };
+            // Parent would be null if this is the root of the tree.
+            // There is no sense in having a door that leads nowhere.
+            if (Parent != null)
+                yield return new PlainDoor { Destination = Parent };
 
             foreach (var childDoor in ChildDoors)
                 yield return childDoor;

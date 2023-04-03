@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
-    public class Bombella : Node, IOnRoomTransitionFinished, IChallenge
+    public class Bombella : BaseComponent<Node2D>, IOnRoomTransitionFinished, IChallenge
     {
         [Export] public PackedScene VictoryChestPrefab;
         [Export] public PackedScene SpawningSpellPrefab;
@@ -21,11 +21,12 @@ namespace RandomDungeons
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
         private AnimationPlayer _shieldAnimator => GetNode<AnimationPlayer>("%ShieldAnimator");
 
-        private HurtBox _hurtBox => GetNode<HurtBox>("%HurtBox");
         private HurtBox _shieldHurtBox => GetNode<HurtBox>("%ShieldHurtBox");
 
         private Node2D _spellSpawnPos => GetNode<Node2D>("%SpellSpawnPos");
-        private EnemyBody _body => GetParent<EnemyBody>();
+
+        private EnemyComponent _enemy => this.GetComponent<EnemyComponent>();
+        private HealthPointsComponent _hp => this.GetComponent<HealthPointsComponent>();
 
         private Action _queuedSpell;
 
@@ -43,13 +44,13 @@ namespace RandomDungeons
             {
                 Vector2 playerPos = PlayerGlobalPos();
 
-                float targetRotRad = _body
+                float targetRotRad = Entity
                     .GlobalPosition
                     .AngleToPoint(playerPos);
 
                 targetRotRad -= Mathf.Deg2Rad(90 + 180);
 
-                _body.Rotation = Mathf.LerpAngle(
+                Entity.Rotation = Mathf.LerpAngle(
                     _aimStartRotRad,
                     targetRotRad,
                     AimProgressPercent
@@ -64,7 +65,7 @@ namespace RandomDungeons
 
         public void StartAiming()
         {
-            _aimStartRotRad = _body.Rotation;
+            _aimStartRotRad = Entity.Rotation;
         }
 
         public void CastBombSpell()
@@ -89,7 +90,7 @@ namespace RandomDungeons
             float angle = GD.Randf() * Mathf.Deg2Rad(360);
             float radius = GD.Randf() * TeleportRadius;
 
-            _body.Position = new Vector2(
+            Entity.Position = new Vector2(
                 radius * Mathf.Cos(angle),
                 radius * Mathf.Sin(angle)
             );
@@ -97,7 +98,7 @@ namespace RandomDungeons
 
         public void OnRespawning()
         {
-            _body.RotationDegrees = 0;
+            Entity.RotationDegrees = 0;
 
             _shieldAnimator.Reset();
             _attackPatterns.Stop(true);
@@ -112,7 +113,7 @@ namespace RandomDungeons
 
         public void OnRoomTransitionFinished()
         {
-            if (_body.IsDead)
+            if (_enemy.IsDead)
                 return;
 
             _animator.PlaybackSpeed = 1;
@@ -126,7 +127,7 @@ namespace RandomDungeons
             OnFinishedRecoveringFromDaze();
         }
 
-        public void OnTookDamage(HitBox hitbox)
+        public void OnTookDamage()
         {
             _attackPatterns.Stop();
             _animator.ResetAndPlay("Ouch");
@@ -197,13 +198,13 @@ namespace RandomDungeons
             this.GetRoom().AddChild(fireball);
             fireball.GlobalPosition = _spellSpawnPos.GlobalPosition;
 
-            fireball.Velocity = _body.GlobalPosition.DirectionTo(PlayerGlobalPos());
+            fireball.Velocity = Entity.GlobalPosition.DirectionTo(PlayerGlobalPos());
             fireball.Velocity *= FireballSpeed;
 
             // Make the fireballs ignore our own hurtboxes
             foreach (var hitbox in fireball.AllDescendantsOfType<HitBox>())
             {
-                hitbox.IgnoreHurtBox(_hurtBox);
+                hitbox.Ignore(_hp);
                 hitbox.IgnoreHurtBox(_shieldHurtBox);
             }
         }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public static class NodeExtensions
     {
@@ -55,12 +55,12 @@ namespace RandomDungeons
         /// <param name="node"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T FindAncestor<T>(this Node node) where T : Node
+        public static T FindAncestor<T>(this Node node) where T : class
         {
             var parent = node.GetParent();
 
-            if (parent is T)
-                return (T)parent;
+            if (parent is T match)
+                return match;
 
             return parent?.FindAncestor<T>();
         }
@@ -104,6 +104,34 @@ namespace RandomDungeons
                     Recursive((Node)child);
                 }
             }
+        }
+
+        /// <summary>
+        /// Returns the first descendant of the given type, using breadth-first
+        /// search.  Returns null if not found.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static T FirstDescendantOfType<T>(this Node node)
+        {
+            var visitQueue = new Queue<Node>();
+            visitQueue.Enqueue(node);
+
+            while (visitQueue.Count > 0)
+            {
+                Node n = visitQueue.Dequeue();
+
+                if (n is T result)
+                    return result;
+
+                foreach (var child in n.EnumerateChildren())
+                {
+                    visitQueue.Enqueue(child);
+                }
+            }
+
+            return default;
         }
 
         /// <summary>

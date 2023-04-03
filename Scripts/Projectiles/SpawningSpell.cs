@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public class SpawningSpell : Node2D
     {

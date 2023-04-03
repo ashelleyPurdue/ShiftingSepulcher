@@ -1,8 +1,8 @@
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
-    public class MiniTilemancer : Node
+    public class MiniTilemancer : BaseComponent<Node2D>
     {
         [Export] public float TileSpawnRadius = 32 * 2;
         [Export] public float WanderSpeed = 32;
@@ -13,12 +13,14 @@ namespace RandomDungeons
 
         private Node2D _target;
 
-        private EnemyBody _body => this.FindAncestor<EnemyBody>();
+        private KnockbackableVelocityComponent _body => this.GetComponent<KnockbackableVelocityComponent>();
+        private EnemyComponent _enemy => this.GetComponent<EnemyComponent>();
+
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
 
         private TilemancerTile _currentTile = null;
 
-        public override void _Ready()
+        public override void _EnterTree()
         {
             _target = GetTree().FindPlayer();
         }
@@ -66,14 +68,14 @@ namespace RandomDungeons
             }
 
             _currentTile = TilePrefab.Instance<TilemancerTile>();
-            _body.Connect(
-                signal: nameof(EnemyBody.Dead),
+            _enemy.Connect(
+                signal: nameof(EnemyComponent.Dead),
                 target: _currentTile,
                 method: nameof(_currentTile.Shatter),
                 flags: (int)(ConnectFlags.ReferenceCounted | ConnectFlags.Oneshot)
             );
-            _body.Connect(
-                signal: nameof(EnemyBody.Respawning),
+            _enemy.Connect(
+                signal: nameof(EnemyComponent.Respawning),
                 target: _currentTile,
                 method: "queue_free",
                 flags: (int)(ConnectFlags.ReferenceCounted | ConnectFlags.Oneshot)
@@ -109,7 +111,7 @@ namespace RandomDungeons
 
         private Vector2 RandomTileSpawnPos()
         {
-            float angleDeg = Mathf.Rad2Deg(_body.GetAngleTo(_target.GlobalPosition));
+            float angleDeg = Mathf.Rad2Deg(Entity.GetAngleTo(_target.GlobalPosition));
             angleDeg += (GD.Randf() * 180) - 90;
 
             float angle = Mathf.Deg2Rad(angleDeg);
@@ -118,7 +120,7 @@ namespace RandomDungeons
                 Mathf.Sin(angle)
             );
 
-            return _body.GlobalPosition + (dir * TileSpawnRadius);
+            return Entity.GlobalPosition + (dir * TileSpawnRadius);
         }
     }
 }

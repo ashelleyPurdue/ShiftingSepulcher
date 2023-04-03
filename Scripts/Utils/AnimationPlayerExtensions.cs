@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public static class AnimationPlayerExtensions
     {
@@ -10,16 +10,28 @@ namespace RandomDungeons
             anim.Advance(0);
         }
 
-        public static void PlayAndAdvance(this AnimationPlayer anim, string animationName)
+        public static void PlayAndAdvance(
+            this AnimationPlayer anim,
+            string name,
+            float customBlend = -1,
+            float customSpeed = 1,
+            bool fromEnd = false
+        )
         {
-            anim.Play(animationName);
+            anim.Play(name, customBlend, customSpeed, fromEnd);
             anim.Advance(0);
         }
 
-        public static void ResetAndPlay(this AnimationPlayer anim, string animationName)
+        public static void ResetAndPlay(
+            this AnimationPlayer anim,
+            string name,
+            float customBlend = -1,
+            float customSpeed = 1,
+            bool fromEnd = false
+        )
         {
             anim.Reset();
-            anim.PlayAndAdvance(animationName);
+            anim.PlayAndAdvance(name, customBlend, customSpeed, fromEnd);
         }
     }
 }

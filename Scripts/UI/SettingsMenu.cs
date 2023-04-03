@@ -1,9 +1,11 @@
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public class SettingsMenu : Node
     {
+        [Signal] public delegate void BackPressed();
+
         private Slider _masterVolume => GetNode<Slider>("%MasterVolumeSlider");
         private Slider _musicVolume => GetNode<Slider>("%MusicVolumeSlider");
         private Slider _soundVolume => GetNode<Slider>("%SoundVolumeSlider");

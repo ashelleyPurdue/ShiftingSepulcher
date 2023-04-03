@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://Fonts/OFLFonts/OpenSans-VariableFont_wdth,wght.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Fonts/OpenSans/OpenSans-VariableFont_wdth,wght.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://addons/controller_icons/assets/key/space.png" type="Texture" id=2]
 [ext_resource path="res://addons/controller_icons/assets/mouse/left.png" type="Texture" id=3]
 [ext_resource path="res://Scripts/UI/Widgets/ThrowOrDropPrompt.cs" type="Script" id=4]

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public class PipePuzzleGraph
     {
@@ -84,7 +84,8 @@ namespace RandomDungeons
             }
 
             // Scramble the puzzle to hide the solution
-            foreach (var cellPos in puzzle.AllCellsReachableFrom(source))
+            var allCells = puzzle.AllCellsReachableFrom(source).ToArray();
+            foreach (var cellPos in allCells)
             {
                 var cell = puzzle.GetCell(cellPos);
 
@@ -238,6 +239,20 @@ namespace RandomDungeons
         public IEnumerable<Vector2i> AllNonEmptyCells()
         {
             return _cells.Select(kvp => kvp.Key);
+        }
+
+        public IEnumerable<Vector2i> AllEmptyCells()
+        {
+            for (int x = 0; x < Width; x++)
+            {
+                for (int y = 0; y < Height; y++)
+                {
+                    var pos = new Vector2i(x, y);
+
+                    if (IsCellEmpty(pos))
+                        yield return pos;
+                }
+            }
         }
 
         public IEnumerable<Vector2i> AllPipes()

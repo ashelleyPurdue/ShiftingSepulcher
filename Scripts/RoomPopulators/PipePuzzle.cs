@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public class PipePuzzle : Node2D, IRoomPopulator, IChallenge
     {
@@ -17,6 +17,7 @@ namespace RandomDungeons
         [Export] public PackedScene SinkCellPrefab;
 
         private PipePuzzleGraph _puzzleGraph;
+        private const float CellSize = 32 * 3;
 
         public bool IsSolved() => _puzzleGraph.IsSolved();
 
@@ -49,6 +50,10 @@ namespace RandomDungeons
                 var sink = Spawn<PipePuzzleCell>(SinkCellPrefab, sinkPos);
                 sink.Cell = puzzleGraph.GetCell(sinkPos);
             }
+
+            // HACK: Move the chest spawn point to one of the empty cells
+            var chestSpawn = GetNode<Node2D>("%ChestSpawns/Center");
+            chestSpawn.Position = rng.PickFrom(PotentialChestSpawns());
 
             // React when the cells get rotated
             foreach (var cell in this.AllDescendantsOfType<PipePuzzleCell>())
@@ -94,9 +99,39 @@ namespace RandomDungeons
             realPos.y *= -1;
 
             // Scale it up by the size of a cell
-            realPos *= 32 * 3;
+            realPos *= CellSize;
 
             return realPos;
+        }
+
+        private IEnumerable<Vector2> PotentialChestSpawns()
+        {
+            foreach (Vector2i emptyCellPos in _puzzleGraph.AllEmptyCells())
+            {
+                var realPos = GraphPosToRealPos(emptyCellPos);
+
+                // Just because a cell is empty doesn't mean we can put a
+                // chest there.  It's possible that the cell's "real" position
+                // is inside a wall, due to GraphPosToRealPos() shifting everything
+                // to put the used cells in the center.
+                //
+                // So, we need to check if the _real_ position is within the
+                // bounds of the room.
+                Vector2 realMax = new Vector2(_puzzleGraph.Width, _puzzleGraph.Height);
+                realMax *= CellSize;
+                realMax /= 2;
+
+                Vector2 realMin = -realMax;
+
+                bool inBounds =
+                    realPos.x < realMax.x &&
+                    realPos.x >= realMin.x &&
+                    realPos.y < realMax.y &&
+                    realPos.y >= realMin.y;
+
+                if (inBounds)
+                    yield return realPos;
+            }
         }
     }
 }

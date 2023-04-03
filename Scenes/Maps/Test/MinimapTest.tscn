@@ -1,10 +1,17 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scenes/Prefabs/UI/Widgets/Minimap/Minimap.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Prefabs/UI/Widgets/SeedInput.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/TestMaps/MinimapTest.cs" type="Script" id=3]
 [ext_resource path="res://Scripts/Elements/PanZoomCamera.cs" type="Script" id=4]
 [ext_resource path="res://Sprites/OutlinedCircle.svg" type="Texture" id=5]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends SpinBox
+
+func _process(delta):
+    $\"%Minimap\".VisibleFloor = value
+"
 
 [node name="MinimapTest" type="Node2D"]
 script = ExtResource( 3 )
@@ -18,26 +25,41 @@ texture = ExtResource( 5 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+[node name="SeedInputAndRegenerateButton" type="VBoxContainer" parent="CanvasLayer"]
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -161.0
 margin_bottom = 66.0
 
-[node name="SeedInput" parent="CanvasLayer/VBoxContainer" instance=ExtResource( 2 )]
+[node name="SeedInput" parent="CanvasLayer/SeedInputAndRegenerateButton" instance=ExtResource( 2 )]
 unique_name_in_owner = true
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 161.0
 margin_bottom = 66.0
 
-[node name="RegenerateButton" type="Button" parent="CanvasLayer/VBoxContainer"]
+[node name="RegenerateButton" type="Button" parent="CanvasLayer/SeedInputAndRegenerateButton"]
 margin_top = 70.0
 margin_right = 161.0
 margin_bottom = 90.0
+
+[node name="FloorSelector" type="VBoxContainer" parent="CanvasLayer"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="FloorSelectorLabel" type="Label" parent="CanvasLayer/FloorSelector"]
+margin_right = 74.0
+margin_bottom = 14.0
+text = "Floor"
+
+[node name="FloorSelector" type="SpinBox" parent="CanvasLayer/FloorSelector"]
+margin_top = 18.0
+margin_right = 74.0
+margin_bottom = 42.0
+script = SubResource( 1 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 script = ExtResource( 4 )
 
-[connection signal="pressed" from="CanvasLayer/VBoxContainer/RegenerateButton" to="." method="Regenerate"]
+[connection signal="pressed" from="CanvasLayer/SeedInputAndRegenerateButton/RegenerateButton" to="." method="Regenerate"]

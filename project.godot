@@ -52,6 +52,7 @@ _global_script_class_icons={
 
 config/name="Shifting Sepulcher"
 run/main_scene="res://Scenes/Maps/TitleScreen.tscn"
+boot_splash/show_image=false
 config/icon="res://icon.png"
 config/macos_native_icon="res://icon.icns"
 config/windows_native_icon="res://icon.ico"
@@ -69,6 +70,7 @@ enabled=PoolStringArray( "res://addons/ProjectPlugins/CustomNodes/plugin.cfg", "
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
+theme/custom="res://Themes/ConsoleMenuTheme.tres"
 
 [input]
 
@@ -134,7 +136,7 @@ Pause={
 
 [mono]
 
-project/assembly_name="RandomDungeons"
+project/assembly_name="ShiftingSepulcher"
 
 [physics]
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public enum RoomTransitionAnimation
     {
@@ -96,6 +96,12 @@ namespace RandomDungeons
             RoomTransitionAnimation anim = RoomTransitionAnimation.Fade
         )
         {
+            // HACK: Log the room seed of every dungeon room entered
+            if (room is IDungeonRoom dr)
+            {
+                GD.Print($"Entered room with seed {dr.LayoutRoom.TreeRoom.RoomSeed}");
+            }
+
             if (_activeRoom == room)
                 return;
 

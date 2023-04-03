@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public class PlayerSword : Node2D
     {
@@ -21,8 +21,7 @@ namespace RandomDungeons
             RotationDegrees += SwingSpeed * delta;
 
             Visible = IsSwinging;
-            _hitBox.Monitoring  = IsSwinging;
-            _hitBox.Monitorable = IsSwinging;
+            _hitBox.Enabled  = IsSwinging;
         }
 
         public void StartSwinging(float angleDeg)

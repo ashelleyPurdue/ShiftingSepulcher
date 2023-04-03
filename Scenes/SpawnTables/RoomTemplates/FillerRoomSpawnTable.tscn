@@ -1,0 +1,34 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Scripts/SpawnTables/SpawnTableEntry.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/SpawnTables/SpawnTable.cs" type="Script" id=2]
+[ext_resource path="res://Scenes/Prefabs/DungeonRoomTemplates/Filler/CentralPillarRoom.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Prefabs/DungeonRoomTemplates/Filler/CorridorRoom.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Prefabs/DungeonRoomTemplates/Filler/FourPillarsRoom.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Prefabs/DungeonRoomTemplates/Filler/FourPotsRoom.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/Prefabs/DungeonRoomTemplates/Filler/RandomWallsRoom.tscn" type="PackedScene" id=7]
+
+[node name="FillerRoomSpawnTable" type="Node"]
+script = ExtResource( 2 )
+
+[node name="CentralPillarRoom" type="Node" parent="."]
+script = ExtResource( 1 )
+Scene = ExtResource( 3 )
+
+[node name="CorridorRoom" type="Node" parent="."]
+script = ExtResource( 1 )
+Weight = 3
+Scene = ExtResource( 4 )
+
+[node name="FourPillarsRoom" type="Node" parent="."]
+script = ExtResource( 1 )
+Scene = ExtResource( 5 )
+
+[node name="FourPotsRoom" type="Node" parent="."]
+script = ExtResource( 1 )
+Scene = ExtResource( 6 )
+
+[node name="RandomWallsRoom" type="Node" parent="."]
+script = ExtResource( 1 )
+Weight = 3
+Scene = ExtResource( 7 )

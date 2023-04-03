@@ -1,18 +1,14 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Audio/Music/JRPG_labyrinth_loop.tres" type="Resource" id=1]
 [ext_resource path="res://Scripts/DungeonRooms/DungeonRoomFactory.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/TestMaps/TestDungeonBase.cs" type="Script" id=3]
 [ext_resource path="res://Scripts/PhysicalDungeons/RandomDungeonInstantiator.cs" type="Script" id=4]
 [ext_resource path="res://Scenes/Prefabs/Elements/Player.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Scenes/Prefabs/DungeonRoomTemplates/KeyRoom.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/Prefabs/DungeonRoomTemplates/EmptyRoom.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/Prefabs/UI/Widgets/SeedInput.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/Prefabs/RoomTransitionManager.tscn" type="PackedScene" id=9]
-[ext_resource path="res://SceneSpawnTables/DungeonRoomTemplates/BossRoomWeights.tres" type="Resource" id=10]
-[ext_resource path="res://SceneSpawnTables/DungeonRoomTemplates/PuzzleRooms.tres" type="Resource" id=11]
-[ext_resource path="res://SceneSpawnTables/DungeonRoomTemplates/CombatRooms.tres" type="Resource" id=12]
-[ext_resource path="res://SceneSpawnTables/DungeonRoomTemplates/FillerRooms.tres" type="Resource" id=13]
+[ext_resource path="res://Scenes/SpawnTables/RoomTemplates/FillerRoomSpawnTable.tscn" type="PackedScene" id=16]
 
 [node name="TestDungeonBase" type="Node2D"]
 script = ExtResource( 3 )
@@ -29,13 +25,13 @@ margin_bottom = 90.0
 unique_name_in_owner = true
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 161.0
-margin_bottom = 66.0
+margin_right = 191.0
+margin_bottom = 84.0
 
 [node name="GenerateButton" type="Button" parent="CanvasLayer/VBoxContainer"]
-margin_top = 70.0
-margin_right = 161.0
-margin_bottom = 90.0
+margin_top = 88.0
+margin_right = 191.0
+margin_bottom = 119.0
 focus_mode = 0
 text = "Generate"
 
@@ -50,15 +46,15 @@ unique_name_in_owner = true
 script = ExtResource( 4 )
 AlwaysUseTreeTemplate = true
 
+[node name="ChallengeTypeSpawnTables" type="Node" parent="DungeonInstantiator"]
+unique_name_in_owner = true
+
+[node name="None" parent="DungeonInstantiator/ChallengeTypeSpawnTables" instance=ExtResource( 16 )]
+
 [node name="RoomFactory" type="Node" parent="DungeonInstantiator"]
 unique_name_in_owner = true
 script = ExtResource( 2 )
 EmptyRoom = ExtResource( 7 )
-KeyRoom = ExtResource( 6 )
-FillerRoomTable = ExtResource( 13 )
-CombatRoomTable = ExtResource( 12 )
-PuzzleRoomTable = ExtResource( 11 )
-BossRoomTable = ExtResource( 10 )
 
 [node name="TreeTemplates" type="Node" parent="DungeonInstantiator"]
 unique_name_in_owner = true

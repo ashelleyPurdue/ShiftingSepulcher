@@ -2,8 +2,8 @@
 
 [ext_resource path="res://Scripts/RoomPopulators/ScalePuzzle.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/Prefabs/Elements/ScaleBowl.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scripts/Components/RotateParentTowardPoint.cs" type="Script" id=3]
-[ext_resource path="res://Scripts/Components/Circle2D.cs" type="Script" id=4]
+[ext_resource path="res://Scripts/Components/RotateTowardPointComponent.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/Renderers/Circle2D.cs" type="Script" id=4]
 
 [node name="ScalePuzzle" type="Node2D"]
 script = ExtResource( 1 )
@@ -33,7 +33,7 @@ position = Vector2( 0, -132 )
 color = Color( 0.666667, 0.611765, 0, 1 )
 polygon = PoolVector2Array( -128, 4, -128, -4, 128, -4, 128, 4 )
 
-[node name="RotateParentTowardPoint" type="Node" parent="ScaleVisuals/Beam"]
+[node name="RotateTowardPointComponent" type="Node" parent="ScaleVisuals/Beam"]
 script = ExtResource( 3 )
 TargetPoint = NodePath("../../../LeftBowl/MoveablePart/Visuals/Rope")
 
@@ -41,7 +41,7 @@ TargetPoint = NodePath("../../../LeftBowl/MoveablePart/Visuals/Rope")
 color = Color( 0.839216, 0.796078, 0.329412, 1 )
 polygon = PoolVector2Array( -128, 0, -128, -4, 128, -4, 128, 0 )
 
-[node name="RotateParentTowardPoint" type="Node" parent="ScaleVisuals/Beam/Shine"]
+[node name="RotateTowardPointComponent" type="Node" parent="ScaleVisuals/Beam/Shine"]
 script = ExtResource( 3 )
 TargetPoint = NodePath("../../../../LeftBowl/MoveablePart/Visuals/Rope")
 

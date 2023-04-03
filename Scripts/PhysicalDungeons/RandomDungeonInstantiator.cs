@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public class RandomDungeonInstantiator : Node
     {
@@ -52,7 +52,7 @@ namespace RandomDungeons
                 incomingReal.OpenSide = outgoingReal;
             }
 
-            var startRoom = layout.RoomAt(Vector2i.Zero).TreeRoom;
+            var startRoom = layout.RoomAt(Vector3i.Zero).TreeRoom;
             _transitionManager.StartDungeon(
                 startRoom: treeRoomToRoom2D[startRoom],
                 roomsToRespawn: treeRoomToRoom2D.Values
@@ -79,12 +79,7 @@ namespace RandomDungeons
         private DungeonTreeRoom GenerateTreeWithoutTemplate(int seed)
         {
             GD.Print("Generating a tree without using a template");
-            return DungeonTreeGenerator.GenerateUsingRuns(
-                seed: seed,
-                minRunLength: 3,
-                maxRunLength: 5,
-                numRuns: 6
-            );
+            return DungeonTreeGenerator.GenerateUsingRuns(seed);
         }
 
         private DungeonTreeRoom GenerateTreeUsingTemplate(Random rng)

@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public class HoldableWeights : KinematicBody2D
     {
@@ -8,11 +8,11 @@ namespace RandomDungeons
         [Export] public float WeightVerticalSeparation = 12;
 
         public bool IsBeingHeld => this
-            .SingleChildOfType<IHoldable>()
+            .GetComponent<HoldableComponent>()
             .IsBeingHeld;
 
         public bool IsFlying => this
-            .SingleChildOfType<ThrowableParentKinematic>()
+            .GetComponent<HoldableComponent>()
             .IsFlying;
 
         private Node2D _weightVisualTemplate => GetNode<Node2D>("%WeightVisualTemplate");

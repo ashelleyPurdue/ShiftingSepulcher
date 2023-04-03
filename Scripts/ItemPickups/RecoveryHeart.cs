@@ -1,15 +1,16 @@
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public class RecoveryHeart : Node2D, IRespawnable
     {
         public void OnPickedUp()
         {
-            PlayerInventory.Health++;
+            var hp = GetTree().FindPlayer().HealthPoints;
+            hp.Health++;
 
-            if (PlayerInventory.Health > PlayerInventory.MaxHealth)
-                PlayerInventory.Health = PlayerInventory.MaxHealth;
+            if (hp.Health > hp.MaxHealth)
+                hp.Health = hp.MaxHealth;
 
             QueueFree();
         }

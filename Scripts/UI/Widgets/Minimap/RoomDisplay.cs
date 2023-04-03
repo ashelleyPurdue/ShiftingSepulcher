@@ -1,5 +1,5 @@
 using Godot;
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     [Tool]
     public class RoomDisplay : Node2D
@@ -19,7 +19,7 @@ namespace RandomDungeons
                 var graphDoor = layoutRoom.DoorAtDirection(dir);
                 var display = GetDoorDisplay(dir);
 
-                display.SetDoor(graphDoor);
+                display.SetDoor(layoutRoom, graphDoor);
             }
         }
 

@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/Elements/PipePuzzleCell.cs" type="Script" id=1]
-[ext_resource path="res://Scripts/Components/Circle2D.cs" type="Script" id=2]
-[ext_resource path="res://Scripts/Components/HurtBox.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/Renderers/Circle2D.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/MiscNodes/HurtBox.cs" type="Script" id=3]
 [ext_resource path="res://Audio/SFX/PipeRotate.wav" type="AudioStream" id=4]
 [ext_resource path="res://Audio/SFX/PipeRotateStop.wav" type="AudioStream" id=5]
 
@@ -23,6 +23,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=4]
 resource_name = "RotateClockwise"
+length = 0.5
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("PipeDisplays:rotation_degrees")
@@ -106,8 +107,9 @@ shape = SubResource( 2 )
 
 [node name="HurtBox" type="Area2D" parent="Knob"]
 script = ExtResource( 3 )
+RecoilDistance = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Knob/HurtBox"]
 shape = SubResource( 1 )
 
-[connection signal="TookDamage" from="Knob/HurtBox" to="." method="OnKnobHit"]
+[connection signal="HitBoxEntered" from="Knob/HurtBox" to="." method="OnKnobHit"]

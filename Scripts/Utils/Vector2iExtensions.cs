@@ -1,21 +1,13 @@
 using System;
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public static class Vector2iExtensions
     {
         public static Vector2i Adjacent(this Vector2i v, CardinalDirection dir)
         {
-            switch (dir)
-            {
-                case CardinalDirection.North: v.y += 1; break;
-                case CardinalDirection.South: v.y -= 1; break;
-                case CardinalDirection.East: v.x += 1; break;
-                case CardinalDirection.West: v.x -= 1; break;
-            }
-
-            return v;
+            return v + dir.ToVector2i();
         }
 
         public static bool IsAdjacentTo(this Vector2i v, Vector2i other)
@@ -50,6 +42,16 @@ namespace RandomDungeons
         public static Vector2 ToVector2(this Vector2i v)
         {
             return new Vector2((float)v.x, (float)v.y);
+        }
+
+        public static Vector3i ToVector3i(this Vector2i v)
+        {
+            return new Vector3i(v.x, v.y, 0);
+        }
+
+        public static Vector3 ToVector3(this Vector2i v)
+        {
+            return new Vector3((float)v.x, (float)v.y, 0);
         }
     }
 }

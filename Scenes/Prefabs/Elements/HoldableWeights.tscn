@@ -1,25 +1,16 @@
 [gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://Scripts/Components/Holdables/HoldableParent.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Components/InteractableComponent.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Elements/HoldableWeights.cs" type="Script" id=2]
-[ext_resource path="res://Scripts/Components/Holdables/ThrowableParentKinematic.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/Components/HoldableComponent.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/Components/Area2DComponent.cs" type="Script" id=4]
+[ext_resource path="res://Scenes/Models/ShadowModel.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 32.0
 
 [sub_resource type="CircleShape2D" id=9]
 radius = 16.0
-
-[sub_resource type="Gradient" id=7]
-interpolation_mode = 1
-colors = PoolColorArray( 0, 0, 0, 1, 1, 1, 1, 0 )
-
-[sub_resource type="GradientTexture2D" id=8]
-flags = 3
-gradient = SubResource( 7 )
-fill = 1
-fill_from = Vector2( 0.5, 0.5 )
-fill_to = Vector2( 0.1, 0.2 )
 
 [sub_resource type="Gradient" id=4]
 interpolation_mode = 1
@@ -50,24 +41,29 @@ fill_to = Vector2( 0.1, 0.2 )
 [node name="HoldableWeights" type="KinematicBody2D"]
 script = ExtResource( 2 )
 
-[node name="HoldableParent" type="Area2D" parent="."]
-script = ExtResource( 1 )
-PromptText = "Pick up"
-PromptPositionPath = NodePath("PromptPos")
+[node name="HoldableComponent" type="Node" parent="."]
+script = ExtResource( 3 )
+ThrowDistance = 80.0
+ThrowSpeed = 320.0
+ArcHeight = 16.0
+Visuals = NodePath("../Visuals")
+Shadow = NodePath("../ShadowModel")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HoldableParent"]
+[node name="InteractableComponent" type="Node" parent="."]
+script = ExtResource( 1 )
+PromptPositionPath = NodePath("../PromptPos")
+
+[node name="Area2DComponent" type="Area2D" parent="."]
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2DComponent"]
 shape = SubResource( 1 )
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="PromptPos" type="Position2D" parent="HoldableParent"]
+[node name="PromptPos" type="Position2D" parent="."]
 position = Vector2( -32, -64 )
-
-[node name="ThrowableParentKinematic" type="Node" parent="."]
-script = ExtResource( 3 )
-ThrowDistance = 32.0
-Visuals = NodePath("../Visuals/WeightStack")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 3 )
@@ -75,14 +71,13 @@ shape = SubResource( 9 )
 
 [node name="Visuals" type="Node2D" parent="."]
 
-[node name="Shadow" type="Sprite" parent="Visuals"]
-modulate = Color( 0, 0, 0, 0.662745 )
-scale = Vector2( 0.5, 0.6 )
-texture = SubResource( 8 )
-
 [node name="WeightStack" type="Node2D" parent="Visuals"]
 unique_name_in_owner = true
 position = Vector2( 0, -6 )
+
+[node name="ShadowModel" parent="." instance=ExtResource( 5 )]
+scale = Vector2( 0.5, 0.6 )
+radius = 32.0
 
 [node name="WeightVisualTemplate" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -107,9 +102,3 @@ texture = SubResource( 6 )
 __meta__ = {
 "_edit_lock_": true
 }
-
-[connection signal="PickedUp" from="HoldableParent" to="CollisionShape2D" method="set_disabled" binds= [ true ]]
-[connection signal="PickedUp" from="HoldableParent" to="Visuals/Shadow" method="set_visible" binds= [ false ]]
-[connection signal="Released" from="HoldableParent" to="CollisionShape2D" method="set_disabled" binds= [ false ]]
-[connection signal="Released" from="HoldableParent" to="Visuals/Shadow" method="set_visible" binds= [ true ]]
-[connection signal="Thrown" from="HoldableParent" to="ThrowableParentKinematic" method="OnThrown"]

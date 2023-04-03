@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Fonts/The Wild Breath of Zelda.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://Audio/SFX/BossDeathShudder.wav" type="AudioStream" id=2]
@@ -34,7 +34,7 @@ tracks/1/keys = {
 "values": [ false, true ]
 }
 tracks/2/type = "method"
-tracks/2/path = NodePath("Options/OpenPlayMenuButton")
+tracks/2/path = NodePath("Options/VBoxContainer/OpenPlayMenuButton")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -113,7 +113,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 tracks/2/type = "method"
-tracks/2/path = NodePath("Options/OpenPlayMenuButton")
+tracks/2/path = NodePath("Options/VBoxContainer/OpenPlayMenuButton")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -418,6 +418,13 @@ font_data = ExtResource( 1 )
 size = 105
 font_data = ExtResource( 1 )
 
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0, 0, 0, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+
 [node name="TitleScreen" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -437,97 +444,12 @@ anims/Sepulcher = SubResource( 5 )
 anims/Shifting = SubResource( 1 )
 
 [node name="IntroSoundPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 7 )
 bus = "Sound"
 
 [node name="Background" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0, 0, 0, 1 )
-
-[node name="PlayMenu" type="Popup" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -224.0
-margin_top = -140.0
-margin_right = 224.0
-margin_bottom = 244.0
-popup_exclusive = true
-
-[node name="Panel" type="Panel" parent="PlayMenu"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="PlayButton" type="Button" parent="PlayMenu"]
-anchor_left = 0.5
-anchor_top = 0.145
-anchor_right = 0.5
-anchor_bottom = 0.162
-margin_left = -77.5
-margin_right = 77.5
-margin_bottom = 20.0
-focus_neighbour_left = NodePath("../BackButton")
-focus_neighbour_top = NodePath("../BackButton")
-focus_neighbour_right = NodePath("../BackButton")
-focus_neighbour_bottom = NodePath("../SeedInput")
-focus_next = NodePath("../SeedInput")
-text = "Play"
-
-[node name="BackButton" type="Button" parent="PlayMenu"]
-margin_right = 42.0
-margin_bottom = 20.0
-focus_neighbour_left = NodePath("../PlayButton")
-focus_neighbour_right = NodePath("../PlayButton")
-focus_neighbour_bottom = NodePath("../PlayButton")
-text = "Back"
-
-[node name="SeedInput" parent="PlayMenu" instance=ExtResource( 5 )]
-unique_name_in_owner = true
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -96.0
-margin_top = 64.0
-margin_right = 96.0
-margin_bottom = 130.0
-
-[node name="SettingsMenu" type="Popup" parent="."]
-margin_left = 384.0
-margin_top = 192.0
-margin_right = 672.0
-margin_bottom = 512.0
-
-[node name="Panel" type="Panel" parent="SettingsMenu"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="BackButton" type="Button" parent="SettingsMenu"]
-margin_right = 42.0
-margin_bottom = 20.0
-focus_neighbour_bottom = NodePath("../SettingsMenu")
-focus_next = NodePath("../SettingsMenu")
-text = "Back"
-
-[node name="SettingsMenu" parent="SettingsMenu" instance=ExtResource( 6 )]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -144.0
-margin_top = -64.0
-margin_right = 17.0
-margin_bottom = -64.0
-focus_neighbour_top = NodePath("../BackButton")
-focus_previous = NodePath("../BackButton")
 
 [node name="Title" type="Control" parent="."]
 anchor_left = 0.5
@@ -569,7 +491,7 @@ text = "Sepulcher"
 align = 1
 uppercase = true
 
-[node name="Options" type="VBoxContainer" parent="."]
+[node name="Options" type="PanelContainer" parent="."]
 unique_name_in_owner = true
 anchor_left = 0.5
 anchor_top = 0.5
@@ -579,21 +501,143 @@ margin_left = -80.0
 margin_top = 78.0
 margin_right = 80.0
 margin_bottom = 134.0
-custom_constants/separation = 16
+theme_type_variation = "TransparentPanelContainer"
 
-[node name="OpenPlayMenuButton" type="Button" parent="Options"]
-margin_right = 160.0
-margin_bottom = 20.0
-text = "Play"
+[node name="VBoxContainer" type="VBoxContainer" parent="Options"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 150.0
+margin_bottom = 64.0
 
-[node name="OpenSettingsMenuButton" type="Button" parent="Options"]
-margin_top = 36.0
-margin_right = 160.0
-margin_bottom = 56.0
+[node name="OpenPlayMenuButton" type="Button" parent="Options/VBoxContainer"]
+margin_right = 140.0
+margin_bottom = 25.0
+theme_type_variation = "ConsoleMenuButton"
+text = "New Game"
+
+[node name="OpenSettingsMenuButton" type="Button" parent="Options/VBoxContainer"]
+margin_top = 29.0
+margin_right = 140.0
+margin_bottom = 54.0
+theme_type_variation = "ConsoleMenuButton"
 text = "Settings"
 
-[connection signal="pressed" from="PlayMenu/PlayButton" to="." method="PlayDungeonMode"]
-[connection signal="pressed" from="PlayMenu/BackButton" to="PlayMenu" method="set_visible" binds= [ false ]]
-[connection signal="pressed" from="SettingsMenu/BackButton" to="SettingsMenu" method="set_visible" binds= [ false ]]
-[connection signal="pressed" from="Options/OpenPlayMenuButton" to="PlayMenu" method="popup"]
-[connection signal="pressed" from="Options/OpenSettingsMenuButton" to="SettingsMenu" method="popup"]
+[node name="PlayMenu" type="Popup" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -83.0
+margin_top = 52.0
+margin_right = 83.0
+margin_bottom = 186.0
+popup_exclusive = true
+
+[node name="PanelContainer" type="PanelContainer" parent="PlayMenu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 9 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayMenu/PanelContainer"]
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 165.0
+margin_bottom = 133.0
+alignment = 1
+
+[node name="PlayButton" type="Button" parent="PlayMenu/PanelContainer/VBoxContainer"]
+margin_top = 24.0
+margin_right = 164.0
+margin_bottom = 49.0
+theme_type_variation = "ConsoleMenuButton"
+text = "Play"
+
+[node name="AdvancedPlayOptionsButton" type="Button" parent="PlayMenu/PanelContainer/VBoxContainer"]
+margin_top = 53.0
+margin_right = 164.0
+margin_bottom = 78.0
+theme_type_variation = "ConsoleMenuButton"
+text = "Advanced Options"
+
+[node name="BackButton" type="Button" parent="PlayMenu/PanelContainer/VBoxContainer"]
+margin_top = 82.0
+margin_right = 164.0
+margin_bottom = 107.0
+theme_type_variation = "ConsoleMenuButton"
+text = "Back"
+
+[node name="SettingsMenu" type="Popup" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -144.0
+margin_top = -160.0
+margin_right = 144.0
+margin_bottom = 160.0
+
+[node name="SettingsMenu" parent="SettingsMenu" instance=ExtResource( 6 )]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 0.0
+margin_bottom = 0.0
+
+[node name="SeedOptionsMenu" type="Popup" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -166.0
+margin_top = -102.5
+margin_right = 166.0
+margin_bottom = 102.5
+popup_exclusive = true
+
+[node name="PanelContainer" type="PanelContainer" parent="SeedOptionsMenu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SeedOptionsMenu/PanelContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 322.0
+margin_bottom = 203.0
+
+[node name="BackButton" type="Button" parent="SeedOptionsMenu/PanelContainer/VBoxContainer"]
+margin_right = 312.0
+margin_bottom = 31.0
+text = "Back"
+
+[node name="Label" type="Label" parent="SeedOptionsMenu/PanelContainer/VBoxContainer"]
+margin_top = 35.0
+margin_right = 312.0
+margin_bottom = 58.0
+
+[node name="Label2" type="Label" parent="SeedOptionsMenu/PanelContainer/VBoxContainer"]
+margin_top = 62.0
+margin_right = 312.0
+margin_bottom = 85.0
+
+[node name="PanelContainer" type="PanelContainer" parent="SeedOptionsMenu/PanelContainer/VBoxContainer"]
+margin_top = 89.0
+margin_right = 312.0
+margin_bottom = 193.0
+
+[node name="SeedInput" parent="SeedOptionsMenu/PanelContainer/VBoxContainer/PanelContainer" instance=ExtResource( 5 )]
+unique_name_in_owner = true
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 302.0
+margin_bottom = 94.0
+
+[connection signal="pressed" from="Options/VBoxContainer/OpenPlayMenuButton" to="PlayMenu" method="popup"]
+[connection signal="pressed" from="Options/VBoxContainer/OpenSettingsMenuButton" to="SettingsMenu" method="popup"]
+[connection signal="pressed" from="PlayMenu/PanelContainer/VBoxContainer/PlayButton" to="." method="PlayDungeonMode"]
+[connection signal="pressed" from="PlayMenu/PanelContainer/VBoxContainer/AdvancedPlayOptionsButton" to="PlayMenu" method="set_visible" binds= [ false ]]
+[connection signal="pressed" from="PlayMenu/PanelContainer/VBoxContainer/AdvancedPlayOptionsButton" to="SeedOptionsMenu" method="popup"]
+[connection signal="pressed" from="PlayMenu/PanelContainer/VBoxContainer/BackButton" to="PlayMenu" method="set_visible" binds= [ false ]]
+[connection signal="BackPressed" from="SettingsMenu/SettingsMenu" to="SettingsMenu" method="set_visible" binds= [ false ]]
+[connection signal="pressed" from="SeedOptionsMenu/PanelContainer/VBoxContainer/BackButton" to="PlayMenu" method="popup"]
+[connection signal="pressed" from="SeedOptionsMenu/PanelContainer/VBoxContainer/BackButton" to="SeedOptionsMenu" method="set_visible" binds= [ false ]]

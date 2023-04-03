@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public class DungeonTreeGeneratorTest : Node
     {
@@ -26,12 +26,7 @@ namespace RandomDungeons
 
             if (template == null)
             {
-                tree = DungeonTreeGenerator.GenerateUsingRuns(
-                    seed,
-                    numRuns: 5,
-                    minRunLength: 5,
-                    maxRunLength: 5
-                );
+                tree = DungeonTreeGenerator.GenerateUsingRuns(seed);
             }
             else
             {

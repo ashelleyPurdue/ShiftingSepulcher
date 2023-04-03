@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public enum CardinalDirection
     {
@@ -52,6 +52,11 @@ namespace RandomDungeons
             }
 
             throw new Exception("There are only four cardinal directions, dude.");
+        }
+
+        public static Vector3i ToVector3i(this CardinalDirection dir)
+        {
+            return dir.ToVector2i().ToVector3i();
         }
     }
 

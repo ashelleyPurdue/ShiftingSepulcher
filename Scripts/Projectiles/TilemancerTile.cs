@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public class TilemancerTile : KinematicBody2D
     {
@@ -31,14 +31,14 @@ namespace RandomDungeons
             _velocity = dir * speed;
 
             _collider.Disabled = false;
-            _hitBox.Monitoring = true;
+            _hitBox.Enabled = true;
             _throwSoundPlayer.Play();
         }
 
         public void Shatter()
         {
             _animator.Play("Shatter");
-            _hitBox.Monitoring = false;
+            _hitBox.Enabled = false;
             _collider.Disabled = true;
             _velocity = Vector2.Zero;
         }

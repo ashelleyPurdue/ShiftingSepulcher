@@ -1,0 +1,269 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Audio/SFX/SwordDamageOwWithSlime.wav" type="AudioStream" id=1]
+[ext_resource path="res://Scripts/MiscNodes/HurtBox.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/Enemies/MiniTilemancer.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/MiscNodes/HitBox.cs" type="Script" id=5]
+[ext_resource path="res://Scenes/Prefabs/Projectiles/TilemancerTile.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/ComponentCollections/StandardKnockbackableEnemyComponents.tscn" type="PackedScene" id=9]
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 16.0
+
+[sub_resource type="Animation" id=4]
+resource_name = "Cycle"
+length = 3.0
+loop = true
+tracks/0/type = "method"
+tracks/0/path = NodePath("AI")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "StartWandering"
+}, {
+"args": [  ],
+"method": "StopWandering"
+} ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("AI")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "SummonTile"
+}, {
+"args": [  ],
+"method": "ThrowTile"
+} ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "Death"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Visuals:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 2, 2 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Visuals:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("HurtBox/HurtBoxShape:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("HitBox/HitBoxShape:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("BodyShape:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=6]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Visuals:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Visuals:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("HurtBox/HurtBoxShape:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("HitBox/HitBoxShape:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("BodyShape:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 16.0
+
+[node name="MiniTilemancer" type="KinematicBody2D"]
+collision_layer = 0
+
+[node name="AI" type="Node" parent="."]
+script = ExtResource( 3 )
+TilePrefab = ExtResource( 6 )
+
+[node name="StandardKnockbackableEnemyComponents" parent="." instance=ExtResource( 9 )]
+
+[node name="HealthPointsComponent" parent="StandardKnockbackableEnemyComponents" index="1"]
+MaxHealth = 2
+
+[node name="HurtBox" type="Area2D" parent="."]
+script = ExtResource( 2 )
+HealthPointsPath = NodePath("../StandardKnockbackableEnemyComponents/HealthPointsComponent")
+
+[node name="HurtBoxShape" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+autoplay = "Cycle"
+anims/Cycle = SubResource( 4 )
+anims/Death = SubResource( 5 )
+anims/RESET = SubResource( 6 )
+
+[node name="BodyShape" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="HitBox" type="Area2D" parent="."]
+script = ExtResource( 5 )
+IgnoredHealthPoints = [ NodePath("../StandardKnockbackableEnemyComponents/HealthPointsComponent") ]
+
+[node name="HitBoxShape" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource( 2 )
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Offset" type="Node2D" parent="Visuals"]
+position = Vector2( -3, -16 )
+scale = Vector2( 0.281711, 0.28 )
+
+[node name="Robe" type="Polygon2D" parent="Visuals/Offset"]
+position = Vector2( 5.05238, 30.1264 )
+scale = Vector2( 0.858013, 0.858013 )
+color = Color( 0.788235, 0.619608, 0.262745, 1 )
+polygon = PoolVector2Array( -10, 19, 19, 24, 14.7973, 31.4873, 23.0717, 60.6245, 23, 80, 50, 100, -42, 99, -15, 77, -14.1628, 60.6245, -5.88846, 27.3249 )
+
+[node name="Head" type="Polygon2D" parent="Visuals/Offset"]
+position = Vector2( 3.54974, 39.2858 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( -16, -16, -16, 16, 8, 32, 26, 17, 32, -16 )
+
+[node name="Hat" type="Polygon2D" parent="Visuals/Offset/Head"]
+color = Color( 0.788235, 0.619608, 0.262745, 1 )
+polygon = PoolVector2Array( -16, -16, 0, -48, 32, -64, 16, -32, 32, -16, 64, -16, 0, 0, -48, -16 )
+
+[node name="LeftHand" type="Polygon2D" parent="Visuals/Offset"]
+position = Vector2( -24.8482, 89.2858 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( -5, -13, 7, -16, 14, -10, 9, -1, -2, -2 )
+
+[node name="Sleeve" type="Polygon2D" parent="Visuals/Offset/LeftHand"]
+color = Color( 0.788235, 0.619608, 0.262745, 1 )
+polygon = PoolVector2Array( -3, -7, -2, -3, 9, -1, 14, -10, 12, 0, 6, 4, -1, 11, -1, 5 )
+
+[node name="RightHand" type="Polygon2D" parent="Visuals/Offset"]
+position = Vector2( 46.1466, 92.8572 )
+scale = Vector2( -1, 1 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( -5, -13, 7, -16, 14, -10, 9, -1, -2, -2 )
+
+[node name="Sleeve" type="Polygon2D" parent="Visuals/Offset/RightHand"]
+color = Color( 0.788235, 0.619608, 0.262745, 1 )
+polygon = PoolVector2Array( -3, -7, -2, -3, 9, -1, 14, -10, 12, 0, 6, 4, -1, 11, -1, 5 )
+
+[node name="TookDamageSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+pitch_scale = 0.89
+bus = "Sound"
+
+[connection signal="Dead" from="StandardKnockbackableEnemyComponents/EnemyComponent" to="AI" method="OnDead"]
+[connection signal="Respawning" from="StandardKnockbackableEnemyComponents/EnemyComponent" to="AI" method="OnRespawning"]
+
+[editable path="StandardKnockbackableEnemyComponents"]

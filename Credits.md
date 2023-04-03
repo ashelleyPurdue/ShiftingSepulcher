@@ -51,6 +51,18 @@ Fireball sound effect:
     https://opengameart.org/content/fireball-1
     Author: Julien Matthey
 
+100 CC0 SFX:
+    https://opengameart.org/content/100-cc0-sfx
+    Author: rubberdeck
+
+Rustling leaves sounds:
+    https://opengameart.org/content/20-rustles-dry-leaves
+    Author: qubodup
+
+Concrete SMASH 2 sound:
+    https://freesound.org/people/magnuswaker/sounds/522099/
+    Author: magnuswaker
+
 Controller button icons:
     https://thoseawesomeguys.com/prompts/
     Author: Nicolae (XELU) Berbece

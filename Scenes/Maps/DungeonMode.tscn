@@ -1,16 +1,15 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/PhysicalDungeons/RandomDungeonInstantiator.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/DungeonRooms/DungeonRoomFactory.cs" type="Script" id=2]
 [ext_resource path="res://Scenes/Prefabs/Elements/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Audio/Music/JRPG_labyrinth_loop.tres" type="Resource" id=4]
-[ext_resource path="res://Scenes/Prefabs/DungeonRoomTemplates/KeyRoom.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Prefabs/DungeonRoomTemplates/EmptyRoom.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/SpawnTables/RoomTemplates/BossRoomSpawnTable.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/SpawnTables/RoomTemplates/CombatRoomSpawnTable.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/SpawnTables/RoomTemplates/FillerRoomSpawnTable.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/Prefabs/RoomTransitionManager.tscn" type="PackedScene" id=10]
-[ext_resource path="res://SceneSpawnTables/DungeonRoomTemplates/BossRoomWeights.tres" type="Resource" id=11]
-[ext_resource path="res://SceneSpawnTables/DungeonRoomTemplates/PuzzleRooms.tres" type="Resource" id=12]
-[ext_resource path="res://SceneSpawnTables/DungeonRoomTemplates/CombatRooms.tres" type="Resource" id=13]
-[ext_resource path="res://SceneSpawnTables/DungeonRoomTemplates/FillerRooms.tres" type="Resource" id=14]
+[ext_resource path="res://Scenes/SpawnTables/RoomTemplates/PuzzleRoomSpawnTable.tscn" type="PackedScene" id=15]
 
 [node name="Node2D" type="Node2D"]
 
@@ -22,15 +21,21 @@ BackgroundMusic = ExtResource( 4 )
 [node name="DungeonInstantiator" type="Node2D" parent="."]
 script = ExtResource( 1 )
 
+[node name="ChallengeTypeSpawnTables" type="Node" parent="DungeonInstantiator"]
+unique_name_in_owner = true
+
+[node name="Boss" parent="DungeonInstantiator/ChallengeTypeSpawnTables" instance=ExtResource( 7 )]
+
+[node name="Combat" parent="DungeonInstantiator/ChallengeTypeSpawnTables" instance=ExtResource( 8 )]
+
+[node name="None" parent="DungeonInstantiator/ChallengeTypeSpawnTables" instance=ExtResource( 9 )]
+
+[node name="Puzzle" parent="DungeonInstantiator/ChallengeTypeSpawnTables" instance=ExtResource( 15 )]
+
 [node name="RoomFactory" type="Node" parent="DungeonInstantiator"]
 unique_name_in_owner = true
 script = ExtResource( 2 )
 EmptyRoom = ExtResource( 6 )
-KeyRoom = ExtResource( 5 )
-FillerRoomTable = ExtResource( 14 )
-CombatRoomTable = ExtResource( 13 )
-PuzzleRoomTable = ExtResource( 12 )
-BossRoomTable = ExtResource( 11 )
 
 [node name="TreeTemplates" type="Node" parent="DungeonInstantiator"]
 unique_name_in_owner = true

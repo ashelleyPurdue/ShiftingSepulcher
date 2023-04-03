@@ -1,10 +1,10 @@
 using Godot;
 
-namespace RandomDungeons
+namespace ShiftingSepulcher
 {
     public class KeyRoom : SimpleDungeonRoom
     {
-        private Key _key => GetNode<Key>("%Key");
+        private KeyChest _key => GetNode<KeyChest>("%Key");
 
         public override void Populate(DungeonLayoutRoom layoutRoom)
         {

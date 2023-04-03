@@ -29,7 +29,6 @@ script = SubResource( 1 )
 [node name="ShadowModel" parent="." instance=ExtResource( 1 )]
 
 [node name="Body" type="Node2D" parent="."]
-z_index = 1
 
 [node name="Base" type="Node2D" parent="Body"]
 script = ExtResource( 3 )
@@ -62,7 +61,6 @@ Color = Color( 0.635294, 0.635294, 0.635294, 1 )
 [node name="EyeFlare" type="Line2D" parent="Body/Head"]
 unique_name_in_owner = true
 position = Vector2( 0, 7 )
-z_index = 1
 points = PoolVector2Array( 48, 0, 16, 0, 0, 0, -16, 0, -48, 0 )
 width_curve = SubResource( 2 )
 default_color = Color( 1, 0, 0, 0.513726 )

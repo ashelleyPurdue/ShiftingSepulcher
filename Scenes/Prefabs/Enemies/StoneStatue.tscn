@@ -278,7 +278,6 @@ stream = ExtResource( 8 )
 bus = "Sound"
 
 [node name="DustCloud" type="Particles2D" parent="."]
-z_index = 1
 emitting = false
 amount = 11
 lifetime = 0.75

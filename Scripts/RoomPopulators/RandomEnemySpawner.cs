@@ -13,12 +13,15 @@ namespace ShiftingSepulcher
 
         public void Populate(DungeonTreeRoom treeRoom, Random rng)
         {
+            var room2D = this.GetRoom();
+            Vector2 spawnPointRoomPos = this.GetPosRelativeToAncestor(room2D);
+
             int count = rng.Next(MinCount, MaxCount);
 
             for (int i = 0; i < count; i++)
             {
                 var enemy = _spawnTable.Spawn<Node2D>(rng);
-                enemy.Position = RandomPos(rng);
+                enemy.Position = RandomPos(rng) + spawnPointRoomPos;
                 AddChild(enemy);
             }
         }

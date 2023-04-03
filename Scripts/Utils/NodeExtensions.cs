@@ -196,18 +196,28 @@ namespace ShiftingSepulcher
         /// <returns></returns>
         public static Vector2 GetPosRelativeToAncestor(this Node2D descendant, Node2D ancestor)
         {
-            var parent = descendant.GetParentOrNull<Node2D>();
+            return descendant.GetTransformRelativeToAncestor(ancestor).origin;
+        }
 
-            if (parent == null)
-                throw new Exception($"Not a descendant of {ancestor}");
+        public static Transform2D GetTransformRelativeToAncestor(this Node2D descendant, Node2D ancestor)
+        {
+            Transform2D transform = Transform2D.Identity;
 
-            // Base case: the descendant is already a direct child.
-            if (ancestor == parent)
-                return descendant.Position;
+            Node2D current = descendant;
+            while (current != ancestor)
+            {
+                if (current == null)
+                    throw new Exception($"{descendant.Name} is not a descendant of {ancestor.Name}");
 
-            // Recursive case: shift it by the parent's relative pos.
-            // TODO: Also take rotation and scale into consideration
-            return parent.GetPosRelativeToAncestor(ancestor) + descendant.Position;
+                // Godot's documentation suggests that I should be multiplying
+                // the child by the parent, instead of multiplying the parent
+                // by the child.  That seems to be backwards, though?
+                transform = current.Transform * transform;
+
+                current = current.GetParentOrNull<Node2D>();
+            }
+
+            return transform;
         }
     }
 }

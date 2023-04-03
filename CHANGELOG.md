@@ -1,4 +1,4 @@
-# 1.1.1: Unreleased
+# 1.1.1: 2023-04-03
 
 ## New Content
 * Added a new plant-based enemy: the Chompweed.  It lives up to its name.

@@ -21,7 +21,7 @@ BackgroundMusic = ExtResource( 4 )
 [node name="HandCraftedDungeonInstantiator" parent="." index="2"]
 StartRoomPath = NodePath("StartRoom")
 
-[node name="StartRoom" type="Node2D" parent="HandCraftedDungeonInstantiator" index="0"]
+[node name="StartRoom" type="YSort" parent="HandCraftedDungeonInstantiator" index="0"]
 script = ExtResource( 2 )
 
 [node name="TileMap" type="TileMap" parent="HandCraftedDungeonInstantiator/StartRoom" index="0"]
@@ -51,7 +51,7 @@ NumWeights = 4
 position = Vector2( 0, 160 )
 NumWeights = 3
 
-[node name="LeftRoom" type="Node2D" parent="HandCraftedDungeonInstantiator" index="1"]
+[node name="LeftRoom" type="YSort" parent="HandCraftedDungeonInstantiator" index="1"]
 position = Vector2( -576, 0 )
 script = ExtResource( 2 )
 
@@ -79,7 +79,7 @@ position = Vector2( 128, -160 )
 position = Vector2( -64, 160 )
 NumWeights = 4
 
-[node name="Basement" type="Node2D" parent="HandCraftedDungeonInstantiator" index="2"]
+[node name="Basement" type="YSort" parent="HandCraftedDungeonInstantiator" index="2"]
 position = Vector2( -640, 640 )
 script = ExtResource( 2 )
 

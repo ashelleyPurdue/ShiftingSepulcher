@@ -185,5 +185,29 @@ namespace ShiftingSepulcher
                 ((Node)child).SetPaused(paused);
             }
         }
+
+        /// <summary>
+        /// Returns the position of the given descendant relative to this node,
+        /// as if the descendant were a direct child.
+        ///
+        /// Throws an error if the given node is not a descendant of this node.
+        /// </summary>
+        /// <param name="descendant"></param>
+        /// <returns></returns>
+        public static Vector2 GetPosRelativeToAncestor(this Node2D descendant, Node2D ancestor)
+        {
+            var parent = descendant.GetParentOrNull<Node2D>();
+
+            if (parent == null)
+                throw new Exception($"Not a descendant of {ancestor}");
+
+            // Base case: the descendant is already a direct child.
+            if (ancestor == parent)
+                return descendant.Position;
+
+            // Recursive case: shift it by the parent's relative pos.
+            // TODO: Also take rotation and scale into consideration
+            return parent.GetPosRelativeToAncestor(ancestor) + descendant.Position;
+        }
     }
 }

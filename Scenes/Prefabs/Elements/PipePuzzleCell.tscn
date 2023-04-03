@@ -62,7 +62,7 @@ radius = 8.0
 [sub_resource type="CircleShape2D" id=1]
 radius = 8.0
 
-[node name="PipePuzzleCell" type="Node2D"]
+[node name="PipePuzzleCell" type="YSort"]
 script = ExtResource( 1 )
 UnpoweredColor = Color( 0, 0.271333, 0.37, 1 )
 PoweredColor = Color( 0, 0.741176, 1, 1 )
@@ -78,6 +78,7 @@ bus = "Sound"
 
 [node name="PipeDisplays" type="Polygon2D" parent="."]
 unique_name_in_owner = true
+z_index = -1
 polygon = PoolVector2Array( -4, -4, 4, -4, 4, 4, -4, 4 )
 
 [node name="North" type="Polygon2D" parent="PipeDisplays"]
@@ -96,6 +97,7 @@ rotation = 4.71239
 polygon = PoolVector2Array( -4, -4, -4.00005, -48, 3.99995, -48, 4, -4 )
 
 [node name="Knob" type="Node2D" parent="."]
+z_index = -1
 script = ExtResource( 2 )
 Radius = 8.0
 Color = Color( 0.054902, 0, 1, 1 )

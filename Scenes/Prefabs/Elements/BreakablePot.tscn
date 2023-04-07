@@ -190,7 +190,7 @@ tracks/6/keys = {
 }
 
 [node name="BreakablePot" type="KinematicBody2D"]
-z_index = 2
+z_index = 1
 
 [node name="EnemyComponent" type="Node" parent="."]
 script = ExtResource( 9 )

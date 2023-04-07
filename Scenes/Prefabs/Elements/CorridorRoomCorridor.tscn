@@ -4,6 +4,7 @@
 extents = Vector2( 16, 96 )
 
 [node name="CorridorRoomCorridor" type="Node2D"]
+z_index = -2
 
 [node name="Visuals" type="Node2D" parent="."]
 

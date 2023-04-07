@@ -5,65 +5,71 @@
 [ext_resource path="res://Scripts/Components/RotateTowardPointComponent.cs" type="Script" id=3]
 [ext_resource path="res://Scripts/Renderers/Circle2D.cs" type="Script" id=4]
 
-[node name="ScalePuzzle" type="Node2D"]
+[node name="ScalePuzzle" type="YSort"]
 script = ExtResource( 1 )
 
 [node name="RightBowl" parent="." instance=ExtResource( 2 )]
 unique_name_in_owner = true
 position = Vector2( 104, 0 )
+z_index = -1
 PartnerBowl = NodePath("../LeftBowl")
 
 [node name="LeftBowl" parent="." instance=ExtResource( 2 )]
 unique_name_in_owner = true
 position = Vector2( -104, 0 )
+z_index = -1
 PartnerBowl = NodePath("../RightBowl")
 
-[node name="ScaleVisuals" type="Node2D" parent="."]
+[node name="ScaleVisuals" type="YSort" parent="."]
 
-[node name="Stalk" type="Polygon2D" parent="ScaleVisuals"]
+[node name="Offset" type="Node2D" parent="ScaleVisuals"]
+position = Vector2( 0, 24 )
+
+[node name="Stalk" type="Polygon2D" parent="ScaleVisuals/Offset"]
+position = Vector2( 0, -24 )
 color = Color( 0.666667, 0.611765, 0, 1 )
 polygon = PoolVector2Array( -12, 8, -14, 16, 0, 24, 0, -128, -4, -128, -4, -40, -6.32567, -21.3948, -8, -8 )
 
-[node name="Polygon2D" type="Polygon2D" parent="ScaleVisuals/Stalk"]
+[node name="Polygon2D" type="Polygon2D" parent="ScaleVisuals/Offset/Stalk"]
 color = Color( 0.839216, 0.796078, 0.329412, 1 )
 polygon = PoolVector2Array( 12, 8, 14, 16, 0, 24, 0, -128, 4, -128, 4, -40, 8, -8 )
 
-[node name="Beam" type="Polygon2D" parent="ScaleVisuals"]
-position = Vector2( 0, -132 )
+[node name="Beam" type="Polygon2D" parent="ScaleVisuals/Offset"]
+position = Vector2( 0, -156 )
 color = Color( 0.666667, 0.611765, 0, 1 )
 polygon = PoolVector2Array( -128, 4, -128, -4, 128, -4, 128, 4 )
 
-[node name="RotateTowardPointComponent" type="Node" parent="ScaleVisuals/Beam"]
-script = ExtResource( 3 )
-TargetPoint = NodePath("../../../LeftBowl/MoveablePart/Visuals/Rope")
-
-[node name="Shine" type="Polygon2D" parent="ScaleVisuals/Beam"]
-color = Color( 0.839216, 0.796078, 0.329412, 1 )
-polygon = PoolVector2Array( -128, 0, -128, -4, 128, -4, 128, 0 )
-
-[node name="RotateTowardPointComponent" type="Node" parent="ScaleVisuals/Beam/Shine"]
+[node name="RotateTowardPointComponent" type="Node" parent="ScaleVisuals/Offset/Beam"]
 script = ExtResource( 3 )
 TargetPoint = NodePath("../../../../LeftBowl/MoveablePart/Visuals/Rope")
 
-[node name="LeftBall" type="Node2D" parent="ScaleVisuals/Beam"]
+[node name="Shine" type="Polygon2D" parent="ScaleVisuals/Offset/Beam"]
+color = Color( 0.839216, 0.796078, 0.329412, 1 )
+polygon = PoolVector2Array( -128, 0, -128, -4, 128, -4, 128, 0 )
+
+[node name="RotateTowardPointComponent" type="Node" parent="ScaleVisuals/Offset/Beam/Shine"]
+script = ExtResource( 3 )
+TargetPoint = NodePath("../../../../../LeftBowl/MoveablePart/Visuals/Rope")
+
+[node name="LeftBall" type="Node2D" parent="ScaleVisuals/Offset/Beam"]
 position = Vector2( -128, 0 )
 script = ExtResource( 4 )
 Radius = 10.0
 Color = Color( 0.666667, 0.611765, 0, 1 )
 
-[node name="Shine" type="Node2D" parent="ScaleVisuals/Beam/LeftBall"]
+[node name="Shine" type="Node2D" parent="ScaleVisuals/Offset/Beam/LeftBall"]
 position = Vector2( 4, -5 )
 script = ExtResource( 4 )
 Radius = 3.0
 Color = Color( 0.839216, 0.796078, 0.329412, 1 )
 
-[node name="RightBall" type="Node2D" parent="ScaleVisuals/Beam"]
+[node name="RightBall" type="Node2D" parent="ScaleVisuals/Offset/Beam"]
 position = Vector2( 128, 0 )
 script = ExtResource( 4 )
 Radius = 10.0
 Color = Color( 0.666667, 0.611765, 0, 1 )
 
-[node name="Shine" type="Node2D" parent="ScaleVisuals/Beam/RightBall"]
+[node name="Shine" type="Node2D" parent="ScaleVisuals/Offset/Beam/RightBall"]
 position = Vector2( 4, -5 )
 script = ExtResource( 4 )
 Radius = 3.0

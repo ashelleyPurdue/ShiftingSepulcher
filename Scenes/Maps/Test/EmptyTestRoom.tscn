@@ -15,7 +15,7 @@ extents = Vector2( 16, 288 )
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 448, 16 )
 
-[node name="EmptyTestRoom" type="Node2D"]
+[node name="EmptyTestRoom" type="YSort"]
 script = ExtResource( 2 )
 
 [node name="Walls" type="StaticBody2D" parent="."]

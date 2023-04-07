@@ -14,11 +14,12 @@ fill_from = Vector2( 0.5, 0.8 )
 fill_to = Vector2( 0.466667, 0.2625 )
 
 [node name="StairsDownDoorModel" type="Node2D"]
+z_index = -1
 
 [node name="BottomDarknessRound" type="Sprite" parent="."]
 position = Vector2( 0, -22.5 )
 scale = Vector2( 1, 0.851563 )
-z_index = -1
+z_index = -2
 z_as_relative = false
 texture = SubResource( 2 )
 

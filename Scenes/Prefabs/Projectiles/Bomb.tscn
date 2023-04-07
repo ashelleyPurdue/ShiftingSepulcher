@@ -255,7 +255,7 @@ scale = 2.0
 color = Color( 0.952941, 0.760784, 0, 1 )
 
 [node name="Bomb" type="KinematicBody2D"]
-z_index = 2
+z_index = 1
 script = ExtResource( 1 )
 ExplosionPrefab = ExtResource( 7 )
 

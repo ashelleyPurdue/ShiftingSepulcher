@@ -2464,6 +2464,7 @@ anims/Shatter = SubResource( 20 )
 
 [node name="ShieldHurtBox" type="Area2D" parent="." groups=["DetonatesBombs"]]
 unique_name_in_owner = true
+visible = false
 script = ExtResource( 1 )
 RecoilDistance = 256.0
 
@@ -2480,6 +2481,7 @@ disabled = true
 [node name="Model" type="Node2D" parent="Visuals"]
 
 [node name="Shadow" type="Node2D" parent="Visuals/Model"]
+z_index = -1
 
 [node name="ShadowModel" parent="Visuals/Model/Shadow" instance=ExtResource( 12 )]
 radius = 32.0

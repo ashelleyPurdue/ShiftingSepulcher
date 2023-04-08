@@ -2,7 +2,7 @@ using Godot;
 
 namespace ShiftingSepulcher
 {
-    public class StatueSummoner : KinematicBody2D
+    public class StatueSummoner : KinematicBody2D, IChallenge
     {
         [Export] public float SummonAngleDeg = 90;
         [Export] public float MaxSummonRadius = 32 * 100;
@@ -13,6 +13,8 @@ namespace ShiftingSepulcher
         private RayCast2D _minionSpawnRay => GetNode<RayCast2D>("%MinionSpawnRay");
 
         private float _summonTimer = 0;
+
+        bool IChallenge.IsSolved() => this.GetComponent<EnemyComponent>().IsDead;
 
         public override void _PhysicsProcess(float delta)
         {

@@ -24,5 +24,15 @@ namespace ShiftingSepulcher
             float speed = 1f / OpenCloseTime;
             _visuals.Scale = _visuals.Scale.MoveToward(targetScale, speed * delta);
         }
+
+        public void Open()
+        {
+            IsOpened = true;
+        }
+
+        public void Close()
+        {
+            IsOpened = false;
+        }
     }
 }

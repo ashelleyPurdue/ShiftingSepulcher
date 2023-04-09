@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Audio/SFX/SwordDamageOwWithSlime.wav" type="AudioStream" id=1]
 [ext_resource path="res://Scripts/MiscNodes/HurtBox.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/Enemies/MiniTilemancer.cs" type="Script" id=3]
+[ext_resource path="res://Scenes/ComponentCollections/StandardLootDroppers.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scripts/MiscNodes/HitBox.cs" type="Script" id=5]
 [ext_resource path="res://Scenes/Prefabs/Projectiles/TilemancerTile.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/ComponentCollections/StandardKnockbackableEnemyComponents.tscn" type="PackedScene" id=9]
@@ -193,6 +194,8 @@ TilePrefab = ExtResource( 6 )
 
 [node name="HealthPointsComponent" parent="StandardKnockbackableEnemyComponents" index="1"]
 MaxHealth = 2
+
+[node name="StandardLootDroppers" parent="." instance=ExtResource( 4 )]
 
 [node name="HurtBox" type="Area2D" parent="."]
 script = ExtResource( 2 )

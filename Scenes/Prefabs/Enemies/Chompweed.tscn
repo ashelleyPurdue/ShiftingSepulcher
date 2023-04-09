@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Scripts/MiscNodes/HurtBox.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Components/KnockbackableVelocityComponent.cs" type="Script" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Audio/SFX/ChompweedBounceLoop0.wav" type="AudioStream" id=9]
 [ext_resource path="res://Scripts/MiscNodes/RapidlyTogglableAudioStreamPlayer.cs" type="Script" id=10]
 [ext_resource path="res://Scripts/Renderers/Ring2D.cs" type="Script" id=11]
+[ext_resource path="res://Scenes/ComponentCollections/StandardLootDroppers.tscn" type="PackedScene" id=12]
 
 [sub_resource type="Animation" id=14]
 resource_name = "Death"
@@ -484,6 +485,8 @@ script = ExtResource( 6 )
 [node name="HealthPointsComponent" parent="StandardEnemyComponents" index="1"]
 MaxHealth = 3
 InvulnerabilityTime = 0.25
+
+[node name="StandardLootDroppers" parent="." instance=ExtResource( 12 )]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true

@@ -37,6 +37,7 @@ namespace ShiftingSepulcher
         {
             var minion = _minionManager.SummonMinion();
             minion.GlobalPosition = GetSummonPosition();
+            minion.GetComponent<EnemyComponent>().DisableLootDrops = true;
         }
 
         private Vector2 GetSummonPosition()

@@ -16,7 +16,7 @@ resource_name = "Cycle"
 length = 3.0
 loop = true
 tracks/0/type = "method"
-tracks/0/path = NodePath("AI")
+tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -33,7 +33,7 @@ tracks/0/keys = {
 } ]
 }
 tracks/1/type = "method"
-tracks/1/path = NodePath("AI")
+tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -185,8 +185,6 @@ radius = 16.0
 
 [node name="MiniTilemancer" type="KinematicBody2D"]
 collision_layer = 0
-
-[node name="AI" type="Node" parent="."]
 script = ExtResource( 3 )
 TilePrefab = ExtResource( 6 )
 
@@ -266,7 +264,7 @@ stream = ExtResource( 1 )
 pitch_scale = 0.89
 bus = "Sound"
 
-[connection signal="Dead" from="StandardKnockbackableEnemyComponents/EnemyComponent" to="AI" method="OnDead"]
-[connection signal="Respawning" from="StandardKnockbackableEnemyComponents/EnemyComponent" to="AI" method="OnRespawning"]
+[connection signal="Dead" from="StandardKnockbackableEnemyComponents/EnemyComponent" to="." method="OnDead"]
+[connection signal="Respawning" from="StandardKnockbackableEnemyComponents/EnemyComponent" to="." method="OnRespawning"]
 
 [editable path="StandardKnockbackableEnemyComponents"]

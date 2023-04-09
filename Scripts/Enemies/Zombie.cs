@@ -2,7 +2,7 @@ using Godot;
 
 namespace ShiftingSepulcher
 {
-    public class Zombie : BaseComponent<Node2D>
+    public class Zombie : KinematicBody2D
     {
         [Export] public float MinIdleTime = 1f;
         [Export] public float MaxIdleTime = 2f;
@@ -22,7 +22,7 @@ namespace ShiftingSepulcher
             _sm = new StateMachine(this);
         }
 
-        public override void _EntityReady()
+        public override void _Ready()
         {
             _body = this.GetComponent<KnockbackableVelocityComponent>();
 
@@ -131,7 +131,6 @@ namespace ShiftingSepulcher
             public override void _PhysicsProcess(float delta)
             {
                 var dir = Owner
-                    .Entity
                     .GlobalPosition
                     .DirectionTo(Owner._targetPlayer.GlobalPosition);
 

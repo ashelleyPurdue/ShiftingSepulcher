@@ -265,8 +265,6 @@ radius = 14.0
 [node name="Zombie" type="KinematicBody2D"]
 collision_layer = 0
 collision_mask = 3
-
-[node name="AI" type="Node" parent="."]
 script = ExtResource( 2 )
 
 [node name="StandardKnockbackableEnemyComponents" parent="." instance=ExtResource( 8 )]
@@ -311,7 +309,7 @@ unique_name_in_owner = true
 
 [node name="ZombieModel" parent="Visuals" instance=ExtResource( 6 )]
 
-[connection signal="body_entered" from="VisionCircle" to="AI" method="OnVisionCircleBodyEntered" flags=3]
+[connection signal="body_entered" from="VisionCircle" to="." method="OnVisionCircleBodyEntered" flags=3]
 
 [editable path="StandardKnockbackableEnemyComponents"]
 [editable path="Visuals/ZombieModel"]

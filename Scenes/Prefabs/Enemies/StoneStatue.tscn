@@ -247,6 +247,7 @@ radius = 64.0
 [node name="StoneStatue" type="KinematicBody2D"]
 collision_layer = 0
 collision_mask = 3
+script = ExtResource( 3 )
 
 [node name="StandardKnockbackableEnemyComponents" parent="." instance=ExtResource( 2 )]
 
@@ -254,10 +255,6 @@ collision_mask = 3
 MaxHealth = 3
 
 [node name="StandardLootDroppers" parent="." instance=ExtResource( 9 )]
-
-[node name="AI" type="Node" parent="."]
-script = ExtResource( 3 )
-TimeBetweenHops = 0.4
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
@@ -324,7 +321,7 @@ HealthPointsPath = NodePath("../StandardKnockbackableEnemyComponents/HealthPoint
 [node name="CircleShape" type="CollisionShape2D" parent="HurtBox"]
 shape = SubResource( 1 )
 
-[connection signal="Dead" from="StandardKnockbackableEnemyComponents/EnemyComponent" to="AI" method="OnDead"]
-[connection signal="Respawning" from="StandardKnockbackableEnemyComponents/EnemyComponent" to="AI" method="OnRespawning"]
+[connection signal="Dead" from="StandardKnockbackableEnemyComponents/EnemyComponent" to="." method="OnDead"]
+[connection signal="Respawning" from="StandardKnockbackableEnemyComponents/EnemyComponent" to="." method="OnRespawning"]
 
 [editable path="StandardKnockbackableEnemyComponents"]

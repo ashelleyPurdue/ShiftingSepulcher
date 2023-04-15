@@ -9,9 +9,9 @@ namespace ShiftingSepulcher
 
         [Export] public float MinionSummonInterval = 5;
 
-        [Export] public float LeapRiseDuration = 0.5f;
-        [Export] public float LeapPauseDuration = 1f;
-        [Export] public float LeapFallDuration = 0.25f;
+        [Export] public float LeapRiseDuration = 0.37f;
+        [Export] public float LeapPauseDuration = 0.5f;
+        [Export] public float LeapFallDuration = 0.1f;
         [Export] public float LeapRecoverDuration = 1f;
 
         bool IChallenge.IsSolved() => !this.GetComponent<EnemyComponent>().IsAlive;

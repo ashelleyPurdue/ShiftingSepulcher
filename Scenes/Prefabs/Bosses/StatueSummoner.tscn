@@ -14,7 +14,7 @@
 [sub_resource type="Animation" id=2]
 resource_name = "Idle"
 tracks/0/type = "value"
-tracks/0/path = NodePath("Model:EyeFlareStrength")
+tracks/0/path = NodePath("ModelScaler/Model:EyeFlareStrength")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -29,7 +29,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id=5]
 resource_name = "LeapFalling"
 tracks/0/type = "value"
-tracks/0/path = NodePath("Model:HeightAboveGround")
+tracks/0/path = NodePath("ModelScaler/Model:HeightAboveGround")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -45,7 +45,7 @@ tracks/0/keys = {
 resource_name = "LeapRecovering"
 step = 0.025
 tracks/0/type = "value"
-tracks/0/path = NodePath("Model:position")
+tracks/0/path = NodePath("ModelScaler/Model:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -60,22 +60,34 @@ tracks/0/keys = {
 [sub_resource type="Animation" id=3]
 resource_name = "LeapRising"
 tracks/0/type = "value"
-tracks/0/path = NodePath("Model:HeightAboveGround")
+tracks/0/path = NodePath("ModelScaler/Model:HeightAboveGround")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
-"values": [ 0.0, 80.0 ]
+"values": [ 0.0, 0.0, 48.0, 80.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ModelScaler/Model:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 2, 0.5 ), Vector2( 1, 1.5 ), Vector2( 1, 1 ) ]
 }
 
 [sub_resource type="Animation" id=4]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("Model:EyeFlareStrength")
+tracks/0/path = NodePath("ModelScaler/Model:EyeFlareStrength")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -87,7 +99,7 @@ tracks/0/keys = {
 "values": [ 0.0 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Model:HeightAboveGround")
+tracks/1/path = NodePath("ModelScaler/Model:HeightAboveGround")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -99,7 +111,7 @@ tracks/1/keys = {
 "values": [ 0.0 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Model:position")
+tracks/2/path = NodePath("ModelScaler/Model:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -109,6 +121,18 @@ tracks/2/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ Vector2( 0, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("ModelScaler/Model:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
 }
 
 [sub_resource type="CircleShape2D" id=1]
@@ -171,8 +195,10 @@ shape = SubResource( 1 )
 unique_name_in_owner = true
 enabled = true
 
-[node name="Model" parent="." instance=ExtResource( 1 )]
+[node name="ModelScaler" type="Node2D" parent="."]
 scale = Vector2( 2, 2 )
+
+[node name="Model" parent="ModelScaler" instance=ExtResource( 1 )]
 EyeFlareStrength = 0.0
 
 [connection signal="Dead" from="EnemyComponent" to="MinionManager" method="DeleteAllMinions"]

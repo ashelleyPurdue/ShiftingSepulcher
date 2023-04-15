@@ -9,28 +9,40 @@ namespace ShiftingSepulcher
 
         [Export] public float MinionSummonInterval = 5;
 
-        private MinionManager _minionManager => GetNode<MinionManager>("%MinionManager");
-        private RayCast2D _minionSpawnRay => GetNode<RayCast2D>("%MinionSpawnRay");
-
-        private float _summonTimer = 0;
+        [Export] public float LeapRiseDuration = 0.5f;
+        [Export] public float LeapPauseDuration = 1f;
+        [Export] public float LeapFallDuration = 0.25f;
+        [Export] public float LeapRecoverDuration = 1f;
 
         bool IChallenge.IsSolved() => !this.GetComponent<EnemyComponent>().IsAlive;
 
-        public override void _PhysicsProcess(float delta)
+        private MinionManager _minionManager => GetNode<MinionManager>("%MinionManager");
+        private RayCast2D _minionSpawnRay => GetNode<RayCast2D>("%MinionSpawnRay");
+
+        private CollisionShape2D _bodyShape => GetNode<CollisionShape2D>("%BodyShape");
+        private HurtBox _hurtBox => GetNode<HurtBox>("%HurtBox");
+        private HitBox _contactHitBox => GetNode<HitBox>("%ContactHitBox");
+
+        private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
+
+        private Node2D _aggroTarget;
+
+        private StateMachine _sm;
+        private float _summonTimer = 0;
+
+        public StatueSummoner()
         {
-            bool dead = !this.GetComponent<EnemyComponent>().IsAlive;
-            Visible = !dead;
+            _sm = new StateMachine(this);
+        }
 
-            if (dead)
-                return;
+        public override void _EnterTree()
+        {
+            _aggroTarget = GetTree().FindPlayer();
+        }
 
-            _summonTimer -= delta;
-
-            if (_summonTimer <= 0)
-            {
-                _summonTimer = MinionSummonInterval;
-                SummonMinion();
-            }
+        public void OnRespawning()
+        {
+            _sm.ChangeState(Idle);
         }
 
         private void SummonMinion()
@@ -69,6 +81,97 @@ namespace ShiftingSepulcher
             _minionSpawnRay.ForceRaycastUpdate();
 
             return _minionSpawnRay.GetCollisionPoint();
+        }
+
+        private void DisableAllCollision()
+        {
+            _bodyShape.Disabled = true;
+            _hurtBox.Enabled = false;
+            _contactHitBox.Enabled = false;
+        }
+
+        private void ResetCollision()
+        {
+            _bodyShape.Disabled = false;
+            _hurtBox.Enabled = true;
+            _contactHitBox.Enabled = true;
+        }
+
+        private readonly IState Idle = new IdleState();
+        private class IdleState : State<StatueSummoner>
+        {
+            public override void _StateEntered()
+            {
+                Owner._animator.ResetAndPlay("Idle");
+            }
+
+            public override void _PhysicsProcess(float delta)
+            {
+                // TODO: Choose an attack
+                ChangeState(Owner.LeapRising);
+            }
+        }
+
+        private readonly IState LeapRising = new LeapRisingState();
+        private class LeapRisingState : State<StatueSummoner>
+        {
+            private Vector2 _startPos;
+            private float _timer;
+
+            public override void _StateEntered()
+            {
+                Owner.DisableAllCollision();
+                _timer = Owner.LeapRiseDuration;
+                _startPos = Owner.Position;
+
+                Owner._animator.PlayFixedDuration("LeapRising", Owner.LeapRiseDuration);
+            }
+
+            public override void _PhysicsProcess(float delta)
+            {
+                var targetPos = Owner._aggroTarget.GlobalPosition - Owner.GetRoom().GlobalPosition;
+
+                _timer -= delta;
+                float t = 1f - (_timer / Owner.LeapRiseDuration);
+                Owner.Position = _startPos.LinearInterpolate(targetPos, t);
+
+                if (_timer <= 0)
+                    ChangeState(Owner.LeapPausing);
+            }
+        }
+
+        private readonly IState LeapPausing = new LeapPausingState();
+        private class LeapPausingState : PauseState<StatueSummoner>
+        {
+            public override float Duration => Owner.LeapPauseDuration;
+            public override IState NextState => Owner.LeapFalling;
+        }
+
+        private readonly IState LeapFalling = new LeapFallingState();
+        private class LeapFallingState : PauseState<StatueSummoner>
+        {
+            public override float Duration => Owner.LeapFallDuration;
+            public override IState NextState => Owner.LeapRecovering;
+
+            public override void _StateEntered()
+            {
+                base._StateEntered();
+                Owner._animator.PlayFixedDuration("LeapFalling", Duration);
+            }
+        }
+
+        private readonly IState LeapRecovering = new LeapRecoveringState();
+        private class LeapRecoveringState : PauseState<StatueSummoner>
+        {
+            public override float Duration => Owner.LeapRecoverDuration;
+            public override IState NextState => Owner.Idle;
+
+            public override void _StateEntered()
+            {
+                base._StateEntered();
+                Owner.ResetCollision();
+                Owner._animator.ResetAndPlay("LeapRecovering");
+            }
         }
     }
 }

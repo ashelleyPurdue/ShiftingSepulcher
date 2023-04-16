@@ -4,6 +4,8 @@ namespace ShiftingSepulcher
 {
     public class StatueSummoner : KinematicBody2D, IChallenge
     {
+        [Signal] public delegate void BecameIdle();
+
         [Export] public float SummonAngleDeg = 90;
         [Export] public float MaxSummonRadius = 32 * 100;
 
@@ -47,6 +49,16 @@ namespace ShiftingSepulcher
         }
 
 
+        // Methods for the AI to call
+        public void StartLeap() => _sm.ChangeState(LeapRising);
+
+        public void SummonMinion()
+        {
+            var minion = _minionManager.SummonMinion();
+            minion.GlobalPosition = GetSummonPosition();
+            minion.GetComponent<EnemyComponent>().DisableLootDrops = true;
+        }
+
         // States
         private readonly IState Idle = new IdleState();
         private class IdleState : State<StatueSummoner>
@@ -54,12 +66,7 @@ namespace ShiftingSepulcher
             public override void _StateEntered()
             {
                 Owner._animator.ResetAndPlay("Idle");
-            }
-
-            public override void _PhysicsProcess(float delta)
-            {
-                // TODO: Choose an attack
-                ChangeState(Owner.LeapRising);
+                Owner.EmitSignal(nameof(BecameIdle));
             }
         }
 
@@ -127,12 +134,6 @@ namespace ShiftingSepulcher
 
 
         // Helper methods
-        private void SummonMinion()
-        {
-            var minion = _minionManager.SummonMinion();
-            minion.GlobalPosition = GetSummonPosition();
-            minion.GetComponent<EnemyComponent>().DisableLootDrops = true;
-        }
 
         private Vector2 GetSummonPosition()
         {

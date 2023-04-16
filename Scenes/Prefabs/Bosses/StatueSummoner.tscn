@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Scenes/Models/StoneStatueModel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Audio/SFX/SwordDamageOwWithSlime.wav" type="AudioStream" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Scripts/Bosses/StatueSummoner.cs" type="Script" id=8]
 [ext_resource path="res://Scripts/MiscNodes/MinionManager.cs" type="Script" id=9]
 [ext_resource path="res://Scenes/Prefabs/Enemies/StoneStatue.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scripts/Bosses/StatueSummonerAI.cs" type="Script" id=11]
 
 [sub_resource type="Animation" id=2]
 resource_name = "Idle"
@@ -153,6 +154,9 @@ RecoilDistance = 92.5
 [node name="HurtFlasherComponent" type="Node" parent="."]
 script = ExtResource( 4 )
 
+[node name="AI" type="Node" parent="."]
+script = ExtResource( 11 )
+
 [node name="TookDamageSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
 pitch_scale = 0.89
@@ -203,4 +207,5 @@ EyeFlareStrength = 0.0
 
 [connection signal="Dead" from="EnemyComponent" to="MinionManager" method="DeleteAllMinions"]
 [connection signal="Respawning" from="EnemyComponent" to="." method="OnRespawning"]
+[connection signal="Respawning" from="EnemyComponent" to="AI" method="OnRespawning"]
 [connection signal="TookDamageNoParams" from="HealthPointsComponent" to="TookDamageSound" method="play"]

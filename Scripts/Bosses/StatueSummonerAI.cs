@@ -52,6 +52,11 @@ namespace ShiftingSepulcher
             }
         }
 
+        public void OnDead()
+        {
+            _coroutine.StopCoroutine();
+        }
+
         private async Task NoMinionsPhase(CancellationToken cancel)
         {
             while (true)

@@ -35,6 +35,7 @@ namespace ShiftingSepulcher
             _sm = new StateMachine(this);
         }
 
+
         public override void _EnterTree()
         {
             _aggroTarget = GetTree().FindPlayer();
@@ -45,58 +46,8 @@ namespace ShiftingSepulcher
             _sm.ChangeState(Idle);
         }
 
-        private void SummonMinion()
-        {
-            var minion = _minionManager.SummonMinion();
-            minion.GlobalPosition = GetSummonPosition();
-            minion.GetComponent<EnemyComponent>().DisableLootDrops = true;
-        }
 
-        private Vector2 GetSummonPosition()
-        {
-            Player aggroTarget = this.GetTree().FindPlayer();
-
-            // Choose a random angle for the minion to spawn at, relative to the
-            // target.
-            float angleOffsetDeg = (float)GD.RandRange(
-                -SummonAngleDeg / 2,
-                SummonAngleDeg / 2
-            );
-            float angleOffsetRad = Mathf.Deg2Rad(angleOffsetDeg);
-
-            float angleToTargetRad = aggroTarget.GlobalPosition.AngleToPoint(GlobalPosition);
-            float angleRad = angleOffsetRad + angleToTargetRad;
-
-            Vector2 summonDir = new Vector2(
-                Mathf.Cos(angleRad),
-                Mathf.Sin(angleRad)
-            );
-
-            // Do a raycast to ensure the minion is spawned inside the room
-            _minionSpawnRay.ClearExceptions();
-            _minionSpawnRay.AddException(aggroTarget);
-            _minionSpawnRay.GlobalPosition = aggroTarget.GlobalPosition;
-            _minionSpawnRay.CastTo = summonDir * MaxSummonRadius;
-            _minionSpawnRay.ForceUpdateTransform();
-            _minionSpawnRay.ForceRaycastUpdate();
-
-            return _minionSpawnRay.GetCollisionPoint();
-        }
-
-        private void DisableAllCollision()
-        {
-            _bodyShape.Disabled = true;
-            _hurtBox.Enabled = false;
-            _contactHitBox.Enabled = false;
-        }
-
-        private void ResetCollision()
-        {
-            _bodyShape.Disabled = false;
-            _hurtBox.Enabled = true;
-            _contactHitBox.Enabled = true;
-        }
-
+        // States
         private readonly IState Idle = new IdleState();
         private class IdleState : State<StatueSummoner>
         {
@@ -172,6 +123,60 @@ namespace ShiftingSepulcher
                 Owner.ResetCollision();
                 Owner._animator.ResetAndPlay("LeapRecovering");
             }
+        }
+
+
+        // Helper methods
+        private void SummonMinion()
+        {
+            var minion = _minionManager.SummonMinion();
+            minion.GlobalPosition = GetSummonPosition();
+            minion.GetComponent<EnemyComponent>().DisableLootDrops = true;
+        }
+
+        private Vector2 GetSummonPosition()
+        {
+            Player aggroTarget = this.GetTree().FindPlayer();
+
+            // Choose a random angle for the minion to spawn at, relative to the
+            // target.
+            float angleOffsetDeg = (float)GD.RandRange(
+                -SummonAngleDeg / 2,
+                SummonAngleDeg / 2
+            );
+            float angleOffsetRad = Mathf.Deg2Rad(angleOffsetDeg);
+
+            float angleToTargetRad = aggroTarget.GlobalPosition.AngleToPoint(GlobalPosition);
+            float angleRad = angleOffsetRad + angleToTargetRad;
+
+            Vector2 summonDir = new Vector2(
+                Mathf.Cos(angleRad),
+                Mathf.Sin(angleRad)
+            );
+
+            // Do a raycast to ensure the minion is spawned inside the room
+            _minionSpawnRay.ClearExceptions();
+            _minionSpawnRay.AddException(aggroTarget);
+            _minionSpawnRay.GlobalPosition = aggroTarget.GlobalPosition;
+            _minionSpawnRay.CastTo = summonDir * MaxSummonRadius;
+            _minionSpawnRay.ForceUpdateTransform();
+            _minionSpawnRay.ForceRaycastUpdate();
+
+            return _minionSpawnRay.GetCollisionPoint();
+        }
+
+        private void DisableAllCollision()
+        {
+            _bodyShape.Disabled = true;
+            _hurtBox.Enabled = false;
+            _contactHitBox.Enabled = false;
+        }
+
+        private void ResetCollision()
+        {
+            _bodyShape.Disabled = false;
+            _hurtBox.Enabled = true;
+            _contactHitBox.Enabled = true;
         }
     }
 }

@@ -18,6 +18,8 @@ namespace ShiftingSepulcher
 
         bool IChallenge.IsSolved() => this.GetComponent<EnemyComponent>().IsDead;
 
+        public int MinionCount => _minionManager.MinionCount;
+
         private MinionManager _minionManager => GetNode<MinionManager>("%MinionManager");
         private RayCast2D _minionSpawnRay => GetNode<RayCast2D>("%MinionSpawnRay");
 

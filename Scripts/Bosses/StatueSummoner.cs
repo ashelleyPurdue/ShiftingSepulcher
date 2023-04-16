@@ -6,6 +6,8 @@ namespace ShiftingSepulcher
     {
         [Signal] public delegate void BecameIdle();
 
+        [Export] public PackedScene ShockwavePrefab;
+
         [Export] public float SummonAngleDeg = 90;
         [Export] public float MaxSummonRadius = 32 * 100;
 
@@ -15,6 +17,13 @@ namespace ShiftingSepulcher
         [Export] public float LeapPauseDuration = 0.5f;
         [Export] public float LeapFallDuration = 0.1f;
         [Export] public float LeapRecoverDuration = 1f;
+
+        [Export] public float HammerAimDuration = 0.5f;
+        [Export] public float HammerSwingTime = 0.2f;
+        [Export] public float HammerRecoveryTime = 1;
+        [Export] public float HammerShockwaveStartRadius = 16;
+        [Export] public float HammerShockwaveEndRadius = 48;
+        [Export] public float HammerShockwaveDamage = 1;
 
         bool IChallenge.IsSolved() => this.GetComponent<EnemyComponent>().IsDead;
 
@@ -26,13 +35,13 @@ namespace ShiftingSepulcher
         private CollisionShape2D _bodyShape => GetNode<CollisionShape2D>("%BodyShape");
         private HurtBox _hurtBox => GetNode<HurtBox>("%HurtBox");
         private HitBox _contactHitBox => GetNode<HitBox>("%ContactHitBox");
+        private Node2D _hammerShockwaveSpawn => GetNode<Node2D>("%HammerShockwaveSpawn");
 
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
 
         private Node2D _aggroTarget;
 
         private StateMachine _sm;
-        private float _summonTimer = 0;
 
         public StatueSummoner()
         {
@@ -53,6 +62,7 @@ namespace ShiftingSepulcher
 
         // Methods for the AI to call
         public void StartLeap() => _sm.ChangeState(LeapRising);
+        public void StartHammerSwing() => _sm.ChangeState(AimingHammer);
 
         public void SummonMinion()
         {
@@ -76,6 +86,7 @@ namespace ShiftingSepulcher
         private class LeapRisingState : State<StatueSummoner>
         {
             private Vector2 _startPos;
+            private float _startAngle;
             private float _timer;
 
             public override void _StateEntered()
@@ -83,6 +94,7 @@ namespace ShiftingSepulcher
                 Owner.DisableAllCollision();
                 _timer = Owner.LeapRiseDuration;
                 _startPos = Owner.Position;
+                _startAngle = Owner.Rotation;
 
                 Owner._animator.PlayFixedDuration("LeapRising", Owner.LeapRiseDuration);
             }
@@ -93,10 +105,16 @@ namespace ShiftingSepulcher
 
                 _timer -= delta;
                 float t = 1f - (_timer / Owner.LeapRiseDuration);
+
+                float targetAngle = Mathf.Deg2Rad(0);
+                Owner.Rotation = Mathf.LerpAngle(_startAngle, targetAngle, t);
                 Owner.Position = _startPos.LinearInterpolate(targetPos, t);
 
                 if (_timer <= 0)
+                {
+                    Owner.Rotation = targetAngle;
                     ChangeState(Owner.LeapPausing);
+                }
             }
         }
 
@@ -132,6 +150,66 @@ namespace ShiftingSepulcher
                 Owner.ResetCollision();
                 Owner._animator.ResetAndPlay("LeapRecovering");
             }
+        }
+
+        private readonly IState AimingHammer = new AimingHammerState();
+        private class AimingHammerState : State<StatueSummoner>
+        {
+            private float _timer;
+            private float _startAngle;
+
+            public override void _StateEntered()
+            {
+                _timer = Owner.HammerAimDuration;
+                _startAngle = Owner.Rotation;
+            }
+
+            public override void _PhysicsProcess(float delta)
+            {
+                _timer -= delta;
+                float t = 1f - (_timer / Owner.HammerAimDuration);
+
+                float targetAngle = Owner.GlobalPosition.AngleToPoint(Owner._aggroTarget.GlobalPosition);
+                targetAngle += Mathf.Deg2Rad(90);
+                Owner.Rotation = Mathf.LerpAngle(_startAngle, targetAngle, t);
+
+                if (_timer <= 0)
+                {
+                    Owner.Rotation = targetAngle;
+                    ChangeState(Owner.SwingingHammer);
+                }
+            }
+        }
+
+        private readonly IState SwingingHammer = new SwingingHammerState();
+        private class SwingingHammerState : PauseState<StatueSummoner>
+        {
+            public override float Duration => Owner.HammerSwingTime;
+            public override IState NextState => Owner.RecoveringHammer;
+
+            public override void _StateEntered()
+            {
+                base._StateEntered();
+                Owner._animator.PlayFixedDuration("HammerSwing", Duration);
+            }
+
+            public override void _StateExited()
+            {
+                var shockwave = Owner.ShockwavePrefab.Instance<Shockwave>();
+                shockwave.Ignore(Owner.GetComponent<HealthPointsComponent>());
+                shockwave.StartRadius = Owner.HammerShockwaveStartRadius;
+                shockwave.EndRadius = Owner.HammerShockwaveEndRadius;
+
+                Owner.AddChild(shockwave);
+                shockwave.GlobalPosition = Owner._hammerShockwaveSpawn.GlobalPosition;
+            }
+        }
+
+        private readonly IState RecoveringHammer = new RecoveringHammerState();
+        private class RecoveringHammerState : PauseState<StatueSummoner>
+        {
+            public override float Duration => Owner.HammerRecoveryTime;
+            public override IState NextState => Owner.Idle;
         }
 
 

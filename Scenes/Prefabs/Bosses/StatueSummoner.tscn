@@ -205,6 +205,7 @@ scale = Vector2( 2, 2 )
 [node name="Model" parent="ModelScaler" instance=ExtResource( 1 )]
 EyeFlareStrength = 0.0
 
+[connection signal="Dead" from="EnemyComponent" to="AI" method="OnDead"]
 [connection signal="Dead" from="EnemyComponent" to="MinionManager" method="DeleteAllMinions"]
 [connection signal="Respawning" from="EnemyComponent" to="." method="OnRespawning"]
 [connection signal="Respawning" from="EnemyComponent" to="AI" method="OnRespawning"]

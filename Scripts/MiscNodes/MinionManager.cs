@@ -8,6 +8,8 @@ namespace ShiftingSepulcher
     {
         [Export] public PackedScene MinionPrefab;
 
+        public int MinionCount => _minions.Count;
+
         private List<EnemyComponent> _minions = new List<EnemyComponent>();
 
         public void OnRoomEnter()

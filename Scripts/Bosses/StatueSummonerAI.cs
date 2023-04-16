@@ -27,11 +27,6 @@ namespace ShiftingSepulcher
             AddChild(_coroutine);
         }
 
-        public override void _EntityReady()
-        {
-            base._EntityReady();
-        }
-
         public void OnRespawning()
         {
             _currentPhase = 0;

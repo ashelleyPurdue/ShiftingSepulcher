@@ -208,4 +208,5 @@ EyeFlareStrength = 0.0
 [connection signal="Dead" from="EnemyComponent" to="MinionManager" method="DeleteAllMinions"]
 [connection signal="Respawning" from="EnemyComponent" to="." method="OnRespawning"]
 [connection signal="Respawning" from="EnemyComponent" to="AI" method="OnRespawning"]
+[connection signal="TookDamageNoParams" from="HealthPointsComponent" to="AI" method="OnTookDamage"]
 [connection signal="TookDamageNoParams" from="HealthPointsComponent" to="TookDamageSound" method="play"]

@@ -33,5 +33,23 @@ namespace ShiftingSepulcher
             anim.Reset();
             anim.PlayAndAdvance(name, customBlend, customSpeed, fromEnd);
         }
+
+        public static void PlayFixedDuration(
+            this AnimationPlayer anim,
+            string name,
+            float duration,
+            float customBlend = -1,
+            bool fromEnd = false
+        )
+        {
+            float animLength = anim.GetAnimation(name).Length;
+
+            anim.ResetAndPlay(
+                name,
+                customBlend: customBlend,
+                customSpeed: animLength / duration,
+                fromEnd: fromEnd
+            );
+        }
     }
 }

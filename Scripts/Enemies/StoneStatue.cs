@@ -2,11 +2,11 @@ using Godot;
 
 namespace ShiftingSepulcher
 {
-    public class StoneStatue : BaseComponent<KinematicBody2D>
+    public class StoneStatue : KinematicBody2D
     {
         [Export] public float HopDistance = 32;
         [Export] public float HopDuration = 0.2f;
-        [Export] public float TimeBetweenHops = 1;
+        [Export] public float TimeBetweenHops = 0.4f;
         [Export] public float WakeUpTime = 1;
 
         private readonly StateMachine _sm;
@@ -28,7 +28,7 @@ namespace ShiftingSepulcher
             _sm = new StateMachine(this);
         }
 
-        public override void _EntityReady()
+        public override void _Ready()
         {
             _velocity = this.GetComponent<KnockbackableVelocityComponent>();
             _sm.ChangeState(Idle);
@@ -145,7 +145,7 @@ namespace ShiftingSepulcher
 
                 float speed = Owner.HopDistance / Owner.HopDuration;
                 Vector2 targetPos = Owner._lastAggroTargetPos;
-                Vector2 dir = Owner.Entity.GlobalPosition.DirectionTo(targetPos);
+                Vector2 dir = Owner.GlobalPosition.DirectionTo(targetPos);
                 Owner._velocity.WalkVelocity = speed * dir;
 
                 _startRot = _rot;

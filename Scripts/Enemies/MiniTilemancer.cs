@@ -2,7 +2,7 @@ using Godot;
 
 namespace ShiftingSepulcher
 {
-    public class MiniTilemancer : BaseComponent<Node2D>
+    public class MiniTilemancer : KinematicBody2D
     {
         [Export] public float TileSpawnRadius = 32 * 2;
         [Export] public float WanderSpeed = 32;
@@ -111,7 +111,7 @@ namespace ShiftingSepulcher
 
         private Vector2 RandomTileSpawnPos()
         {
-            float angleDeg = Mathf.Rad2Deg(Entity.GetAngleTo(_target.GlobalPosition));
+            float angleDeg = Mathf.Rad2Deg(GetAngleTo(_target.GlobalPosition));
             angleDeg += (GD.Randf() * 180) - 90;
 
             float angle = Mathf.Deg2Rad(angleDeg);
@@ -120,7 +120,7 @@ namespace ShiftingSepulcher
                 Mathf.Sin(angle)
             );
 
-            return Entity.GlobalPosition + (dir * TileSpawnRadius);
+            return GlobalPosition + (dir * TileSpawnRadius);
         }
     }
 }

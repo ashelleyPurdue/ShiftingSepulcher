@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Scenes/Models/StoneStatueModel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Audio/SFX/SwordDamageOwWithSlime.wav" type="AudioStream" id=2]
@@ -11,6 +11,35 @@
 [ext_resource path="res://Scripts/MiscNodes/MinionManager.cs" type="Script" id=9]
 [ext_resource path="res://Scenes/Prefabs/Enemies/StoneStatue.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scripts/Bosses/StatueSummonerAI.cs" type="Script" id=11]
+[ext_resource path="res://Scenes/Models/HammerModel.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Scenes/Prefabs/Projectiles/Shockwave.tscn" type="PackedScene" id=13]
+
+[sub_resource type="Animation" id=7]
+resource_name = "HammerSwing"
+tracks/0/type = "value"
+tracks/0/path = NodePath("ModelScaler/HammerModel:SwingPercent")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ModelScaler/HammerModel:HeadRadius")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.7, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 8.0, 8.0, 9.0, 8.0 ]
+}
 
 [sub_resource type="Animation" id=2]
 resource_name = "Idle"
@@ -135,12 +164,37 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ) ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("ModelScaler/HammerModel:SwingPercent")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("ModelScaler/HammerModel:HeadRadius")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 8.0 ]
+}
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 32.0
 
 [node name="StatueSummoner" type="KinematicBody2D"]
 script = ExtResource( 8 )
+ShockwavePrefab = ExtResource( 13 )
 
 [node name="EnemyComponent" type="Node" parent="."]
 script = ExtResource( 3 )
@@ -169,6 +223,7 @@ MinionPrefab = ExtResource( 10 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
+anims/HammerSwing = SubResource( 7 )
 anims/Idle = SubResource( 2 )
 anims/LeapFalling = SubResource( 5 )
 anims/LeapRecovering = SubResource( 6 )
@@ -195,6 +250,10 @@ IgnoredHealthPoints = [ NodePath("../HealthPointsComponent") ]
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ContactHitBox"]
 shape = SubResource( 1 )
 
+[node name="HammerShockwaveSpawn" type="Position2D" parent="."]
+unique_name_in_owner = true
+position = Vector2( 0, 64 )
+
 [node name="MinionSpawnRay" type="RayCast2D" parent="."]
 unique_name_in_owner = true
 enabled = true
@@ -204,6 +263,8 @@ scale = Vector2( 2, 2 )
 
 [node name="Model" parent="ModelScaler" instance=ExtResource( 1 )]
 EyeFlareStrength = 0.0
+
+[node name="HammerModel" parent="ModelScaler" instance=ExtResource( 12 )]
 
 [connection signal="Dead" from="EnemyComponent" to="AI" method="OnDead"]
 [connection signal="Dead" from="EnemyComponent" to="MinionManager" method="DeleteAllMinions"]

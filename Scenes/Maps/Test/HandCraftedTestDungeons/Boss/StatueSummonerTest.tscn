@@ -6,3 +6,4 @@
 [node name="StatueSummonerTest" instance=ExtResource( 1 )]
 
 [node name="StatueSummoner" parent="HandCraftedDungeonInstantiator/BossRoom" index="5" instance=ExtResource( 2 )]
+ShockwavePrefab = null

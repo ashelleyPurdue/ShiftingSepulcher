@@ -56,8 +56,17 @@ namespace ShiftingSepulcher
         {
             while (true)
             {
-                Entity.StartLeap();
-                await ForAttackToFinish(cancel);
+                for (int i = 0; i < 4; i++)
+                {
+                    Entity.StartHammerSwing();
+                    await ForAttackToFinish(cancel);
+                }
+
+                for (int i = 0; i < 2; i++)
+                {
+                    Entity.StartLeap();
+                    await ForAttackToFinish(cancel);
+                }
             }
         }
 
@@ -71,11 +80,17 @@ namespace ShiftingSepulcher
                     await _coroutine.ForPhysicsSeconds(0.5f, cancel);
                 }
 
-                Entity.StartLeap();
-                await ForAttackToFinish(cancel);
+                for (int i = 0; i < 4; i++)
+                {
+                    Entity.StartHammerSwing();
+                    await ForAttackToFinish(cancel);
+                }
 
-                Entity.StartLeap();
-                await ForAttackToFinish(cancel);
+                for (int i = 0; i < 2; i++)
+                {
+                    Entity.StartLeap();
+                    await ForAttackToFinish(cancel);
+                }
             }
         }
 

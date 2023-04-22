@@ -25,6 +25,12 @@ namespace ShiftingSepulcher
         [Export] public float HammerShockwaveEndRadius = 48;
         [Export] public float HammerShockwaveDamage = 1;
 
+        [Export] public int SpinAttackRevolutions = 2;
+        [Export] public float SpinAttackInitialSwingDuration = 0.2f;
+        [Export] public float SpinAttackInitialSwingPauseDuration = 0.75f;
+        [Export] public float SpinAttackDuration = 1.25f;
+        [Export] public float SpinAttackRecoveryDuration = 0.5f;
+
         bool IChallenge.IsSolved() => this.GetComponent<EnemyComponent>().IsDead;
 
         public int MinionCount => _minionManager.MinionCount;
@@ -35,6 +41,7 @@ namespace ShiftingSepulcher
         private CollisionShape2D _bodyShape => GetNode<CollisionShape2D>("%BodyShape");
         private HurtBox _hurtBox => GetNode<HurtBox>("%HurtBox");
         private HitBox _contactHitBox => GetNode<HitBox>("%ContactHitBox");
+        private HitBox _spinHitBox => GetNode<HitBox>("%SpinHitBox");
         private Node2D _hammerShockwaveSpawn => GetNode<Node2D>("%HammerShockwaveSpawn");
 
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
@@ -63,6 +70,7 @@ namespace ShiftingSepulcher
         // Methods for the AI to call
         public void StartLeap() => _sm.ChangeState(LeapRising);
         public void StartHammerSwing() => _sm.ChangeState(AimingHammer);
+        public void StartSpinAttack() => _sm.ChangeState(SpinAttackAiming);
 
         public void SummonMinion()
         {
@@ -70,6 +78,7 @@ namespace ShiftingSepulcher
             minion.GlobalPosition = GetSummonPosition();
             minion.GetComponent<EnemyComponent>().DisableLootDrops = true;
         }
+
 
         // States
         private readonly IState Idle = new IdleState();
@@ -203,6 +212,71 @@ namespace ShiftingSepulcher
             public override IState NextState => Owner.Idle;
         }
 
+        private readonly IState SpinAttackAiming = new SpinAttackAimingState();
+        private class SpinAttackAimingState : AimingHammerState
+        {
+            public override IState NextState => Owner.SpinAttackSwingingHammer;
+        }
+
+        private readonly IState SpinAttackSwingingHammer = new SpinAttackSwingingHammerState();
+        private class SpinAttackSwingingHammerState : SwingingHammerState
+        {
+            public override IState NextState => Owner.SpinAttackPausing;
+        }
+
+        private readonly IState SpinAttackPausing = new SpinAttackPausingState();
+        private class SpinAttackPausingState : PauseState<StatueSummoner>
+        {
+            public override float Duration => Owner.SpinAttackInitialSwingPauseDuration;
+            public override IState NextState => Owner.SpinAttacking;
+        }
+
+        private readonly IState SpinAttacking = new SpinAttackingState();
+        private class SpinAttackingState : PauseState<StatueSummoner>
+        {
+            public override float Duration => Owner.SpinAttackDuration;
+            public override IState NextState => Owner.SpinAttackRecovering;
+
+            private float _startRotDeg;
+            private float _targetRotDeg;
+
+            public override void _StateEntered()
+            {
+                base._StateEntered();
+
+                Owner._spinHitBox.Enabled = true;
+                Owner._animator.ResetAndPlay("Spinning");
+
+                _startRotDeg = Owner.RotationDegrees;
+                _targetRotDeg = _startRotDeg + (360 * Owner.SpinAttackRevolutions);
+            }
+
+            public override void _PhysicsProcess(float delta)
+            {
+                base._PhysicsProcess(delta);
+
+                float t = Mathf.Clamp(PercentComplete, 0, 1);
+
+                Owner.RotationDegrees = TweenUtils.Sinusoidal(
+                    _startRotDeg,
+                    _targetRotDeg,
+                    t
+                );
+            }
+
+            public override void _StateExited()
+            {
+                Owner._spinHitBox.Enabled = false;
+            }
+        }
+
+        private readonly IState SpinAttackRecovering = new SpinAttackRecoveringState();
+        private class SpinAttackRecoveringState : PauseState<StatueSummoner>
+        {
+            public override float Duration => Owner.SpinAttackRecoveryDuration;
+            public override IState NextState => Owner.Idle;
+        }
+
 
         // Helper methods
 
@@ -242,6 +316,7 @@ namespace ShiftingSepulcher
             _bodyShape.Disabled = true;
             _hurtBox.Enabled = false;
             _contactHitBox.Enabled = false;
+            _spinHitBox.Enabled = false;
         }
 
         private void ResetCollision()
@@ -249,6 +324,10 @@ namespace ShiftingSepulcher
             _bodyShape.Disabled = false;
             _hurtBox.Enabled = true;
             _contactHitBox.Enabled = true;
+
+            // No, this isn't a bug.  The spin hitbox _is_ supposed to be
+            // _disabled_ under normal circumstances.
+            _spinHitBox.Enabled = false;
         }
     }
 }

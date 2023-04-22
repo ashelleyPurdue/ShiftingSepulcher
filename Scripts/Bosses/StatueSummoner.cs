@@ -83,16 +83,18 @@ namespace ShiftingSepulcher
         }
 
         private readonly IState LeapRising = new LeapRisingState();
-        private class LeapRisingState : State<StatueSummoner>
+        private class LeapRisingState : PauseState<StatueSummoner>
         {
+            public override float Duration => Owner.LeapRiseDuration;
+            public override IState NextState => Owner.LeapPausing;
+
             private Vector2 _startPos;
             private float _startAngle;
-            private float _timer;
-
             public override void _StateEntered()
             {
+                base._StateEntered();
+
                 Owner.DisableAllCollision();
-                _timer = Owner.LeapRiseDuration;
                 _startPos = Owner.Position;
                 _startAngle = Owner.Rotation;
 
@@ -101,20 +103,14 @@ namespace ShiftingSepulcher
 
             public override void _PhysicsProcess(float delta)
             {
-                var targetPos = Owner._aggroTarget.GlobalPosition - Owner.GetRoom().GlobalPosition;
+                base._PhysicsProcess(delta);
 
-                _timer -= delta;
-                float t = 1f - (_timer / Owner.LeapRiseDuration);
+                var targetPos = Owner._aggroTarget.GlobalPosition - Owner.GetRoom().GlobalPosition;
+                float t = Mathf.Clamp(PercentComplete, 0, 1);
 
                 float targetAngle = Mathf.Deg2Rad(0);
                 Owner.Rotation = Mathf.LerpAngle(_startAngle, targetAngle, t);
                 Owner.Position = _startPos.LinearInterpolate(targetPos, t);
-
-                if (_timer <= 0)
-                {
-                    Owner.Rotation = targetAngle;
-                    ChangeState(Owner.LeapPausing);
-                }
             }
         }
 
@@ -153,31 +149,26 @@ namespace ShiftingSepulcher
         }
 
         private readonly IState AimingHammer = new AimingHammerState();
-        private class AimingHammerState : State<StatueSummoner>
+        private class AimingHammerState : PauseState<StatueSummoner>
         {
-            private float _timer;
+            public override float Duration => Owner.HammerAimDuration;
+            public override IState NextState => Owner.SwingingHammer;
+
             private float _startAngle;
 
             public override void _StateEntered()
             {
-                _timer = Owner.HammerAimDuration;
+                base._StateEntered();
                 _startAngle = Owner.Rotation;
             }
 
             public override void _PhysicsProcess(float delta)
             {
-                _timer -= delta;
-                float t = 1f - (_timer / Owner.HammerAimDuration);
+                base._PhysicsProcess(delta);
 
                 float targetAngle = Owner.GlobalPosition.AngleToPoint(Owner._aggroTarget.GlobalPosition);
                 targetAngle += Mathf.Deg2Rad(90);
-                Owner.Rotation = Mathf.LerpAngle(_startAngle, targetAngle, t);
-
-                if (_timer <= 0)
-                {
-                    Owner.Rotation = targetAngle;
-                    ChangeState(Owner.SwingingHammer);
-                }
+                Owner.Rotation = Mathf.LerpAngle(_startAngle, targetAngle, PercentComplete);
             }
         }
 

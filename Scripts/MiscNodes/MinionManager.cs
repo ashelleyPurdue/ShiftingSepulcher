@@ -8,6 +8,8 @@ namespace ShiftingSepulcher
     {
         [Export] public PackedScene MinionPrefab;
 
+        public int MinionCount => _minions.Count;
+
         private List<EnemyComponent> _minions = new List<EnemyComponent>();
 
         public void OnRoomEnter()
@@ -45,7 +47,7 @@ namespace ShiftingSepulcher
         {
             foreach (var m in _minions)
             {
-                m.GetComponent<HealthPointsComponent>().Health = 0;
+                m.GetComponent<HealthPointsComponent>().Kill();
             }
         }
 

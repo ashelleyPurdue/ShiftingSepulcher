@@ -10,6 +10,8 @@ namespace ShiftingSepulcher
 
         private float _timer;
 
+        protected float PercentComplete => 1f - (_timer / Duration);
+
         public override void _StateEntered()
         {
             _timer = Duration;

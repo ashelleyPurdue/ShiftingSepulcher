@@ -24,5 +24,16 @@ namespace ShiftingSepulcher
                 return null;
             }
         }
+
+        public static PhysicsTimer CreatePhysicsTimer(
+            this SceneTree tree,
+            float duration
+        )
+        {
+            var timer = new PhysicsTimer(duration);
+            tree.Root.AddChild(timer);
+
+            return timer;
+        }
     }
 }

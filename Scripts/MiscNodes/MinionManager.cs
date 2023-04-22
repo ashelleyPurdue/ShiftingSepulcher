@@ -47,7 +47,7 @@ namespace ShiftingSepulcher
         {
             foreach (var m in _minions)
             {
-                m.GetComponent<HealthPointsComponent>().Health = 0;
+                m.GetComponent<HealthPointsComponent>().Kill();
             }
         }
 

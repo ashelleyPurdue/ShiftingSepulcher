@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Scenes/Models/StoneStatueModel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Audio/SFX/SwordDamageOwWithSlime.wav" type="AudioStream" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://Scripts/Bosses/StatueSummonerAI.cs" type="Script" id=11]
 [ext_resource path="res://Scenes/Models/HammerModel.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Scenes/Prefabs/Projectiles/Shockwave.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Scenes/Prefabs/UI/Widgets/BossHealthBar.tscn" type="PackedScene" id=14]
 
 [sub_resource type="Animation" id=7]
 resource_name = "HammerSwing"
@@ -294,6 +295,9 @@ scale = Vector2( 2, 2 )
 EyeFlareStrength = 0.0
 
 [node name="HammerModel" parent="ModelScaler" instance=ExtResource( 12 )]
+
+[node name="BossHealthBar" parent="." instance=ExtResource( 14 )]
+thing_with_health = NodePath("../HealthPointsComponent")
 
 [connection signal="Dead" from="EnemyComponent" to="." method="OnDead"]
 [connection signal="Dead" from="EnemyComponent" to="AI" method="OnDead"]

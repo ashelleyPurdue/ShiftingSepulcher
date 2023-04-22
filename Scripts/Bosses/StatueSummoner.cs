@@ -66,6 +66,11 @@ namespace ShiftingSepulcher
             _sm.ChangeState(Idle);
         }
 
+        public void OnDead()
+        {
+            _sm.ChangeState(Dead);
+        }
+
 
         // Methods for the AI to call
         public void StartLeap() => _sm.ChangeState(LeapRising);
@@ -81,6 +86,23 @@ namespace ShiftingSepulcher
 
 
         // States
+
+        private readonly IState Dead = new DeadState();
+        private class DeadState : State<StatueSummoner>
+        {
+            public override void _StateEntered()
+            {
+                Owner.DisableAllCollision();
+                Owner.Visible = false;
+            }
+
+            public override void _StateExited()
+            {
+                Owner.ResetCollision();
+                Owner.Visible = true;
+            }
+        }
+
         private readonly IState Idle = new IdleState();
         private class IdleState : State<StatueSummoner>
         {

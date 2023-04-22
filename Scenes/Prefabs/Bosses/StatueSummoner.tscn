@@ -295,9 +295,11 @@ EyeFlareStrength = 0.0
 
 [node name="HammerModel" parent="ModelScaler" instance=ExtResource( 12 )]
 
+[connection signal="Dead" from="EnemyComponent" to="." method="OnDead"]
 [connection signal="Dead" from="EnemyComponent" to="AI" method="OnDead"]
-[connection signal="Dead" from="EnemyComponent" to="MinionManager" method="DeleteAllMinions"]
+[connection signal="Dead" from="EnemyComponent" to="MinionManager" method="KillAllMinions"]
 [connection signal="Respawning" from="EnemyComponent" to="." method="OnRespawning"]
 [connection signal="Respawning" from="EnemyComponent" to="AI" method="OnRespawning"]
+[connection signal="Respawning" from="EnemyComponent" to="MinionManager" method="DeleteAllMinions"]
 [connection signal="TookDamageNoParams" from="HealthPointsComponent" to="AI" method="OnTookDamage"]
 [connection signal="TookDamageNoParams" from="HealthPointsComponent" to="TookDamageSound" method="play"]

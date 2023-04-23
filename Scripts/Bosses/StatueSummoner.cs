@@ -79,9 +79,11 @@ namespace ShiftingSepulcher
 
         public void SummonMinion()
         {
-            var minion = _minionManager.SummonMinion();
+            var minion = (StoneStatue)_minionManager.SummonMinion();
             minion.GlobalPosition = GetSummonPosition();
             minion.GetComponent<EnemyComponent>().DisableLootDrops = true;
+
+            minion.AggroRadius = 100 * 32;
         }
 
 

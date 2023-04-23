@@ -199,6 +199,13 @@ namespace ShiftingSepulcher
             return descendant.GetTransformRelativeToAncestor(ancestor).origin;
         }
 
+        public static void SetPosRelativeToAncestor(this Node2D descendant, Node2D ancestor, Vector2 pos)
+        {
+            var currentPos = descendant.GetPosRelativeToAncestor(ancestor);
+            var diff = pos - currentPos;
+            descendant.Position += diff;
+        }
+
         public static Transform2D GetTransformRelativeToAncestor(this Node2D descendant, Node2D ancestor)
         {
             Transform2D transform = Transform2D.Identity;

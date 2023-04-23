@@ -9,6 +9,11 @@ namespace ShiftingSepulcher
         [Export] public float TimeBetweenHops = 0.4f;
         [Export] public float WakeUpTime = 1;
 
+        // A tool script built into the scene reads this property to adjust the
+        // radius of a circle shape.  This allows the radius to be visible in
+        // the editor without having to make _this_ script a [Tool].
+        [Export] public float AggroRadius = 64;
+
         private readonly StateMachine _sm;
 
         private CollisionShape2D _bodyShape => GetNode<CollisionShape2D>("%KinematicBodyShape");

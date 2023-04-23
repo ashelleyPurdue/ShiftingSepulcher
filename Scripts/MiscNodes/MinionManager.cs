@@ -37,7 +37,8 @@ namespace ShiftingSepulcher
                 nameof(EnemyComponent.Dead),
                 this,
                 nameof(OnMinionDead),
-                new Godot.Collections.Array(enemy)
+                new Godot.Collections.Array(enemy),
+                (uint)ConnectFlags.Deferred
             );
 
             return entity;

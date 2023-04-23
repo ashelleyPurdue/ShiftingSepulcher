@@ -8,7 +8,7 @@ namespace ShiftingSepulcher
 
         [Export] public PackedScene ShockwavePrefab;
 
-        [Export] public float SummonAngleDeg = 90;
+        [Export] public float SummonAngleDeg = 180;
         [Export] public float MaxSummonRadius = 32 * 100;
 
         [Export] public float MinionSummonInterval = 5;

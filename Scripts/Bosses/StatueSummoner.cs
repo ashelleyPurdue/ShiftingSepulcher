@@ -31,6 +31,8 @@ namespace ShiftingSepulcher
         [Export] public float SpinAttackDuration = 1.25f;
         [Export] public float SpinAttackRecoveryDuration = 0.5f;
 
+        [Export] public float LevitateRiseDuration = 1f;
+
         bool IChallenge.IsSolved() => this.GetComponent<EnemyComponent>().IsDead;
 
         public int MinionCount => _minionManager.MinionCount;
@@ -76,6 +78,7 @@ namespace ShiftingSepulcher
         public void StartLeap() => _sm.ChangeState(LeapRising);
         public void StartHammerSwing() => _sm.ChangeState(AimingHammer);
         public void StartSpinAttack() => _sm.ChangeState(SpinAttackAiming);
+        public void StartLevitating() => _sm.ChangeState(LevitateRising);
 
         public void SummonMinion()
         {
@@ -301,6 +304,49 @@ namespace ShiftingSepulcher
             public override IState NextState => Owner.Idle;
         }
 
+        private readonly IState LevitateRising = new LevitateRisingState();
+        private class LevitateRisingState : PauseState<StatueSummoner>
+        {
+            public override float Duration => Owner.LevitateRiseDuration;
+            public override IState NextState => Owner.Levitating;
+
+            private Vector2 _startPos;
+
+            public override void _StateEntered()
+            {
+                base._StateEntered();
+                Owner.DisableAllCollision();
+                Owner._animator.PlayFixedDuration("LeapRising", Duration);
+
+                _startPos = Owner.GetPosRelativeToAncestor(Owner.GetRoom());
+            }
+
+            public override void _PhysicsProcess(float delta)
+            {
+                base._PhysicsProcess(delta);
+
+                var pos = _startPos.LinearInterpolate(Vector2.Zero, PercentComplete);
+                Owner.SetPosRelativeToAncestor(Owner.GetRoom(), pos);
+            }
+        }
+
+        private readonly IState Levitating = new LevitatingState();
+        private class LevitatingState : State<StatueSummoner>
+        {
+            public override void _StateEntered()
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    Owner.SummonMinion();
+                }
+            }
+
+            public override void _PhysicsProcess(float delta)
+            {
+                if (Owner._minionManager.MinionCount <= 0)
+                    ChangeState(Owner.LeapFalling);
+            }
+        }
 
         // Helper methods
 

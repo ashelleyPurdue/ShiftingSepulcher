@@ -43,7 +43,7 @@ namespace ShiftingSepulcher
             if (_currentPhase != intendedPhase)
             {
                 _currentPhase = intendedPhase;
-                _coroutine.StartCoroutine(_phases[_currentPhase]);
+                _coroutine.StartCoroutine(LevitatingBetweenPhases);
             }
         }
 
@@ -71,6 +71,15 @@ namespace ShiftingSepulcher
                     await ForAttackToFinish(cancel);
                 }
             }
+        }
+
+        private async Task LevitatingBetweenPhases(CancellationToken cancel)
+        {
+            Entity.StartLevitating();
+            await ForAttackToFinish(cancel);
+
+            _coroutine.StopCoroutine();
+            _coroutine.StartCoroutine(_phases[_currentPhase]);
         }
 
         private async Task MinionsAddedPhase(CancellationToken cancel)

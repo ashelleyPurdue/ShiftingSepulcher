@@ -111,6 +111,7 @@ namespace ShiftingSepulcher
             public override void _StateEntered()
             {
                 Owner._animator.ResetAndPlay("Idle");
+                Owner.ResetCollision();
                 Owner.EmitSignal(nameof(BecameIdle));
             }
         }

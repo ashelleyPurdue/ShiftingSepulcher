@@ -311,6 +311,7 @@ namespace ShiftingSepulcher
             public override IState NextState => Owner.Levitating;
 
             private Vector2 _startPos;
+            private float _startRot;
 
             public override void _StateEntered()
             {
@@ -319,6 +320,7 @@ namespace ShiftingSepulcher
                 Owner._animator.PlayFixedDuration("LeapRising", Duration);
 
                 _startPos = Owner.GetPosRelativeToAncestor(Owner.GetRoom());
+                _startRot = Owner.Rotation;
             }
 
             public override void _PhysicsProcess(float delta)
@@ -327,6 +329,7 @@ namespace ShiftingSepulcher
 
                 var pos = _startPos.LinearInterpolate(Vector2.Zero, PercentComplete);
                 Owner.SetPosRelativeToAncestor(Owner.GetRoom(), pos);
+                Owner.Rotation = Mathf.LerpAngle(_startRot, 0, PercentComplete);
             }
         }
 

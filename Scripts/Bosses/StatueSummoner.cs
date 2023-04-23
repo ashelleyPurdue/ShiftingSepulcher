@@ -373,6 +373,11 @@ namespace ShiftingSepulcher
                 Mathf.Sin(angleRad)
             );
 
+            // Flip the summon dir to ensure they always spawn on the opposite
+            // side of the room as the player.  This way, the player can't
+            // get suddenly damaged from standing inside their spawn point.
+            summonDir *= -1;
+
             // Do a raycast to ensure the minion is spawned inside the room
             _minionSpawnRay.ClearExceptions();
             _minionSpawnRay.AddException(aggroTarget);

@@ -24,7 +24,7 @@ func _physics_process(delta):
         _minionManager.SummonMinion()
         _minionManager.SummonMinion()
     if (_stage == 2):
-        _playerHealth.Kill()
+        _minionManager.KillAllMinions()
 "
 
 [node name="DebugMinionManager" type="Node2D"]
@@ -40,17 +40,18 @@ unique_name_in_owner = true
 script = ExtResource( 5 )
 StartRoomPath = NodePath("Room2D")
 
-[node name="Room2D" type="YSort" parent="HandCraftedDungeonInstantiator"]
+[node name="Room2D2" type="YSort" parent="HandCraftedDungeonInstantiator"]
 script = ExtResource( 3 )
 
-[node name="MinionManager" type="Node" parent="HandCraftedDungeonInstantiator/Room2D"]
+[node name="MinionManager" type="Node" parent="HandCraftedDungeonInstantiator/Room2D2"]
 unique_name_in_owner = true
 script = ExtResource( 1 )
 MinionPrefab = ExtResource( 2 )
+
+[node name="Room2D" type="YSort" parent="HandCraftedDungeonInstantiator"]
+script = ExtResource( 3 )
 
 [node name="FooDoer" type="Node" parent="HandCraftedDungeonInstantiator/Room2D"]
 script = SubResource( 1 )
 
 [connection signal="DeathAnimationFinished" from="Player" to="RoomTransitionManager" method="RespawnPlayer"]
-
-[editable path="Player"]

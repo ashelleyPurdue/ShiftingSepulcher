@@ -9,28 +9,24 @@
 [ext_resource path="res://Audio/Music/JRPG_labyrinth_loop.tres" type="Resource" id=7]
 
 [sub_resource type="GDScript" id=1]
-script/source = "extends Node2D
+script/source = "extends Node
 
-var _stage = -1;
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-    _stage = -1;
+var _stage = -1
+onready var _minionManager = $\"%MinionManager\"
 
 func _physics_process(delta):
     _stage += 1
     
     if (_stage == 1):
-        $\"%MinionManager\".SummonMinion()
-        $\"%MinionManager\".SummonMinion()
-        $\"%MinionManager\".SummonMinion()
-        $\"%MinionManager\".SummonMinion()
+        _minionManager.SummonMinion()
+        _minionManager.SummonMinion()
+        _minionManager.SummonMinion()
+        _minionManager.SummonMinion()
     if (_stage == 2):
-        $\"%MinionManager\".KillAllMinions()
+        _minionManager.KillAllMinions()
 "
 
 [node name="DebugMinionManager" type="Node2D"]
-script = SubResource( 1 )
 
 [node name="RoomTransitionManager" parent="." instance=ExtResource( 4 )]
 BackgroundMusic = ExtResource( 7 )
@@ -38,6 +34,7 @@ BackgroundMusic = ExtResource( 7 )
 [node name="Player" parent="." instance=ExtResource( 6 )]
 
 [node name="HandCraftedDungeonInstantiator" type="Node2D" parent="."]
+unique_name_in_owner = true
 script = ExtResource( 5 )
 StartRoomPath = NodePath("Room2D")
 
@@ -48,3 +45,6 @@ script = ExtResource( 3 )
 unique_name_in_owner = true
 script = ExtResource( 1 )
 MinionPrefab = ExtResource( 2 )
+
+[node name="FooDoer" type="Node" parent="HandCraftedDungeonInstantiator/Room2D"]
+script = SubResource( 1 )

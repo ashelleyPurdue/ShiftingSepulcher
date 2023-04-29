@@ -30,7 +30,8 @@ namespace ShiftingSepulcher
         public void OnRespawning()
         {
             _currentPhase = 0;
-            _coroutine.StartCoroutine(_phases[_currentPhase]);
+            _coroutine.StartCoroutine(LevitatingBetweenPhases);
+            //_coroutine.StartCoroutine(_phases[_currentPhase]);
         }
 
         public void OnTookDamage()

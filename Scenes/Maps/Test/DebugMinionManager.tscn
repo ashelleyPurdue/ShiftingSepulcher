@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scripts/MiscNodes/MinionManager.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/Prefabs/Enemies/StoneStatue.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scripts/Room2D.cs" type="Script" id=3]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
@@ -28,7 +29,10 @@ func _physics_process(delta):
 [node name="DebugMinionManager" type="Node2D"]
 script = SubResource( 1 )
 
-[node name="MinionManager" type="Node" parent="."]
+[node name="Room2D" type="YSort" parent="."]
+script = ExtResource( 3 )
+
+[node name="MinionManager" type="Node" parent="Room2D"]
 unique_name_in_owner = true
 script = ExtResource( 1 )
 MinionPrefab = ExtResource( 2 )

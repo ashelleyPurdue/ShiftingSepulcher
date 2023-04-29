@@ -56,7 +56,10 @@ namespace ShiftingSepulcher
         public void OnRoomEnter()
         {
             if (!IsDead)
+            {
+                GD.PushError($"Respawning {this.GetEntity().Name}(OnRoomEnter)");
                 Respawn();
+            }
         }
 
         public void Respawn()

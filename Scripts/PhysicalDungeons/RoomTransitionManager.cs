@@ -69,6 +69,10 @@ namespace ShiftingSepulcher
             {
                 foreach (var enemy in room.AllDescendantsOfType<IRespawnable>())
                 {
+                    // if (((Node)enemy).Owner.GetParent().IsQueuedForDeletion())
+                    //     continue;
+
+                    GD.PushError($"Respawning {((Node)enemy).Owner.GetParent().Name} after player death");
                     enemy.Respawn();
                 }
             }

@@ -47,6 +47,7 @@ namespace ShiftingSepulcher
         {
             foreach (var m in _minions)
             {
+                GD.PushError($"Killing {m.GetEntity().Name}");
                 m.GetComponent<HealthPointsComponent>().Kill();
             }
         }
@@ -55,15 +56,20 @@ namespace ShiftingSepulcher
         {
             foreach (var m in _minions)
             {
+                GD.PushError($"Queueing {m.GetEntity().Name} for deletion(DeleteAllMinions)");
                 m.GetEntity().QueueFree();
             }
 
+            GD.PushError("Clearing minion list");
             _minions.Clear();
         }
 
         private void OnMinionDead(EnemyComponent minion)
         {
+            GD.PushError($"Removing {minion.GetEntity().Name} from list");
             _minions.Remove(minion);
+
+            GD.PushError($"Queueing {minion.GetEntity().Name} for deletion(OnMinionDead)");
             minion.GetEntity().QueueFree();
         }
     }

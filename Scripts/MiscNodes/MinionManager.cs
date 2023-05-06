@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 namespace ShiftingSepulcher
@@ -56,8 +57,16 @@ namespace ShiftingSepulcher
         {
             foreach (var m in _minions)
             {
-                GD.PushError($"Queueing {m.GetEntity().Name} for deletion(DeleteAllMinions)");
-                m.GetEntity().QueueFree();
+                var entity = m.GetEntity();
+                GD.PushError($"Queueing {entity.Name} for deletion(DeleteAllMinions)");
+                entity.GetParent().RemoveChild(entity);
+                entity.QueueFree();
+
+                var roomChildren = this.GetRoom()
+                    .AllDescendantsOfType<IRespawnable>()
+                    .Where(r => r is EnemyComponent e)
+                    .Select(r => ((EnemyComponent)r).GetEntity().Name);
+                GD.PushError($"Respawnables({this.GetRoom().Name}): {string.Join(",", roomChildren)}");
             }
 
             GD.PushError("Clearing minion list");

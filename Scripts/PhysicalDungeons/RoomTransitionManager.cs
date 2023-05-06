@@ -67,11 +67,19 @@ namespace ShiftingSepulcher
             // Respawn all the enemies
             foreach (var room in _roomsToRespawn)
             {
+                GD.PushError($"Room child count(RespawnPlayer)({room.Name}): {room.AllDescendantsOfType<IRespawnable>().Count()}");
                 foreach (var enemy in room.AllDescendantsOfType<IRespawnable>())
                 {
                     // if (((Node)enemy).Owner.GetParent().IsQueuedForDeletion())
                     //     continue;
 
+                    // AHA!  Found the bug!
+                    // This ends up respawning the very enemies that we're about
+                    // to destroy, because the destruction is triggered inside
+                    // another enemy's OnRespawning() method!
+                    // The minion manager removes them from the room and queues them
+                    // for deletion, but they're still in this IEnumerable, so they'll
+                    // still get Respawn() called on them.
                     GD.PushError($"Respawning {((Node)enemy).Owner.GetParent().Name} after player death");
                     enemy.Respawn();
                 }

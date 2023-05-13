@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://Scenes/Models/StoneStatueModel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Audio/SFX/SwordDamageOwWithSlime.wav" type="AudioStream" id=2]
@@ -14,6 +14,13 @@
 [ext_resource path="res://Scenes/Models/HammerModel.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Scenes/Prefabs/Projectiles/Shockwave.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Scenes/Prefabs/UI/Widgets/BossHealthBar.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Audio/SFX/FallWhistleSuperShort.wav" type="AudioStream" id=15]
+[ext_resource path="res://Scripts/MiscNodes/LingeringAudioStreamPlayer.cs" type="Script" id=16]
+[ext_resource path="res://Audio/SFX/StoneStatueHopSlamBig.wav" type="AudioStream" id=17]
+[ext_resource path="res://Audio/SFX/StatueSummonerJump.wav" type="AudioStream" id=18]
+[ext_resource path="res://Audio/SFX/StatueSummonerHammerSwing.wav" type="AudioStream" id=19]
+[ext_resource path="res://Audio/SFX/StatueSummonerHammerSlam.wav" type="AudioStream" id=20]
+[ext_resource path="res://Audio/SFX/StatueSummonerHammerDrag.wav" type="AudioStream" id=21]
 
 [sub_resource type="Animation" id=7]
 resource_name = "HammerSwing"
@@ -40,6 +47,34 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
 "values": [ 8.0, 8.0, 9.0, 8.0 ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("AnimationPlayer/HammingSwingWoosh")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Play"
+} ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("AnimationPlayer/HammerSwingSlam")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.7 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Play"
+} ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -71,6 +106,20 @@ tracks/0/keys = {
 "update": 0,
 "values": [ 80.0, 0.0 ]
 }
+tracks/1/type = "method"
+tracks/1/path = NodePath("AnimationPlayer/FallWhistle")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Play"
+} ]
+}
 
 [sub_resource type="Animation" id=6]
 resource_name = "LeapRecovering"
@@ -86,6 +135,20 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ Vector2( 0, 0 ), Vector2( 4, 0 ), Vector2( -4, 0 ), Vector2( 4, 0 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "audio"
+tracks/1/path = NodePath("AnimationPlayer/FallSlam")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 17 )
+} ],
+"times": PoolRealArray( 0 )
 }
 
 [sub_resource type="Animation" id=3]
@@ -113,6 +176,20 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 1, 1 ), Vector2( 2, 0.5 ), Vector2( 1, 1.5 ), Vector2( 1, 1 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("AnimationPlayer/LeapRise")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Play"
+} ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -249,6 +326,37 @@ anims/LeapRecovering = SubResource( 6 )
 anims/LeapRising = SubResource( 3 )
 anims/RESET = SubResource( 4 )
 anims/Spinning = SubResource( 8 )
+
+[node name="FallWhistle" type="Node" parent="AnimationPlayer"]
+script = ExtResource( 16 )
+Sound = ExtResource( 15 )
+
+[node name="FallSlam" type="AudioStreamPlayer" parent="AnimationPlayer"]
+stream = ExtResource( 17 )
+pitch_scale = 0.85
+bus = "Sound"
+
+[node name="LeapRise" type="Node" parent="AnimationPlayer"]
+script = ExtResource( 16 )
+Sound = ExtResource( 18 )
+
+[node name="HammingSwingWoosh" type="Node" parent="AnimationPlayer"]
+script = ExtResource( 16 )
+Sound = ExtResource( 19 )
+
+[node name="HammerSwingSlam" type="Node" parent="AnimationPlayer"]
+script = ExtResource( 16 )
+Sound = ExtResource( 20 )
+VolumeLinear = 0.75
+
+[node name="HammerDrag" type="AudioStreamPlayer" parent="AnimationPlayer"]
+unique_name_in_owner = true
+stream = ExtResource( 21 )
+
+[node name="SpinSwish" type="Node" parent="AnimationPlayer"]
+unique_name_in_owner = true
+script = ExtResource( 16 )
+Sound = ExtResource( 19 )
 
 [node name="BodyShape" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true

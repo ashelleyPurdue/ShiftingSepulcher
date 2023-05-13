@@ -268,6 +268,11 @@ namespace ShiftingSepulcher
             private float _startRotDeg;
             private float _targetRotDeg;
 
+            private AudioStreamPlayer _dragSound => Owner.GetNode<AudioStreamPlayer>("%HammerDrag");
+            private LingeringAudioStreamPlayer _swishSound => Owner.GetNode<LingeringAudioStreamPlayer>("%SpinSwish");
+
+            private int _swishesPlayed;
+
             public override void _StateEntered()
             {
                 base._StateEntered();
@@ -277,6 +282,9 @@ namespace ShiftingSepulcher
 
                 _startRotDeg = Owner.RotationDegrees;
                 _targetRotDeg = _startRotDeg + (360 * Owner.SpinAttackRevolutions);
+                _dragSound.Play();
+
+                _swishesPlayed = 0;
             }
 
             public override void _PhysicsProcess(float delta)
@@ -290,11 +298,27 @@ namespace ShiftingSepulcher
                     _targetRotDeg,
                     t
                 );
+
+                PlaySwishSounds(t);
             }
 
             public override void _StateExited()
             {
                 Owner._spinHitBox.Enabled = false;
+                _dragSound.Stop();
+            }
+
+            private void PlaySwishSounds(float t)
+            {
+                int swishCount = (int)((t * 1.5f) * Owner.SpinAttackRevolutions);
+                swishCount = Mathf.Clamp(swishCount, 0, Owner.SpinAttackRevolutions);
+                swishCount++;
+
+                if (_swishesPlayed < swishCount)
+                {
+                    _swishesPlayed++;
+                    _swishSound.Play();
+                }
             }
         }
 

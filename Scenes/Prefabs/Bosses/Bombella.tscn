@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=2]
+[gd_scene load_steps=55 format=2]
 
 [ext_resource path="res://Scripts/MiscNodes/HurtBox.cs" type="Script" id=1]
 [ext_resource path="res://Audio/SFX/SwordDamageOwWithSlime.wav" type="AudioStream" id=2]
@@ -12,7 +12,6 @@
 [ext_resource path="res://Scripts/Bosses/Bombella.cs" type="Script" id=10]
 [ext_resource path="res://Scripts/MiscNodes/MusicServiceAccessor.cs" type="Script" id=11]
 [ext_resource path="res://Scenes/Models/ShadowModel.tscn" type="PackedScene" id=12]
-[ext_resource path="res://Fonts/The Wild Breath of Zelda.otf" type="DynamicFontData" id=13]
 [ext_resource path="res://Scripts/MiscNodes/LingeringAudioStreamPlayer.cs" type="Script" id=14]
 [ext_resource path="res://Sprites/OutlinedCircle.svg" type="Texture" id=15]
 [ext_resource path="res://Scenes/Renderers/Circle2D.tscn" type="PackedScene" id=16]
@@ -24,6 +23,7 @@
 [ext_resource path="res://Scripts/Components/KnockbackableVelocityComponent.cs" type="Script" id=22]
 [ext_resource path="res://Scripts/Components/EnemyComponent.cs" type="Script" id=23]
 [ext_resource path="res://Scripts/Components/HurtFlasherComponent.cs" type="Script" id=24]
+[ext_resource path="res://Scenes/Prefabs/UI/Widgets/BossTitleText.tscn" type="PackedScene" id=25]
 [ext_resource path="res://Scripts/Components/HealthPointsComponent.cs" type="Script" id=26]
 [ext_resource path="res://Audio/Music/BossIntro.tres" type="Resource" id=27]
 [ext_resource path="res://Audio/Music/BossMusic.tres" type="Resource" id=28]
@@ -31,10 +31,6 @@
 
 [sub_resource type="CircleShape2D" id=11]
 radius = 32.0
-
-[sub_resource type="DynamicFont" id=33]
-size = 100
-font_data = ExtResource( 13 )
 
 [sub_resource type="Animation" id=12]
 resource_name = "DazedLoop"
@@ -801,7 +797,7 @@ tracks/12/keys = {
 "values": [ false, true, false ]
 }
 tracks/13/type = "value"
-tracks/13/path = NodePath("CanvasLayer/BossNameText:visible")
+tracks/13/path = NodePath("CanvasLayer/BossTitleText:visible")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/imported = false
@@ -813,7 +809,7 @@ tracks/13/keys = {
 "values": [ false, true ]
 }
 tracks/14/type = "value"
-tracks/14/path = NodePath("CanvasLayer/BossNameText:modulate")
+tracks/14/path = NodePath("CanvasLayer/BossTitleText:modulate")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/imported = false
@@ -1555,7 +1551,7 @@ tracks/44/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 tracks/45/type = "value"
-tracks/45/path = NodePath("CanvasLayer/BossNameText:visible")
+tracks/45/path = NodePath("CanvasLayer/BossTitleText:modulate")
 tracks/45/interp = 1
 tracks/45/loop_wrap = true
 tracks/45/imported = false
@@ -1564,10 +1560,10 @@ tracks/45/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ false ]
+"values": [ Color( 1, 1, 1, 1 ) ]
 }
 tracks/46/type = "value"
-tracks/46/path = NodePath("CanvasLayer/BossNameText:modulate")
+tracks/46/path = NodePath("CanvasLayer/BossTitleText:visible")
 tracks/46/interp = 1
 tracks/46/loop_wrap = true
 tracks/46/imported = false
@@ -1576,7 +1572,7 @@ tracks/46/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ) ]
+"values": [ false ]
 }
 tracks/47/type = "value"
 tracks/47/path = NodePath("BossHealthBar:visible")
@@ -2414,23 +2410,9 @@ thing_with_health = NodePath("../HealthPointsComponent")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="BossNameText" type="Label" parent="CanvasLayer"]
+[node name="BossTitleText" parent="CanvasLayer" instance=ExtResource( 25 )]
 visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -256.0
-margin_top = 52.0
-margin_right = 244.0
-margin_bottom = 157.0
-custom_colors/font_color = Color( 0.819608, 0.803922, 0.709804, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_constants/shadow_offset_x = 4
-custom_constants/shadow_offset_y = 5
-custom_fonts/font = SubResource( 33 )
 text = "Bombella"
-align = 1
 
 [node name="AttackPatterns" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true

@@ -48,7 +48,7 @@ namespace ShiftingSepulcher
 
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
 
-        private Node2D _aggroTarget;
+        private Player _aggroTarget;
 
         private StateMachine _sm;
 
@@ -115,12 +115,18 @@ namespace ShiftingSepulcher
             public override void _StateEntered()
             {
                 Owner._animator.ResetAndPlay("Intro");
+                Owner._aggroTarget.FreezeForCutscene();
             }
 
             public override void _PhysicsProcess(float delta)
             {
                 if (!Owner._animator.IsPlaying())
                     ChangeState(Owner.Idle);
+            }
+
+            public override void _StateExited()
+            {
+                Owner._aggroTarget.UnfreezeForCutscene();
             }
         }
 

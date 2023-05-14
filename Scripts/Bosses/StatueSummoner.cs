@@ -75,6 +75,7 @@ namespace ShiftingSepulcher
 
 
         // Methods for the AI to call
+        public void StartIntro() => _sm.ChangeState(Intro);
         public void StartLeap() => _sm.ChangeState(LeapRising);
         public void StartHammerSwing() => _sm.ChangeState(AimingHammer);
         public void StartSpinAttack() => _sm.ChangeState(SpinAttackAiming);
@@ -105,6 +106,21 @@ namespace ShiftingSepulcher
             {
                 Owner.ResetCollision();
                 Owner.Visible = true;
+            }
+        }
+
+        private readonly IState Intro = new IntroState();
+        private class IntroState : State<StatueSummoner>
+        {
+            public override void _StateEntered()
+            {
+                Owner._animator.ResetAndPlay("Intro");
+            }
+
+            public override void _PhysicsProcess(float delta)
+            {
+                if (!Owner._animator.IsPlaying())
+                    ChangeState(Owner.Idle);
             }
         }
 

@@ -13,7 +13,7 @@ namespace ShiftingSepulcher
         private static Content _content = new Content();
         private class Content
         {
-            public int MaxHealth = 6;
+            public int MaxHealth = 1;
 
             public HashSet<int> HeldKeys = new HashSet<int>();
             public int Gold;

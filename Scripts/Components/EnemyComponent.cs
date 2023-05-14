@@ -55,12 +55,18 @@ namespace ShiftingSepulcher
 
         public void OnRoomEnter()
         {
+            StatueSummonerAI.LogPos(Entity, "Before OnRoomEnter");
+
             if (!IsDead)
                 Respawn();
+
+            StatueSummonerAI.LogPos(Entity, "After OnRoomEnter");
         }
 
         public void Respawn()
         {
+            StatueSummonerAI.LogPos(Entity, "Before Respawn()");
+
             if (IsDead && DiesPermanently)
                 return;
 
@@ -71,6 +77,8 @@ namespace ShiftingSepulcher
                 Entity.Position = _spawnPos;
 
             EmitSignal(nameof(Respawning));
+
+            StatueSummonerAI.LogPos(Entity, "After Respawn()");
         }
 
         public void OnTookDamage()

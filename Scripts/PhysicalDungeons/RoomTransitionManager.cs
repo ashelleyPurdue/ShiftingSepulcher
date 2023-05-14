@@ -162,13 +162,23 @@ namespace ShiftingSepulcher
             _prevRoom?.SetPaused(true); // _prevRoom is null during the first transition
 
             // Play the transition animation, now that it's been set up
+
+            StatueSummonerAI.LogPos(_activeRoom, "Before starting transition animation");
+            StatueSummonerAI.LogPos(_prevRoom, "Before starting transition animation");
             _transitionAnimator.ResetAndPlay(anim.ToString());
+            StatueSummonerAI.LogPos(_activeRoom, "After starting transition animation");
+            StatueSummonerAI.LogPos(_prevRoom, "After starting transition animation");
+
             _camera.GlobalPosition = position;
         }
 
         private void TransitionAnimationFinished()
         {
+            StatueSummonerAI.LogPos(_activeRoom, "Before TransitionAnimationFinished");
+            StatueSummonerAI.LogPos(_prevRoom, "Before TransitionAnimationFinished");
+
             _activeRoomHolder.GlobalPosition = _nextRoomTexture.GlobalPosition;
+
             ReparentNode(_activeRoom, _activeRoomHolder);
             UnparentNode(_prevRoom);
 
@@ -182,6 +192,9 @@ namespace ShiftingSepulcher
             {
                 node.OnRoomTransitionFinished();
             }
+
+            StatueSummonerAI.LogPos(_activeRoom, "After TransitionAnimationFinished");
+            StatueSummonerAI.LogPos(_prevRoom, "After TransitionAnimationFinished");
         }
 
         private Vector2 GetRelativePosition(Node2D parent, Node2D descendant)
@@ -201,16 +214,22 @@ namespace ShiftingSepulcher
 
         private void ReparentNode(Node node, Node newParent)
         {
+            StatueSummonerAI.LogPos(node, "Before ReparentNode");
+
             if (node == null)
                 return;
 
             node.GetParent()?.RemoveChild(node);
             newParent.AddChild(node);
+
+            StatueSummonerAI.LogPos(node, "After ReparentNode");
         }
 
         private void UnparentNode(Node node)
         {
+            StatueSummonerAI.LogPos(node, "Before UnparentNode");
             node?.GetParent()?.RemoveChild(node);
+            StatueSummonerAI.LogPos(node, "After UnparentNode");
         }
     }
 }

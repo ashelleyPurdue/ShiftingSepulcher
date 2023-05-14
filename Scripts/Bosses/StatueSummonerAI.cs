@@ -27,6 +27,25 @@ namespace ShiftingSepulcher
             AddChild(_coroutine);
         }
 
+        public override void _EnterTree()
+        {
+            GD.PushWarning($"After entering tree: {Entity.Position}");
+        }
+
+        public override void _ExitTree()
+        {
+            GD.PushWarning($"ExitTree: {Entity.Position}");
+        }
+
+        public static void LogPos(Node n, string msg)
+        {
+            var ss = n?.FirstDescendantOfType<StatueSummonerAI>();
+            if (ss == null)
+                return;
+
+            GD.PushWarning($"{msg}: {ss.Entity.Position}");
+        }
+
         public void OnRespawning()
         {
         }

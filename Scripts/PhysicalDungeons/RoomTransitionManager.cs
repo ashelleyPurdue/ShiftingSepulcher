@@ -172,6 +172,15 @@ namespace ShiftingSepulcher
             _camera.GlobalPosition = position;
         }
 
+        public override void _Process(float delta)
+        {
+            if (_transitionAnimator.IsPlaying())
+            {
+                StatueSummonerAI.LogPos(_activeRoom, "During transition animation");
+                StatueSummonerAI.LogPos(_prevRoom, "During transition animation");
+            }
+        }
+
         private void TransitionAnimationFinished()
         {
             StatueSummonerAI.LogPos(_activeRoom, "Before TransitionAnimationFinished");

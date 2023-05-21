@@ -33,7 +33,7 @@ namespace ShiftingSepulcher
 
         private Room2D _startRoom;
         private Room2D _activeRoom;
-        private Room2D _prevRoom;
+        private Room2D _prevRoom;   // NOTE: This is null during the first transition
 
         private IEnumerable<Room2D> _roomsToRespawn;
 
@@ -113,15 +113,10 @@ namespace ShiftingSepulcher
                 node.OnRoomEnter();
             }
 
-            // Freeze the player during the transition, to prevent them from
-            // taking advantage of the fact that the walls are intangible during
-            // the transition animation.
-            var player = GetTree().FindPlayer();
-            player.FreezeForCutscene();
-
             // Force the player to drop whatever object they're holding, to
             // prevent them from carrying objects between rooms.
             // Otherwise, players would be able to cheat at puzzles.
+            var player = GetTree().FindPlayer();
             player.ReleaseHeldObject();
 
             // Put the next and previous rooms inside separate viewports, so they
@@ -157,9 +152,24 @@ namespace ShiftingSepulcher
             _previousRoomTexture.GlobalPosition = _activeRoomHolder.GlobalPosition;
             _nextRoomTexture.GlobalPosition = position;
 
-            // Freeze the previous room, and unfreeze the next room
-            _activeRoom.SetPaused(false);
-            _prevRoom?.SetPaused(true); // _prevRoom is null during the first transition
+            // Pause the game during the transition, to prevent the player
+            // from walking around and taking advantage of the fact that the
+            // walls are temporarily intangible.
+            //
+            // The animator and camera are flagged as being un-pausable, so
+            // the transition will still play while the game is paused.
+            PauseManager.RequestPause(this);
+
+            // HACK: "Process" each node in the room once, to ensure certain
+            // visual effects that occur in the "Process" function are started
+            // before the player sees them.
+            //
+            // This is necessary because we just paused the game, which causes
+            // "Process" to not get called.
+            foreach (var node in room.AllDescendants())
+            {
+                node._Process(0);
+            }
 
             // Play the transition animation, now that it's been set up
             _transitionAnimator.ResetAndPlay(anim.ToString());
@@ -172,8 +182,7 @@ namespace ShiftingSepulcher
             ReparentNode(_activeRoom, _activeRoomHolder);
             UnparentNode(_prevRoom);
 
-            var player = GetTree().FindPlayer();
-            player.UnfreezeForCutscene();
+            PauseManager.AllowUnpause(this);
 
             // Notify nodes that the transition is finished
             var nodesToNotify = _activeRoom

@@ -288,11 +288,13 @@ volume_db = 3.99
 bus = "Sound"
 
 [node name="Camera" type="Camera2D" parent="." groups=["Camera"]]
+pause_mode = 2
 unique_name_in_owner = true
 current = true
 smoothing_enabled = true
 
 [node name="RoomTransitionAnimator" type="AnimationPlayer" parent="."]
+pause_mode = 2
 unique_name_in_owner = true
 anims/Fade = SubResource( 1 )
 anims/RESET = SubResource( 2 )

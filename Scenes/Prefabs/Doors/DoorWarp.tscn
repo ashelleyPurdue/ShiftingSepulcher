@@ -13,6 +13,7 @@ extents = Vector2( 16, 32 )
 extents = Vector2( 16, 32 )
 
 [node name="DoorWarp" type="Area2D"]
+z_index = -1
 script = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

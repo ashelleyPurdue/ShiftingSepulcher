@@ -19,5 +19,6 @@ shape = SubResource( 1 )
 [node name="Visuals" type="Polygon2D" parent="."]
 unique_name_in_owner = true
 position = Vector2( 0, 32 )
+z_index = -1
 color = Color( 0.854902, 0.25098, 1, 0.454902 )
 polygon = PoolVector2Array( -64, -32, 64, -32, 64, 0, -64, 0 )

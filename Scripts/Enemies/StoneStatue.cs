@@ -2,12 +2,17 @@ using Godot;
 
 namespace ShiftingSepulcher
 {
-    public class StoneStatue : BaseComponent<KinematicBody2D>
+    public class StoneStatue : KinematicBody2D
     {
         [Export] public float HopDistance = 32;
         [Export] public float HopDuration = 0.2f;
-        [Export] public float TimeBetweenHops = 1;
+        [Export] public float TimeBetweenHops = 0.4f;
         [Export] public float WakeUpTime = 1;
+
+        // A tool script built into the scene reads this property to adjust the
+        // radius of a circle shape.  This allows the radius to be visible in
+        // the editor without having to make _this_ script a [Tool].
+        [Export] public float AggroRadius = 64;
 
         private readonly StateMachine _sm;
 
@@ -28,7 +33,7 @@ namespace ShiftingSepulcher
             _sm = new StateMachine(this);
         }
 
-        public override void _EntityReady()
+        public override void _Ready()
         {
             _velocity = this.GetComponent<KnockbackableVelocityComponent>();
             _sm.ChangeState(Idle);
@@ -42,6 +47,7 @@ namespace ShiftingSepulcher
 
         public void OnRespawning()
         {
+            _visuals.Rotation = 0;
             _sm.ChangeState(Idle);
         }
 
@@ -76,6 +82,11 @@ namespace ShiftingSepulcher
         private readonly IState Idle = new IdleState();
         private class IdleState : State<StoneStatue>
         {
+            public override void _StateEntered()
+            {
+                Owner._animator.Reset();
+            }
+
             public override void _PhysicsProcess(float delta)
             {
                 if (Owner.TryAcquireAggroTarget())
@@ -145,7 +156,7 @@ namespace ShiftingSepulcher
 
                 float speed = Owner.HopDistance / Owner.HopDuration;
                 Vector2 targetPos = Owner._lastAggroTargetPos;
-                Vector2 dir = Owner.Entity.GlobalPosition.DirectionTo(targetPos);
+                Vector2 dir = Owner.GlobalPosition.DirectionTo(targetPos);
                 Owner._velocity.WalkVelocity = speed * dir;
 
                 _startRot = _rot;

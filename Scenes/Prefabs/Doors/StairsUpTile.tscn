@@ -7,6 +7,7 @@
 extents = Vector2( 16, 16 )
 
 [node name="StairsUpTile" type="Area2D"]
+z_index = -1
 script = ExtResource( 1 )
 TransitionAnimation = 1
 

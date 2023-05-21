@@ -278,7 +278,7 @@ viewport_path = NodePath("PreviousRoomViewport")
 [sub_resource type="ViewportTexture" id=5]
 viewport_path = NodePath("NextRoomViewport")
 
-[node name="RoomTransitionManager" type="Node2D"]
+[node name="RoomTransitionManager" type="YSort"]
 unique_name_in_owner = true
 script = ExtResource( 1 )
 
@@ -299,7 +299,7 @@ anims/RESET = SubResource( 2 )
 anims/StairsDown = SubResource( 7 )
 anims/StairsUp = SubResource( 6 )
 
-[node name="ActiveRoomHolder" type="Node2D" parent="."]
+[node name="ActiveRoomHolder" type="YSort" parent="."]
 unique_name_in_owner = true
 
 [node name="PreviousRoomViewport" type="Viewport" parent="."]

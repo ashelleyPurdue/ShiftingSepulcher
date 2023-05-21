@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Scenes/Models/StoneStatueModel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/ComponentCollections/StandardKnockbackableEnemyComponents.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Audio/SFX/StoneStatueHopSlam.wav" type="AudioStream" id=6]
 [ext_resource path="res://Audio/SFX/StoneStatueHopRise.wav" type="AudioStream" id=7]
 [ext_resource path="res://Audio/SFX/StoneStatueEyes.wav" type="AudioStream" id=8]
+[ext_resource path="res://Scenes/ComponentCollections/StandardLootDroppers.tscn" type="PackedScene" id=9]
 
 [sub_resource type="Animation" id=5]
 resource_name = "Death"
@@ -241,20 +242,27 @@ resource_name = "BodyShape"
 radius = 16.0
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 64.0
+radius = 1.0
+
+[sub_resource type="GDScript" id=14]
+script/source = "tool
+extends CollisionShape2D
+
+func _physics_process(delta):
+    scale = Vector2.ONE * owner.AggroRadius
+"
 
 [node name="StoneStatue" type="KinematicBody2D"]
 collision_layer = 0
 collision_mask = 3
+script = ExtResource( 3 )
 
 [node name="StandardKnockbackableEnemyComponents" parent="." instance=ExtResource( 2 )]
 
 [node name="HealthPointsComponent" parent="StandardKnockbackableEnemyComponents" index="1"]
 MaxHealth = 3
 
-[node name="AI" type="Node" parent="."]
-script = ExtResource( 3 )
-TimeBetweenHops = 0.4
+[node name="StandardLootDroppers" parent="." instance=ExtResource( 9 )]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
@@ -278,7 +286,6 @@ stream = ExtResource( 8 )
 bus = "Sound"
 
 [node name="DustCloud" type="Particles2D" parent="."]
-z_index = 1
 emitting = false
 amount = 11
 lifetime = 0.75
@@ -302,7 +309,9 @@ shape = SubResource( 1 )
 unique_name_in_owner = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AggroCircle"]
+scale = Vector2( 64, 64 )
 shape = SubResource( 2 )
+script = SubResource( 14 )
 
 [node name="HitBox" type="Area2D" parent="."]
 unique_name_in_owner = true
@@ -322,7 +331,7 @@ HealthPointsPath = NodePath("../StandardKnockbackableEnemyComponents/HealthPoint
 [node name="CircleShape" type="CollisionShape2D" parent="HurtBox"]
 shape = SubResource( 1 )
 
-[connection signal="Dead" from="StandardKnockbackableEnemyComponents/EnemyComponent" to="AI" method="OnDead"]
-[connection signal="Respawning" from="StandardKnockbackableEnemyComponents/EnemyComponent" to="AI" method="OnRespawning"]
+[connection signal="Dead" from="StandardKnockbackableEnemyComponents/EnemyComponent" to="." method="OnDead"]
+[connection signal="Respawning" from="StandardKnockbackableEnemyComponents/EnemyComponent" to="." method="OnRespawning"]
 
 [editable path="StandardKnockbackableEnemyComponents"]

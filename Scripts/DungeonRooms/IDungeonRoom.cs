@@ -20,8 +20,6 @@ namespace ShiftingSepulcher
             Dictionary<DungeonTreeRoom, Room2D> treeRoomToRealRoom,
             ShortcutDoorMap shortcutDoorMap
         );
-
-        bool IsChallengeSolved();
     }
 
     public class ShortcutDoorMap

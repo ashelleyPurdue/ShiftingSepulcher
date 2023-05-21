@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Audio/SFX/SwordDamageOwWithSlime.wav" type="AudioStream" id=1]
 [ext_resource path="res://Scripts/MiscNodes/HurtBox.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/Enemies/MiniTilemancer.cs" type="Script" id=3]
+[ext_resource path="res://Scenes/ComponentCollections/StandardLootDroppers.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scripts/MiscNodes/HitBox.cs" type="Script" id=5]
 [ext_resource path="res://Scenes/Prefabs/Projectiles/TilemancerTile.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/ComponentCollections/StandardKnockbackableEnemyComponents.tscn" type="PackedScene" id=9]
@@ -15,7 +16,7 @@ resource_name = "Cycle"
 length = 3.0
 loop = true
 tracks/0/type = "method"
-tracks/0/path = NodePath("AI")
+tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -32,7 +33,7 @@ tracks/0/keys = {
 } ]
 }
 tracks/1/type = "method"
-tracks/1/path = NodePath("AI")
+tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -184,8 +185,6 @@ radius = 16.0
 
 [node name="MiniTilemancer" type="KinematicBody2D"]
 collision_layer = 0
-
-[node name="AI" type="Node" parent="."]
 script = ExtResource( 3 )
 TilePrefab = ExtResource( 6 )
 
@@ -193,6 +192,8 @@ TilePrefab = ExtResource( 6 )
 
 [node name="HealthPointsComponent" parent="StandardKnockbackableEnemyComponents" index="1"]
 MaxHealth = 2
+
+[node name="StandardLootDroppers" parent="." instance=ExtResource( 4 )]
 
 [node name="HurtBox" type="Area2D" parent="."]
 script = ExtResource( 2 )
@@ -263,7 +264,7 @@ stream = ExtResource( 1 )
 pitch_scale = 0.89
 bus = "Sound"
 
-[connection signal="Dead" from="StandardKnockbackableEnemyComponents/EnemyComponent" to="AI" method="OnDead"]
-[connection signal="Respawning" from="StandardKnockbackableEnemyComponents/EnemyComponent" to="AI" method="OnRespawning"]
+[connection signal="Dead" from="StandardKnockbackableEnemyComponents/EnemyComponent" to="." method="OnDead"]
+[connection signal="Respawning" from="StandardKnockbackableEnemyComponents/EnemyComponent" to="." method="OnRespawning"]
 
 [editable path="StandardKnockbackableEnemyComponents"]

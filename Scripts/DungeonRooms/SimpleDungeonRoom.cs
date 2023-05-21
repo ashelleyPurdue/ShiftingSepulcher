@@ -29,22 +29,6 @@ namespace ShiftingSepulcher
             return GetNode<Node2D>($"%DoorSpawns/{dir}");
         }
 
-        public override void _PhysicsProcess(float deltaTime)
-        {
-            // Detect when the challenge is solved
-            if (!_sentChallengeSolvedSignal && IsChallengeSolved())
-            {
-                _sentChallengeSolvedSignal = true;
-
-                if (_challenges.Any())
-                {
-                    EmitSignal(nameof(ChallengeSolved));
-                }
-
-                OnChallengeSolved();
-            }
-        }
-
         public virtual void Populate(DungeonLayoutRoom layoutRoom)
         {
             LayoutRoom = layoutRoom;
@@ -155,22 +139,16 @@ namespace ShiftingSepulcher
                 Create<DoorBars>(spawn, DoorPrefabs.Bars);
         }
 
-        protected T Create<T>(Node2D parent, PackedScene prefab) where T : Node2D
+        protected T Create<T>(Node2D spawnPoint, PackedScene prefab) where T : Node2D
         {
             var node = prefab.Instance<T>();
-            parent.AddChild(node);
+            AddChild(node);
+            node.Transform = spawnPoint.GetTransformRelativeToAncestor(this);
+
             return node;
         }
 
-        public virtual bool IsChallengeSolved()
-        {
-            if (_challenges.Length == 0)
-                return true;
-
-            return _challenges.All(c => c.IsSolved());
-        }
-
-        private void OnChallengeSolved()
+        public void OnChallengeSolved()
         {
             // Open all barred doors
             foreach (var bars in this.AllDescendantsOfType<DoorBars>())

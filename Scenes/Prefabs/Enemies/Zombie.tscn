@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scripts/MiscNodes/HurtBox.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/Enemies/Zombie.cs" type="Script" id=2]
+[ext_resource path="res://Scenes/ComponentCollections/StandardLootDroppers.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/MiscNodes/HitBox.cs" type="Script" id=4]
 [ext_resource path="res://Scenes/Models/ZombieModel.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/ComponentCollections/StandardKnockbackableEnemyComponents.tscn" type="PackedScene" id=8]
@@ -264,14 +265,14 @@ radius = 14.0
 [node name="Zombie" type="KinematicBody2D"]
 collision_layer = 0
 collision_mask = 3
-
-[node name="AI" type="Node" parent="."]
 script = ExtResource( 2 )
 
 [node name="StandardKnockbackableEnemyComponents" parent="." instance=ExtResource( 8 )]
 
 [node name="HealthPointsComponent" parent="StandardKnockbackableEnemyComponents" index="1"]
 MaxHealth = 2
+
+[node name="StandardLootDroppers" parent="." instance=ExtResource( 3 )]
 
 [node name="HurtBox" type="Area2D" parent="."]
 script = ExtResource( 1 )
@@ -308,7 +309,7 @@ unique_name_in_owner = true
 
 [node name="ZombieModel" parent="Visuals" instance=ExtResource( 6 )]
 
-[connection signal="body_entered" from="VisionCircle" to="AI" method="OnVisionCircleBodyEntered" flags=3]
+[connection signal="body_entered" from="VisionCircle" to="." method="OnVisionCircleBodyEntered" flags=3]
 
 [editable path="StandardKnockbackableEnemyComponents"]
 [editable path="Visuals/ZombieModel"]

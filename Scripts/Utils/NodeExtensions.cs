@@ -185,5 +185,46 @@ namespace ShiftingSepulcher
                 ((Node)child).SetPaused(paused);
             }
         }
+
+        /// <summary>
+        /// Returns the position of the given descendant relative to this node,
+        /// as if the descendant were a direct child.
+        ///
+        /// Throws an error if the given node is not a descendant of this node.
+        /// </summary>
+        /// <param name="descendant"></param>
+        /// <returns></returns>
+        public static Vector2 GetPosRelativeToAncestor(this Node2D descendant, Node2D ancestor)
+        {
+            return descendant.GetTransformRelativeToAncestor(ancestor).origin;
+        }
+
+        public static void SetPosRelativeToAncestor(this Node2D descendant, Node2D ancestor, Vector2 pos)
+        {
+            var currentPos = descendant.GetPosRelativeToAncestor(ancestor);
+            var diff = pos - currentPos;
+            descendant.Position += diff;
+        }
+
+        public static Transform2D GetTransformRelativeToAncestor(this Node2D descendant, Node2D ancestor)
+        {
+            Transform2D transform = Transform2D.Identity;
+
+            Node2D current = descendant;
+            while (current != ancestor)
+            {
+                if (current == null)
+                    throw new Exception($"{descendant.Name} is not a descendant of {ancestor.Name}");
+
+                // Godot's documentation suggests that I should be multiplying
+                // the child by the parent, instead of multiplying the parent
+                // by the child.  That seems to be backwards, though?
+                transform = current.Transform * transform;
+
+                current = current.GetParentOrNull<Node2D>();
+            }
+
+            return transform;
+        }
     }
 }

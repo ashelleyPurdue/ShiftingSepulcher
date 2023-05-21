@@ -14,6 +14,7 @@ namespace ShiftingSepulcher
         /// </summary>
         /// <value></value>
         [Export] public bool DiesPermanently = false;
+        [Export] public bool DisableLootDrops = false;
 
         public bool IsDead {get; private set;}
 
@@ -79,8 +80,11 @@ namespace ShiftingSepulcher
             {
                 IsDead = true;
 
-                foreach (var lootDropper in this.GetComponents<ILootDropperComponent>())
-                    lootDropper.DropLoot();
+                if (!DisableLootDrops)
+                {
+                    foreach (var lootDropper in this.GetComponents<ILootDropperComponent>())
+                        lootDropper.DropLoot();
+                }
 
                 EmitSignal(nameof(Dead));
             }

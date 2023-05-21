@@ -27,13 +27,13 @@ namespace ShiftingSepulcher
         {
             _isOpen = true;
             _defaultFocusedOption.GrabFocus();
-            GetTree().Paused = true;
+            PauseManager.RequestPause(this);
         }
 
         public void Unpause()
         {
             _isOpen = false;
-            GetTree().Paused = false;
+            PauseManager.AllowUnpause(this);
 
             GetNode<Popup>("%SettingsMenu").Visible = false;
         }

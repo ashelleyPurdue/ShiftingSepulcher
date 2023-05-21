@@ -59,6 +59,7 @@ config/windows_native_icon="res://icon.ico"
 
 [autoload]
 
+PauseManager="*res://Scenes/AutoLoadSingletons/PauseManager.tscn"
 MusicService="*res://Scenes/AutoLoadSingletons/MusicService.tscn"
 FallbackRoom2D="*res://Scenes/AutoLoadSingletons/FallbackRoom2D.tscn"
 ControllerIcons="*res://addons/controller_icons/ControllerIcons.gd"

@@ -81,6 +81,11 @@ namespace ShiftingSepulcher
         private readonly IState Idle = new IdleState();
         private class IdleState : State<StoneStatue>
         {
+            public override void _StateEntered()
+            {
+                Owner._animator.Reset();
+            }
+
             public override void _PhysicsProcess(float delta)
             {
                 if (Owner.TryAcquireAggroTarget())

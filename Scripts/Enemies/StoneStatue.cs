@@ -47,6 +47,7 @@ namespace ShiftingSepulcher
 
         public void OnRespawning()
         {
+            _visuals.Rotation = 0;
             _sm.ChangeState(Idle);
         }
 

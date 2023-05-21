@@ -20,7 +20,6 @@ namespace ShiftingSepulcher
         public DungeonLayoutRoom LayoutRoom {get; protected set;}
 
         private IChallenge[] _challenges;
-        private bool _sentChallengeSolvedSignal = false;
 
         private KeyChest _keyChest = null;
 
@@ -116,7 +115,7 @@ namespace ShiftingSepulcher
                 var doorLock = Create<DoorLock>(spawn, DoorPrefabs.Lock);
                 doorLock.KeyId = lockedDoor.KeyId;
             }
-            else if (treeDoor is ChallengeDoor challengeDoor)
+            else if (treeDoor is ChallengeDoor challengeDoor && LayoutRoom.TreeRoom.ChallengeType != ChallengeType.None)
             {
                 Create<DoorBars>(spawn, DoorPrefabs.Bars);
             }

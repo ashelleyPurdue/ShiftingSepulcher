@@ -33,7 +33,7 @@ namespace ShiftingSepulcher
 
         private Room2D _startRoom;
         private Room2D _activeRoom;
-        private Room2D _prevRoom;
+        private Room2D _prevRoom;   // NOTE: This is null during the first transition
 
         private IEnumerable<Room2D> _roomsToRespawn;
 
@@ -113,15 +113,10 @@ namespace ShiftingSepulcher
                 node.OnRoomEnter();
             }
 
-            // Freeze the player during the transition, to prevent them from
-            // taking advantage of the fact that the walls are intangible during
-            // the transition animation.
-            var player = GetTree().FindPlayer();
-            player.FreezeForCutscene();
-
             // Force the player to drop whatever object they're holding, to
             // prevent them from carrying objects between rooms.
             // Otherwise, players would be able to cheat at puzzles.
+            var player = GetTree().FindPlayer();
             player.ReleaseHeldObject();
 
             // Put the next and previous rooms inside separate viewports, so they
@@ -157,13 +152,15 @@ namespace ShiftingSepulcher
             _previousRoomTexture.GlobalPosition = _activeRoomHolder.GlobalPosition;
             _nextRoomTexture.GlobalPosition = position;
 
-            // Freeze the previous room, and unfreeze the next room
+            // Pause the game during the transition, to prevent the player
+            // from walking around and taking advantage of the fact that the
+            // walls are temporarily intangible.
+            //
+            // The animator and camera are flagged as being un-pausable, so
+            // the transition will still play while the game is paused.
             GetTree().Paused = true;
-            // _activeRoom.SetPaused(false);
-            // _prevRoom?.SetPaused(true); // _prevRoom is null during the first transition
 
             // Play the transition animation, now that it's been set up
-
             StatueSummonerAI.LogPos(_activeRoom, "Before starting transition animation");
             StatueSummonerAI.LogPos(_prevRoom, "Before starting transition animation");
             _transitionAnimator.ResetAndPlay(anim.ToString());
@@ -184,8 +181,6 @@ namespace ShiftingSepulcher
 
         private void TransitionAnimationFinished()
         {
-            GetTree().Paused = false;
-
             StatueSummonerAI.LogPos(_activeRoom, "Before TransitionAnimationFinished");
             StatueSummonerAI.LogPos(_prevRoom, "Before TransitionAnimationFinished");
 
@@ -194,8 +189,7 @@ namespace ShiftingSepulcher
             ReparentNode(_activeRoom, _activeRoomHolder);
             UnparentNode(_prevRoom);
 
-            var player = GetTree().FindPlayer();
-            player.UnfreezeForCutscene();
+            GetTree().Paused = false;
 
             // Notify nodes that the transition is finished
             var nodesToNotify = _activeRoom

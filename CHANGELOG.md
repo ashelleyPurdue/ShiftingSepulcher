@@ -1,3 +1,11 @@
+# Unreleased
+## Bug fixes
+* Fixed stone statues becoming invisible after respawning if the player dies
+    after killing one.
+
+* Fixed a number of instances where certain objects would be drawn "above"
+    other objects when they logically shouldn't.
+
 # 1.1.1: 2023-04-03
 
 ## New Content

@@ -158,8 +158,9 @@ namespace ShiftingSepulcher
             _nextRoomTexture.GlobalPosition = position;
 
             // Freeze the previous room, and unfreeze the next room
-            _activeRoom.SetPaused(false);
-            _prevRoom?.SetPaused(true); // _prevRoom is null during the first transition
+            GetTree().Paused = true;
+            // _activeRoom.SetPaused(false);
+            // _prevRoom?.SetPaused(true); // _prevRoom is null during the first transition
 
             // Play the transition animation, now that it's been set up
 
@@ -183,6 +184,8 @@ namespace ShiftingSepulcher
 
         private void TransitionAnimationFinished()
         {
+            GetTree().Paused = false;
+
             StatueSummonerAI.LogPos(_activeRoom, "Before TransitionAnimationFinished");
             StatueSummonerAI.LogPos(_prevRoom, "Before TransitionAnimationFinished");
 

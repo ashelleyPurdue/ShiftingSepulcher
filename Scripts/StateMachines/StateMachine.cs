@@ -5,6 +5,8 @@ namespace ShiftingSepulcher
     public class StateMachine : Node
     {
         public IState CurrentState {get; private set;}
+        public bool LogStateChanges = false;
+
         private readonly Node _owner;
 
         public StateMachine(Node owner)
@@ -19,6 +21,11 @@ namespace ShiftingSepulcher
             {
                 state.StateMachine = this;
                 state.Owner = _owner;
+            }
+
+            if (LogStateChanges)
+            {
+                GD.Print($"{_owner.Name}: changing state to {state?.GetType().Name ?? "null"}");
             }
 
             var prevState = CurrentState;

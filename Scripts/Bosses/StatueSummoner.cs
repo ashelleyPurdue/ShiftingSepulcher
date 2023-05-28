@@ -78,6 +78,7 @@ namespace ShiftingSepulcher
         public void StartIntro() => _sm.ChangeState(Intro);
         public void StartLeap() => _sm.ChangeState(LeapRising);
         public void StartHammerSwing() => _sm.ChangeState(AimingHammer);
+        public void StartComboSwing() => _sm.ChangeState(ComboSwingAiming);
         public void StartSpinAttack() => _sm.ChangeState(SpinAttackAiming);
         public void StartLevitating() => _sm.ChangeState(LevitateRising);
 
@@ -263,8 +264,18 @@ namespace ShiftingSepulcher
             public override IState NextState => Owner.Idle;
         }
 
+        private readonly IState ComboSwingAiming = new ComboSwingAimingState();
+        private class ComboSwingAimingState : AimingHammerState
+        {
+            public override void _StateEntered()
+            {
+                base._StateEntered();
+                Owner._animator.ResetAndPlay("ComboSwingAimHammer");
+            }
+        }
+
         private readonly IState SpinAttackAiming = new SpinAttackAimingState();
-        private class SpinAttackAimingState : AimingHammerState
+        private class SpinAttackAimingState : ComboSwingAimingState
         {
             public override IState NextState => Owner.SpinAttackSwingingHammer;
         }

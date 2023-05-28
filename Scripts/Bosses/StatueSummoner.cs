@@ -218,6 +218,7 @@ namespace ShiftingSepulcher
             public override void _StateEntered()
             {
                 base._StateEntered();
+                Owner._animator.ResetAndPlay("AimHammer");
                 _startAngle = Owner.Rotation;
             }
 

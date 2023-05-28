@@ -48,7 +48,7 @@ namespace ShiftingSepulcher
 
         private AnimationPlayer _animator => GetNode<AnimationPlayer>("%AnimationPlayer");
 
-        private Node2D _aggroTarget;
+        private Player _aggroTarget;
 
         private StateMachine _sm;
 
@@ -75,6 +75,7 @@ namespace ShiftingSepulcher
 
 
         // Methods for the AI to call
+        public void StartIntro() => _sm.ChangeState(Intro);
         public void StartLeap() => _sm.ChangeState(LeapRising);
         public void StartHammerSwing() => _sm.ChangeState(AimingHammer);
         public void StartSpinAttack() => _sm.ChangeState(SpinAttackAiming);
@@ -105,6 +106,27 @@ namespace ShiftingSepulcher
             {
                 Owner.ResetCollision();
                 Owner.Visible = true;
+            }
+        }
+
+        private readonly IState Intro = new IntroState();
+        private class IntroState : State<StatueSummoner>
+        {
+            public override void _StateEntered()
+            {
+                Owner._animator.ResetAndPlay("Intro");
+                Owner._aggroTarget.FreezeForCutscene();
+            }
+
+            public override void _PhysicsProcess(float delta)
+            {
+                if (!Owner._animator.IsPlaying())
+                    ChangeState(Owner.Idle);
+            }
+
+            public override void _StateExited()
+            {
+                Owner._aggroTarget.UnfreezeForCutscene();
             }
         }
 

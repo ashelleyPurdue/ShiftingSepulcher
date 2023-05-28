@@ -5,7 +5,7 @@ using Godot;
 
 namespace ShiftingSepulcher
 {
-    public class StatueSummonerAI : BaseComponent<StatueSummoner>
+    public class StatueSummonerAI : BaseComponent<StatueSummoner>, IOnRoomTransitionFinished
     {
         private EnemyComponent _enemy => this.GetComponent<EnemyComponent>();
         private HealthPointsComponent _hp => this.GetComponent<HealthPointsComponent>();
@@ -29,8 +29,12 @@ namespace ShiftingSepulcher
 
         public void OnRespawning()
         {
-            _currentPhase = 0;
-            _coroutine.StartCoroutine(_phases[_currentPhase]);
+            _coroutine.StopCoroutine();
+        }
+
+        public void OnRoomTransitionFinished()
+        {
+            _coroutine.StartCoroutine(PlayingIntro);
         }
 
         public void OnTookDamage()
@@ -50,6 +54,15 @@ namespace ShiftingSepulcher
         public void OnDead()
         {
             _coroutine.StopCoroutine();
+        }
+
+        private async Task PlayingIntro(CancellationToken cancel)
+        {
+            Entity.StartIntro();
+            await ForAttackToFinish(cancel);
+
+            _currentPhase = 0;
+            _coroutine.StartCoroutine(_phases[_currentPhase]);
         }
 
         private async Task NoMinionsPhase(CancellationToken cancel)

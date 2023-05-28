@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://Scenes/Models/StoneStatueModel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Audio/SFX/SwordDamageOwWithSlime.wav" type="AudioStream" id=2]
@@ -21,6 +21,11 @@
 [ext_resource path="res://Audio/SFX/StatueSummonerHammerSwing.wav" type="AudioStream" id=19]
 [ext_resource path="res://Audio/SFX/StatueSummonerHammerSlam.wav" type="AudioStream" id=20]
 [ext_resource path="res://Audio/SFX/StatueSummonerHammerDrag.wav" type="AudioStream" id=21]
+[ext_resource path="res://Scenes/Prefabs/UI/Widgets/BossTitleText.tscn" type="PackedScene" id=22]
+[ext_resource path="res://Audio/SFX/StoneStatueEyes.wav" type="AudioStream" id=23]
+[ext_resource path="res://Scripts/MiscNodes/MusicServiceAccessor.cs" type="Script" id=24]
+[ext_resource path="res://Audio/Music/BossMusic.tres" type="Resource" id=25]
+[ext_resource path="res://Audio/Music/BossIntro.ogg" type="AudioStream" id=26]
 
 [sub_resource type="Animation" id=7]
 resource_name = "HammerSwing"
@@ -90,6 +95,124 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "Intro"
+length = 5.5
+step = 0.025
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimationPlayer/CanvasLayer/BossTitleText:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2.375, 4.225 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ModelScaler/Model:HeightAboveGround")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.75, 1.4 ),
+"transitions": PoolRealArray( 1, 2.46229, 1 ),
+"update": 0,
+"values": [ 160.0, 160.0, 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("ModelScaler/Model:EyeFlareStrength")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 4.2, 4.3, 4.85, 5.275 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 1.0, 1.0, 0.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("AnimationPlayer/CanvasLayer/BossTitleText:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 3.875, 4.225 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("ModelScaler/Model:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 1.4, 1.425, 1.45, 1.475, 1.5, 1.525, 1.55 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 4, 0 ), Vector2( -4, 0 ), Vector2( 4, 0 ), Vector2( -4, 0 ), Vector2( 4, 0 ), Vector2( 0, 0 ) ]
+}
+tracks/5/type = "audio"
+tracks/5/path = NodePath("AnimationPlayer/CutsceneSounds")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 15 )
+}, {
+"end_offset": 0.0305025,
+"start_offset": 0.0,
+"stream": ExtResource( 17 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 23 )
+} ],
+"times": PoolRealArray( 0.875, 1.4, 4.2 )
+}
+tracks/6/type = "method"
+tracks/6/path = NodePath("AnimationPlayer/MusicServiceAccessor")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 5.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "StopSong"
+}, {
+"args": [ ExtResource( 25 ) ],
+"method": "PlaySong"
+} ]
+}
+tracks/7/type = "audio"
+tracks/7/path = NodePath("AnimationPlayer/CutsceneMusic")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"clips": [ {
+"end_offset": 1.40419,
+"start_offset": 0.0,
+"stream": ExtResource( 26 )
+} ],
+"times": PoolRealArray( 2.025 )
 }
 
 [sub_resource type="Animation" id=5]
@@ -266,6 +389,30 @@ tracks/5/keys = {
 "update": 0,
 "values": [ 8.0 ]
 }
+tracks/6/type = "value"
+tracks/6/path = NodePath("AnimationPlayer/CanvasLayer/BossTitleText:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("AnimationPlayer/CanvasLayer/BossTitleText:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
 
 [sub_resource type="Animation" id=8]
 resource_name = "Spinning"
@@ -321,11 +468,15 @@ MinionPrefab = ExtResource( 10 )
 unique_name_in_owner = true
 anims/HammerSwing = SubResource( 7 )
 anims/Idle = SubResource( 2 )
+anims/Intro = SubResource( 10 )
 anims/LeapFalling = SubResource( 5 )
 anims/LeapRecovering = SubResource( 6 )
 anims/LeapRising = SubResource( 3 )
 anims/RESET = SubResource( 4 )
 anims/Spinning = SubResource( 8 )
+
+[node name="MusicServiceAccessor" type="Node" parent="AnimationPlayer"]
+script = ExtResource( 24 )
 
 [node name="FallWhistle" type="Node" parent="AnimationPlayer"]
 script = ExtResource( 16 )
@@ -357,6 +508,21 @@ stream = ExtResource( 21 )
 unique_name_in_owner = true
 script = ExtResource( 16 )
 Sound = ExtResource( 19 )
+
+[node name="CutsceneSounds" type="AudioStreamPlayer" parent="AnimationPlayer"]
+stream = ExtResource( 23 )
+bus = "Sound"
+
+[node name="CutsceneMusic" type="AudioStreamPlayer" parent="AnimationPlayer"]
+stream = ExtResource( 26 )
+bus = "Music"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="AnimationPlayer"]
+
+[node name="BossTitleText" parent="AnimationPlayer/CanvasLayer" instance=ExtResource( 22 )]
+visible = false
+grow_horizontal = 2
+text = "Statue Summoner"
 
 [node name="BodyShape" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true

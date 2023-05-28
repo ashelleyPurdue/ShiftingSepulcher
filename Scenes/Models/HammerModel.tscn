@@ -254,7 +254,6 @@ tracks/9/keys = {
 [node name="HammerModel" type="Node2D"]
 process_priority = 100
 script = ExtResource( 3 )
-HeadRadius = 8.0
 HandleThickness = 2.0
 
 [node name="HeadAngleSlider" type="AnimationPlayer" parent="."]

@@ -10,6 +10,18 @@ namespace ShiftingSepulcher
 
         [Export] public float HandleThickness = 1.1f;
 
+        [Export] public float HeadRotationDeg = 0;
+        [Export]
+        public float HeadTwistAngleDeg
+        {
+            get => _headTwistAngleDeg;
+            set
+            {
+                _headTwistAngleDeg = value;
+                SetHeadAngle((_swingPercent * 180) + _headTwistAngleDeg);
+            }
+        }
+        private float _headTwistAngleDeg = 0;
 
         [Export] public float SwingPercent
         {
@@ -17,12 +29,7 @@ namespace ShiftingSepulcher
             set
             {
                 _swingPercent = value;
-
-                _headAngleSlider.Stop(true);
-                _headAngleSlider.Play("Angle");
-                _headAngleSlider.Advance(_swingPercent);
-                _headAngleSlider.Stop(false); // Allow the animation to be played
-                                              // with in the editor
+                SetHeadAngle((_swingPercent * 180) + _headTwistAngleDeg);
             }
         }
         private float _swingPercent = 0;
@@ -51,7 +58,21 @@ namespace ShiftingSepulcher
                 Mathf.Clamp(SwingPercent, 0, 1)
             );
 
+            _head.RotationDegrees = HeadRotationDeg;
+
             Update();
+        }
+
+        private void SetHeadAngle(float headAngleDeg)
+        {
+            float percent = headAngleDeg / 180;
+            percent = Mathf.PosMod(percent, 1);
+
+            _headAngleSlider.Stop(true);
+            _headAngleSlider.Play("Angle");
+            _headAngleSlider.Advance(percent);
+            _headAngleSlider.Stop(false); // Allow the animation to be played
+                                          // with in the editor
         }
     }
 }

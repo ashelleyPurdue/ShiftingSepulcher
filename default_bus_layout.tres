@@ -5,7 +5,6 @@ resource_name = "Compressor"
 threshold = -4.6
 
 [resource]
-bus/0/send = "CompressedSounds"
 bus/1/name = "Music"
 bus/1/solo = false
 bus/1/mute = false

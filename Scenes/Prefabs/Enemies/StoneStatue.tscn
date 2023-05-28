@@ -280,6 +280,7 @@ bus = "Sound"
 [node name="HopeRiseSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
 volume_db = -5.388
+bus = "Sound"
 
 [node name="EyesSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )

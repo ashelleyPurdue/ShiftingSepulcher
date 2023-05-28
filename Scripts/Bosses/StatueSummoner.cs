@@ -66,6 +66,7 @@ namespace ShiftingSepulcher
         public void OnRespawning()
         {
             _sm.ChangeState(Idle);
+            Rotation = 0;
         }
 
         public void OnDead()

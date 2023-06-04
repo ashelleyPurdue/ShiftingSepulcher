@@ -269,6 +269,9 @@ script = ExtResource( 2 )
 
 [node name="StandardKnockbackableEnemyComponents" parent="." instance=ExtResource( 8 )]
 
+[node name="EnemyComponent" parent="StandardKnockbackableEnemyComponents" index="0"]
+SkipDeathAnimation = false
+
 [node name="HealthPointsComponent" parent="StandardKnockbackableEnemyComponents" index="1"]
 MaxHealth = 2
 

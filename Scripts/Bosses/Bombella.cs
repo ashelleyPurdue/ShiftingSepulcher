@@ -113,7 +113,7 @@ namespace ShiftingSepulcher
 
         public void OnRoomTransitionFinished()
         {
-            if (_enemy.IsDead)
+            if (!_enemy.IsAlive)
                 return;
 
             _animator.PlaybackSpeed = 1;

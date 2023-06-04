@@ -17,7 +17,7 @@ namespace ShiftingSepulcher
 
         public bool IsSolved()
         {
-            return _enemies.All(e => e.IsDead);
+            return _enemies.All(e => !e.IsAlive);
         }
     }
 }

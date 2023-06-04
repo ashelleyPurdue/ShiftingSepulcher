@@ -52,7 +52,7 @@ namespace ShiftingSepulcher
 
         public void OnRoomTransitionFinished()
         {
-            if (!_enemy.IsDead)
+            if (_enemy.IsAlive)
             {
                 _mainAnimationPlayer.PlaybackSpeed = 1;
                 _mainAnimationPlayer.ResetAndPlay("Intro");

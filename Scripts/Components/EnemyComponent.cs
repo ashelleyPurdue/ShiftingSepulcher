@@ -16,7 +16,7 @@ namespace ShiftingSepulcher
         [Export] public bool DiesPermanently = false;
         [Export] public bool DisableLootDrops = false;
 
-        public bool IsDead {get; private set;}
+        public bool IsAlive {get; private set;} = true;
 
         private HealthPointsComponent _healthPoints => this.GetComponent<HealthPointsComponent>();
 
@@ -55,17 +55,17 @@ namespace ShiftingSepulcher
 
         public void OnRoomEnter()
         {
-            if (!IsDead)
+            if (IsAlive)
                 Respawn();
         }
 
         public void Respawn()
         {
-            if (IsDead && DiesPermanently)
+            if (!IsAlive && DiesPermanently)
                 return;
 
             _healthPoints.Health = _healthPoints.MaxHealth;
-            IsDead = false;
+            IsAlive = true;
 
             if (_spawnPosKnown)
                 Entity.Position = _spawnPos;
@@ -76,9 +76,9 @@ namespace ShiftingSepulcher
         public void OnTookDamage()
         {
             // Die when out of health
-            if (_healthPoints.Health <= 0 && !IsDead)
+            if (_healthPoints.Health <= 0 && IsAlive)
             {
-                IsDead = true;
+                IsAlive = false;
 
                 if (!DisableLootDrops)
                 {

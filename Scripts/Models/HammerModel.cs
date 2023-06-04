@@ -34,6 +34,11 @@ namespace ShiftingSepulcher
         }
         private float _swingPercent = 0;
 
+        [Export] public Color HandColor = Colors.DarkGray;
+        [Export] public float HandRadius = 3.5f;
+        [Export] public float LeftHandHeightPercent = 0.5f;
+        [Export] public float RightHandHeightPercent = 0;
+
         private Node2D _head => GetNode<Node2D>("%Head");
         private AnimationPlayer _headAngleSlider => GetNode<AnimationPlayer>("%HeadAngleSlider");
 
@@ -44,6 +49,18 @@ namespace ShiftingSepulcher
                 _head.Position,
                 Colors.White,
                 HandleThickness
+            );
+
+            DrawCircle(
+                HandHeightToPos(LeftHandHeightPercent),
+                HandRadius,
+                HandColor
+            );
+
+            DrawCircle(
+                HandHeightToPos(RightHandHeightPercent),
+                HandRadius,
+                HandColor
             );
         }
 
@@ -73,6 +90,15 @@ namespace ShiftingSepulcher
             _headAngleSlider.Advance(percent);
             _headAngleSlider.Stop(false); // Allow the animation to be played
                                           // with in the editor
+        }
+
+        private Vector2 HandHeightToPos(float handHeightPercent)
+        {
+            float handleLengthAtZeroSwing = HandleLength;
+            float handleLengthAtFullSwing = -HandleLength;
+            float handleLength = Mathf.Lerp(handleLengthAtZeroSwing, handleLengthAtFullSwing, SwingPercent);
+
+            return Vector2.Up * handleLength * handHeightPercent;
         }
     }
 }

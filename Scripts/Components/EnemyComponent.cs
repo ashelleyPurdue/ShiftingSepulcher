@@ -64,6 +64,8 @@ namespace ShiftingSepulcher
                 );
             }
 
+            this.Connect(nameof(Dead), this, nameof(OnDead));
+
             _spawnPos = Entity.Position;
             _spawnPosKnown = true;
 
@@ -97,13 +99,6 @@ namespace ShiftingSepulcher
             {
                 IsAlive = false;
 
-                if (!DisableLootDrops)
-                {
-                    // TODO: Move this into a signal handler for Dead.
-                    foreach (var lootDropper in this.GetComponents<ILootDropperComponent>())
-                        lootDropper.DropLoot();
-                }
-
                 EmitSignal(nameof(Dying));
 
                 if (SkipDeathAnimation)
@@ -128,6 +123,15 @@ namespace ShiftingSepulcher
         private void OnHitWall()
         {
             _healthPoints.TakeDamageDisregardingInvulnerability(1);
+        }
+
+        private void OnDead()
+        {
+            if (!DisableLootDrops)
+            {
+                foreach (var lootDropper in this.GetComponents<ILootDropperComponent>())
+                    lootDropper.DropLoot();
+            }
         }
     }
 }

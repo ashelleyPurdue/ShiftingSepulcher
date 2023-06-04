@@ -147,7 +147,7 @@ namespace ShiftingSepulcher
                 Owner._body.WalkVelocity = Vector2.Zero;
             }
 
-            public override void _Process(float delta)
+            public override void _PhysicsProcess(float delta)
             {
                 if (!Owner._animator.IsPlaying())
                 {

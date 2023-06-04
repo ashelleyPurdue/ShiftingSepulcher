@@ -48,7 +48,7 @@ namespace ShiftingSepulcher
             _sm.ChangeState(Idle);
         }
 
-        public void OnDead()
+        public void OnDying()
         {
             _sm.ChangeState(Dead);
         }
@@ -105,6 +105,10 @@ namespace ShiftingSepulcher
 
                     if (otherHurtBox.FindAncestor<Chompweed>() == null)
                         return otherHurtBox;
+
+                    // TODO: Ignore dead enemies, so the chompweed doesn't
+                    // attack seemingly-empty space.  The current abstractions
+                    // make this hard right now >.<
                 }
 
                 return null;

@@ -5,6 +5,7 @@ namespace ShiftingSepulcher
     [CustomNode]
     public class EnemyComponent : BaseComponent<Node2D>, IRespawnable, IEnemy, IOnRoomEnter
     {
+        [Signal] public delegate void Dying();
         [Signal] public delegate void Dead();
         [Signal] public delegate void Respawning();
 
@@ -15,6 +16,15 @@ namespace ShiftingSepulcher
         /// <value></value>
         [Export] public bool DiesPermanently = false;
         [Export] public bool DisableLootDrops = false;
+
+        /// <summary>
+        /// If this is true, <see cref="Dying"/> will be fired instead of
+        /// <see cref="Dead"/> when the enemy runs out of health.  The enemy's
+        /// entity must then call <see cref="FireDeathAnimationComplete"/> when
+        /// the death animation completes.
+        /// </summary>
+        /// <value></value>
+        [Export] public bool HasDeathAnimation = false;
 
         public bool IsAlive {get; private set;} = true;
 
@@ -82,12 +92,26 @@ namespace ShiftingSepulcher
 
                 if (!DisableLootDrops)
                 {
+                    // TODO: Move this into a signal handler for Dead.
                     foreach (var lootDropper in this.GetComponents<ILootDropperComponent>())
                         lootDropper.DropLoot();
                 }
 
-                EmitSignal(nameof(Dead));
+                if (HasDeathAnimation)
+                {
+                    EmitSignal(nameof(Dying));
+                }
+                else
+                {
+                    EmitSignal(nameof(Dead));
+                }
             }
+        }
+
+        public void FireDeathAnimationComplete()
+        {
+            // TODO: Throw errors if the death animation isn't playing.
+            EmitSignal(nameof(Dead));
         }
 
         private void OnHitWall()

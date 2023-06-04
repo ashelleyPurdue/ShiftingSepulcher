@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 namespace ShiftingSepulcher
@@ -18,13 +19,19 @@ namespace ShiftingSepulcher
         [Export] public bool DisableLootDrops = false;
 
         /// <summary>
-        /// If this is true, <see cref="Dying"/> will be fired instead of
-        /// <see cref="Dead"/> when the enemy runs out of health.  The enemy's
-        /// entity must then call <see cref="FireDeathAnimationComplete"/> when
-        /// the death animation completes.
+        /// If this is true, <see cref="Dead"/> will be fired immediately after
+        /// <see cref="Dying"/>, without waiting for
+        /// <see cref="FireDeathAnimationComplete"/>.
+        ///
+        /// Use this for enemies whose death animation has not been implemented
+        /// yet.
+        ///
+        /// If this is false, then the entity must call
+        /// <see cref="FireDeathAnimationComplete"/> when the death animation
+        /// completes, or else <see cref="Dead"/> will never fire.
         /// </summary>
         /// <value></value>
-        [Export] public bool HasDeathAnimation = false;
+        [Export] public bool SkipDeathAnimation = true;
 
         public bool IsAlive {get; private set;} = true;
 
@@ -97,20 +104,24 @@ namespace ShiftingSepulcher
                         lootDropper.DropLoot();
                 }
 
-                if (HasDeathAnimation)
-                {
-                    EmitSignal(nameof(Dying));
-                }
-                else
-                {
+                EmitSignal(nameof(Dying));
+
+                if (SkipDeathAnimation)
                     EmitSignal(nameof(Dead));
-                }
             }
         }
 
         public void FireDeathAnimationComplete()
         {
-            // TODO: Throw errors if the death animation isn't playing.
+            if (SkipDeathAnimation)
+                throw new InvalidOperationException("The death animation was already skipped");
+
+            if (IsAlive)
+                throw new InvalidOperationException("This enemy is still alive!");
+
+            // TODO: Throw an error if this is called more than once before
+            // respawning.
+
             EmitSignal(nameof(Dead));
         }
 

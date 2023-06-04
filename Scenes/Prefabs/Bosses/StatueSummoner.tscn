@@ -54,6 +54,30 @@ tracks/1/keys = {
 "update": 0,
 "values": [ 90.0, 0.0 ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("ModelScaler/HammerModel:LeftHandHeightPercent")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.5, 0.25 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("ModelScaler/HammerModel:RightHandHeightPercent")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.1, 0.15 ]
+}
 
 [sub_resource type="Animation" id=12]
 resource_name = "ComboSwingAimHammer"
@@ -105,6 +129,30 @@ tracks/3/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ 0.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("ModelScaler/HammerModel:LeftHandHeightPercent")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.2, 0.25 ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("ModelScaler/HammerModel:RightHandHeightPercent")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.1, 0.15 ]
 }
 
 [sub_resource type="Animation" id=7]
@@ -196,6 +244,30 @@ tracks/6/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ 0.0 ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("ModelScaler/HammerModel:LeftHandHeightPercent")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.25, 0.2 ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("ModelScaler/HammerModel:RightHandHeightPercent")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.15, 0.1 ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -673,6 +745,30 @@ tracks/11/keys = {
 "update": 0,
 "values": [ Vector2( 0, 0 ) ]
 }
+tracks/12/type = "value"
+tracks/12/path = NodePath("ModelScaler/HammerModel:RightHandHeightPercent")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.1 ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("ModelScaler/HammerModel:LeftHandHeightPercent")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.5 ]
+}
 
 [sub_resource type="Animation" id=8]
 resource_name = "Spinning"
@@ -873,6 +969,7 @@ rotation = 0.785398
 HeadTwistAngleDeg = 90.0
 HeadRotationDeg = 90.0
 HandColor = Color( 0.478431, 0.478431, 0.478431, 1 )
+RightHandHeightPercent = 0.1
 
 [node name="BossHealthBar" parent="." instance=ExtResource( 14 )]
 thing_with_health = NodePath("../HealthPointsComponent")

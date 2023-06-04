@@ -865,11 +865,15 @@ scale = Vector2( 2, 2 )
 
 [node name="Model" parent="ModelScaler" instance=ExtResource( 1 )]
 EyeFlareStrength = 0.0
+ShowShield = false
+ShowSword = false
 
 [node name="HammerModel" parent="ModelScaler" instance=ExtResource( 12 )]
 rotation = 0.785398
 HeadTwistAngleDeg = 90.0
 HeadRotationDeg = 90.0
+SwingPercent = 0.0
+HeadRadius = 8.0
 
 [node name="BossHealthBar" parent="." instance=ExtResource( 14 )]
 thing_with_health = NodePath("../HealthPointsComponent")

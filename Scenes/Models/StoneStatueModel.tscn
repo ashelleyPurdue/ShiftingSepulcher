@@ -12,10 +12,15 @@ export var HeightAboveGround: float = 0
 export var EyeColor: Color = Color.black
 export var EyeFlareStrength: float = 1
 
+export var ShowShield: bool = true
+export var ShowSword: bool = true
+
 func _process(_delta):
     $\"./Body\".position.y = -HeightAboveGround
     $\"%Eyes\".modulate = EyeColor
     $\"%EyeFlare\".modulate.a = EyeFlareStrength
+    $\"%Shield\".visible = ShowShield
+    $\"%SwordHand\".visible = ShowSword
 "
 
 [sub_resource type="Curve" id=2]
@@ -25,6 +30,8 @@ _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.498721, 1 ), 4.7394, -5.54
 [node name="StoneStatueModel" type="Node2D"]
 process_priority = 100
 script = SubResource( 1 )
+ShowShield = null
+ShowSword = null
 
 [node name="ShadowModel" parent="." instance=ExtResource( 1 )]
 
@@ -83,22 +90,24 @@ script = ExtResource( 2 )
 Radius = 1.5
 
 [node name="Shield" type="Polygon2D" parent="Body"]
+unique_name_in_owner = true
 position = Vector2( -1, -5 )
 color = Color( 0.843137, 0.843137, 0.843137, 1 )
 polygon = PoolVector2Array( -15, -20, -11, -15, -4, -13, 1, -14, 0, 3, -11, 9, -17, -1, -17, -20 )
 
-[node name="LeftHand" type="Node2D" parent="Body"]
+[node name="SwordHand" type="Node2D" parent="Body"]
+unique_name_in_owner = true
 position = Vector2( 11, -8 )
 scale = Vector2( 2, 2 )
 script = ExtResource( 2 )
 Radius = 2.0
 Color = Color( 0.478431, 0.478431, 0.478431, 1 )
 
-[node name="Sword" type="Polygon2D" parent="Body/LeftHand"]
+[node name="Sword" type="Polygon2D" parent="Body/SwordHand"]
 position = Vector2( 0, -2 )
 color = Color( 0.913725, 0.913725, 0.913725, 1 )
 polygon = PoolVector2Array( -3, -1, 3, -1, 3, 1, -3, 1 )
 
-[node name="Polygon2D" type="Polygon2D" parent="Body/LeftHand/Sword"]
+[node name="Polygon2D" type="Polygon2D" parent="Body/SwordHand/Sword"]
 color = Color( 0.913725, 0.913725, 0.913725, 1 )
 polygon = PoolVector2Array( -1, -1, -2, -7, 0, -12, 2, -7, 1, -1 )

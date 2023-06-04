@@ -100,7 +100,7 @@ namespace ShiftingSepulcher
             _currentTile = null;
         }
 
-        public void OnDead()
+        public void OnDying()
         {
             StopWandering();
             _currentTile = null;

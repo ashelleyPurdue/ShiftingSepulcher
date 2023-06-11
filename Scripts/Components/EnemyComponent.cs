@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 namespace ShiftingSepulcher
@@ -5,6 +6,7 @@ namespace ShiftingSepulcher
     [CustomNode]
     public class EnemyComponent : BaseComponent<Node2D>, IRespawnable, IEnemy, IOnRoomEnter
     {
+        [Signal] public delegate void Dying();
         [Signal] public delegate void Dead();
         [Signal] public delegate void Respawning();
 
@@ -16,7 +18,22 @@ namespace ShiftingSepulcher
         [Export] public bool DiesPermanently = false;
         [Export] public bool DisableLootDrops = false;
 
-        public bool IsDead {get; private set;}
+        /// <summary>
+        /// If this is true, <see cref="Dead"/> will be fired immediately after
+        /// <see cref="Dying"/>, without waiting for
+        /// <see cref="FireDeathAnimationComplete"/>.
+        ///
+        /// Use this for enemies whose death animation has not been implemented
+        /// yet.
+        ///
+        /// If this is false, then the entity must call
+        /// <see cref="FireDeathAnimationComplete"/> when the death animation
+        /// completes, or else <see cref="Dead"/> will never fire.
+        /// </summary>
+        /// <value></value>
+        [Export] public bool SkipDeathAnimation = true;
+
+        public bool IsAlive {get; private set;} = true;
 
         private HealthPointsComponent _healthPoints => this.GetComponent<HealthPointsComponent>();
 
@@ -47,6 +64,8 @@ namespace ShiftingSepulcher
                 );
             }
 
+            this.Connect(nameof(Dead), this, nameof(OnDead));
+
             _spawnPos = Entity.Position;
             _spawnPosKnown = true;
 
@@ -55,17 +74,17 @@ namespace ShiftingSepulcher
 
         public void OnRoomEnter()
         {
-            if (!IsDead)
+            if (IsAlive)
                 Respawn();
         }
 
         public void Respawn()
         {
-            if (IsDead && DiesPermanently)
+            if (!IsAlive && DiesPermanently)
                 return;
 
             _healthPoints.Health = _healthPoints.MaxHealth;
-            IsDead = false;
+            IsAlive = true;
 
             if (_spawnPosKnown)
                 Entity.Position = _spawnPos;
@@ -76,23 +95,43 @@ namespace ShiftingSepulcher
         public void OnTookDamage()
         {
             // Die when out of health
-            if (_healthPoints.Health <= 0 && !IsDead)
+            if (_healthPoints.Health <= 0 && IsAlive)
             {
-                IsDead = true;
+                IsAlive = false;
 
-                if (!DisableLootDrops)
-                {
-                    foreach (var lootDropper in this.GetComponents<ILootDropperComponent>())
-                        lootDropper.DropLoot();
-                }
+                EmitSignal(nameof(Dying));
 
-                EmitSignal(nameof(Dead));
+                if (SkipDeathAnimation)
+                    EmitSignal(nameof(Dead));
             }
+        }
+
+        public void FireDeathAnimationComplete()
+        {
+            if (SkipDeathAnimation)
+                throw new InvalidOperationException("The death animation was already skipped");
+
+            if (IsAlive)
+                throw new InvalidOperationException("This enemy is still alive!");
+
+            // TODO: Throw an error if this is called more than once before
+            // respawning.
+
+            EmitSignal(nameof(Dead));
         }
 
         private void OnHitWall()
         {
             _healthPoints.TakeDamageDisregardingInvulnerability(1);
+        }
+
+        private void OnDead()
+        {
+            if (!DisableLootDrops)
+            {
+                foreach (var lootDropper in this.GetComponents<ILootDropperComponent>())
+                    lootDropper.DropLoot();
+            }
         }
     }
 }

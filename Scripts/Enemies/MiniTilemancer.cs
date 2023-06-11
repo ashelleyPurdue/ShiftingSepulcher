@@ -100,10 +100,10 @@ namespace ShiftingSepulcher
             _currentTile = null;
         }
 
-        public void OnDead()
+        public void OnDying()
         {
             StopWandering();
-            _currentTile = null;
+            DetonateTile();
 
             _animator.Play("Death");
             _animator.PlaybackSpeed = 1;
@@ -121,6 +121,19 @@ namespace ShiftingSepulcher
             );
 
             return GlobalPosition + (dir * TileSpawnRadius);
+        }
+
+        private void DetonateTile()
+        {
+            // Don't do anything if the tile has already been destroyed
+            if (!IsInstanceValid(_currentTile))
+            {
+                _currentTile = null;
+                return;
+            }
+
+            _currentTile.Shatter();
+            _currentTile = null;
         }
     }
 }

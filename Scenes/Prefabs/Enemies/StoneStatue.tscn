@@ -12,6 +12,7 @@
 
 [sub_resource type="Animation" id=5]
 resource_name = "Death"
+length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("StoneStatueModel:modulate")
 tracks/0/interp = 1
@@ -259,6 +260,9 @@ script = ExtResource( 3 )
 
 [node name="StandardKnockbackableEnemyComponents" parent="." instance=ExtResource( 2 )]
 
+[node name="EnemyComponent" parent="StandardKnockbackableEnemyComponents" index="0"]
+SkipDeathAnimation = false
+
 [node name="HealthPointsComponent" parent="StandardKnockbackableEnemyComponents" index="1"]
 MaxHealth = 3
 
@@ -332,7 +336,7 @@ HealthPointsPath = NodePath("../StandardKnockbackableEnemyComponents/HealthPoint
 [node name="CircleShape" type="CollisionShape2D" parent="HurtBox"]
 shape = SubResource( 1 )
 
-[connection signal="Dead" from="StandardKnockbackableEnemyComponents/EnemyComponent" to="." method="OnDead"]
+[connection signal="Dying" from="StandardKnockbackableEnemyComponents/EnemyComponent" to="." method="OnDying"]
 [connection signal="Respawning" from="StandardKnockbackableEnemyComponents/EnemyComponent" to="." method="OnRespawning"]
 
 [editable path="StandardKnockbackableEnemyComponents"]

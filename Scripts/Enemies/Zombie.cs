@@ -33,9 +33,9 @@ namespace ShiftingSepulcher
                 nameof(OnRespawning)
             );
             enemy.Connect(
-                signal: nameof(EnemyComponent.Dead),
+                signal: nameof(EnemyComponent.Dying),
                 target: this,
-                nameof(OnDead)
+                nameof(OnDying)
             );
         }
 
@@ -45,9 +45,9 @@ namespace ShiftingSepulcher
                 _visuals.Rotation = _body.WalkVelocity.Angle();
         }
 
-        public void OnDead()
+        public void OnDying()
         {
-            _sm.ChangeState(Dead);
+            _sm.ChangeState(Dying);
         }
 
         public void OnRespawning()
@@ -138,14 +138,26 @@ namespace ShiftingSepulcher
             }
         }
 
-        private State<Zombie> Dead = new DeadState();
-        private class DeadState : State<Zombie>
+        private State<Zombie> Dying = new DyingState();
+        private class DyingState : State<Zombie>
         {
             public override void _StateEntered()
             {
                 Owner._animator.ResetAndPlay("Death");
                 Owner._body.WalkVelocity = Vector2.Zero;
             }
+
+            public override void _PhysicsProcess(float delta)
+            {
+                if (!Owner._animator.IsPlaying())
+                {
+                    ChangeState(Owner.Dead);
+                    Owner.GetComponent<EnemyComponent>().FireDeathAnimationComplete();
+                }
+            }
         }
+
+        private State<Zombie> Dead = new DeadState();
+        private class DeadState : State<Zombie> {}
     }
 }

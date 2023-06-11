@@ -51,7 +51,7 @@ namespace ShiftingSepulcher
             _sm.ChangeState(Idle);
         }
 
-        public void OnDead()
+        public void OnDying()
         {
             _sm.ChangeState(Dead);
         }
@@ -183,11 +183,24 @@ namespace ShiftingSepulcher
         private readonly IState Dead = new DeadState();
         private class DeadState : State<StoneStatue>
         {
+            private bool _animationFinished = false;
+
             public override void _StateEntered()
             {
                 Owner.EnableCollision(false);
                 Owner._aggroTarget = null;
+
+                _animationFinished = false;
                 Owner._animator.ResetAndPlay("Death");
+            }
+
+            public override void _PhysicsProcess(float delta)
+            {
+                if (!_animationFinished && !Owner._animator.IsPlaying())
+                {
+                    _animationFinished = true;
+                    Owner.GetComponent<EnemyComponent>().FireDeathAnimationComplete();
+                }
             }
 
             public override void _StateExited()

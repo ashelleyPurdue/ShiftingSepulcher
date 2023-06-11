@@ -1,3 +1,13 @@
+# Unreleased
+
+## Bug fixes
+* Fixed "Tilemancer" enemies leaving their tiles behind if they die before throwing
+    them.
+
+## Changes
+* Enemies now drop loot after their death animation finishes, instead of
+    immediately when their health reaches zero.
+
 # 1.1.2: 2023-05-21
 ## Bug fixes
 * Fixed stone statues becoming invisible after respawning if the player dies

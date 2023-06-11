@@ -30,5 +30,5 @@ script = ExtResource( 8 )
 Sound = ExtResource( 6 )
 VolumeLinear = 2.0
 
-[connection signal="Dead" from="EnemyComponent" to="DeathSound" method="Play"]
+[connection signal="Dying" from="EnemyComponent" to="DeathSound" method="Play"]
 [connection signal="TookDamageNoParams" from="HealthPointsComponent" to="TookDamageSound" method="play"]
